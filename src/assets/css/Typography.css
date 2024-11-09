@@ -1,0 +1,9 @@
+:root {
+    --font-family-base: 'Arial, sans-serif';
+    --font-size-small: 0.875rem;   /* For small text */
+    --font-size-base: 1rem;        /* Default text size */
+    --font-size-large: 1.25rem;    /* For headings */
+    --font-weight-normal: 400;
+    --font-weight-bold: 600;
+  }
+  

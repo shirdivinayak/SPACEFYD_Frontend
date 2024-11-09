@@ -1,0 +1,11 @@
+/* colors.css */
+:root {
+    --primary-color: #2B3A57;   /* Dark blue used in the sidebar */
+    --secondary-color: #FFFFFF; /* For text on a dark background */
+    --accent-color: #28A745;    /* Success color, like for buttons */
+    --background-color: #F8F9FA; /* Background for main content */
+    --border-color: #E0E0E0;    /* Light grey for borders */
+    --text-color-dark: #333333;
+    --text-color-light: #FFFFFF;
+  }
+  
