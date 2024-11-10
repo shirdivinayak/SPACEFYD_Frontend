@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, Button, Row, Col, Form } from "react-bootstrap";
 
-const MainContent = () => {
+const Home = () => {
   // States for handling banners
   const [banners, setBanners] = useState({
     mainBanner: { image: null },
@@ -258,4 +258,4 @@ const MainContent = () => {
   );
 };
 
-export default MainContent;
+export default Home;
