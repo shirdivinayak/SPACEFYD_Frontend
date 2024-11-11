@@ -224,13 +224,21 @@ const ProductTable = () => {
         >
           {categories.map((category, index) => (
             <Button
-              key={index}
-              variant={selectedCategory === category ? "primary" : "btn-light"}
-              className="mx-1"
-              onClick={() => handleCategorySelect(category)}
-            >
-              {category}
-            </Button>
+            key={index}
+            variant={selectedCategory === category ? "primary" : "btn-light"}
+            className="mx-1"
+            onClick={() => handleCategorySelect(category)}
+            style={{
+              backgroundColor: selectedCategory === category ? "#E0E8FF" : "white", // Custom background color
+              color: selectedCategory === category ? "#184BD3" : "#011140", // Custom text color
+              border: "none" // Removes border
+
+
+            }}
+          >
+            {category}
+          </Button>
+          
           ))}
         </div>
         <Button
@@ -286,7 +294,7 @@ const ProductTable = () => {
                 color: "#474747",
               }}
             >
-              ID
+              Product ID
             </th>
             <th
               style={{
@@ -342,7 +350,7 @@ const ProductTable = () => {
             >
               Brand
             </th>
-            <th style={{ border: "none", width: "140px" }}>
+            <th style={{ border: "none", width: "140px" ,  borderBottom: true,}}>
               <div
                 className="global-toggle d-flex align-items-center"
                 style={{ width: "100%" }}
