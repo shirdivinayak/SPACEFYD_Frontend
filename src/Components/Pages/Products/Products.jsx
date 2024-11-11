@@ -342,8 +342,7 @@ const ProductTable = () => {
             >
               Brand
             </th>
-            <th style={{ border: "none", width: "140px" ,borderBottom: true,
-}}>
+            <th style={{ border: "none", width: "140px" }}>
               <div
                 className="global-toggle d-flex align-items-center"
                 style={{ width: "100%" }}
