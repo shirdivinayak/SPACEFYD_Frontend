@@ -1,0 +1,189 @@
+.product-page {
+  width: 1090px;
+  height: 1078px;
+  padding: 20px;
+  background-color: #FFFFFF;
+  border-radius: 8px 0px 0px 0px;
+  position: absolute;
+  top: 202px;
+  left: 308px;
+}
+
+.table-frame {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-bottom: 20px;
+  justify-content: space-between;
+}
+
+.tabs {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  width: calc(100% - 50px);
+  padding-right: 20px;
+  background-color: transparent;
+  margin-left: auto;
+}
+
+.tab {
+  padding: 10px 15px;
+  margin-right: 20px;
+  color: #101010;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  background-color: transparent;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.tab:hover {
+  background-color: #e8f1ff;
+  color: #184BD3;
+}
+
+.arrows {
+  display: flex;
+  align-items: center;
+}
+
+.arrow {
+  cursor: pointer;
+  padding: 5px;
+  user-select: none;
+  font-size: 12px;
+  color: #101010;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  background-color: #ddd;
+  margin-right: 5px;
+}
+
+.arrow:hover {
+  background-color: #f0f0f0;
+  color: #184BD3;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.product-table th, .product-table td {
+  padding: 12px;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 1px solid #ddd;
+}
+
+.product-table th {
+  font-weight: 600;
+  color: #666666;
+}
+
+.product-table td {
+  color: #333333;
+}
+
+.product-image {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.selected-row {
+  background-color: #ffebef;
+}
+
+.edit-btn {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  color: #184BD3;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.edit-btn:hover {
+  color: #0062cc;
+}
+
+.toggle-and-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.global-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #e0e0e0;
+  width: 100px;
+  margin-bottom: 10px;
+}
+
+.global-toggle .switch {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.global-toggle .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.global-toggle .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 20px;
+}
+
+.global-toggle .slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.global-toggle .switch input:checked + .slider {
+  background-color: #0062cc;
+}
+
+.global-toggle .switch input:checked + .slider:before {
+  transform: translateX(14px);
+}
+
+.global-toggle span {
+  font-size: 12px;
+  color: #666666;
+}

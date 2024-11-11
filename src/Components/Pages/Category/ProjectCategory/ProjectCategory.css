@@ -1,0 +1,143 @@
+body {
+  background-color: #F5F5F5;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.categories-container {
+  width: 1090px;
+  margin-left: 308px;
+  background: #FFFFFF;
+}
+
+.add-more-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 1090px;
+  height: 58px;
+  padding: 17px 32px;
+  background: #FFFFFF;
+  border-radius: 6px 0px 0px 0px;
+  position: absolute;
+  top: 212px;
+  left: 308px;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  color: #2C3E50;
+}
+
+.add-more-text {
+  font-size: 16px;
+  color: #007bff;
+}
+
+.add-more-icon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid #007bff;
+  color: #007bff;
+  font-size: 12px;
+  background-color: transparent;
+}
+
+.table-container {
+  width: 1090px;
+  height: 859px;
+  background: #FFFFFF;
+  border-radius: 8px 0px 0px 0px;
+  position: absolute;
+  top: 294px;
+  left: 308px;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-table {
+  width: 100%;
+  border: none; /* No border for the table itself */
+}
+
+/* Styling for table header */
+.category-table th {
+  padding: 20px;
+  font-size: 14px;
+  color: #2C3E50;
+  font-weight: 500;
+  text-align: left; /* Align category heading to the left */
+  border-bottom: 1px solid #DDD; /* Horizontal line below the header */
+}
+
+/* Styling for table rows */
+.category-table td {
+  padding: 20px;
+  font-size: 14px;
+  color: #2C3E50;
+  white-space: nowrap;
+  border-bottom: none; /* No border for rows */
+  position: relative; /* Make sure the parent is relatively positioned */
+}
+
+.header-checkbox {
+  margin-right: 50px;
+}
+
+.category-checkbox {
+  margin-right: 50px;
+}
+
+.category-row {
+  display: flex;
+  align-items: center;
+}
+
+.edit-text {
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+  position: absolute;
+  right: 20px;
+  text-align: right;
+  padding-right: 20px;
+}
+
+/* Align Category heading to the left */
+.category-table .category-column {
+  text-align: left;
+  padding-left: 20px; /* Optional padding for alignment */
+}
+
+/* Align Edit heading to the right */
+.category-table .edit-column {
+  text-align: right;
+  padding-right: 20px; /* Optional padding for alignment */
+}
+
+/* Updated edit-btn to align to the right of the table cell */
+.edit-btn {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  color: #184BD3;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: underline;
+  position: absolute; /* Position it relative to the <td> */
+  right: 0; /* Align it to the right of the table cell */
+  top: 50%; /* Vertically center it in the table cell */
+  transform: translateY(-50%); /* Adjust vertical centering */
+  padding-right: 50px; 
+}
+
+.edit-btn:hover {
+  color: #0062cc;
+}
