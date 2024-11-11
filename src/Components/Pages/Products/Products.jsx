@@ -1,10 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTrash,
-  faChevronLeft,
-  faChevronRight,
-} from "@fortawesome/free-solid-svg-icons";
 import { Button, Table, Form } from "react-bootstrap";
 
 import { Nav } from "react-bootstrap";
@@ -174,7 +168,7 @@ const ProductTable = () => {
 
   const scrollTabs = (direction) => {
     if (tabsRef.current) {
-      const scrollAmount = direction === "right" ? 100 : -100;
+      const scrollAmount = direction === "right" ? 120 : -120; // Slightly larger scroll amount
       tabsRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
   };
@@ -187,10 +181,16 @@ const ProductTable = () => {
           .filter((item) => (isOnLive ? item.onlive === "1" : true));
 
   return (
-    <div className="container mt-4">
-      <div className="d-flex justify-content-between align-items-center">
-        <h4 className="d-flex align-items-center mb-0">
-          <Nav.Link as={Link} to="/" className="p-0 me-2 opacity-50">
+    <div className="container " style={{ padding: "0" }}>
+      <div
+        className="d-flex justify-content-between align-items-center p-4"
+        style={{ backgroundColor: "white", minHeight: "70px", padding: "0" }}
+      >
+        <h4
+          className="d-flex align-items-center mb-0 m-0"
+          style={{ fontSize: "20px" }}
+        >
+          <Nav.Link as={Link} to="/" className="me-2 opacity-50">
             Home
           </Nav.Link>
           <span> &gt; </span> {/* This ensures the ">" symbol is inline */}
@@ -198,48 +198,59 @@ const ProductTable = () => {
         </h4>
 
         <Button
-          size="sm"
+          height="12px"
           onClick={() => handleRemoveSelected()}
-          variant="primary" // Makes the button blue
-          className="text-white" // Makes the text white
+          variant="primary" // Keeps the button style, but we'll override the color
+          className="text-white"
+          style={{
+            backgroundColor: "#184BD3", // Replace with any custom color (example: orange-red)
+            border: "none", // Match border color to the background color
+          }}
         >
           <i className="bi bi-plus-circle"></i> Add Product
         </Button>
       </div>
 
       {/* Add a custom gap here */}
-      <div style={{ marginTop: "40px", color: "gray" }}></div>
+      <div style={{ marginTop: "22px" }}></div>
 
       {/* Category Tabs */}
-      <div className="d-flex align-items-center my-3">
-        <div
-          className="d-flex overflow-hidden mx-3"
-          ref={tabsRef}
-          style={{
-            maxWidth: "1000px", // Control the visible width
-            overflowX: "auto", // Enable horizontal scrolling
-            whiteSpace: "nowrap",
-            height: "40px", // Set a fixed height for category tabs
-          }}
-        >
-          {categories.map((category, index) => (
-            <Button
-            key={index}
-            variant={selectedCategory === category ? "primary" : "btn-light"}
-            className="mx-1"
-            onClick={() => handleCategorySelect(category)}
+      <div
+        className="d-flex align-items-center  mx-4 px-4"
+        style={{ backgroundColor: "white" }}
+      >
+        <div className="m-3">
+          <div
+            className="d-flex overflow-hidden"
+            ref={tabsRef}
             style={{
-              backgroundColor: selectedCategory === category ? "#E0E8FF" : "white", // Custom background color
-              color: selectedCategory === category ? "#184BD3" : "#011140", // Custom text color
-              border: "none" // Removes border
-
-
+              maxWidth: "1000px", // Control the visible width
+              overflowX: "auto", // Enable horizontal scrolling
+              whiteSpace: "nowrap",
+              height: "40px", // Set a fixed height for category tabs
             }}
           >
-            {category}
-          </Button>
-          
-          ))}
+            {categories.map((category, index) => (
+              <Button
+                key={index}
+                variant={
+                  selectedCategory === category ? "primary" : "btn-light"
+                }
+                className="mx-1"
+                onClick={() => handleCategorySelect(category)}
+                style={{
+                  backgroundColor:
+                    selectedCategory === category ? "#E0E8FF" : "white", // Custom background color
+                  color: selectedCategory === category ? "#184BD3" : "#011140", // Custom text color
+                  border: "none", // Match border color to the background color
+                  fontWeight: 500,
+                  fontSize: "16px",
+                }}
+              >
+                {category}
+              </Button>
+            ))}
+          </div>
         </div>
         <Button
           variant="light"
@@ -250,159 +261,221 @@ const ProductTable = () => {
             margin: "0 10px", // Adds space between buttons and other elements
             border: "1px solid #ddd", // Optional: Adds a border to the circular button
             boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)", // Optional: Adds shadow to the button
+            width: "24px",
+            height: "24px",
+            display: "flex", // Enables flexbox
+            justifyContent: "center", // Centers content horizontally
+            alignItems: "center",
           }}
         >
-          <FontAwesomeIcon icon={faChevronLeft} />
+          <i class="bi bi-chevron-compact-left"></i>
         </Button>
 
         <Button
           variant="light"
           onClick={() => scrollTabs("right")}
           style={{
-            borderRadius: "50%", // Makes the button circular
+            borderRadius: "15px", // Makes the button circular
             padding: "5px", // Adds space inside the button
             margin: "0 10px", // Adds space between buttons and other elements
             border: "1px solid #ddd", // Optional: Adds a border to the circular button
             boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)", // Optional: Adds shadow to the button
+            width: "24px",
+            height: "24px",
+            display: "flex", // Enables flexbox
+            justifyContent: "center", // Centers content horizontally
+            alignItems: "center",
           }}
         >
-          <FontAwesomeIcon icon={faChevronRight} />
+          <i class="bi bi-chevron-compact-right"></i>
         </Button>
       </div>
 
       {/* Product Table */}
-      <Table  hover responsive>
-        <thead>
-          <tr>
-            <th
-              style={{
-                height: "60px",
-                padding: "20px 10px",
-                borderBottom: true,
-                fontWeight: "normal",
-                color: "#474747",
-              }}
-            >
-              <Form.Check type="checkbox" onChange={handleSelectAll} />
-            </th>
-            <th
-              style={{
-                height: "60px",
-                padding: "20px 10px",
-                borderBottom: true,
-                fontWeight: "normal",
-                color: "#474747",
-              }}
-            >
-              Product ID
-            </th>
-            <th
-              style={{
-                height: "60px",
-                padding: "20px 10px",
-                borderBottom: true,
-                fontWeight: "normal",
-                color: "#474747",
-              }}
-            >
-              Name
-            </th>
-            <th
-              style={{
-                padding: "20px 10px",
-                borderBottom: true,
-                fontWeight: "normal",
-                color: "#474747",
-              }}
-            >
-              Image
-            </th>
-            <th
-              style={{
-                height: "60px",
-                padding: "20px 10px",
-                borderBottom: true,
-                fontWeight: "normal",
-                color: "#474747",
-              }}
-            >
-              Category
-            </th>
-            <th
-              style={{
-                height: "60px",
-                padding: "20px 10px",
-                borderBottom: true,
-                fontWeight: "normal",
-                color: "#474747",
-              }}
-            >
-              Sub-Category
-            </th>
-            <th
-              style={{
-                height: "60px",
-                padding: "20px 10px",
-                borderBottom: true,
-                fontWeight: "normal",
-                color: "#474747",
-              }}
-            >
-              Brand
-            </th>
-            <th style={{ border: "none", width: "140px" ,  borderBottom: true,}}>
-              <div
-                className="global-toggle d-flex align-items-center"
-                style={{ width: "100%" }}
+      <div className="  mx-4 px-4" style={{ backgroundColor: "white" }}>
+        <Table hover responsive>
+          <thead>
+            <tr>
+              <th
+                style={{
+                  height: "60px",
+                  padding: "20px 10px",
+                  borderBottom: true,
+                  fontWeight: 500,
+                  fontSize: 14,
+                  color: "#474747",
+                }}
               >
-                <label className="switch" style={{ width: "40px" }}>
-                  <input
-                    type="checkbox"
-                    checked={isOnLive}
-                    onChange={handleGlobalToggle}
-                  />
-                  <span className="slider round"></span>
-                </label>
-                <span className="ms-2" style={{ marginLeft: "10px" }}>
-                  On live
-                </span>
-              </div>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredItems.map((item) => (
-            <tr key={item.id}>
-              
-              <td style={{borderBottom: true, }}>
                 <Form.Check
                   type="checkbox"
-                  checked={selectedItems.includes(item.id)}
-                  onChange={() => handleCheckboxChange(item.id)}
+                  onChange={handleSelectAll}
+                  style={{
+                    transform: "scale(1.2)", // Scale the checkbox size
+                  }}
                 />
-              </td>
-              <td style={{borderBottom: true, }}>{item.id}</td>
-              <td style={{borderBottom: true, }}>{item.name}</td>
-              <td style={{borderBottom: true, }}>
-                <img src={item.image} alt={item.name} width="50" />
-              </td>
-              <td style={{borderBottom: true, }}>{item.category}</td>
-              <td style={{borderBottom: true, }}>{item.subCategory}</td>
-              <td style={{borderBottom: true, }}>{item.brand}</td>
-              <td style={{borderBottom: true, }}>
-                <Button
-                  size="sm"
-                  onClick={() => {}}
-                  variant="light"
+              </th>
+              <th
+                style={{
+                  height: "60px",
+                  padding: "20px 10px",
+                  borderBottom: true,
+                  fontWeight: 500,
+                  fontSize: 14,
+
+                  color: "#474747",
+                }}
+              >
+                Product ID
+              </th>
+              <th
+                style={{
+                  height: "60px",
+                  padding: "20px 10px",
+                  borderBottom: true,
+                  fontWeight: 500,
+                  fontSize: 14,
+                  color: "#474747",
+                }}
+              >
+                Name
+              </th>
+              <th
+                style={{
+                  padding: "20px 10px",
+                  borderBottom: true,
+                  fontWeight: 500,
+                  fontSize: 14,
+                  color: "#474747",
+                }}
+              >
+                Image
+              </th>
+              <th
+                style={{
+                  height: "60px",
+                  padding: "20px 10px",
+                  borderBottom: true,
+                  fontWeight: 500,
+                  fontSize: 14,
+                  color: "#474747",
+                }}
+              >
+                Category
+              </th>
+              <th
+                style={{
+                  height: "60px",
+                  padding: "20px 10px",
+                  borderBottom: true,
+                  fontWeight: 500,
+                  fontSize: 14,
+                  color: "#474747",
+                }}
+              >
+                Sub-Category
+              </th>
+              <th
+                style={{
+                  height: "60px",
+                  padding: "20px 10px",
+                  borderBottom: true,
+                  fontWeight: 500,
+                  fontSize: 14,
+                  color: "#474747",
+                }}
+              >
+                Brand
+              </th>
+              <th
+                style={{ border: "none", width: "140px", borderBottom: true }}
+              >
+                <div
+                  className="d-flex align-items-center"
+                  style={{
+                    width: "100%",
+                    border: "1px solid #ddd", // Adds a light border
+                    padding: "10px", // Optional: Adds padding inside the div
+                    borderRadius: "5px", // Optional: Adds rounded corners to the div
+                  }}
                 >
-                  <i className="bi bi-pencil" style={{ color: "blue" }}></i>{" "}
-                  Edit
-                </Button>
-              </td>
+                  <div className="form-check form-switch">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="liveToggle"
+                      checked={isOnLive}
+                      onChange={handleGlobalToggle}
+                      style={{
+                        backgroundColor: isOnLive ? "#011140" : "#ccc", // Color when active or inactive
+                        width: "42px", // Increase the width of the switch
+                        height: "24px", // Increase the height of the switch
+                      }}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="liveToggle"
+                      style={{
+                        fontWeight: 500,
+                        fontSize: "14px",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      On live
+                    </label>
+                  </div>
+                </div>
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {filteredItems.map((item) => (
+              <tr key={item.id}>
+                <td style={{ borderBottom: true }}>
+                  <Form.Check
+                    type="checkbox"
+                    checked={selectedItems.includes(item.id)}
+                    onChange={() => handleCheckboxChange(item.id)}
+                    style={{
+                      transform: "scale(1.2)", // Scale the checkbox size
+                    }}
+                  />
+                </td>
+                <td style={{ borderBottom: true }}>{item.id}</td>
+                <td style={{ borderBottom: true }}>{item.name}</td>
+                <td style={{ borderBottom: true }}>
+                  <img src={item.image} alt={item.name} width="50" />
+                </td>
+                <td style={{ borderBottom: true }}>{item.category}</td>
+                <td style={{ borderBottom: true }}>{item.subCategory}</td>
+                <td style={{ borderBottom: true }}>{item.brand}</td>
+                <td style={{ borderBottom: true }}>
+                  <Button
+                    size="sm"
+                    onClick={() => {}}
+                    style={{
+                      color: "blue", // Text color
+                      backgroundColor: "transparent", // Background color set to transparent
+                      border: "none", // Remove the border if needed
+                      // Adjust this to change the size of the text "Edit"
+                    }}
+                  >
+                    <i
+                      className="bi bi-pencil"
+                      style={{ color: "blue", fontSize: "20px" }}
+                    ></i>{" "}
+                    {/* Increase icon size */}
+                    <span style={{ fontWeight: 500, fontSize: "16px" }}>
+                      {" "}
+                      Edit
+                    </span>{" "}
+                    {/* Increase text size */}
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
 
       {/*message section*/}
       {message && (
@@ -443,15 +516,25 @@ const ProductTable = () => {
             style={{
               display: "flex",
               justifyContent: "space-between",
-              width: "1100px",
+              width: "1220px",
             }}
           >
             {/* Left: Number of selected items */}
-            <span>{selectedItems.length} Selected</span>
+            <span
+              style={{ color: "#011140", fontWeight: 500, fontSize: "22px" }}
+            >
+              {selectedItems.length} Selected
+            </span>
 
             {/* Right: Remove button */}
             <div>
-              <Button variant="danger" onClick={handleRemoveSelected}>
+              <Button
+                onClick={handleRemoveSelected}
+                style={{
+                  backgroundColor: "rgba(194, 0, 0, 0.6)", // 60% opacity
+                  border: "none", // Match border color to the background color
+                }}
+              >
                 <i className="bi bi-trash" style={{ marginRight: "15px" }}></i>
                 Remove
               </Button>

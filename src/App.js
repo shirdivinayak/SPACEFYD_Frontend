@@ -5,8 +5,8 @@ import Sidebar from "./Components/common/Sidebar";
 import TopNavbar from "./Components/common/Topnavbar";
 import Home from "./Components/Pages/MainContent";
 import Categories from "./Components/Pages/Category/ProjectCategory/ProjectCategory";
-import ProductTable from "./Components/Pages/Products/Products";
-import ProjectTable from "./Components/Pages/Projects/Project";
+import Product from "./Components/Pages/Products/Products";
+import Project from "./Components/Pages/Projects/Project";
 
 
 function App() {
@@ -14,14 +14,14 @@ function App() {
     <Router>
       <div className="d-flex">
         <Sidebar />
-        <div className="flex-grow-1">
-          <TopNavbar />
-          <div className="p-4">
+        <div className="flex-grow-1"style={{ backgroundColor: "yellow", padding: "0"}}>
+          <TopNavbar /> 
+          <div >
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/categories" element={<Categories />} />
-              <Route path="/products" element={<ProductTable />} />
-              <Route path="/projects" element={<ProjectTable />} />
+              <Route path="/products" element={<Product />} />
+              <Route path="/projects" element={<Project />} />
               
             </Routes>
           </div>
