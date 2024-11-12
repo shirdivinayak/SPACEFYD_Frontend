@@ -14,7 +14,7 @@ function App() {
     <Router>
       <div className="d-flex">
         <Sidebar />
-        <div className="flex-grow-1"style={{ backgroundColor: "yellow", padding: "0"}}>
+        <div className="flex-grow-1"style={{ backgroundColor: "#F5F5F5", padding: "0"}}>
           <TopNavbar /> 
           <div >
             <Routes>
