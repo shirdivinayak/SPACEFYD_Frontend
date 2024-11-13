@@ -1,7 +1,7 @@
 import React from "react";
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import GroupImage from "../Images/Group.png";
+import GroupImage from "../../Assets/Images/Group.png";
 
 const Sidebar = () => {
   return (
