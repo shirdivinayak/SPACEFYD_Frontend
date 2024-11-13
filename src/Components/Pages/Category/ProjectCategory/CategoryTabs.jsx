@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { Tab, Nav, Form, Button, Row, Col } from "react-bootstrap";
+import { Tab, Nav, Form, Button, Row, Col, Alert } from "react-bootstrap";
+import AlertSuccesMessage from "../../../common/MessageSuccesAlert";
 
 const CategoryTabs = () => {
   const [activeTab, setActiveTab] = useState("addCategory");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categoryName, setCategoryName] = useState("");
   const [subCategoryName, setSubCategoryName] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState(""); // State for validation error messages
 
   const categories = ["furniture", "casde", "erje", "rtdt"]; // Example categories
 
@@ -14,40 +17,60 @@ const CategoryTabs = () => {
   };
 
   const handleAddCategory = () => {
-    console.log(
-      `Category: ${categoryName}, Sub Category Added: ${subCategoryName}`
-    );
-    setCategoryName("");
+    if (!subCategoryName.trim()) {
+      setError("Category name is required.");
+      return;
+    }
+
+    const msg = `New Category added`;
+    console.log(msg);
+    setMessage(msg);
+    setError("");
     setSubCategoryName("");
-    setSelectedCategory("select");
+
+    setTimeout(() => {
+      setMessage("");
+    }, 3000);
+  };
+
+  const handleAddSubCategory = () => {
+    if (!selectedCategory.trim()) {
+      setError("Please select a category.");
+      return;
+    }
+    if (!categoryName.trim()) {
+      setError("Sub Category name is required.");
+      return;
+    }
+
+    const msg = `New Sub Category added.`;
+    console.log(msg);
+    setMessage(msg);
+    setError("");
+    setCategoryName("");
+    setSelectedCategory("");
+
+    setTimeout(() => {
+      setMessage("");
+    }, 3000);
   };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault(); // Prevent Enter from submitting the form
+      e.preventDefault();
     }
   };
 
   return (
-    <div
-      className="container px-4 py-4"
-      style={{ maxWidth: "100%", paddingLeft: "0" }}
-    >
-      <Tab.Container
-        activeKey={activeTab}
-        onSelect={(tab) => setActiveTab(tab)}
-      >
+    <div className="container px-4 py-4" style={{ maxWidth: "100%", paddingLeft: "0" }}>
+      <Tab.Container activeKey={activeTab} onSelect={(tab) => setActiveTab(tab)}>
         <Nav variant="pills" className="justify-content-start">
           <Nav.Item>
             <Nav.Link
               eventKey="addCategory"
               style={{
-                color:
-                  activeTab === "addCategory"
-                    ? "#184BD3"
-                    : "rgba(24, 75, 211, 0.6)",
-                borderBottom:
-                  activeTab === "addCategory" ? "5px solid #184BD3" : "none",
+                color: activeTab === "addCategory" ? "#184BD3" : "rgba(24, 75, 211, 0.6)",
+                borderBottom: activeTab === "addCategory" ? "5px solid #184BD3" : "none",
                 backgroundColor: "transparent",
                 fontSize: "18px",
                 fontWeight: 500,
@@ -60,12 +83,8 @@ const CategoryTabs = () => {
             <Nav.Link
               eventKey="addSubCategory"
               style={{
-                color:
-                  activeTab === "addSubCategory"
-                    ? "#184BD3"
-                    : "rgba(24, 75, 211, 0.6)",
-                borderBottom:
-                  activeTab === "addSubCategory" ? "5px solid #184BD3" : "none",
+                color: activeTab === "addSubCategory" ? "#184BD3" : "rgba(24, 75, 211, 0.6)",
+                borderBottom: activeTab === "addSubCategory" ? "5px solid #184BD3" : "none",
                 backgroundColor: "transparent",
                 fontSize: "18px",
                 fontWeight: 500,
@@ -75,16 +94,12 @@ const CategoryTabs = () => {
             </Nav.Link>
           </Nav.Item>
         </Nav>
-        <div
-          style={{
-            borderBottom: "1px solid #ccc", // Divider style
-            marginTop: "0px", // Optional: Add some space above the divider
-          }}
-        ></div>
+        <div style={{ borderBottom: "1px solid #ccc", marginTop: "0px" }}></div>
 
         <Tab.Content className="mt-4">
           <Tab.Pane eventKey="addSubCategory">
             <Form style={{ maxWidth: "600px", marginLeft: "0" }}>
+              {error && <Alert variant="danger">{error}</Alert>}
               <Row className="mb-3">
                 <Col md={4}>
                   <Form.Group controlId="categorySelect">
@@ -94,22 +109,13 @@ const CategoryTabs = () => {
                       onChange={handleCategoryChange}
                       onKeyDown={handleKeyDown}
                       style={{
-                        width: "100%", // Full width of the container
-                        fontSize: "14px", // Set font size
-                        fontWeight: "400", // Set font weight
-                        color: "#757575", // Set text color
+                        width: "100%",
+                        fontSize: "14px",
+                        fontWeight: "400",
+                        color: "#757575",
                       }}
                     >
-                      <option
-                        value=""
-                        style={{
-                          fontSize: "14px",
-                          fontWeight: "400",
-                          color: "#757575",
-                        }}
-                      >
-                        Select
-                      </option>
+                      <option value="">Select</option>
                       {categories.map((category, index) => (
                         <option key={index} value={category}>
                           {category}
@@ -120,10 +126,10 @@ const CategoryTabs = () => {
                 </Col>
                 <Col md={4}>
                   <Form.Group controlId="categoryInput">
-                    <Form.Label>Category Name</Form.Label>
+                    <Form.Label>Sub Category Name</Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Enter category name"
+                      placeholder="Enter sub category name"
                       value={categoryName}
                       onChange={(e) => setCategoryName(e.target.value)}
                       onKeyDown={handleKeyDown}
@@ -140,12 +146,12 @@ const CategoryTabs = () => {
                   <Button
                     variant="primary"
                     type="button"
-                    onClick={handleAddCategory}
+                    onClick={handleAddSubCategory}
                     style={{
-                      width: "auto", // Adjusts width to content size
-                      height: "38px", // Sets the height to a smaller value (optional)
-                      paddingLeft: "20px", // Optional: adds padding for better visual balance
-                      paddingRight: "20px", // Optional: adds padding for better visual balance
+                      width: "auto",
+                      height: "38px",
+                      paddingLeft: "20px",
+                      paddingRight: "20px",
                       marginTop: "30px",
                       backgroundColor: "#184BD3",
                     }}
@@ -158,31 +164,20 @@ const CategoryTabs = () => {
           </Tab.Pane>
           <Tab.Pane eventKey="addCategory">
             <Form style={{ maxWidth: "600px", marginLeft: "0" }}>
-              <Row
-                className="mb-3"
-                style={{ display: "flex", alignItems: "center" }}
-              >
+              {error && <Alert variant="danger">{error}</Alert>}
+              <Row className="mb-3" style={{ display: "flex", alignItems: "center" }}>
                 <Col md="auto">
                   <Form.Group controlId="subCategoryInput">
-                    <Form.Label
-                      style={{
-                        fontSize: "16px",
-                        fontWeight: "400",
-                        color: "#474747",
-                        opacity: "0.51",
-                      }}
-                    >
+                    <Form.Label style={{ fontSize: "16px", fontWeight: "400", color: "#474747", opacity: "0.51" }}>
                       New Category Name
                     </Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Enter sub category name"
+                      placeholder="Enter category name"
                       value={subCategoryName}
                       onChange={(e) => setSubCategoryName(e.target.value)}
                       onKeyDown={handleKeyDown}
-                      style={{
-                        width: "281px", // Fixed width for the text input
-                      }}
+                      style={{ width: "281px" }}
                     />
                   </Form.Group>
                 </Col>
@@ -192,10 +187,10 @@ const CategoryTabs = () => {
                     type="button"
                     onClick={handleAddCategory}
                     style={{
-                      width: "auto", // Adjusts width to content size
-                      height: "38px", // Sets the height to a smaller value (optional)
-                      paddingLeft: "20px", // Optional: adds padding for better visual balance
-                      paddingRight: "20px", // Optional: adds padding for better visual balance
+                      width: "auto",
+                      height: "38px",
+                      paddingLeft: "20px",
+                      paddingRight: "20px",
                       marginTop: "30px",
                       backgroundColor: "#184BD3",
                     }}
@@ -208,6 +203,8 @@ const CategoryTabs = () => {
           </Tab.Pane>
         </Tab.Content>
       </Tab.Container>
+
+      <AlertSuccesMessage message={message} />
     </div>
   );
 };
