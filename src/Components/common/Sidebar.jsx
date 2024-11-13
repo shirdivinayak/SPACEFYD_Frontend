@@ -14,10 +14,10 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="Sidebar min-vh-100">
+    <div className="Sidebar">
       <div
         className="d-flex flex-column text-white min-vh-100 p-3"
-        style={{ backgroundColor: "#011140" }}
+        style={{ width: 268, height: 1721, backgroundColor: "#011140" }}
       >
         {/* App Title */}
         <Nav.Link as={Link} to="/" className="text-center">
