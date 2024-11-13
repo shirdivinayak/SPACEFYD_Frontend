@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # SPACEFYD_Frontend
+=======
+# Getting Started with Create React App
+>>>>>>> ab8b85bc1554dbb9eb706d0507dc490e5db36073
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
