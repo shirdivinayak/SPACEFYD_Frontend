@@ -3,7 +3,11 @@ import React, { useState } from "react";
 import { Nav } from "react-bootstrap";
 import { BiChevronDown } from "react-icons/bi";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import GroupImage from "../Assets/Images/Group.png"; // Corrected path
+=======
+import GroupImage from "../../Assets/Images/Group.png";
+>>>>>>> origin/main
 
 const Sidebar = () => {
   // State to manage the visibility of the sub-buttons
