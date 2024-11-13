@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { Tab, Nav, Form, Button, Row, Col } from "react-bootstrap";
-import AlertSuccesMessage from "../../../common/MessageSuccesAlert"; // Import the AlertMessage component
+import { Tab, Nav, Form, Button, Row, Col, Alert } from "react-bootstrap";
+import AlertSuccesMessage from "../../../common/MessageSuccesAlert";
 
 const CategoryTabs = () => {
   const [activeTab, setActiveTab] = useState("addCategory");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categoryName, setCategoryName] = useState("");
   const [subCategoryName, setSubCategoryName] = useState("");
-  const [message, setMessage] = useState(""); // State for the message
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState(""); // State for validation error messages
 
   const categories = ["furniture", "casde", "erje", "rtdt"]; // Example categories
 
@@ -16,36 +17,39 @@ const CategoryTabs = () => {
   };
 
   const handleAddCategory = () => {
-    const msg = `New Category added succesfully`;
-    console.log(msg);
-    
-    // Set the message to display in AlertMessage
-    setMessage(msg);
-    
-    // Clear input fields
-    setCategoryName("");
-    setSubCategoryName("");
-    setSelectedCategory("");
+    if (!subCategoryName.trim()) {
+      setError("Category name is required.");
+      return;
+    }
 
-    // Clear the message after 3 seconds
+    const msg = `New Category added`;
+    console.log(msg);
+    setMessage(msg);
+    setError("");
+    setSubCategoryName("");
+
     setTimeout(() => {
       setMessage("");
     }, 3000);
   };
 
   const handleAddSubCategory = () => {
-    const msg = `New Sub Category added succesfully`;
+    if (!selectedCategory.trim()) {
+      setError("Please select a category.");
+      return;
+    }
+    if (!categoryName.trim()) {
+      setError("Sub Category name is required.");
+      return;
+    }
+
+    const msg = `New Sub Category added.`;
     console.log(msg);
-    
-    // Set the message to display in AlertMessage
     setMessage(msg);
-    
-    // Clear input fields
+    setError("");
     setCategoryName("");
-    setSubCategoryName("");
     setSelectedCategory("");
 
-    // Clear the message after 3 seconds
     setTimeout(() => {
       setMessage("");
     }, 3000);
@@ -53,7 +57,7 @@ const CategoryTabs = () => {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault(); // Prevent Enter from submitting the form
+      e.preventDefault();
     }
   };
 
@@ -95,6 +99,7 @@ const CategoryTabs = () => {
         <Tab.Content className="mt-4">
           <Tab.Pane eventKey="addSubCategory">
             <Form style={{ maxWidth: "600px", marginLeft: "0" }}>
+              {error && <Alert variant="danger">{error}</Alert>}
               <Row className="mb-3">
                 <Col md={4}>
                   <Form.Group controlId="categorySelect">
@@ -110,9 +115,7 @@ const CategoryTabs = () => {
                         color: "#757575",
                       }}
                     >
-                      <option value="" style={{ fontSize: "14px", fontWeight: "400", color: "#757575" }}>
-                        Select
-                      </option>
+                      <option value="">Select</option>
                       {categories.map((category, index) => (
                         <option key={index} value={category}>
                           {category}
@@ -123,10 +126,10 @@ const CategoryTabs = () => {
                 </Col>
                 <Col md={4}>
                   <Form.Group controlId="categoryInput">
-                    <Form.Label>Category Name</Form.Label>
+                    <Form.Label>Sub Category Name</Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Enter category name"
+                      placeholder="Enter sub category name"
                       value={categoryName}
                       onChange={(e) => setCategoryName(e.target.value)}
                       onKeyDown={handleKeyDown}
@@ -161,6 +164,7 @@ const CategoryTabs = () => {
           </Tab.Pane>
           <Tab.Pane eventKey="addCategory">
             <Form style={{ maxWidth: "600px", marginLeft: "0" }}>
+              {error && <Alert variant="danger">{error}</Alert>}
               <Row className="mb-3" style={{ display: "flex", alignItems: "center" }}>
                 <Col md="auto">
                   <Form.Group controlId="subCategoryInput">
@@ -169,7 +173,7 @@ const CategoryTabs = () => {
                     </Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Enter sub category name"
+                      placeholder="Enter category name"
                       value={subCategoryName}
                       onChange={(e) => setSubCategoryName(e.target.value)}
                       onKeyDown={handleKeyDown}
@@ -200,9 +204,7 @@ const CategoryTabs = () => {
         </Tab.Content>
       </Tab.Container>
 
-      {/* Display the alert message at the bottom of the screen */}
       <AlertSuccesMessage message={message} />
-
     </div>
   );
 };
