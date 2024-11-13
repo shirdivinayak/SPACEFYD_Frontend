@@ -3,6 +3,7 @@ import { Button, Table, Form } from "react-bootstrap";
 
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import AlertMessage from "../../common/MessageAlert";
 
 const ProductTable = () => {
   const categories = [
@@ -478,23 +479,8 @@ const ProductTable = () => {
       </div>
 
       {/*message section*/}
-      {message && (
-        <div
-          className="alert alert-danger mt-3"
-          role="alert"
-          style={{
-            position: "fixed", // Position at the bottom of the screen
-            bottom: "20px", // Add some spacing from the bottom
-            left: "50%", // Center the alert horizontally
-            transform: "translateX(-50%)", // Center the alert horizontally
-            maxWidth: "400px", // Limit the width of the alert
-            width: "auto", // Adjust width based on content
-            zIndex: 9999, // Make sure it appears above other content
-          }}
-        >
-          {message}
-        </div>
-      )}
+      <AlertMessage message={message} />
+
 
       {/* Footer section */}
       {selectedItems.length > 0 && (

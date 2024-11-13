@@ -3,59 +3,58 @@ import { Button, Table, Form } from "react-bootstrap";
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import CategoryTabs from "./CategoryTabs";
+import AlertMessage from "../../../common/MessageAlert";
 
 const CategoryData = [
   {
     id: `#56674`,
     category: "Furniture",
-    subCategory: "Seating",
+    subCategory: "Seating, table, chair, counter , shelfing, sideboard, outdoor,tables,chair, bar, sdhfs",
   },
   {
     id: `#56675`,
     category: "Furniture",
-    subCategory: "Seating",
+    subCategory: "Seating,  ounter , shelfing, sideboard, outdoor",
   },
   {
     id: `#56676`,
     category: "Plants",
-    subCategory: "Greenery",
+    subCategory: "Greenery, table, chair, counter , shelfing, ",
   },
   {
     id: `#56677`,
     category: "Decorations",
-    subCategory: "Vases",
+    subCategory: "Vases  shelfing, sideboard, outdoor,tables,chair",
   },
   {
     id: `#56678`,
     category: "Dining",
-    subCategory: "Furniture",
+    subCategory: "Furniture,  shelfing, sideboard, outdoor,tables,chair",
   },
   {
     id: `#56679`,
     category: "Decorations",
-    subCategory: "Art",
-    image: "https://via.placeholder.com/50",
-    onlive: "0",
+    subCategory: "Art, shelfing, sideboard, outdoor,tables,chair",
   },
   {
     id: `#56680`,
     category: "Lighting",
-    subCategory: "Ceiling Lights",
+    subCategory: "Ceiling Lights shelfing, sideboard, outdoor,tables,chair",
   },
   {
     id: `#56681`,
     category: "Outdoor",
-    subCategory: "Furniture",
+    subCategory: "Furniture shelfing, sideboard, outdoor,tables,chair",
   },
   {
     id: `#56682`,
     category: "Storage",
-    subCategory: "Shelves",
+    subCategory: "Shelves shelfing, sideboard, outdoor,tables,chair",
   },
   {
     id: `#56683`,
     category: "Lighting",
-    subCategory: "Lamps",
+    subCategory: "Lamps shelfing, sideboard, outdoor,tables,chair",
   },
 ];
 
@@ -115,7 +114,7 @@ const ProjectCategory = () => {
     <div className="container " style={{ padding: "0" }}>
       <div
         className="d-flex justify-content-between align-items-center p-4"
-        style={{ backgroundColor: "white", minHeight: "70px", padding: "0" }}
+        style={{ backgroundColor: "white", minHeight: "85px", padding: "0" }}
       >
         <h4
           className="d-flex align-items-center mb-0 m-0"
@@ -281,23 +280,8 @@ const ProjectCategory = () => {
       </div>
 
       {/* Message section */}
-      {message && (
-        <div
-          className="alert alert-danger mt-3"
-          role="alert"
-          style={{
-            position: "fixed", // Position at the bottom of the screen
-            bottom: "20px", // Add some spacing from the bottom
-            left: "50%", // Center the alert horizontally
-            transform: "translateX(-50%)", // Center the alert horizontally
-            maxWidth: "400px", // Limit the width of the alert
-            width: "auto", // Adjust width based on content
-            zIndex: 9999, // Make sure it appears above other content
-          }}
-        >
-          {message}
-        </div>
-      )}
+      <AlertMessage message={message} />
+      
 
       {/* Footer section */}
       {selectedItems.length > 0 && (
