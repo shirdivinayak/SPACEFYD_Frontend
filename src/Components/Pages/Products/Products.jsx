@@ -1,13 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-<<<<<<< HEAD
-=======
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTrash,
-  faChevronLeft,
-  faChevronRight,
-} from "@fortawesome/free-solid-svg-icons";
->>>>>>> ab8b85bc1554dbb9eb706d0507dc490e5db36073
 import { Button, Table, Form } from "react-bootstrap";
 
 import { Nav } from "react-bootstrap";
@@ -178,11 +169,7 @@ const ProductTable = () => {
 
   const scrollTabs = (direction) => {
     if (tabsRef.current) {
-<<<<<<< HEAD
       const scrollAmount = direction === "right" ? 120 : -120; // Slightly larger scroll amount
-=======
-      const scrollAmount = direction === "right" ? 100 : -100;
->>>>>>> ab8b85bc1554dbb9eb706d0507dc490e5db36073
       tabsRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
   };
@@ -195,7 +182,6 @@ const ProductTable = () => {
           .filter((item) => (isOnLive ? item.onlive === "1" : true));
 
   return (
-<<<<<<< HEAD
     <div className="container " style={{ padding: "0" }}>
       <div
         className="d-flex justify-content-between align-items-center p-4"
@@ -206,12 +192,6 @@ const ProductTable = () => {
           style={{ fontSize: "20px" }}
         >
           <Nav.Link as={Link} to="/" className="me-2 opacity-50">
-=======
-    <div className="container mt-4">
-      <div className="d-flex justify-content-between align-items-center">
-        <h4 className="d-flex align-items-center mb-0">
-          <Nav.Link as={Link} to="/" className="p-0 me-2 opacity-50">
->>>>>>> ab8b85bc1554dbb9eb706d0507dc490e5db36073
             Home
           </Nav.Link>
           <span> &gt; </span> {/* This ensures the ">" symbol is inline */}
@@ -219,7 +199,6 @@ const ProductTable = () => {
         </h4>
 
         <Button
-<<<<<<< HEAD
           height="12px"
           onClick={() => handleRemoveSelected()}
           variant="primary" // Keeps the button style, but we'll override the color
@@ -228,19 +207,12 @@ const ProductTable = () => {
             backgroundColor: "#184BD3", // Replace with any custom color (example: orange-red)
             border: "none", // Match border color to the background color
           }}
-=======
-          size="sm"
-          onClick={() => handleRemoveSelected()}
-          variant="primary" // Makes the button blue
-          className="text-white" // Makes the text white
->>>>>>> ab8b85bc1554dbb9eb706d0507dc490e5db36073
         >
           <i className="bi bi-plus-circle"></i> Add Product
         </Button>
       </div>
 
       {/* Add a custom gap here */}
-<<<<<<< HEAD
       <div style={{ marginTop: "22px" }}></div>
 
       {/* Category Tabs */}
@@ -280,40 +252,6 @@ const ProductTable = () => {
               </Button>
             ))}
           </div>
-=======
-      <div style={{ marginTop: "40px", color: "gray" }}></div>
-
-      {/* Category Tabs */}
-      <div className="d-flex align-items-center my-3">
-        <div
-          className="d-flex overflow-hidden mx-3"
-          ref={tabsRef}
-          style={{
-            maxWidth: "1000px", // Control the visible width
-            overflowX: "auto", // Enable horizontal scrolling
-            whiteSpace: "nowrap",
-            height: "40px", // Set a fixed height for category tabs
-          }}
-        >
-          {categories.map((category, index) => (
-            <Button
-            key={index}
-            variant={selectedCategory === category ? "primary" : "btn-light"}
-            className="mx-1"
-            onClick={() => handleCategorySelect(category)}
-            style={{
-              backgroundColor: selectedCategory === category ? "#E0E8FF" : "white", // Custom background color
-              color: selectedCategory === category ? "#184BD3" : "#011140", // Custom text color
-              border: "none" // Removes border
-
-
-            }}
-          >
-            {category}
-          </Button>
-          
-          ))}
->>>>>>> ab8b85bc1554dbb9eb706d0507dc490e5db36073
         </div>
         <Button
           variant="light"
@@ -324,7 +262,6 @@ const ProductTable = () => {
             margin: "0 10px", // Adds space between buttons and other elements
             border: "1px solid #ddd", // Optional: Adds a border to the circular button
             boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)", // Optional: Adds shadow to the button
-<<<<<<< HEAD
             width: "24px",
             height: "24px",
             display: "flex", // Enables flexbox
@@ -333,27 +270,17 @@ const ProductTable = () => {
           }}
         >
           <i class="bi bi-chevron-compact-left"></i>
-=======
-          }}
-        >
-          <FontAwesomeIcon icon={faChevronLeft} />
->>>>>>> ab8b85bc1554dbb9eb706d0507dc490e5db36073
         </Button>
 
         <Button
           variant="light"
           onClick={() => scrollTabs("right")}
           style={{
-<<<<<<< HEAD
             borderRadius: "15px", // Makes the button circular
-=======
-            borderRadius: "50%", // Makes the button circular
->>>>>>> ab8b85bc1554dbb9eb706d0507dc490e5db36073
             padding: "5px", // Adds space inside the button
             margin: "0 10px", // Adds space between buttons and other elements
             border: "1px solid #ddd", // Optional: Adds a border to the circular button
             boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)", // Optional: Adds shadow to the button
-<<<<<<< HEAD
             width: "24px",
             height: "24px",
             display: "flex", // Enables flexbox
@@ -362,16 +289,10 @@ const ProductTable = () => {
           }}
         >
           <i class="bi bi-chevron-compact-right"></i>
-=======
-          }}
-        >
-          <FontAwesomeIcon icon={faChevronRight} />
->>>>>>> ab8b85bc1554dbb9eb706d0507dc490e5db36073
         </Button>
       </div>
 
       {/* Product Table */}
-<<<<<<< HEAD
       <div className="  mx-4 px-4" style={{ backgroundColor: "white" }}>
         <Table hover responsive>
           <thead>
@@ -556,140 +477,6 @@ const ProductTable = () => {
           </tbody>
         </Table>
       </div>
-=======
-      <Table  hover responsive>
-        <thead>
-          <tr>
-            <th
-              style={{
-                height: "60px",
-                padding: "20px 10px",
-                borderBottom: true,
-                fontWeight: "normal",
-                color: "#474747",
-              }}
-            >
-              <Form.Check type="checkbox" onChange={handleSelectAll} />
-            </th>
-            <th
-              style={{
-                height: "60px",
-                padding: "20px 10px",
-                borderBottom: true,
-                fontWeight: "normal",
-                color: "#474747",
-              }}
-            >
-              Product ID
-            </th>
-            <th
-              style={{
-                height: "60px",
-                padding: "20px 10px",
-                borderBottom: true,
-                fontWeight: "normal",
-                color: "#474747",
-              }}
-            >
-              Name
-            </th>
-            <th
-              style={{
-                padding: "20px 10px",
-                borderBottom: true,
-                fontWeight: "normal",
-                color: "#474747",
-              }}
-            >
-              Image
-            </th>
-            <th
-              style={{
-                height: "60px",
-                padding: "20px 10px",
-                borderBottom: true,
-                fontWeight: "normal",
-                color: "#474747",
-              }}
-            >
-              Category
-            </th>
-            <th
-              style={{
-                height: "60px",
-                padding: "20px 10px",
-                borderBottom: true,
-                fontWeight: "normal",
-                color: "#474747",
-              }}
-            >
-              Sub-Category
-            </th>
-            <th
-              style={{
-                height: "60px",
-                padding: "20px 10px",
-                borderBottom: true,
-                fontWeight: "normal",
-                color: "#474747",
-              }}
-            >
-              Brand
-            </th>
-            <th style={{ border: "none", width: "140px" ,  borderBottom: true,}}>
-              <div
-                className="global-toggle d-flex align-items-center"
-                style={{ width: "100%" }}
-              >
-                <label className="switch" style={{ width: "40px" }}>
-                  <input
-                    type="checkbox"
-                    checked={isOnLive}
-                    onChange={handleGlobalToggle}
-                  />
-                  <span className="slider round"></span>
-                </label>
-                <span className="ms-2" style={{ marginLeft: "10px" }}>
-                  On live
-                </span>
-              </div>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredItems.map((item) => (
-            <tr key={item.id}>
-              
-              <td style={{borderBottom: true, }}>
-                <Form.Check
-                  type="checkbox"
-                  checked={selectedItems.includes(item.id)}
-                  onChange={() => handleCheckboxChange(item.id)}
-                />
-              </td>
-              <td style={{borderBottom: true, }}>{item.id}</td>
-              <td style={{borderBottom: true, }}>{item.name}</td>
-              <td style={{borderBottom: true, }}>
-                <img src={item.image} alt={item.name} width="50" />
-              </td>
-              <td style={{borderBottom: true, }}>{item.category}</td>
-              <td style={{borderBottom: true, }}>{item.subCategory}</td>
-              <td style={{borderBottom: true, }}>{item.brand}</td>
-              <td style={{borderBottom: true, }}>
-                <Button
-                  size="sm"
-                  onClick={() => {}}
-                  variant="light"
-                >
-                  <i className="bi bi-pencil" style={{ color: "blue" }}></i>{" "}
-                  Edit
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
->>>>>>> ab8b85bc1554dbb9eb706d0507dc490e5db36073
 
       {/*message section*/}
       <AlertMessage message={message} />
@@ -715,7 +502,6 @@ const ProductTable = () => {
             style={{
               display: "flex",
               justifyContent: "space-between",
-<<<<<<< HEAD
               width: "1220px",
             }}
           >
@@ -735,17 +521,6 @@ const ProductTable = () => {
                   border: "none", // Match border color to the background color
                 }}
               >
-=======
-              width: "1100px",
-            }}
-          >
-            {/* Left: Number of selected items */}
-            <span>{selectedItems.length} Selected</span>
-
-            {/* Right: Remove button */}
-            <div>
-              <Button variant="danger" onClick={handleRemoveSelected}>
->>>>>>> ab8b85bc1554dbb9eb706d0507dc490e5db36073
                 <i className="bi bi-trash" style={{ marginRight: "15px" }}></i>
                 Remove
               </Button>
