@@ -220,7 +220,9 @@ const ProductTable = () => {
             className="d-flex overflow-hidden"
             ref={tabsRef}
             style={{
-              maxWidth: "1000px", // Control the visible width
+              paddingRight:"90px",
+
+              maxWidth: "950px", // Control the visible width
               overflowX: "auto", // Enable horizontal scrolling
               whiteSpace: "nowrap",
               height: "40px", // Set a fixed height for category tabs
@@ -307,6 +309,9 @@ const ProductTable = () => {
                   onChange={handleSelectAll}
                   style={{
                     transform: "scale(1.2)", // Scale the checkbox size
+                    fontSize:"20px",
+                    paddingLeft:"10px"
+
                   }}
                 />
               </th>
@@ -422,6 +427,9 @@ const ProductTable = () => {
                     onChange={() => handleCheckboxChange(item.id)}
                     style={{
                       transform: "scale(1.2)", // Scale the checkbox size
+                      fontSize:"20px",
+                      paddingLeft:"10px"
+
                     }}
                   />
                 </td>
@@ -471,7 +479,7 @@ const ProductTable = () => {
           style={{
             position: "fixed",
             bottom: 0,
-            width: "100%",
+            width: "81%",
             backgroundColor: "#f8f9fa",
             padding: "0px 20px",
             display: "flex",

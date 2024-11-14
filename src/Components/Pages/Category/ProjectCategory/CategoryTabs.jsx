@@ -103,7 +103,9 @@ const CategoryTabs = () => {
               <Row className="mb-3">
                 <Col md={4}>
                   <Form.Group controlId="categorySelect">
-                    <Form.Label>Select Category</Form.Label>
+                    
+                  <Form.Label style={{ fontSize: "16px", fontWeight: "400", color: "#474747", opacity: "0.51" }}>
+                  Select Category</Form.Label>
                     <Form.Select
                       value={selectedCategory}
                       onChange={handleCategoryChange}
@@ -126,7 +128,8 @@ const CategoryTabs = () => {
                 </Col>
                 <Col md={4}>
                   <Form.Group controlId="categoryInput">
-                    <Form.Label>Sub Category Name</Form.Label>
+                  <Form.Label style={{ fontSize: "16px", fontWeight: "400", color: "#474747", opacity: "0.51" }}>
+                  Sub Category Name</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Enter sub category name"

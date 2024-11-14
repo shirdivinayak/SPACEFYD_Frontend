@@ -63,6 +63,8 @@ const ProjectCategory = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("Categories");
   const [message, setMessage] = useState("");
+  const [showCategoryTabs, setShowCategoryTabs] = useState(false); // Toggle state for CategoryTabs
+
 
   useEffect(() => {
     if (message) {
@@ -104,6 +106,12 @@ const ProjectCategory = () => {
     }
   };
 
+
+  const toggleCategoryTabs = () => {
+    setShowCategoryTabs(!showCategoryTabs);
+  };
+
+
   // Filter items based on the selected category
   const filteredItems =
     selectedCategory === "Categories"
@@ -131,29 +139,33 @@ const ProjectCategory = () => {
       {/* Add a custom gap here */}
       <div style={{ marginTop: "22px" }}></div>
       <div>
-  {/* Add a custom gap here */}
-  <div style={{ marginTop: "22px" }}></div>
+      <div className="mx-4 px-2" style={{ backgroundColor: "white", minHeight: "70px" }}>
+        <div
+          className="d-flex justify-content-between"
+          style={{
+            backgroundColor: "white",
+            paddingTop: "20px",
+            paddingLeft: "25px",
+            paddingRight: "15px",
+          }}
+        >
+          <h4 className="mb-0" style={{ fontSize: "20px", color: "#011140", fontWeight: 500 }}>
+            Add more
+          </h4>
+          <i
+            className={`bi ${showCategoryTabs ? "bi-dash-circle" : "bi-plus-circle"}`}
+            style={{ color: "rgba(1, 17, 64, 1)", fontSize: "20px", cursor: "pointer" }}
+            onClick={toggleCategoryTabs}
+          ></i>
+        </div>
 
-  <div className="mx-4 px-2" style={{ backgroundColor: "white", minHeight: "70px", padding: "0" }}>
-  <div
-  className="d-flex justify-content-between"
-  style={{
-    backgroundColor: "white",
-    paddingTop: "20px",      // Padding at the top
-    paddingLeft: "25px",     // Padding on the left
-    paddingRight: "15px",    // Padding on the right
-  }}
->      <h4 className="mb-0" style={{ fontSize: "20px", color:"#011140" , fontWeight:500 }}>
-        Add more
-      </h4>
-      <i className="bi bi-dash-circle" style={{ color: "#011140", fontSize: "20px" }}></i>
-    </div>
-
-    <div>
-      {/* Render the CategoryTabs component here */}
-      <CategoryTabs />
-    </div>
-  </div>
+        {/* Render the CategoryTabs only if showCategoryTabs is true */}
+        {showCategoryTabs && (
+          <div>
+            <CategoryTabs />
+          </div>
+        )}
+      </div>
 </div>
 
 
@@ -177,12 +189,15 @@ const ProjectCategory = () => {
                 }}
               >
                 <Form.Check
-                  type="checkbox"
-                  onChange={handleSelectAll}
-                  style={{
-                    transform: "scale(1.2)", // Scale the checkbox size
-                  }}
-                />
+  type="checkbox"
+  onChange={handleSelectAll}
+  style={{
+    transform: "scale(1.2)",       // Scale the checkbox size
+    paddingLeft:"10px",
+    fontSize:"20px",
+  }}
+/>
+
               </th>
 
               <th
@@ -233,6 +248,15 @@ const ProjectCategory = () => {
                     onChange={() => handleCheckboxChange(item.id)}
                     style={{
                       transform: "scale(1.2)", // Scale the checkbox size
+                      borderColor:"rgba(1, 17, 64, 1)",
+                      accentColor: "#011140",   
+                      paddingLeft:"10px",
+                      visibility: "visible",
+                      fontSize:"20px",
+
+    
+                      // Set the color of the checkbox
+
                     }}
                   />
                 </td>
@@ -289,7 +313,7 @@ const ProjectCategory = () => {
           style={{
             position: "fixed",
             bottom: 0,
-            width: "100%",
+            width: "82%",
             backgroundColor: "#f8f9fa",
             padding: "0px 20px",
             display: "flex",
