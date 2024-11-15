@@ -3,7 +3,9 @@ import { Button, Table, Form } from "react-bootstrap";
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import CategoryTabs from "./CategoryTabs";
-import AlertMessage from "../../../common/MessageAlert";
+import AlertMessage from "../../../common/MessageSuccesAlert";
+import EditCategoryModal from "./EditCategoryModal";
+
 
 const CategoryData = [
   {
@@ -64,6 +66,22 @@ const ProjectCategory = () => {
   const [selectedCategory, setSelectedCategory] = useState("Categories");
   const [message, setMessage] = useState("");
   const [showCategoryTabs, setShowCategoryTabs] = useState(false); // Toggle state for CategoryTabs
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [currentItem, setCurrentItem] = useState(null);
+
+
+  const handleEdit = (item) => {
+    setCurrentItem(item);
+    setShowEditModal(true);
+  };
+
+
+  const handleSave = (updatedItem) => {
+    setItems((prevItems) =>
+      prevItems.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+    );
+    setMessage("Category updated successfully.");
+  };
 
 
   useEffect(() => {
@@ -79,9 +97,6 @@ const ProjectCategory = () => {
     } else {
       setSelectedItems([...selectedItems, id]);
     }
-  };
-  const handleMessageUpdate = (newMessage) => {
-    setMessage(newMessage);
   };
 
 
@@ -270,22 +285,26 @@ const ProjectCategory = () => {
                   {item.category}
                 </td>
                 <td
-                  style={{
-                    borderBottom: true,
-                    padding: "20px 10px",
-                    fontSize: 16,
-                  }}
-                >
-                  {item.subCategory}
-                </td>
+  style={{
+    borderBottom: true,
+    padding: "20px 10px",
+    fontSize: 16,
+    overflow: "hidden",   // Hide overflow content
+    textOverflow: "ellipsis", // Add ellipsis for overflowed content
+  }}
+>
+  {item.subCategory}
+</td>
+
                 <td style={{ borderTop: true, padding: "20px 10px" }}>
                   <Button
                     size="sm"
-                    onClick={() => {}}
+                    onClick={() => handleEdit(item)}
                     style={{
                       color: "blue",
                       backgroundColor: "transparent",
                       border: "none",
+                      
                     }}
                   >
                     <i
@@ -303,6 +322,15 @@ const ProjectCategory = () => {
         </Table>
       </div>
 
+      {currentItem && (
+        <EditCategoryModal
+          show={showEditModal}
+          handleClose={() => setShowEditModal(false)}
+          categoryData={currentItem}
+          onSave={handleSave}
+        />
+      )}
+            
       {/* Message section */}
       <AlertMessage message={message} />
       

@@ -4,9 +4,9 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Sidebar from "./Components/common/Sidebar";
 import TopNavbar from "./Components/common/Topnavbar";
 import Home from "./Components/Pages/Home/MainContent";
-import Categories from "./Components/Pages/Category/ProjectCategory/ProjectCategory";
 import Product from "./Components/Pages/Products/Products";
 import Project from "./Components/Pages/Projects/Project";
+import ProductCategory from "./Components/Pages/Category/ProductCategory/ProductCategory";
 
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
           <div >
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/categories/products" element={<Categories />} />
+              <Route path="/categories/products" element={<ProductCategory />} />
               <Route path="/products" element={<Product />} />
               <Route path="/projects" element={<Project />} />
               

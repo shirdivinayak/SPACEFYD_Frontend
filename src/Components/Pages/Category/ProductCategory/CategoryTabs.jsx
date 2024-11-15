@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Tab, Nav, Form, Button, Row, Col, Alert } from "react-bootstrap";
+import { Tab, Nav, Form, Button, Row, Col, Alert, Dropdown } from "react-bootstrap";
 import AlertSuccesMessage from "../../../common/MessageSuccesAlert";
 
 const CategoryTabs = () => {
@@ -105,25 +105,44 @@ const CategoryTabs = () => {
                   <Form.Group controlId="categorySelect">
                     
                   <Form.Label style={{ fontSize: "16px", fontWeight: "400", color: "#474747", opacity: "0.51" }}>
-                  Select Category</Form.Label>
-                    <Form.Select
-                      value={selectedCategory}
-                      onChange={handleCategoryChange}
-                      onKeyDown={handleKeyDown}
-                      style={{
-                        width: "100%",
-                        fontSize: "14px",
-                        fontWeight: "400",
-                        color: "#757575",
-                      }}
-                    >
-                      <option value="">Select</option>
-                      {categories.map((category, index) => (
-                        <option key={index} value={category}>
-                          {category}
-                        </option>
-                      ))}
-                    </Form.Select>
+  Select Category
+</Form.Label>
+<Dropdown>
+  <Dropdown.Toggle
+    id="dropdown"
+    style={{
+      width: "100%",
+      fontSize: "14px",
+      fontWeight: "400",
+      color: "#757575", // Updated text color
+      backgroundColor: "white",
+      border: "1px solid #ccc",
+      borderRadius: "4px",
+      padding: "8px",
+      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center", // Align text and icon properly
+    }}
+  >
+    <span style={{ fontSize: "14px", fontWeight: "400", color: "#757575" }}>
+      {selectedCategory || "Select"} {/* Displays selected category or placeholder */}
+    </span>
+  </Dropdown.Toggle>
+
+  <Dropdown.Menu style={{ width: "100%" }}>
+    {categories.map((category, index) => (
+      <Dropdown.Item
+        key={index}
+        onClick={() => handleCategoryChange({ target: { value: category } })}
+        style={{ fontSize: "14px", fontWeight: "400", color: "#757575" }} // Ensure consistent styling in the dropdown list
+      >
+        {category}
+      </Dropdown.Item>
+    ))}
+  </Dropdown.Menu>
+</Dropdown>
+
                   </Form.Group>
                 </Col>
                 <Col md={4}>
