@@ -1,8 +1,9 @@
 // TopNavbar.js
 import React from "react";
-import { Navbar, Form, FormControl, Button, Container } from "react-bootstrap";
+import { Navbar, Form, FormControl, Container } from "react-bootstrap";
 import { BiChevronDown } from "react-icons/bi";
 import { FaUserCircle } from "react-icons/fa";
+// import { BsSearch } from "react-icons/bs";
 
 const TopNavbar = () => {
   return (
@@ -22,6 +23,7 @@ const TopNavbar = () => {
           style={{ maxWidth: "500px", width: "100%", marginLeft: "auto" }}
         >
           <FormControl
+            className="bi bi-search"
             type="text"
             placeholder="Search"
             style={{
@@ -30,7 +32,7 @@ const TopNavbar = () => {
               border: "1px solid #eaeaea",
             }}
           />
-          <Button
+          {/* <Button
             variant="outline-secondary"
             style={{
               borderRadius: "20px",
@@ -42,7 +44,7 @@ const TopNavbar = () => {
             }}
           >
             Search
-          </Button>
+          </Button> */}
         </Form>
 
         {/* Right side: Admin Profile with Down Arrow Icon */}

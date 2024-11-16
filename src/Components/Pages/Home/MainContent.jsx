@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Card, Button } from "react-bootstrap";
+import ImageModal from "./ImageModal"; // Import the modal component
 
 const Home = () => {
   const [banners, setBanners] = useState({
@@ -10,13 +11,8 @@ const Home = () => {
     banner4: { image: null },
   });
 
-  const [trendingItems, setTrendingItems] = useState([
-    { image: null, title: "Card 1" },
-    { image: null, title: "Card 2" },
-    { image: null, title: "Card 3" },
-  ]);
-
   const [isChanged, setIsChanged] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleBannerImageUpload = (bannerKey, e) => {
     const file = e.target.files[0];
@@ -50,34 +46,15 @@ const Home = () => {
       banner3: { image: null },
       banner4: { image: null },
     });
-    setTrendingItems([
-      { image: null, title: "Card 1" },
-      { image: null, title: "Card 2" },
-      { image: null, title: "Card 3" },
-    ]);
     setIsChanged(false);
   };
 
-  const handleTrendingImageUpload = (index, e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const updatedTrendingItems = [...trendingItems];
-      updatedTrendingItems[index].image = URL.createObjectURL(file);
-      setTrendingItems(updatedTrendingItems);
-      setIsChanged(true);
-    }
-  };
-
   return (
-    <div
-      className="container w-75 p-20"
-      style={{ padding: "1rem", fontFamily: "Arial, sans-serif" }}
-    >
+    <div className="container w-75 p-20" style={{ padding: "1rem" }}>
       <h3>Home</h3>
 
-      <div style={{ marginTop: "1rem" }}>
+      <div className="container" style={{ marginTop: "2rem" }}>
         <div style={{ display: "flex", alignItems: "center" }}>
-          {/* Smaller banners on the left side */}
           <div
             style={{
               display: "flex",
@@ -91,11 +68,12 @@ const Home = () => {
                 <Card
                   key={index}
                   style={{
-                    width: "100px",
-                    height: "100px",
+                    width: "167px",
+                    height: "95px",
                     border: "1px dashed #ccc",
                     position: "relative",
                   }}
+                  onClick={() => setShowModal(true)} // Open modal on click
                 >
                   <input
                     type="file"
@@ -130,33 +108,17 @@ const Home = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        fontSize: "0.7rem",
+                        fontSize: "2rem",
                       }}
                     >
-                      <i className="bi bi-plus-lg"></i>
-                      <br />
-                      Upload
+                      <i className="bi bi-file-earmark-image"></i>
                     </Button>
-                  )}
-                  {banners[bannerKey].image && (
-                    <div
-                      style={{ position: "absolute", top: "5px", right: "5px" }}
-                    >
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        onClick={() => handleBannerImageDelete(bannerKey)}
-                      >
-                        <i className="bi bi-x"></i>
-                      </Button>
-                    </div>
                   )}
                 </Card>
               )
             )}
           </div>
 
-          {/* Main banner */}
           <div
             style={{
               flex: 1,
@@ -167,14 +129,15 @@ const Home = () => {
           >
             <Card
               style={{
-                width: "100%",
-                height: "300px",
+                width: "748px",
+                height: "421px",
                 border: "1px dashed #ccc",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
                 position: "relative",
               }}
+              onClick={() => setShowModal(true)} // Open modal on click
             >
               <input
                 type="file"
@@ -213,19 +176,6 @@ const Home = () => {
                   Click here to upload Banner
                 </Button>
               )}
-              {banners.mainBanner.image && (
-                <div
-                  style={{ position: "absolute", top: "10px", right: "10px" }}
-                >
-                  <Button
-                    variant="danger"
-                    size="sm"
-                    onClick={() => handleBannerImageDelete("mainBanner")}
-                  >
-                    <i className="bi bi-x"></i>
-                  </Button>
-                </div>
-              )}
             </Card>
           </div>
         </div>
@@ -251,6 +201,13 @@ const Home = () => {
           </div>
         )}
       </div>
+
+      {/* Image Modal */}
+      <ImageModal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        banners={banners}
+      />
     </div>
   );
 };
