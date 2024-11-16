@@ -4,6 +4,7 @@ import { Button, Table, Form } from "react-bootstrap";
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AlertMessage from "../../common/MessageAlert";
+import ProductEdit from "./Editproduct";
 
 const ProductTable = () => {
   const categories = [
@@ -463,7 +464,7 @@ const ProductTable = () => {
                 <td style={{ borderBottom: true }}>
                   <Button
                     size="sm"
-                    onClick={() => {}}
+                    onClick={() => {ProductEdit()}}
                     style={{
                       color: "blue", // Text color
                       backgroundColor: "transparent", // Background color set to transparent
