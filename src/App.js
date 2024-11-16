@@ -7,6 +7,7 @@ import Home from "./Components/Pages/Home/MainContent";
 import Product from "./Components/Pages/Products/Products";
 import Project from "./Components/Pages/Projects/Project";
 import ProductCategory from "./Components/Pages/Category/ProductCategory/ProductCategory";
+import ProjectCategory from "./Components/Pages/Category/ProjectCategory/ProjectCategory";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/categories/products" element={<ProductCategory />} />
+              <Route path="/categories/projects" element={<ProjectCategory/>} />
               <Route path="/products" element={<Product />} />
               <Route path="/projects" element={<Project />} />
               

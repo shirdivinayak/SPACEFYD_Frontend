@@ -6,12 +6,12 @@ import CategoryTabs from "./CategoryTabs";
 import AlertMessage from "../../../common/MessageSuccesAlert";
 import EditCategoryModal from "./EditCategoryModal";
 
-
 const CategoryData = [
   {
     id: `#56674`,
     category: "Furniture",
-    subCategory: "Seating, table, chair, counter , shelfing, sideboard, outdoor,tables,chair, bar, sdhfs",
+    subCategory:
+      "Seating, table, chair, counter , shelfing, sideboard, outdoor,tables,chair, bar, sdhfs",
   },
   {
     id: `#56675`,
@@ -60,7 +60,7 @@ const CategoryData = [
   },
 ];
 
-const ProjectCategory = () => {
+const ProductCategory = () => {
   const [items, setItems] = useState(CategoryData); // Initialize with CategoryData
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("Categories");
@@ -69,12 +69,10 @@ const ProjectCategory = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
 
-
   const handleEdit = (item) => {
     setCurrentItem(item);
     setShowEditModal(true);
   };
-
 
   const handleSave = (updatedItem) => {
     setItems((prevItems) =>
@@ -82,7 +80,6 @@ const ProjectCategory = () => {
     );
     setMessage("Category updated successfully.");
   };
-
 
   useEffect(() => {
     if (message) {
@@ -98,7 +95,6 @@ const ProjectCategory = () => {
       setSelectedItems([...selectedItems, id]);
     }
   };
-
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
@@ -121,11 +117,9 @@ const ProjectCategory = () => {
     }
   };
 
-
   const toggleCategoryTabs = () => {
     setShowCategoryTabs(!showCategoryTabs);
   };
-
 
   // Filter items based on the selected category
   const filteredItems =
@@ -154,36 +148,46 @@ const ProjectCategory = () => {
       {/* Add a custom gap here */}
       <div style={{ marginTop: "22px" }}></div>
       <div>
-      <div className="mx-4 px-2" style={{ backgroundColor: "white", minHeight: "70px" }}>
         <div
-          className="d-flex justify-content-between"
-          style={{
-            backgroundColor: "white",
-            paddingTop: "20px",
-            paddingLeft: "25px",
-            paddingRight: "15px",
-          }}
+          className="mx-4 px-2"
+          style={{ backgroundColor: "white", minHeight: "70px" }}
         >
-          <h4 className="mb-0" style={{ fontSize: "20px", color: "#011140", fontWeight: 500 }}>
-            Add more
-          </h4>
-          <i
-            className={`bi ${showCategoryTabs ? "bi-dash-circle" : "bi-plus-circle"}`}
-            style={{ color: "rgba(1, 17, 64, 1)", fontSize: "20px", cursor: "pointer" }}
-            onClick={toggleCategoryTabs}
-          ></i>
-        </div>
-
-        {/* Render the CategoryTabs only if showCategoryTabs is true */}
-        {showCategoryTabs && (
-          <div>
-            <CategoryTabs />
+          <div
+            className="d-flex justify-content-between"
+            style={{
+              backgroundColor: "white",
+              paddingTop: "20px",
+              paddingLeft: "25px",
+              paddingRight: "15px",
+            }}
+          >
+            <h4
+              className="mb-0"
+              style={{ fontSize: "20px", color: "#011140", fontWeight: 500 }}
+            >
+              Add more
+            </h4>
+            <i
+              className={`bi ${
+                showCategoryTabs ? "bi-dash-circle" : "bi-plus-circle"
+              }`}
+              style={{
+                color: "rgba(1, 17, 64, 1)",
+                fontSize: "20px",
+                cursor: "pointer",
+              }}
+              onClick={toggleCategoryTabs}
+            ></i>
           </div>
-        )}
+
+          {/* Render the CategoryTabs only if showCategoryTabs is true */}
+          {showCategoryTabs && (
+            <div>
+              <CategoryTabs />
+            </div>
+          )}
+        </div>
       </div>
-</div>
-
-
 
       <div style={{ marginTop: "22px" }}></div>
 
@@ -204,15 +208,14 @@ const ProjectCategory = () => {
                 }}
               >
                 <Form.Check
-  type="checkbox"
-  onChange={handleSelectAll}
-  style={{
-    transform: "scale(1.2)",       // Scale the checkbox size
-    paddingLeft:"10px",
-    fontSize:"20px",
-  }}
-/>
-
+                  type="checkbox"
+                  onChange={handleSelectAll}
+                  style={{
+                    transform: "scale(1.2)", // Scale the checkbox size
+                    paddingLeft: "10px",
+                    fontSize: "20px",
+                  }}
+                />
               </th>
 
               <th
@@ -263,15 +266,13 @@ const ProjectCategory = () => {
                     onChange={() => handleCheckboxChange(item.id)}
                     style={{
                       transform: "scale(1.2)", // Scale the checkbox size
-                      borderColor:"rgba(1, 17, 64, 1)",
-                      accentColor: "#011140",   
-                      paddingLeft:"10px",
+                      borderColor: "rgba(1, 17, 64, 1)",
+                      accentColor: "#011140",
+                      paddingLeft: "10px",
                       visibility: "visible",
-                      fontSize:"20px",
+                      fontSize: "20px",
 
-    
                       // Set the color of the checkbox
-
                     }}
                   />
                 </td>
@@ -285,16 +286,16 @@ const ProjectCategory = () => {
                   {item.category}
                 </td>
                 <td
-  style={{
-    borderBottom: true,
-    padding: "20px 10px",
-    fontSize: 16,
-    overflow: "hidden",   // Hide overflow content
-    textOverflow: "ellipsis", // Add ellipsis for overflowed content
-  }}
->
-  {item.subCategory}
-</td>
+                  style={{
+                    borderBottom: true,
+                    padding: "20px 10px",
+                    fontSize: 16,
+                    overflow: "hidden", // Hide overflow content
+                    textOverflow: "ellipsis", // Add ellipsis for overflowed content
+                  }}
+                >
+                  {item.subCategory}
+                </td>
 
                 <td style={{ borderTop: true, padding: "20px 10px" }}>
                   <Button
@@ -304,7 +305,6 @@ const ProjectCategory = () => {
                       color: "blue",
                       backgroundColor: "transparent",
                       border: "none",
-                      
                     }}
                   >
                     <i
@@ -330,10 +330,9 @@ const ProjectCategory = () => {
           onSave={handleSave}
         />
       )}
-            
+
       {/* Message section */}
       <AlertMessage message={message} />
-      
 
       {/* Footer section */}
       {selectedItems.length > 0 && (
@@ -385,4 +384,4 @@ const ProjectCategory = () => {
   );
 };
 
-export default ProjectCategory;
+export default ProductCategory;
