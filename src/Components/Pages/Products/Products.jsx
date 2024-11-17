@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Button, Table, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
 
 import { Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import AlertMessage from "../../common/MessageAlert";
-import ProductEdit from "./Editproduct";
 
 const ProductTable = () => {
+  const navigate = useNavigate();
   const categories = [
     "All Products",
     "Furniture",
@@ -23,99 +25,121 @@ const ProductTable = () => {
     "Storage",
     "On Sale",
   ];
-
   const productData = [
     {
       id: `#56674`,
       name: "Rigo Solid Wood",
       category: "Furniture",
       subCategory: "Seating",
+      description: "lorem ipsum sysb fskehg ekfbekr tehein vdjkvnskjfbvs vsfbvskjbk vskjrgbskjrbgsknvks",
       brand: "Home Centre",
       image: "https://via.placeholder.com/50",
       onlive: "1",
+      productCode: "RIG001",
     },
     {
       id: `#56675`,
       name: "Modern Sofa",
       category: "Furniture",
       subCategory: "Seating",
+      description: "lorem ipsum sysb fskehg ekfbekr tehein vdjkvnskjfbvs vsfbvskjbk vskjrgbskjrbgsknvks",
       brand: "Furniture Plus",
       image: "https://via.placeholder.com/50",
       onlive: "1",
+      productCode: "SOF002",
+      displayInHome:'true'
     },
     {
       id: `#56676`,
       name: "Indoor Plant",
       category: "Plants",
       subCategory: "Greenery",
+      description: "lorem ipsum sysb fskehg ekfbekr tehein vdjkvnskjfbvs vsfbvskjbk vskjrgbskjrbgsknvks",
       brand: "Green Homes",
       image: "https://via.placeholder.com/50",
       onlive: "0",
+      productCode: "PLT003",
     },
     {
       id: `#56677`,
       name: "Decorative Vase",
       category: "Decorations",
       subCategory: "Vases",
+      description: "lorem ipsum sysb fskehg ekfbekr tehein vdjkvnskjfbvs vsfbvskjbk vskjrgbsknvks",
       brand: "Home Living",
       image: "https://via.placeholder.com/50",
       onlive: "1",
+      productCode: "VAS004",
     },
     {
       id: `#56678`,
       name: "Dining Table Set",
       category: "Dining",
       subCategory: "Furniture",
+      description: "lorem ipsum sysb fskehg ekfbekr tehein vdjkvnskjfbvs vsfbvskjbk vskjrgbsknvks",
       brand: "Luxury Furnishings",
       image: "https://via.placeholder.com/50",
       onlive: "1",
+      productCode: "DNT005",
     },
     {
       id: `#56679`,
       name: "Wall Art",
       category: "Decorations",
       subCategory: "Art",
+      description: "lorem ipsum sysb fskehg ekfbekr tehein vdjkvnskjfbvs vsfbvskjbk vskjrgbsknvks",
       brand: "DecorCraft",
       image: "https://via.placeholder.com/50",
       onlive: "0",
+      productCode: "ART006",
     },
     {
       id: `#56680`,
       name: "LED Ceiling Light",
       category: "Lighting",
       subCategory: "Ceiling Lights",
+      description: "lorem ipsum sysb fskehg ekfbekr tehein vdjkvnskjfbvs vsfbvskjbk vskjrgbsknvks",
       brand: "Bright Lights",
       image: "https://via.placeholder.com/50",
       onlive: "0",
+      productCode: "LGT007",
     },
     {
       id: `#56681`,
       name: "Outdoor Chair",
       category: "Outdoor",
       subCategory: "Furniture",
+      description: "lorem ipsum sysb fskehg ekfbekr tehein vdjkvnskjfbvs vsfbvskjbk vskjrgbsknvks",
       brand: "Outdoor Living",
       image: "https://via.placeholder.com/50",
       onlive: "1",
+      productCode: "CHA008",
     },
     {
       id: `#56682`,
       name: "Storage Shelf",
       category: "Storage",
       subCategory: "Shelves",
+      description: "lorem ipsum sysb fskehg ekfbekr tehein vdjkvnskjfbvs vsfbvskjbk vskjrgbsknvks",
       brand: "Space Saver",
       image: "https://via.placeholder.com/50",
       onlive: "1",
+      productCode: "SHF009",
+      displayInHome: true
     },
     {
       id: `#56683`,
       name: "Table Lamp",
       category: "Lighting",
       subCategory: "Lamps",
+      description: "lorem ipsum sysb fskehg ekfbekr tehein vdjkvnskjfbvs vsfbvskjbk vskjrgbsknvks",
       brand: "Lighting World",
       image: "https://via.placeholder.com/50",
       onlive: "0",
+      productCode: "LMP010",
     },
   ];
+  
 
   const [items, setItems] = useState(productData);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -131,6 +155,12 @@ const ProductTable = () => {
     }
   }, [message]);
 
+
+  const handleEdit = (product) => {
+    navigate('/EditProduct', { state: { item: product } });
+  };
+
+  
   const handleCheckboxChange = (id) => {
     if (selectedItems.includes(id)) {
       setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
@@ -289,7 +319,7 @@ const ProductTable = () => {
             alignItems: "center",
           }}
         >
-          <i class="bi bi-chevron-compact-right"></i>
+          <i className="bi bi-chevron-compact-right"></i>
         </Button>
       </div>
 
@@ -464,7 +494,7 @@ const ProductTable = () => {
                 <td style={{ borderBottom: true }}>
                   <Button
                     size="sm"
-                    onClick={() => {ProductEdit()}}
+                    onClick={() => handleEdit(item)}
                     style={{
                       color: "blue", // Text color
                       backgroundColor: "transparent", // Background color set to transparent

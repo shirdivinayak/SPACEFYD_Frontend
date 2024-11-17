@@ -1,492 +1,743 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button, Card, Modal, Image, Alert, Nav } from 'react-bootstrap';
-import { BiTrash, BiEdit } from 'react-icons/bi';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Button, Dropdown, Nav } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import AlertSuccesMessage from "../../common/MessageSuccesAlert";
 
-function ProductEdit() {
-  const placeholderImage = 'https://via.placeholder.com/50'; // Placeholder image URL
+const categories = ["Electronics", "Furniture", "Clothing", "Toys"];
+const subCategories = {
+  Electronics: ["Phones", "Laptops", "Cameras"],
+  Furniture: ["Chairs", "Tables", "Beds"],
+  Clothing: ["Men", "Women", "Kids"],
+  Toys: ["Indoor", "Outdoor"],
+};
+const brands = ["Samsung", "Ikea", "Nike", "Lego"];
 
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [selectedImage, setSelectedImage] = useState('/assets/image 7.png');
-  const [showModal, setShowModal] = useState(false); // State for modal visibility
-  const [isEditing, setIsEditing] = useState(false); // New state for edit mode
-  
-  // Product data state
-  const [productName, setProductName] = useState("Familia Soft Chair");
-  const [description, setDescription] = useState("Lorem ipsum dolor sit amet...");
-  
-  // Saved values to reset on cancel
-  const [savedProductName, setSavedProductName] = useState("Familia Soft Chair");
-  const [savedDescription, setSavedDescription] = useState("Lorem ipsum dolor sit amet...");
+const EditProductScreen = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const item = location.state?.item;
 
-  const [thumbnails, setThumbnails] = useState([
-    '/assets/image1.jpg',
-    '/assets/image2.jpg',
-    '/assets/image3.jpeg'
-  ]);
+  // Initialize state with product data or fallback values
+  const [productDetails, setProductDetails] = useState({
+    name: item?.name || "",
+    description: item?.description || "",
+    category: item?.category || categories[0],
+    subCategory: item?.subCategory || "",
+    brand: item?.brand || brands[0],
+    productCode: item?.productCode || "",
+    displayInHome: item?.displayInHome || false,
+    displayInTrending: item?.displayInTrending || false,
+  });
+  const [image, setImage] = useState({
+    image: "https://via.placeholder.com/400", // Example main image URL
+    images: [
+      "https://via.placeholder.com/100", // Example thumbnail image URLs
+      "https://via.placeholder.com/100",
+      "https://via.placeholder.com/100",
+    ],
+  });
+  const [message, setMessage] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
 
-  const handleShowModal = (image) => {
-    setSelectedImage(image);
-    setShowModal(true);
+  const handleEdit = () => {
+    setIsEditing(true); // Switch to edit mode
   };
 
-  const handleImageClick = (image) => {
-    handleShowModal(image); // Open modal with the selected image
+  useEffect(() => {
+    if (item && item.category) {
+      setProductDetails((prev) => ({
+        ...prev,
+        subCategory: item.subCategory || subCategories[item.category][0],
+      }));
+    }
+  }, [item]);
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setProductDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
-  const handleCloseModal = () => setShowModal(false);
-
-  const handleSaveChanges = () => {
-    setIsEditing(false);
-    setShowSuccessMessage(true);
-    setSavedProductName(productName);
-    setSavedDescription(description);
-    setTimeout(() => setShowSuccessMessage(false), 3000);
+  const handleSave = () => {
+    console.log("Item saved:", productDetails);
+    setMessage("Category updated successfully.");
+    setTimeout(() => {
+      setMessage("");
+    }, 3000);
+    setIsEditing(false); // Exit edit mode
   };
-  
-  const handleCancelEdit = () => {
-    setIsEditing(false);
-    setProductName(savedProductName);
-    setDescription(savedDescription);
-    setSelectedImage('/assets/image 7.png');
-  };
-
-  const handleRemoveCoverImage = () => {
-    setSelectedImage(placeholderImage);
-    setIsEditing(true);
+  const handleCategoryChange = (e) => {
+    const selectedCategory = e.target.value;
+    setProductDetails((prev) => ({
+      ...prev,
+      category: selectedCategory,
+      subCategory: subCategories[selectedCategory]?.[0] || "", // Default to empty if no subcategory
+    }));
   };
 
-  const handleRemoveThumbnail = (index) => {
-    const newThumbnails = thumbnails.filter((_, thumbIndex) => thumbIndex !== index);
-    setThumbnails(newThumbnails);
-    setIsEditing(true);
+  const handleSubCategoryChange = (e) => {
+    const selectedSubCategory = e.target.value;
+    setProductDetails((prev) => ({
+      ...prev,
+      subCategory: selectedSubCategory,
+    }));
+  };
+  const handleBrandChange = (event) => {
+    const { value } = event.target;
+    setProductDetails((prevDetails) => ({
+      ...prevDetails,
+      brand: value, // Update the selected brand in the product details
+    }));
   };
 
-  const handleInputChange = (setter) => (event) => {
-    setter(event.target.value);
-    setIsEditing(true);
+  const handleMainImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImage((prevState) => ({ ...prevState, image: e.target.result }));
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setMessage("Please upload a valid image file.");
+      setTimeout(() => setMessage(""), 3000);
+    }
   };
-  
+
+  const handleOtherImageUpload = (event, index) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImage((prevState) => {
+          const updatedImages = [...prevState.images];
+          updatedImages[index] = e.target.result;
+          return { ...prevState, images: updatedImages };
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  const handleDeleteMain = () => {
+    setImage((prevState) => ({
+      ...prevState,
+      image: "https://via.placeholder.com/448",
+    }));
+  };
+  const handleDeleteOtherImage = (index) => {
+    setImage((prevState) => {
+      const updatedImages = [...prevState.images];
+      updatedImages[index] = "https://via.placeholder.com/100"; // Reset to placeholder
+      return { ...prevState, images: updatedImages };
+    });
+  };
+
+  const handleCancel = () => {
+    navigate(-1); // Navigate back without saving
+    setIsEditing(false); // Exit edit mode
+  };
+
   return (
-    <div style={{ backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
-      <>
-        <div className="d-flex justify-content-between align-items-center p-4" style={{ backgroundColor: "white", minHeight: "70px" }}>
-          <h4 className="d-flex align-items-center mb-0 m-0" style={{ fontSize: "20px" }}>
-            <Nav.Link as={Link} to="/" className="me-2 opacity-50">Home</Nav.Link>
-            <span> &gt; </span>
-            <span className="ms-2">All Products</span>
-          </h4>
-        </div>
+    <div className="container " style={{ padding: "0" }}>
+      {/* Breadcrumb Section */}
+      <div
+        className="d-flex justify-content-between align-items-center p-4 "
+        style={{ backgroundColor: "white", minHeight: "85px", padding: "0" }}
+      >
+        <h4
+          className="d-flex align-items-center mb-0 m-0"
+          style={{ fontSize: "20px" }}
+        >
+          <Nav.Link as={Link} to="/" className="me-2 opacity-50">
+            Home
+          </Nav.Link>
+          <span style={{ marginRight: "8px" }}>&gt;</span>
+          <Nav.Link as={Link} to="/products" className="me-2 opacity-50">
+            All Products
+          </Nav.Link>
 
-        <Container className="p-4" style={{
-          top: '215px',
-          left: '308px',
-          height: '718px',
-          width: '1090px',
-          backgroundColor: '#fff',
-          borderRadius: '8px',
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-          position: 'absolute'
-        }}>
-          <Form>
-            <Row className="mt-4">
-              <Col md={6}>
-                <Form.Group controlId="productName" className="mb-3">
-                  <Form.Label style={{   width: '135px',
-    height: '20px',
-    top:'36px',
-    left: '54px',
-    fontFamily: 'Outfit',
-    fontSize: '16px',
-    fontWeight: '400',
-    lineHeight: '20.16px',
-     color: '#47474782' }}>New Product Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={productName}
-                    onChange={handleInputChange(setProductName)}
-                    placeholder="Familia Soft Chair"
-                    style={{ width: '480px', borderRadius: '4px', border: '1px solid #E0E0E0',color:'#474747' }}
-                  />
-                </Form.Group>
+          <span> &gt; </span>
+          <span className="ms-2"> Edit Products</span>
+        </h4>
+      </div>
 
-                <Form.Group controlId="description" className="mb-3">
-                  <Form.Label style={{ fontSize: '16px', color: '#47474782' }}>Description</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={5}
-                    value={description}
-                    onChange={handleInputChange(setDescription)}
-                    placeholder="Lorem ipsum dolor sit amet..."
-                    style={{ width: '480px', borderRadius: '4px', border: '1px solid #E0E0E0',color:'#474747' }}
-                  />
-                </Form.Group>
-                <Form.Group controlId="category" className="mb-3">
-  <Form.Label style={{
-    width: '68px',
-    height: '20px',
-    top:'329px',
-    left: '54px',
-    fontFamily: 'Outfit',
-    fontSize: '16px',
-    fontWeight: '400',
-    lineHeight: '20.16px',
-    textAlign: 'left',
-    color: '#47474782',
-    position: 'absolute'
-  }}>
-    Category
-  </Form.Label>
-  <Form.Control
-    as="select"
-    style={{
-      width: '231px',
-      height: '40px',
-      top: '357px',
-      left: '54px',
-      padding: '6px 12px',
-      borderRadius: '4px 0px 0px 0px',
-      border: '1px solid #E0E0E0',
-      color: '#474747',
-      position: 'absolute'
-    }}
-    value="Furniture"
-  >
-    <option>select</option>
-   
-  </Form.Control>
-  <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
-    <i className="bi bi-caret-down-fill" style={{ fontSize: '16px', color: '#474747' }}></i>
-  </div>
-</Form.Group>
-
-<Form.Group controlId="subcategory" className="mb-3">
-  <Form.Label style={{
-    width: '97px',
-    height: '20px',
-    top:'329px',
-    left:"303px",
-    fontFamily: 'Outfit',
-    fontSize: '16px',
-    fontWeight: '400',
-    lineHeight: '20.16px',
-    textAlign: 'left',
-    color: '#47474782',
-    position: 'absolute'
-  }}>
-    Subcategory
-  </Form.Label>
-  <Form.Control
-    as="select"
-    style={{
-      width: '231px',
-      height: '40px',
-      top: '357px',
-      left: '303px',
-      padding: '6px 12px',
-      borderRadius: '4px 0px 0px 0px',
-      border: '1px solid #E0E0E0',
-      color: '##474747',
-      position: 'absolute'
-    }}
-    value="Living"
-  >
-    <option>select</option>
-    
-  </Form.Control>
-  <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
-    <i className="bi bi-caret-down-fill" style={{ fontSize: '16px', color: '#474747' }}></i>
-  </div>
-</Form.Group>
-
-<Form.Group controlId="brand" className="mb-3">
-  <Form.Label style={{
-    width: '44px',
-    height: '20px',
-    top:'415px',
-    left:'54px',
-
-    fontFamily: 'Outfit',
-    fontSize: '16px',
-    fontWeight: '400',
-    lineHeight: '20.16px',
-    textAlign: 'left',
-    color: '#47474782',
-    position: 'absolute'
-  }}>
-    Brand
-  </Form.Label>
-  <Form.Control
-    as="select"
-    style={{
-      width: '231px',
-      height: '40px',
-      top: '443px',
-      left: '54px',
-      padding: '6px 12px',
-      borderRadius: '4px 0px 0px 0px',
-      border: '1px solid #E0E0E0',
-      color: '#474747',
-      position: 'absolute'
-    }}
-    value="Modern"
-  >
-    <option>select</option>
-    
-  </Form.Control>
-  <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
-    <i className="bi bi-caret-down-fill" style={{ fontSize: '16px', color: '#474747' }}></i>
-  </div>
-</Form.Group>
-<Form.Group controlId="productCode" className="mb-3">
-  <Form.Label style={{
-    width: '98px',
-    height: '20px',
-    top: '415px',
-    left: '303px',
-    fontFamily: 'Outfit',
-    fontSize: '16px',
-    fontWeight: '400',
-    lineHeight: '20.16px',
-    textAlign: 'left',
-    color: '#47474782',
-    
-    position: 'absolute'
-  }}>
-    Product Code
-  </Form.Label>
-  <Form.Control
-    type="text"
-    placeholder="Enter Product Code"
-    style={{
-      width: '231px',
-      height: '40px',
-      top: '443px',
-      left: '303px',
-      padding: '6px 12px',
-      borderRadius: '4px 0px 0px 0px',
-      border: '1px solid #E0E0E0',
-      color:'#474747',
-      fontFamily: 'Outfit',
-    fontSize: '14px',
-    fontWeight: '400',
-    lineHeight: '20px',
-      position: 'absolute'
-    }}
-  />
-</Form.Group>
-<Form.Group controlId="displayInHomeScreen" className="mb-3" style={{ position: 'absolute', top: '510px', left: '54px' }}>
-  <Form.Label style={{
-    width: '480px',
-    height: '40px',
-    top:'510px',
-    left:'54px',
-    fontFamily: 'Outfit',
-    fontSize: '14px',
-    fontWeight: '500',
-    lineHeight: '20px',
-    textAlign: 'left',
-    color: '#474747',
-    
-    padding: '6px 12px',
-    borderRadius: '4px 0px 0px 0px',
-    border: '1px solid #E0E0E0',
-    display: 'flex',
-    alignItems: 'center'
-  }}>
-    Size of Display in Home Screen
-    <Form.Check type="checkbox" style={{
-      width: '20px',
-      height: '20px',
-      marginLeft: 'auto',
-      opacity: '1'
-    }}/>
-  </Form.Label>
-</Form.Group>
-
-<Form.Group controlId="displayInTrendingSection" className="mb-3" style={{ position: 'absolute', top: '568px', left: '54px' }}>
-  <Form.Label style={{
-    width: '480px',
-    height: '40px',
-        top:'568px',
-    left:'54px',
-    fontFamily: 'Outfit',
-    fontSize: '14px',
-    fontWeight: '500',
-    lineHeight: '20px',
-    textAlign: 'left',
-    color: '#474747',
-    
-    padding: '6px 12px',
-    borderRadius: '4px 0px 0px 0px',
-    border: '1px solid #E0E0E0',
-    display: 'flex',
-    alignItems: 'center'
-  }}>
-    Size of Display in Home Screen with Trending Section
-    <Form.Check type="checkbox" style={{
-      width: '20px',
-      height: '20px',
-      marginLeft: 'auto',
-      opacity: '1'
-    }}/>
-  </Form.Label>
-</Form.Group>
-
-</Col>
-<Col md={6}>
-                <Card style={{ width: '448px', height: '448px' }}>
-                  <Card.Img
-                    variant="top"
-                    src={selectedImage}
-                    onClick={() => handleImageClick(selectedImage)}
-                    style={{ height: '448px', borderRadius: '6px', objectFit: 'cover', cursor: 'pointer' }}
-                  />
-                  <div
-                    className="position-absolute d-flex align-items-center"
-                    style={{
-                      width: '164px',
-                      height: '25px',
-                      background: '#FFE0E08F',
-                      color: '#DD0000',
-                      fontSize: '14px',
-                      borderRadius: '4px',
-                      top: '5px',
-                      right: '5px',
-                      padding: '0 5px',
-                      cursor: 'pointer'
-                    }}
-                    onClick={handleRemoveCoverImage}
-                  >
-                    <BiTrash style={{ width: '14.67px', height: '14.67px' }} />
-                    <span>Remove Cover Image</span>
-                  </div>
-                </Card>
-
-                <div className="d-flex mt-3" style={{ gap: '20px' }}>
-                  {thumbnails.map((thumb, index) => (
-                    <div key={index} className="position-relative">
-                      <Image
-                        src={thumb}
-                        alt={`Thumbnail ${index + 1}`}
-                        rounded
-                        onClick={() => handleImageClick(thumb)}
-                        style={{
-                          width: '110px',
-                          height: '110px',
-                          borderRadius: '6px',
-                          border: '1px solid #474747',
-                          cursor: 'pointer',
-                        }}
-                      />
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        className="position-absolute"
-                        onClick={() => handleRemoveThumbnail(index)}
-                        style={{
-                          width: '20x',
-                      height: '2opx',
-                      background: '#FFE0E08F',
-                      color: '#DD0000',
-                      fontSize: '14px',
-                      borderRadius: '4px',
-                      top: '493px',
-                      right: '5px',
-                      padding: '0 5px',
-                      cursor: 'pointer'
-                        }}
-                      >
-                        <BiTrash style={{ width: '14.67px', height: '14.67px' ,top:"495.67",left:"947.67px"}} />
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-              </Col>
-            </Row>
-            
-            <div className="d-flex justify-content-end mt-3">
-              {!isEditing ? (
-                <Button variant="primary" onClick={() => setIsEditing(true)}>
-                  <BiEdit /> Edit
-                </Button>
-              ) : (
-                <>
-                  <Button variant="secondary" className="me-2" onClick={handleCancelEdit}>Cancel</Button>
-                  <Button variant="primary" onClick={handleSaveChanges}>Save Changes</Button>
-                </>
-              )}
+      {/* Main Form Section */}
+      <div
+        className="d-flex mx-4 px-4 "
+        style={{ backgroundColor: "white", marginTop: "20px" }}
+      >
+        {/* Left Section */}
+        <div className="w-50 pe-4 py-4 px-4">
+          <form>
+            <div>
+              <label
+                style={{
+                  color: "rgba(71, 71, 71, 0.51)",
+                  display: "block",
+                  marginTop: "10px",
+                  fontSize: "16px",
+                }}
+              >
+                Product Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={productDetails.name}
+                onChange={handleChange}
+                disabled={!isEditing} // Disable input when not editing
+                onFocus={(e) =>
+                  (e.target.style.borderColor = "rgba(24, 75, 211, 1)")
+                }
+                onBlur={(e) =>
+                  (e.target.style.borderColor = "rgba(200, 200, 200, 1)")
+                }
+                style={{
+                  width: "100%",
+                  padding: "5px",
+                  fontSize: "14px",
+                  color: "rgba(71, 71, 71, 1)",
+                  border: "1px solid rgba(224, 224, 224, 1)",
+                  borderRadius: "4px",
+                }}
+              />
             </div>
 
-            {showSuccessMessage && (
-              <Alert variant="success" className="mt-3">
-                Changes Saved Successfully
-              </Alert>
+            <div>
+              <label
+                style={{
+                  color: "rgba(71, 71, 71, 0.51)",
+                  display: "block",
+                  marginTop: "10px",
+                  fontSize: "16px",
+                }}
+              >
+                Description:
+                <textarea
+                  name="description"
+                  value={productDetails.description}
+                  onChange={handleChange}
+                  disabled={!isEditing} // Disable input when not editing
+                  style={{
+                    width: "100%",
+                    padding: "5px",
+                    height: "150px", // Adjusted height
+                    color: "rgba(71, 71, 71, 1)",
+                    fontSize: "14px",
+
+                    border: "1px solid rgba(224, 224, 224, 1)",
+                    borderRadius: "4px", // Optional for rounded edges
+                  }}
+                  onFocus={(e) =>
+                    (e.target.style.borderColor = "rgba(24, 75, 211, 1)")
+                  } // Border color on focus
+                  onBlur={(e) =>
+                    (e.target.style.borderColor = "rgba(200, 200, 200, 1)")
+                  } // Border color on blur
+                />
+              </label>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "20px",
+                marginTop: "10px",
+                fontSize: "16px",
+              }}
+            >
+              {/* Category Dropdown */}
+              <label
+                style={{
+                  flex: "1",
+                  color: "rgba(71, 71, 71, 0.51)",
+                  display: "block",
+                }}
+              >
+                Category:
+                <Dropdown>
+                  <Dropdown.Toggle
+                    id="dropdown"
+                    style={{
+                      width: "100%",
+                      fontSize: "14px",
+                      fontWeight: "400",
+                      fontSize: "14px",
+
+                      color: "#757575", // Updated text color
+                      backgroundColor: "white",
+                      border: "1px solid #ccc",
+                      borderRadius: "4px",
+                      padding: "8px",
+                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center", // Align text and icon properly
+                    }}
+                    disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
+                  >
+                    <span
+                      style={{
+                        fontSize: "14px",
+                        fontWeight: "400",
+                        color: "#757575",
+                      }}
+                    >
+                      {productDetails.category || "Select"}{" "}
+                      {/* Displays selected category or placeholder */}
+                    </span>
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu style={{ width: "100%" }}>
+                    {categories.map((category, index) => (
+                      <Dropdown.Item
+                        key={index}
+                        onClick={() =>
+                          handleCategoryChange({ target: { value: category } })
+                        }
+                        style={{
+                          fontSize: "14px",
+                          fontWeight: "400",
+                          color: "#757575",
+                          padding: "8px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        {category}
+                      </Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+                </Dropdown>
+              </label>
+
+              {/* Sub-Category Dropdown */}
+              {/* Sub-Category Dropdown */}
+              <label
+                style={{
+                  flex: "1",
+                  color: "rgba(71, 71, 71, 0.51)",
+                  display: "block",
+                }}
+              >
+                Sub-Category:
+                <Dropdown>
+                  <Dropdown.Toggle
+                    id="dropdown-subcategory"
+                    style={{
+                      width: "100%",
+                      fontSize: "14px",
+                      fontWeight: "400",
+                      color: "#757575", // Updated text color
+                      backgroundColor: "white",
+                      border: "1px solid #ccc",
+                      borderRadius: "4px",
+                      padding: "8px",
+                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center", // Align text and icon properly
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: "14px",
+                        fontWeight: "400",
+                        color: "#757575",
+                      }}
+                      disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
+                    >
+                      {productDetails.subCategory || "Select"}{" "}
+                      {/* Displays selected subcategory or placeholder */}
+                    </span>
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu style={{ width: "100%" }}>
+                    {(subCategories[productDetails.category] || []).map(
+                      (sub, index) => (
+                        <Dropdown.Item
+                          key={index}
+                          onClick={() =>
+                            handleSubCategoryChange({ target: { value: sub } })
+                          }
+                          style={{
+                            fontSize: "14px",
+                            fontWeight: "400",
+                            color: "#757575",
+                            padding: "8px",
+                            cursor: "pointer",
+                          }}
+                        >
+                          {sub}
+                        </Dropdown.Item>
+                      )
+                    )}
+                  </Dropdown.Menu>
+                </Dropdown>
+              </label>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: "20px",
+              }}
+            >
+              <label
+                style={{
+                  flex: "1",
+                  color: "rgba(71, 71, 71, 0.51)",
+                  display: "block",
+                  marginTop: "20px", // Adjust the margin as needed
+                  marginBottom: "10px", // Space between label and dropdown
+                }}
+              >
+                Brand:
+                <Dropdown>
+                  <Dropdown.Toggle
+                    id="dropdown-brand"
+                    style={{
+                      width: "100%",
+                      fontSize: "14px",
+                      fontWeight: "400",
+                      color: "#757575", // Updated text color
+                      backgroundColor: "white",
+                      border: "1px solid #ccc",
+                      borderRadius: "4px",
+                      padding: "8px",
+                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Same box-shadow as dropdown
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center", // Align text and icon properly
+                    }}
+                    disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
+                  >
+                    <span
+                      style={{
+                        fontSize: "14px",
+                        fontWeight: "400",
+                        color: "#757575",
+                      }}
+                    >
+                      {productDetails.brand || "Select"}{" "}
+                      {/* Displays selected brand or placeholder */}
+                    </span>
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu style={{ width: "100%" }}>
+                    {brands.map((brand) => (
+                      <Dropdown.Item
+                        key={brand}
+                        onClick={() =>
+                          handleBrandChange({ target: { value: brand } })
+                        }
+                        style={{
+                          fontSize: "14px",
+                          fontWeight: "400",
+                          color: "#757575",
+                          padding: "8px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        {brand}
+                      </Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+                </Dropdown>
+              </label>
+
+              <label
+                style={{
+                  flex: "1",
+                  color: "rgba(71, 71, 71, 0.51)",
+                  display: "block",
+                  marginTop: "10px", // Adjust the margin as needed
+                }}
+              >
+                Product Code:
+                <input
+                  type="text"
+                  name="productCode"
+                  value={productDetails.productCode}
+                  onChange={handleChange}
+                  style={{
+                    width: "100%",
+                    padding: "8px", // Adjust padding for input field
+                    fontSize: "14px",
+                    fontWeight: "400",
+                    color: "#757575",
+                    backgroundColor: "white", // Set background color to white
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Same box-shadow as dropdown
+                    cursor: "pointer", // Add cursor pointer for better UX
+                  }}
+                  disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
+                />
+              </label>
+            </div>
+
+            <div
+              style={{
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+                marginTop: "20px",
+                padding: "7px",
+                display: "flex", // Added flexbox to align items
+                justifyContent: "space-between", // Space between label and checkbox
+                alignItems: "center", // Vertically center the items
+              }}
+            >
+              <label
+                style={{
+                  fontSize: "14px",
+
+                  color: "rgba(71, 71, 71, 0.51)",
+                  display: "block",
+                  paddingLeft: "6px", // Padding to left side
+                  flex: 1, // Allow label to take available space
+                }}
+              >
+                Display in Home Screen
+              </label>
+
+              <input
+                type="checkbox"
+                name="displayInHome"
+                checked={productDetails.displayInHome}
+                disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
+                onChange={handleChange}
+                style={{
+                  marginRight: "6px", // Margin for spacing on the right
+                  transform: "scale(1.5)", // Scales the checkbox by 1.5 times (you can adjust this value)
+                  cursor: "pointer", // Optional: To improve UX, change cursor on hover
+                }}
+              />
+            </div>
+
+            <div
+              style={{
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+                marginTop: "20px",
+                padding: "7px",
+                display: "flex", // Added flexbox to align items
+                justifyContent: "space-between", // Space between label and checkbox
+                alignItems: "center", // Vertically center the items
+              }}
+            >
+              <label
+                style={{
+                  color: "rgba(71, 71, 71, 0.51)",
+                  display: "block",
+                  paddingLeft: "6px", // Padding to left side
+                  flex: 1, // Allow label to take available space
+                }}
+              >
+                Display in Trending
+              </label>
+              <input
+                type="checkbox"
+                name="displayInTrending"
+                checked={productDetails.displayInTrending}
+                disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
+                onChange={handleChange}
+                style={{
+                  marginRight: "6px", // Margin for spacing on the right
+                  transform: "scale(1.5)", // Scales the checkbox by 1.5 times (you can adjust this value)
+                  cursor: "pointer", // Optional: To improve UX, change cursor on hover
+                }}
+              />
+            </div>
+          </form>
+        </div>
+
+        {/* Right Section */}
+        <div className=" ps-4 py-4">
+          <div>
+            {/* Display the main image */}
+            <div
+              style={{
+                position: "relative",
+                display: "inline-block",
+                paddingLeft: "50px",
+              }}
+            >
+              <img
+                src={image.image}
+                alt="Main"
+                disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
+                style={{
+                  width: "400px", // Fixed width
+                  height: "400px", // Fixed height
+                  objectFit: "cover", // Ensures the image fills the area while maintaining its aspect ratio
+                  border: "1px solid #ddd",
+                  padding: "5px",
+                  cursor: "pointer",
+                }}
+                onClick={() =>
+                  document.getElementById("mainImageInput").click()
+                } // Trigger file input click
+              />
+              {isEditing && (
+                <button
+                  onClick={handleDeleteMain}
+                  disabled={!isEditing} // Disable button if not in editing mode
+                  style={{
+                    position: "absolute",
+                    top: "10px",
+                    right: "10px",
+                    backgroundColor: "red",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "50%",
+                    width: "30px",
+                    height: "30px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  <i className="bi bi-trash"></i>
+                </button>
+              )}
+
+              <input
+                disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
+                type="file"
+                id="mainImageInput"
+                accept="image/*"
+                style={{ display: "none" }} // Hidden file input
+                onChange={handleMainImageUpload}
+              />
+            </div>
+
+            {/* Display other images */}
+            <div
+              className="d-flex"
+              style={{ gap: "10px", marginTop: "10px", paddingLeft: "50px" }}
+            >
+              {image.images.map((img, index) => (
+                <div
+                  key={index}
+                  style={{ position: "relative", display: "inline-block" }}
+                >
+                  <img
+                    src={img}
+                    disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
+                    alt={`image-${index}`}
+                    style={{
+                      width: "110px",
+                      height: "110px",
+                      border: "1px solid #ddd",
+                      padding: "5px",
+                      cursor: "pointer",
+                    }}
+                    onClick={() =>
+                      document
+                        .getElementById(`otherImageInput-${index}`)
+                        .click()
+                    } // Trigger file input click
+                  />
+                  {isEditing && (
+                    <button
+                      onClick={() => handleDeleteOtherImage(index)} // Pass the index for other images
+                      disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
+                      style={{
+                        position: "absolute",
+                        top: "5px",
+                        right: "5px",
+                        backgroundColor: "red",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "50%",
+                        width: "30px",
+                        height: "30px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <i className="bi bi-trash"></i>
+                    </button>
+                  )}
+                  <input
+                    type="file"
+                    disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
+                    id={`otherImageInput-${index}`}
+                    accept="image/*"
+                    style={{ display: "none" }} // Hidden file input
+                    onChange={(e) => handleOtherImageUpload(e, index)}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Display other images */}
+
+          <div className="mt-4 d-flex justify-content-end">
+            {!isEditing ? (
+              <span
+                style={{
+                  color: "#113DBC",
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  textDecoration: "none",
+                  marginRight: "50px",
+                }}
+                onClick={handleEdit}
+              >
+                {" "}
+                <i
+                  className="bi bi-pencil"
+                  style={{ fontSize: "16px", paddingRight: "10px" }}
+                ></i>
+                Edit
+              </span>
+            ) : (
+              <>
+                <Button
+                  style={{
+                    backgroundColor: "transparent", // Background color
+                    border: "none", // Removes border
+                    color: "#113DBC", // Text color
+                    fontSize: "16px", // Font size
+                    fontWeight: 600, // Font weight
+                    textDecoration: "none", // Ensures no text decoration
+                  }}
+                  onClick={handleCancel}
+                >
+                  Cancel
+                </Button>
+                <div style={{ paddingRight: "10px" }}></div>
+                <Button
+                  style={{
+                    backgroundColor: "#184BD3", // Background color
+                    border: "none", // Removes border
+                    color: "white", // Text color
+                    fontSize: "16px", // Font size
+                    fontWeight: 600, // Font weight
+                    textDecoration: "none", // Ensures no text decoration
+                  }}
+                  onClick={handleSave}
+                >
+                  Save Changes
+                </Button>
+              </>
             )}
-          </Form>
-
-          <Modal
-  show={showModal}
-  onHide={handleCloseModal}
-  centered
-  dialogClassName="custom-modal"
->
-  <Modal.Header closeButton />
-  <Modal.Body style={{  backgroundColor: 'transparent', 
-    width: '666px',
-    height: '666px',
-    top: '117px',
-    left: '520px',
-    gap: '0px',
-    borderRadius: '6px 0px 0px 0px',  // Border radius applied for specific corners
-     // Assuming you want a 1px border on all sides
-    opacity: '1px',  // This will make the element invisible (use '1' for visible)
-    position: 'fixed', 
-    backdropFilter: 'blur(4.8px)' }}>
-  <Image 
-    src={selectedImage} 
-    alt="Selected" 
-    fluid 
-    style={{ backgroundColor: 'transparent' }} 
-  />
-  <div
-    className="d-flex mt-3"
-    style={{
-      width: '666px',
-      height: '666px',
-      top: '117px',
-      left: '520px',
-      gap: '0px',
-      padding: '6px 0px 0px 0px',
-      border: '1px 0px 0px 0px',
-      opacity: '0px',
-    }}
-  >
-    {thumbnails.map((thumb, index) => (
-      <Image
-        key={index}
-        src={thumb}
-        alt={`Thumbnail ${index + 1}`}
-        onClick={() => setSelectedImage(thumb)}
-        rounded
-        style={{
-          width: '70px',
-          height: '70px',
-          border: thumb === selectedImage ? '1px solid' : '1px solid #ddd',
-          cursor: 'pointer',
-          backgroundColor: 'transparent',
-        }}
-      />
-    ))}
-  </div>
-</Modal.Body>
-
-</Modal>
-
-        </Container>
-      </>
+          </div>
+          <AlertSuccesMessage message={message} />
+        </div>
+      </div>
     </div>
   );
-}
+};
 
-export default ProductEdit;
+export default EditProductScreen;

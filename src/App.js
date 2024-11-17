@@ -8,6 +8,7 @@ import Product from "./Components/Pages/Products/Products";
 import Project from "./Components/Pages/Projects/Project";
 import ProductCategory from "./Components/Pages/Category/ProductCategory/ProductCategory";
 import ProjectCategory from "./Components/Pages/Category/ProjectCategory/ProjectCategory";
+import EditProductScreen from "./Components/Pages/Products/Editproduct";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
               <Route path="/categories/projects" element={<ProjectCategory/>} />
               <Route path="/products" element={<Product />} />
               <Route path="/projects" element={<Project />} />
+              <Route path="/EditProduct" element={<EditProductScreen />} />
               
             </Routes>
           </div>
