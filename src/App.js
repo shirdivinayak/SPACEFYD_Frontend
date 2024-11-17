@@ -13,6 +13,8 @@ import Home from "./Components/Pages/Home/MainContent";
 import Product from "./Components/Pages/Products/Products";
 import Project from "./Components/Pages/Projects/Project";
 import ProductCategory from "./Components/Pages/Category/ProductCategory/ProductCategory";
+import ProjectCategory from "./Components/Pages/Category/ProjectCategory/ProjectCategory";
+import EditProductScreen from "./Components/Pages/Products/Editproduct";
 
 function App() {
   // A wrapper to exclude certain components for specific routes
@@ -24,6 +26,7 @@ function App() {
 
     return (
       <div className="d-flex">
+<<<<<<< HEAD
         {!isLoginPage && <Sidebar />}
         <div
           className="flex-grow-1"
@@ -31,6 +34,22 @@ function App() {
         >
           {!isLoginPage && <TopNavbar />}
           {children}
+=======
+        <Sidebar />
+        <div className="flex-grow-1"style={{ backgroundColor: "#F5F5F5", padding: "0"}}>
+          <TopNavbar /> 
+          <div >
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/categories/products" element={<ProductCategory />} />
+              <Route path="/categories/projects" element={<ProjectCategory/>} />
+              <Route path="/products" element={<Product />} />
+              <Route path="/projects" element={<Project />} />
+              <Route path="/EditProduct" element={<EditProductScreen />} />
+              
+            </Routes>
+          </div>
+>>>>>>> 36fc322913d7964492424293fa17142493b53aeb
         </div>
       </div>
     );
