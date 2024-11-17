@@ -26,20 +26,12 @@ function App() {
 
     return (
       <div className="d-flex">
-<<<<<<< HEAD
-        {!isLoginPage && <Sidebar />}
-        <div
-          className="flex-grow-1"
-          style={{ backgroundColor: "#F5F5F5", padding: "0" }}
-        >
-          {!isLoginPage && <TopNavbar />}
-          {children}
-=======
         <Sidebar />
         <div className="flex-grow-1"style={{ backgroundColor: "#F5F5F5", padding: "0"}}>
           <TopNavbar /> 
           <div >
             <Routes>
+            <Route path="/login" element={<Login />} />
               <Route path="/" element={<Home />} />
               <Route path="/categories/products" element={<ProductCategory />} />
               <Route path="/categories/projects" element={<ProjectCategory/>} />
@@ -49,7 +41,6 @@ function App() {
               
             </Routes>
           </div>
->>>>>>> 36fc322913d7964492424293fa17142493b53aeb
         </div>
       </div>
     );
