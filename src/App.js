@@ -15,32 +15,30 @@ import Project from "./Components/Pages/Projects/Project";
 import ProductCategory from "./Components/Pages/Category/ProductCategory/ProductCategory";
 import ProjectCategory from "./Components/Pages/Category/ProjectCategory/ProjectCategory";
 import EditProductScreen from "./Components/Pages/Products/Editproduct";
+import AddProject from "./Components/Pages/Projects/AddProjetcs";
+import EditProjectScreen from "./Components/Pages/Projects/EditProject";
+import AddProduct from "./Components/Pages/Products/AddProduct";
 
 function App() {
-  // A wrapper to exclude certain components for specific routes
   const Layout = ({ children }) => {
     const location = useLocation();
 
     // Exclude Sidebar and TopNavbar for the login page
     const isLoginPage = location.pathname === "/login";
 
+    if (isLoginPage) {
+      return children;
+    }
+
     return (
       <div className="d-flex">
         <Sidebar />
-        <div className="flex-grow-1"style={{ backgroundColor: "#F5F5F5", padding: "0"}}>
-          <TopNavbar /> 
-          <div >
-            <Routes>
-            <Route path="/login" element={<Login />} />
-              <Route path="/" element={<Home />} />
-              <Route path="/categories/products" element={<ProductCategory />} />
-              <Route path="/categories/projects" element={<ProjectCategory/>} />
-              <Route path="/products" element={<Product />} />
-              <Route path="/projects" element={<Project />} />
-              <Route path="/EditProduct" element={<EditProductScreen />} />
-              
-            </Routes>
-          </div>
+        <div
+          className="flex-grow-1"
+          style={{ backgroundColor: "#F5F5F5", padding: "0" }}
+        >
+          <TopNavbar />
+          {children}
         </div>
       </div>
     );
@@ -50,11 +48,18 @@ function App() {
     <Router>
       <Layout>
         <Routes>
+          {/* Login Route */}
           <Route path="/login" element={<Login />} />
+          {/* Main Routes */}
           <Route path="/" element={<Home />} />
           <Route path="/categories/products" element={<ProductCategory />} />
+          <Route path="/categories/projects" element={<ProjectCategory />} />
           <Route path="/products" element={<Product />} />
           <Route path="/projects" element={<Project />} />
+          <Route path="/projects/addprojects" element={<AddProject />} />
+          <Route path="/projects/editprojects" element={<EditProjectScreen />} />
+          <Route path="/EditProduct" element={<EditProductScreen />} />
+          <Route path="/AddProduct" element={<AddProduct />} />
         </Routes>
       </Layout>
     </Router>

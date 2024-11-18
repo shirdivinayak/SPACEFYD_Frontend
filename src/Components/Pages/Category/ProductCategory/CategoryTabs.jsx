@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Tab, Nav, Form, Button, Row, Col, Alert, Dropdown } from "react-bootstrap";
+import {
+  Tab,
+  Nav,
+  Form,
+  Button,
+  Row,
+  Col,
+  Alert,
+  Dropdown,
+} from "react-bootstrap";
 import AlertSuccesMessage from "../../../common/MessageSuccesAlert";
 
 const CategoryTabs = () => {
@@ -62,15 +71,25 @@ const CategoryTabs = () => {
   };
 
   return (
-    <div className="container px-4 py-4" style={{ maxWidth: "100%", paddingLeft: "0" }}>
-      <Tab.Container activeKey={activeTab} onSelect={(tab) => setActiveTab(tab)}>
+    <div
+      className="container px-4 py-4"
+      style={{ maxWidth: "100%", paddingLeft: "0" }}
+    >
+      <Tab.Container
+        activeKey={activeTab}
+        onSelect={(tab) => setActiveTab(tab)}
+      >
         <Nav variant="pills" className="justify-content-start">
           <Nav.Item>
             <Nav.Link
               eventKey="addCategory"
               style={{
-                color: activeTab === "addCategory" ? "#184BD3" : "rgba(24, 75, 211, 0.6)",
-                borderBottom: activeTab === "addCategory" ? "5px solid #184BD3" : "none",
+                color:
+                  activeTab === "addCategory"
+                    ? "#184BD3"
+                    : "rgba(24, 75, 211, 0.6)",
+                borderBottom:
+                  activeTab === "addCategory" ? "5px solid #184BD3" : "none",
                 backgroundColor: "transparent",
                 fontSize: "18px",
                 fontWeight: 500,
@@ -83,8 +102,12 @@ const CategoryTabs = () => {
             <Nav.Link
               eventKey="addSubCategory"
               style={{
-                color: activeTab === "addSubCategory" ? "#184BD3" : "rgba(24, 75, 211, 0.6)",
-                borderBottom: activeTab === "addSubCategory" ? "5px solid #184BD3" : "none",
+                color:
+                  activeTab === "addSubCategory"
+                    ? "#184BD3"
+                    : "rgba(24, 75, 211, 0.6)",
+                borderBottom:
+                  activeTab === "addSubCategory" ? "5px solid #184BD3" : "none",
                 backgroundColor: "transparent",
                 fontSize: "18px",
                 fontWeight: 500,
@@ -103,52 +126,80 @@ const CategoryTabs = () => {
               <Row className="mb-3">
                 <Col md={4}>
                   <Form.Group controlId="categorySelect">
-                    
-                  <Form.Label style={{ fontSize: "16px", fontWeight: "400", color: "#474747", opacity: "0.51" }}>
-  Select Category
-</Form.Label>
-<Dropdown>
-  <Dropdown.Toggle
-    id="dropdown"
-    style={{
-      width: "100%",
-      fontSize: "14px",
-      fontWeight: "400",
-      color: "#757575", // Updated text color
-      backgroundColor: "white",
-      border: "1px solid #ccc",
-      borderRadius: "4px",
-      padding: "8px",
-      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center", // Align text and icon properly
-    }}
-  >
-    <span style={{ fontSize: "14px", fontWeight: "400", color: "#757575" }}>
-      {selectedCategory || "Select"} {/* Displays selected category or placeholder */}
-    </span>
-  </Dropdown.Toggle>
+                    <Form.Label
+                      style={{
+                        fontSize: "16px",
+                        fontWeight: "400",
+                        color: "#474747",
+                        opacity: "0.51",
+                      }}
+                    >
+                      Select Category
+                    </Form.Label>
+                    <Dropdown>
+                      <Dropdown.Toggle
+                        id="dropdown"
+                        style={{
+                          width: "100%",
+                          fontSize: "14px",
+                          fontWeight: "400",
+                          color: "#757575", // Updated text color
+                          backgroundColor: "white",
+                          border: "1px solid #ccc",
+                          borderRadius: "4px",
+                          padding: "8px",
+                          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center", // Align text and icon properly
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontSize: "14px",
+                            fontWeight: "400",
+                            color: "#757575",
+                          }}
+                        >
+                          {selectedCategory || "Select"}{" "}
+                          {/* Displays selected category or placeholder */}
+                        </span>
+                      </Dropdown.Toggle>
 
-  <Dropdown.Menu style={{ width: "100%" }}>
-    {categories.map((category, index) => (
-      <Dropdown.Item
-        key={index}
-        onClick={() => handleCategoryChange({ target: { value: category } })}
-        style={{ fontSize: "14px", fontWeight: "400", color: "#757575" }} // Ensure consistent styling in the dropdown list
-      >
-        {category}
-      </Dropdown.Item>
-    ))}
-  </Dropdown.Menu>
-</Dropdown>
-
+                      <Dropdown.Menu style={{ width: "100%" }}>
+                        {categories.map((category, index) => (
+                          <Dropdown.Item
+                            key={index}
+                            onClick={() =>
+                              handleCategoryChange({
+                                target: { value: category },
+                              })
+                            }
+                            style={{
+                              fontSize: "14px",
+                              fontWeight: "400",
+                              color: "#757575",
+                            }} // Ensure consistent styling in the dropdown list
+                          >
+                            {category}
+                          </Dropdown.Item>
+                        ))}
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </Form.Group>
                 </Col>
                 <Col md={4}>
                   <Form.Group controlId="categoryInput">
-                  <Form.Label style={{ fontSize: "16px", fontWeight: "400", color: "#474747", opacity: "0.51" }}>
-                  Sub Category Name</Form.Label>
+                    <Form.Label
+                      style={{
+                        fontSize: "16px",
+                        fontWeight: "400",
+                        color: "#474747",
+                        opacity: "0.51",
+                      }}
+                    >
+                      Sub Category Name
+                    </Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Enter sub category name"
@@ -187,10 +238,20 @@ const CategoryTabs = () => {
           <Tab.Pane eventKey="addCategory">
             <Form style={{ maxWidth: "600px", marginLeft: "0" }}>
               {error && <Alert variant="danger">{error}</Alert>}
-              <Row className="mb-3" style={{ display: "flex", alignItems: "center" }}>
+              <Row
+                className="mb-3"
+                style={{ display: "flex", alignItems: "center" }}
+              >
                 <Col md="auto">
                   <Form.Group controlId="subCategoryInput">
-                    <Form.Label style={{ fontSize: "16px", fontWeight: "400", color: "#474747", opacity: "0.51" }}>
+                    <Form.Label
+                      style={{
+                        fontSize: "16px",
+                        fontWeight: "400",
+                        color: "#474747",
+                        opacity: "0.51",
+                      }}
+                    >
                       New Category Name
                     </Form.Label>
                     <Form.Control

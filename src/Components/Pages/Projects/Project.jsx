@@ -1,11 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Button, Table, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AlertMessage from "../../common/MessageAlert";
 
 const ProductTable = () => {
+  const navigate = useNavigate();
+
   const categories = [
     "All Projects",
     "Commercial",
@@ -40,7 +43,7 @@ const ProductTable = () => {
     {
       id: `#56676`,
       name: "Indoor Plant",
-      category: "Plants",
+      category: "Furniture",
       location: "Greenery",
       sqrft: "Green Homes",
       image: "https://via.placeholder.com/50",
@@ -133,6 +136,10 @@ const ProductTable = () => {
     }
   };
 
+  const handleAdd = (product) => {
+    navigate('/projects/addprojects', { state: { item: product } });
+  };
+
   const handleGlobalToggle = () => {
     setIsOnLive((prevIsOnLive) => !prevIsOnLive);
   };
@@ -143,6 +150,9 @@ const ProductTable = () => {
     } else {
       setSelectedItems([]);
     }
+  };
+  const handleEdit = (product) => {
+    navigate('/projects/editprojects', { state: { item: product } });
   };
 
   const handleRemoveSelected = () => {
@@ -195,7 +205,7 @@ const ProductTable = () => {
 
         <Button
           height="12px"
-          onClick={() => handleRemoveSelected()}
+          onClick={() => handleAdd()}
           variant="primary" // Keeps the button style, but we'll override the color
           className="text-white"
           style={{
@@ -443,7 +453,7 @@ const ProductTable = () => {
                 <td style={{ borderBottom: true }}>
                   <Button
                     size="sm"
-                    onClick={() => {}}
+                    onClick={() => {handleEdit(item)}}
                     style={{
                       color: "blue", // Text color
                       backgroundColor: "transparent", // Background color set to transparent

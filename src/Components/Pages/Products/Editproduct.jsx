@@ -591,11 +591,10 @@ const EditProductScreen = () => {
                     position: "absolute",
                     top: "10px",
                     right: "10px",
-                    backgroundColor: "red",
+                    backgroundColor: " rgba(255, 224, 224, 0.56)",
                     color: "white",
                     border: "none",
-                    borderRadius: "50%",
-                    width: "30px",
+                    borderRadius: "5%",
                     height: "30px",
                     display: "flex",
                     alignItems: "center",
@@ -603,7 +602,11 @@ const EditProductScreen = () => {
                     cursor: "pointer",
                   }}
                 >
-                  <i className="bi bi-trash"></i>
+                  <i
+                    className="bi bi-trash"
+                    style={{ color: "red", paddingRight: "10px" }}
+                  ></i>
+                  <span style={{ color: "red" }}>Remove cover image</span>
                 </button>
               )}
 
@@ -647,13 +650,12 @@ const EditProductScreen = () => {
                   {isEditing && (
                     <button
                       onClick={() => handleDeleteOtherImage(index)} // Pass the index for other images
-                      disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
                       style={{
                         position: "absolute",
                         top: "5px",
                         right: "5px",
-                        backgroundColor: "red",
-                        color: "white",
+
+                        backgroundColor: "transparent",
                         border: "none",
                         borderRadius: "50%",
                         width: "30px",
@@ -664,7 +666,7 @@ const EditProductScreen = () => {
                         cursor: "pointer",
                       }}
                     >
-                      <i className="bi bi-trash"></i>
+                      <i className="bi bi-trash" style={{ color: "red" }}></i>
                     </button>
                   )}
                   <input

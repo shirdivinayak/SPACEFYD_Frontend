@@ -160,6 +160,11 @@ const ProductTable = () => {
     navigate('/EditProduct', { state: { item: product } });
   };
 
+  const handleAdd = (product) => {
+    navigate('/AddProduct', { state: { item: product } });
+  };
+
+
   
   const handleCheckboxChange = (id) => {
     if (selectedItems.includes(id)) {
@@ -231,7 +236,7 @@ const ProductTable = () => {
 
         <Button
           height="12px"
-          onClick={() => handleRemoveSelected()}
+          onClick={() => handleAdd()}
           variant="primary" // Keeps the button style, but we'll override the color
           className="text-white"
           style={{

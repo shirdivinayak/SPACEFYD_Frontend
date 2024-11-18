@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons for show/hide password
 import { Link } from "react-router-dom"; // Import Link for routing
 import LoginImage from "../../../Assets/Images/LoginImage.png";
-import LoginSide from "../../../Assets/Images/LoginSide.jpeg";
+import LoginSide from "../../../Assets/Images/LoginSide.png";
 
 function Login() {
   // State to manage form inputs and password visibility
@@ -45,7 +45,7 @@ function Login() {
       <div
         style={{
           flex: 1,
-          backgroundImage: { LoginSide }, // Replace with the correct path to Login.jpg
+          backgroundImage: `url(${LoginSide})`, // Correct format to include the image
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -58,12 +58,13 @@ function Login() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center",
+          marginLeft:"50px",
+          alignItems: "left",
           backgroundColor: "#ffffff",
         }}
       >
         {/* Logo */}
-        <div style={{ position: "absolute", top: "5%", textAlign: "center" }}>
+        <div style={{ position: "absolute", top: "5%", textAlign: "left" }}>
           <img
             src={LoginImage} // Replace with the correct path to your logo
             alt="Logo"
@@ -74,7 +75,7 @@ function Login() {
         <div
           style={{
             marginBottom: "20px",
-            textAlign: "center",
+            textAlign: "left",
             color: "#B6985A",
           }}
         >
