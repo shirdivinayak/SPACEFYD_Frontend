@@ -91,13 +91,12 @@ function Login() {
             width: "80%",
             maxWidth: "400px",
             padding: "20px",
-            border: "1px solid #ddd",
+            // border: "1px solid #ddd",
             borderRadius: "8px",
-            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+            // boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
             backgroundColor: "#fff",
           }}
         >
-          <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Login</h2>
           <form onSubmit={handleSubmit}>
             {/* Email Input */}
             <div style={{ marginBottom: "15px" }}>
