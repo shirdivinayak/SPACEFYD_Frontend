@@ -58,8 +58,8 @@ function App() {
           <Route path="/projects" element={<Project />} />
           <Route path="/projects/addprojects" element={<AddProject />} />
           <Route path="/projects/editprojects" element={<EditProjectScreen />} />
-          <Route path="/EditProduct" element={<EditProductScreen />} />
-          <Route path="/AddProduct" element={<AddProduct />} />
+          <Route path="/products/EditProduct" element={<EditProductScreen />} />
+          <Route path="/products/AddProduct" element={<AddProduct />} />
         </Routes>
       </Layout>
     </Router>

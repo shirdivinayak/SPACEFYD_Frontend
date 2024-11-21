@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Button, Table, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import useFetchCategories from "../../../hooks/useAllProjectApi"; // Adjust path
 
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -9,17 +10,7 @@ import AlertMessage from "../../common/MessageAlert";
 const ProductTable = () => {
   const navigate = useNavigate();
 
-  const categories = [
-    "All Projects",
-    "Commercial",
-    "Residential",
-    "HealthCare",
-    "Retail",
-    "Landscaping",
-    "Lighting",
-    "Corporate",
-    
-  ];
+  
 
   const productData = [
     {
@@ -120,13 +111,22 @@ const ProductTable = () => {
   const [message, setMessage] = useState("");
   const tabsRef = useRef(null);
   const [isOnLive, setIsOnLive] = useState(false);
+  const { categories, loading, error } = useFetchCategories();
+// Setting the default selected category
+useEffect(() => {
+  if (!selectedCategory) {
+    setSelectedCategory("All Projects");
+  }
+}, [selectedCategory]);
 
-  useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => setMessage(""), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [message]);
+// Handling message timeout
+useEffect(() => {
+  if (message) {
+    const timer = setTimeout(() => setMessage(""), 3000);
+    return () => clearTimeout(timer); // Cleanup timeout on unmount
+  }
+}, [message]);
+
 
   const handleCheckboxChange = (id) => {
     if (selectedItems.includes(id)) {
@@ -169,7 +169,7 @@ const ProductTable = () => {
   };
 
   const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
+    setSelectedCategory(category.name);
   };
 
   const scrollTabs = (direction) => {
@@ -179,13 +179,26 @@ const ProductTable = () => {
     }
   };
 
+  if (loading) return <p>Loading categories...</p>;
+  if (error) return <p>Error: {error}</p>;
+  
   const filteredItems =
     selectedCategory === "All Projects"
       ? items.filter((item) => (isOnLive ? item.onlive === "1" : true))
       : items
           .filter((item) => item.category === selectedCategory)
           .filter((item) => (isOnLive ? item.onlive === "1" : true));
-
+          const filteredAndSortedCategories = categories
+          .filter(category => category.name) // Make sure 'name' is defined
+          .sort((a, b) => {
+            // Prioritize "All Products" category
+            if (a.name === "All Projects") return -1;
+            if (b.name === "All Projects") return 1;
+            
+            // For the rest, sort alphabetically
+            return (a.name || '').localeCompare(b.name || '');
+          });
+        
   return (
     <div className="container " style={{ padding: "0" }}>
       <div
@@ -238,7 +251,7 @@ const ProductTable = () => {
               height: "40px", // Set a fixed height for category tabs
             }}
           >
-            {categories.map((category, index) => (
+{filteredAndSortedCategories.map((category, index) => (
               <Button
                 key={index}
                 variant={
@@ -255,7 +268,7 @@ const ProductTable = () => {
                   fontSize: "16px",
                 }}
               >
-                {category}
+                {category.name}
               </Button>
             ))}
           </div>

@@ -1,33 +1,38 @@
 import React, { useState } from "react";
 import { Form, Button, Row, Col, Alert } from "react-bootstrap";
 import AlertSuccesMessage from "../../../common/MessageSuccesAlert";
+import useProjectCategoryApi from "../../../../hooks/useProjectCategoryApi";
 
 const ProjectAddCategory = () => {
-  const [subCategoryName, setSubCategoryName] = useState("");
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [categoryName, setCategoryName] = useState("");
 
-  const handleAddCategory = () => {
-    if (!subCategoryName.trim()) {
+  const {
+    addCategory,
+    error,
+    loading,
+    message,
+    setMessage,
+    setError,
+  } = useProjectCategoryApi();
+
+  const handleAddCategory = async () => {
+    if (!categoryName.trim()) {
       setError("Category name is required.");
       return;
     }
 
-    const msg = `New category "${subCategoryName}" added.`;
-    console.log(msg);
-    setMessage(msg);
-    setError("");
-    setSubCategoryName("");
-
+    await addCategory({ name: categoryName });
+    setCategoryName(""); // Clear input field
     setTimeout(() => {
-      setMessage("");
+      setMessage(""); // Clear success message after 3 seconds
+      setError(null);  // Clear error message if present
     }, 3000);
   };
 
-
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault();
+      e.preventDefault(); // Prevent form submission on Enter
+      handleAddCategory(); // Optionally trigger submit on Enter
     }
   };
 
@@ -51,8 +56,8 @@ const ProjectAddCategory = () => {
               <Form.Control
                 type="text"
                 placeholder="Enter category name"
-                value={subCategoryName}
-                onChange={(e) => setSubCategoryName(e.target.value)}
+                value={categoryName}
+                onChange={(e) => setCategoryName(e.target.value)}
                 onKeyDown={handleKeyDown}
                 style={{ width: "281px" }}
               />
@@ -71,17 +76,16 @@ const ProjectAddCategory = () => {
                 backgroundColor: "#184BD3",
                 border: "none",
               }}
+              disabled={loading}
             >
-              Submit
+              {loading ? "Submitting..." : "Submit"}
             </Button>
           </Col>
         </Row>
-
-        
       </Form>
 
       {/* Success Message */}
-      <AlertSuccesMessage message={message} />
+      {message && <AlertSuccesMessage message={message} />}
     </div>
   );
 };
