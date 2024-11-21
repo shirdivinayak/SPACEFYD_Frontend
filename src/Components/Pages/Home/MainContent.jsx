@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Card, Button } from "react-bootstrap";
-import ImageModal from "./ImageModal"; // Import the modal component
+import { Button, Modal } from "react-bootstrap";
+import { IoClose } from "react-icons/io5";
 
 const Home = () => {
   const [banners, setBanners] = useState({
@@ -17,9 +17,10 @@ const Home = () => {
   const handleBannerImageUpload = (bannerKey, e) => {
     const file = e.target.files[0];
     if (file) {
+      const updatedImage = URL.createObjectURL(file);
       setBanners((prevState) => ({
         ...prevState,
-        [bannerKey]: { image: URL.createObjectURL(file) },
+        [bannerKey]: { image: updatedImage },
       }));
       setIsChanged(true);
     }
@@ -31,6 +32,10 @@ const Home = () => {
       [bannerKey]: { image: null },
     }));
     setIsChanged(true);
+  };
+
+  const handleImageClick = () => {
+    setShowModal(true);
   };
 
   const handleSave = () => {
@@ -65,15 +70,16 @@ const Home = () => {
           >
             {["banner1", "banner2", "banner3", "banner4"].map(
               (bannerKey, index) => (
-                <Card
+                <div
                   key={index}
                   style={{
                     width: "167px",
                     height: "95px",
                     border: "1px dashed #ccc",
+                    borderRadius: 0,
                     position: "relative",
+                    overflow: "hidden",
                   }}
-                  onClick={() => setShowModal(true)} // Open modal on click
                 >
                   <input
                     type="file"
@@ -83,19 +89,36 @@ const Home = () => {
                     id={`${bannerKey}-upload`}
                   />
                   {banners[bannerKey].image ? (
-                    <img
-                      src={banners[bannerKey].image}
-                      alt={`Banner ${index + 1}`}
+                    <div
                       style={{
+                        position: "relative",
                         width: "100%",
                         height: "100%",
-                        objectFit: "cover",
-                        cursor: "pointer",
                       }}
-                      onClick={() =>
-                        document.getElementById(`${bannerKey}-upload`).click()
-                      }
-                    />
+                    >
+                      <img
+                        src={banners[bannerKey].image}
+                        alt=""
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          cursor: "pointer",
+                        }}
+                        onClick={handleImageClick}
+                      />
+                      <IoClose
+                        style={{
+                          position: "absolute",
+                          top: "5px",
+                          right: "5px",
+                          fontSize: "20px",
+                          color: "gray",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => handleBannerImageDelete(bannerKey)}
+                      />
+                    </div>
                   ) : (
                     <Button
                       variant="outline-secondary"
@@ -114,7 +137,7 @@ const Home = () => {
                       <i className="bi bi-file-earmark-image"></i>
                     </Button>
                   )}
-                </Card>
+                </div>
               )
             )}
           </div>
@@ -127,17 +150,15 @@ const Home = () => {
               position: "relative",
             }}
           >
-            <Card
+            <div
               style={{
                 width: "748px",
                 height: "421px",
                 border: "1px dashed #ccc",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                borderRadius: 0,
+                overflow: "hidden",
                 position: "relative",
               }}
-              onClick={() => setShowModal(true)} // Open modal on click
             >
               <input
                 type="file"
@@ -147,15 +168,36 @@ const Home = () => {
                 id="main-banner-upload"
               />
               {banners.mainBanner.image ? (
-                <img
-                  src={banners.mainBanner.image}
-                  alt="Main Banner"
+                <div
                   style={{
+                    position: "relative",
                     width: "100%",
                     height: "100%",
-                    objectFit: "cover",
                   }}
-                />
+                >
+                  <img
+                    src={banners.mainBanner.image}
+                    alt=""
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      cursor: "pointer",
+                    }}
+                    onClick={handleImageClick}
+                  />
+                  <IoClose
+                    style={{
+                      position: "absolute",
+                      top: "5px",
+                      right: "5px",
+                      fontSize: "20px",
+                      color: "gray",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handleBannerImageDelete("mainBanner")}
+                  />
+                </div>
               ) : (
                 <Button
                   variant="outline-secondary"
@@ -176,7 +218,7 @@ const Home = () => {
                   Click here to upload Banner
                 </Button>
               )}
-            </Card>
+            </div>
           </div>
         </div>
 
@@ -203,11 +245,62 @@ const Home = () => {
       </div>
 
       {/* Image Modal */}
-      <ImageModal
+      <Modal
         show={showModal}
-        onClose={() => setShowModal(false)}
-        banners={banners}
-      />
+        onHide={() => setShowModal(false)}
+        size="lg"
+        centered
+        backdrop="static"
+        style={{ backdropFilter: "blur(10px)" }}
+      >
+        <IoClose
+          style={{
+            position: "absolute",
+            top: "10px",
+            right: "20px",
+            fontSize: "25px",
+            cursor: "pointer",
+            color: "gray",
+            zIndex: "1051", // Ensure it's above the modal
+          }}
+          onClick={() => setShowModal(false)}
+        />
+        <Modal.Body
+          style={{ display: "flex", gap: "10px", background: "none" }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              width: "30%",
+            }}
+          >
+            {["banner1", "banner2", "banner3", "banner4"].map((bannerKey) => (
+              <div
+                key={bannerKey}
+                style={{
+                  width: "167px",
+                  height: "95px",
+                  border: banners[bannerKey].image ? "none" : "1px dashed #ccc",
+                  background: banners[bannerKey].image
+                    ? `url(${banners[bannerKey].image}) center / cover`
+                    : "none",
+                }}
+              />
+            ))}
+          </div>
+          <div
+            style={{
+              width: "70%",
+              height: "421px",
+              background: banners.mainBanner.image
+                ? `url(${banners.mainBanner.image}) center / cover`
+                : "none",
+            }}
+          />
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

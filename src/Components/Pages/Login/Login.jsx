@@ -45,7 +45,7 @@ function Login() {
       <div
         style={{
           flex: 1,
-          backgroundImage: { LoginSide }, // Replace with the correct path to Login.jpg
+          backgroundImage: `url(${LoginSide})`, // Correctly include the background image
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -74,7 +74,7 @@ function Login() {
         <div
           style={{
             marginBottom: "20px",
-            textAlign: "center",
+            textAlign: "left",
             color: "#B6985A",
           }}
         >
@@ -96,20 +96,9 @@ function Login() {
             backgroundColor: "#fff",
           }}
         >
-          <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Login</h2>
           <form onSubmit={handleSubmit}>
             {/* Email Input */}
             <div style={{ marginBottom: "15px" }}>
-              <label
-                htmlFor="email"
-                style={{
-                  display: "block",
-                  marginBottom: "5px",
-                  fontWeight: "bold",
-                }}
-              >
-                Email
-              </label>
               <input
                 type="email"
                 id="email"
@@ -129,16 +118,6 @@ function Login() {
 
             {/* Password Input with Show/Hide Icon */}
             <div style={{ marginBottom: "15px", position: "relative" }}>
-              <label
-                htmlFor="password"
-                style={{
-                  display: "block",
-                  marginBottom: "5px",
-                  fontWeight: "bold",
-                }}
-              >
-                Password
-              </label>
               <input
                 type={showPassword ? "text" : "password"}
                 id="password"
@@ -160,7 +139,8 @@ function Login() {
                 style={{
                   position: "absolute",
                   right: "10px",
-                  top: "35px",
+                  top: "50%", // Center vertically
+                  transform: "translateY(-50%)", // Align perfectly in the middle
                   cursor: "pointer",
                   color: "#888",
                 }}
@@ -188,13 +168,14 @@ function Login() {
               type="submit"
               style={{
                 width: "100%",
-                padding: "10px",
+                padding: "8px", // Reduced padding for smaller height
                 borderRadius: "4px",
                 border: "none",
-                backgroundColor: "#007BFF",
+                backgroundColor: "#184BD3",
                 color: "#fff",
                 fontWeight: "bold",
                 cursor: "pointer",
+                textAlign: "left",
               }}
             >
               Login
