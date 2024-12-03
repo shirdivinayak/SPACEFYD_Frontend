@@ -3,8 +3,8 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  useLocation,
   Navigate,
+  useLocation,
 } from "react-router-dom";
 
 import Login from "./Components/Pages/Login/Login";
@@ -51,7 +51,7 @@ function App() {
           <Routes>
             {/* Login Route */}
             <Route path="/login" element={<Login />} />
-            
+
             {/* Protected Routes */}
             <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
             <Route path="/categories/products" element={<PrivateRoute><ProductCategory /></PrivateRoute>} />
@@ -69,12 +69,14 @@ function App() {
   );
 }
 
-// Protected Route that checks for authentication
+// Protected Route Component
 const PrivateRoute = ({ children }) => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
 
-  // If user is authenticated, render the children (protected pages)
-  // If not, redirect to the login page
+  if (loading) {
+    return <div>Loading...</div>; // Placeholder while loading
+  }
+
   return user ? children : <Navigate to="/login" />;
 };
 

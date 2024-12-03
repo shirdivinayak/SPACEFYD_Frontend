@@ -78,7 +78,7 @@ const TopNavbar = () => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu align="end">
-            <Dropdown.Item as={Link} to="/categories/products">
+            <Dropdown.Item as={Link} to="/">
               Reset Password
             </Dropdown.Item>
             <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
