@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons for show/hide password
-import { Link } from "react-router-dom"; // Import Link for routing
+import { Link, useNavigate } from "react-router-dom"; // Import Link and useNavigate for routing
+import axios from "axios"; // Import Axios for API calls
 import LoginImage from "../../../Assets/Images/LoginImage.png";
 import LoginSide from "../../../Assets/Images/LoginSide.png";
 
 function Login() {
-  // State to manage form inputs and password visibility
+  const navigate = useNavigate(); // For navigation after login
   const [credentials, setCredentials] = useState({
-    email: "",
-    password: "",
+    email: "admin@123.com",
+    password: "123456",
   });
   const [showPassword, setShowPassword] = useState(false); // Toggle password visibility
+  const [errorMessage, setErrorMessage] = useState(""); // State for error messages
 
   // Handle input change
   const handleChange = (e) => {
@@ -22,10 +24,46 @@ function Login() {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted Credentials:", credentials); // Console the credentials
-  };
+    setErrorMessage(""); // Clear previous errors
+
+    if (!credentials.email || !credentials.password) {
+      setErrorMessage("Please fill in both email and password.");
+      return;
+    }
+
+  //   try {
+  //     const response = await axios.post("/api/login", credentials); // Replace with your API endpoint
+  //     if (response.data.success) {
+  //       // Store the token in local storage
+  //       localStorage.setItem("token", response.data.token);
+
+  //       // Redirect to the home page
+  //       navigate("/");
+  //     } else {
+  //       setErrorMessage(response.data.message || "Invalid login credentials.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Login failed:", error);
+  //     setErrorMessage("An error occurred. Please try again.");
+  //   }
+  // };
+
+   // Simulate a successful login
+   if (
+    credentials.email === "admin@123.com" &&
+    credentials.password === "123456"
+  ) {
+    // Simulate token storage
+    localStorage.setItem("token", "mock-token");
+
+    // Redirect to the home page
+    navigate("/");
+  } else {
+    setErrorMessage("Invalid email or password. Please try again.");
+  }
+};
 
   // Toggle password visibility
   const togglePasswordVisibility = () => {
@@ -45,7 +83,7 @@ function Login() {
       <div
         style={{
           flex: 1,
-          backgroundImage: `url(${LoginSide})`, // Correct format to include the image
+          backgroundImage: `url(${LoginSide})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -58,7 +96,7 @@ function Login() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          marginLeft:"50px",
+          marginLeft: "50px",
           alignItems: "left",
           backgroundColor: "#ffffff",
         }}
@@ -66,7 +104,7 @@ function Login() {
         {/* Logo */}
         <div style={{ position: "absolute", top: "5%", textAlign: "left" }}>
           <img
-            src={LoginImage} // Replace with the correct path to your logo
+            src={LoginImage}
             alt="Logo"
             style={{ width: "150px", height: "auto" }}
           />
@@ -91,9 +129,7 @@ function Login() {
             width: "80%",
             maxWidth: "400px",
             padding: "20px",
-            // border: "1px solid #ddd",
             borderRadius: "8px",
-            // boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
             backgroundColor: "#fff",
           }}
         >
@@ -154,7 +190,6 @@ function Login() {
                 }}
                 required
               />
-              {/* Eye Icon for Toggle */}
               <span
                 onClick={togglePasswordVisibility}
                 style={{
@@ -169,10 +204,24 @@ function Login() {
               </span>
             </div>
 
+            {/* Error Message */}
+            {errorMessage && (
+              <div
+                style={{
+                  color: "red",
+                  marginBottom: "15px",
+                  fontSize: "14px",
+                  textAlign: "left",
+                }}
+              >
+                {errorMessage}
+              </div>
+            )}
+
             {/* Forgot Password Link */}
             <div style={{ textAlign: "left", marginBottom: "15px" }}>
               <Link
-                to="/reset-password" // Redirects to the reset password page
+                to="/reset-password"
                 style={{
                   textDecoration: "none",
                   color: "#000000",

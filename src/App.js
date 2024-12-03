@@ -4,6 +4,7 @@ import {
   Route,
   Routes,
   useLocation,
+  Navigate,
 } from "react-router-dom";
 
 import Login from "./Components/Pages/Login/Login";
@@ -18,12 +19,11 @@ import EditProductScreen from "./Components/Pages/Products/Editproduct";
 import AddProject from "./Components/Pages/Projects/AddProjetcs";
 import EditProjectScreen from "./Components/Pages/Projects/EditProject";
 import AddProduct from "./Components/Pages/Products/AddProduct";
+import { AuthProvider, useAuth } from "./AuthContext";
 
 function App() {
   const Layout = ({ children }) => {
     const location = useLocation();
-
-    // Exclude Sidebar and TopNavbar for the login page
     const isLoginPage = location.pathname === "/login";
 
     if (isLoginPage) {
@@ -31,7 +31,7 @@ function App() {
     }
 
     return (
-      <div className="d-flex" style={{backgroundColor:"#011140"}}>
+      <div className="d-flex" style={{ backgroundColor: "#011140" }}>
         <Sidebar />
         <div
           className="flex-grow-1"
@@ -45,25 +45,37 @@ function App() {
   };
 
   return (
-    <Router>
-      <Layout>
-        <Routes>
-          {/* Login Route */}
-          <Route path="/login" element={<Login />} />
-          {/* Main Routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/categories/products" element={<ProductCategory />} />
-          <Route path="/categories/projects" element={<ProjectCategory />} />
-          <Route path="/products" element={<Product />} />
-          <Route path="/projects" element={<Project />} />
-          <Route path="/projects/addprojects" element={<AddProject />} />
-          <Route path="/projects/editprojects" element={<EditProjectScreen />} />
-          <Route path="/products/EditProduct" element={<EditProductScreen />} />
-          <Route path="/products/AddProduct" element={<AddProduct />} />
-        </Routes>
-      </Layout>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Layout>
+          <Routes>
+            {/* Login Route */}
+            <Route path="/login" element={<Login />} />
+            
+            {/* Protected Routes */}
+            <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+            <Route path="/categories/products" element={<PrivateRoute><ProductCategory /></PrivateRoute>} />
+            <Route path="/categories/projects" element={<PrivateRoute><ProjectCategory /></PrivateRoute>} />
+            <Route path="/products" element={<PrivateRoute><Product /></PrivateRoute>} />
+            <Route path="/projects" element={<PrivateRoute><Project /></PrivateRoute>} />
+            <Route path="/projects/addprojects" element={<PrivateRoute><AddProject /></PrivateRoute>} />
+            <Route path="/projects/editprojects" element={<PrivateRoute><EditProjectScreen /></PrivateRoute>} />
+            <Route path="/products/EditProduct" element={<PrivateRoute><EditProductScreen /></PrivateRoute>} />
+            <Route path="/products/AddProduct" element={<PrivateRoute><AddProduct /></PrivateRoute>} />
+          </Routes>
+        </Layout>
+      </Router>
+    </AuthProvider>
   );
 }
+
+// Protected Route that checks for authentication
+const PrivateRoute = ({ children }) => {
+  const { user } = useAuth();
+
+  // If user is authenticated, render the children (protected pages)
+  // If not, redirect to the login page
+  return user ? children : <Navigate to="/login" />;
+};
 
 export default App;

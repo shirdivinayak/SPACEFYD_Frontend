@@ -1,21 +1,24 @@
-import React from "react";
+import React from "react"; 
 import { Link, useNavigate } from "react-router-dom";
-import {
-  Navbar,
-  Form,
-  FormControl,
-  Container,
-  Dropdown,
-} from "react-bootstrap";
+import { Navbar, Form, FormControl, Container, Dropdown } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
 import { BiSearch } from "react-icons/bi";
+import { useAuth } from "../../AuthContext"; // Import the useAuth hook
 
 const TopNavbar = () => {
   const navigate = useNavigate(); // Initialize navigate function
+  const { logout } = useAuth(); // Get logout function from AuthContext
+
+  // Handle search form submit
+  const handleSearchSubmit = (e) => {
+    e.preventDefault(); // Prevent form from submitting and causing redirection
+    // Add your search logic here (e.g., searching for products, etc.)
+    console.log("Searching...");
+  };
 
   const handleLogout = () => {
-    // Perform any necessary logout operations here (e.g., clearing tokens)
-    navigate("/login"); // Redirect to the login page
+    logout(); // Call the logout function to handle the logout process
+    navigate("/login"); // Redirect to the login page after logout
   };
 
   return (
@@ -33,6 +36,7 @@ const TopNavbar = () => {
         <Form
           className="position-relative"
           style={{ maxWidth: "500px", width: "100%", marginLeft: "auto" }}
+          onSubmit={handleSearchSubmit} // Add onSubmit handler to prevent form submit
         >
           <FormControl
             type="text"
