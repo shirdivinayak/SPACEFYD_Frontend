@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -15,6 +15,7 @@ import Project from "./Components/Pages/Projects/Project";
 import ProductCategory from "./Components/Pages/Category/ProductCategory/ProductCategory";
 import ProjectCategory from "./Components/Pages/Category/ProjectCategory/ProjectCategory";
 import EditProductScreen from "./Components/Pages/Products/Editproduct";
+import ImageGalleryModal from "./Components/common/ImageGalleryModal"; // Import the modal
 
 function App() {
   const Layout = ({ children }) => {
@@ -41,6 +42,23 @@ function App() {
     );
   };
 
+  // State for the ImageGalleryModal
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [images, setImages] = useState([]);
+
+  // Function to open the modal
+  const openGallery = (imageList, index) => {
+    setImages(imageList);
+    setCurrentImageIndex(index);
+    setModalVisible(true);
+  };
+
+  // Function to close the modal
+  const closeGallery = () => {
+    setModalVisible(false);
+  };
+
   return (
     <Router>
       <Layout>
@@ -48,13 +66,37 @@ function App() {
           {/* Login Route */}
           <Route path="/login" element={<Login />} />
           {/* Main Routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/categories/products" element={<ProductCategory />} />
-          <Route path="/categories/projects" element={<ProjectCategory />} />
-          <Route path="/products" element={<Product />} />
-          <Route path="/projects" element={<Project />} />
+          <Route
+            path="/"
+            element={<Home openGallery={openGallery} />} // Pass modal handler
+          />
+          <Route
+            path="/categories/products"
+            element={<ProductCategory openGallery={openGallery} />}
+          />
+          <Route
+            path="/categories/projects"
+            element={<ProjectCategory openGallery={openGallery} />}
+          />
+          <Route
+            path="/products"
+            element={<Product openGallery={openGallery} />}
+          />
+          <Route
+            path="/projects"
+            element={<Project openGallery={openGallery} />}
+          />
           <Route path="/EditProduct" element={<EditProductScreen />} />
         </Routes>
+
+        {/* ImageGalleryModal */}
+        <ImageGalleryModal
+          images={images}
+          currentImageIndex={currentImageIndex}
+          setCurrentImageIndex={setCurrentImageIndex}
+          visible={isModalVisible}
+          close={closeGallery}
+        />
       </Layout>
     </Router>
   );
