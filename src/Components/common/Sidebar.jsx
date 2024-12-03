@@ -1,16 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Nav } from "react-bootstrap";
 import { BiChevronDown, BiGrid, BiHome, BiBox, BiClipboard, BiTag } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import GroupImage from "../../Assets/Images/Group.png";
-
 
 const Sidebar = () => {
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(""); // To track the active option
+  const location = useLocation(); // To get the current URL path
+
+  // Effect to set the selected option based on the current path
+  useEffect(() => {
+    const path = location.pathname;
+    if (path.includes("categories")) {
+      if (path.includes("products")) {
+        setSelectedOption("Products");
+      } else if (path.includes("projects")) {
+        setSelectedOption("Projects");
+      } else {
+        setSelectedOption(""); // Reset if no sub-path is found
+      }
+    } else if (path === "/brands") {
+      setSelectedOption("Brands");
+    } else if (path === "/products") {
+      setSelectedOption("All Products");
+    } else if (path === "/projects") {
+      setSelectedOption("All Projects");
+    } else {
+      setSelectedOption("Home");
+    }
+  }, [location]); // Run the effect whenever the route changes
 
   const handleCategoriesClick = () => {
     setIsCategoriesOpen(!isCategoriesOpen);
+  };
+
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    if (option !== "Products" && option !== "Projects") {
+      setIsCategoriesOpen(false); // Close categories if a non-subcategory is selected
+    }
   };
 
   // Inline styles for hover and active states
@@ -53,6 +82,8 @@ const Sidebar = () => {
             src={GroupImage}
             alt="Group Logo"
             style={{
+              marginTop: 20,
+              marginBottom: 40,
               width: "150px",
               height: "auto",
             }}
@@ -66,7 +97,7 @@ const Sidebar = () => {
         <Nav.Link
           as={Link}
           to="/"
-          onClick={() => setSelectedOption("Home")}
+          onClick={() => handleOptionClick("Home")}
           className="mb-3"
           style={{
             ...linkStyles.base,
@@ -87,7 +118,7 @@ const Sidebar = () => {
         {/* Categories Button with Toggle */}
         <Nav.Link
           as="button"
-          onClick={() => setIsCategoriesOpen(!isCategoriesOpen)}
+          onClick={handleCategoriesClick}
           className="mb-3"
           style={{
             ...linkStyles.base,
@@ -119,7 +150,7 @@ const Sidebar = () => {
             <Nav.Link
               as={Link}
               to="/categories/products"
-              onClick={() => setSelectedOption("Products")}
+              onClick={() => handleOptionClick("Products")}
               className="mb-2"
               style={{
                 ...linkStyles.base,
@@ -139,7 +170,7 @@ const Sidebar = () => {
             <Nav.Link
               as={Link}
               to="/categories/projects"
-              onClick={() => setSelectedOption("Projects")}
+              onClick={() => handleOptionClick("Projects")}
               className="mb-2"
               style={{
                 ...linkStyles.base,
@@ -163,7 +194,7 @@ const Sidebar = () => {
         <Nav.Link
           as={Link}
           to="/products"
-          onClick={() => setSelectedOption("All Products")}
+          onClick={() => handleOptionClick("All Products")}
           className="mb-3"
           style={{
             ...linkStyles.base,
@@ -185,7 +216,7 @@ const Sidebar = () => {
         <Nav.Link
           as={Link}
           to="/projects"
-          onClick={() => setSelectedOption("All Projects")}
+          onClick={() => handleOptionClick("All Projects")}
           className="mb-3"
           style={{
             ...linkStyles.base,
@@ -207,7 +238,7 @@ const Sidebar = () => {
         <Nav.Link
           as={Link}
           to="/brands"
-          onClick={() => setSelectedOption("Brands")}
+          onClick={() => handleOptionClick("Brands")}
           className="mb-3"
           style={{
             ...linkStyles.base,

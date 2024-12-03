@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons for show/hide password
 import { Link, useNavigate } from "react-router-dom"; // Import Link and useNavigate for routing
-import axios from "axios"; // Import Axios for API calls
 import LoginImage from "../../../Assets/Images/LoginImage.png";
 import LoginSide from "../../../Assets/Images/LoginSide.png";
+import theme from "../../../Assets/colors/styles";
 
 function Login() {
   const navigate = useNavigate(); // For navigation after login
   const [credentials, setCredentials] = useState({
-    email: "admin@123.com",
-    password: "123456",
+    email: "",
+    password: "",
   });
   const [showPassword, setShowPassword] = useState(false); // Toggle password visibility
   const [errorMessage, setErrorMessage] = useState(""); // State for error messages
@@ -91,166 +90,167 @@ function Login() {
 
       {/* Right Half with logo and login form */}
       <div
-        style={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          marginLeft: "50px",
-          alignItems: "left",
-          backgroundColor: "#ffffff",
-        }}
-      >
-        {/* Logo */}
-        <div style={{ position: "absolute", top: "5%", textAlign: "left" }}>
-          <img
-            src={LoginImage}
-            alt="Logo"
-            style={{ width: "150px", height: "auto" }}
-          />
-        </div>
+  style={{
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    marginLeft: "50px",
+    alignItems: "flex-start", // Use 'flex-start' to align everything to the left
+    backgroundColor: "#ffffff",
+  }}
+>
+  {/* Logo */}
+  <div style={{ position: "absolute", top: "5%", textAlign: "left" }}>
+    <img
+      src={LoginImage}
+      alt="Logo"
+      style={{ width: "250px", height: "auto" }}
+    />
+  </div>
 
-        <div
+  <div
+    style={{
+      textAlign: "left",
+      color: "#B6985A",
+      marginRight: "200px",
+    }}
+  >
+    <h2
+      style={{
+        textAlign: "left",
+        color: "#B6985A",
+        fontWeight:"bold",
+        paddingLeft:20,
+        marginBottom:20,
+      }}
+    >
+      Login to Your
+      <br /> Account
+    </h2>
+  </div>
+
+  {/* Login Form */}
+  <div
+    style={{
+      width: "80%",
+      maxWidth: "400px",
+      padding: "20px",
+      borderRadius: "8px",
+      backgroundColor: "#fff",
+      textAlign: "left", // Align the form contents to the left
+    }}
+  >
+    <form onSubmit={handleSubmit}>
+      {/* Email Input */}
+      <div style={{ marginBottom: "15px" }}>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email"
+          value={credentials.email}
+          onChange={handleChange}
           style={{
-            marginBottom: "20px",
-            textAlign: "left",
-            color: "#B6985A",
+            width: "100%",
+            padding: "10px",
+            borderRadius: "4px",
+            border: "1px solid #ddd",
           }}
-        >
-          <h2>
-            Login to Your
-            <br /> Account
-          </h2>
-        </div>
-
-        {/* Login Form */}
-        <div
-          style={{
-            width: "80%",
-            maxWidth: "400px",
-            padding: "20px",
-            borderRadius: "8px",
-            backgroundColor: "#fff",
-          }}
-        >
-          <form onSubmit={handleSubmit}>
-            {/* Email Input */}
-            <div style={{ marginBottom: "15px" }}>
-              <label
-                htmlFor="email"
-                style={{
-                  display: "block",
-                  marginBottom: "5px",
-                  fontWeight: "bold",
-                }}
-              >
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Enter your email"
-                value={credentials.email}
-                onChange={handleChange}
-                style={{
-                  width: "100%",
-                  padding: "10px",
-                  borderRadius: "4px",
-                  border: "1px solid #ddd",
-                }}
-                required
-              />
-            </div>
-
-            {/* Password Input with Show/Hide Icon */}
-            <div style={{ marginBottom: "15px", position: "relative" }}>
-              <label
-                htmlFor="password"
-                style={{
-                  display: "block",
-                  marginBottom: "5px",
-                  fontWeight: "bold",
-                }}
-              >
-                Password
-              </label>
-              <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                name="password"
-                placeholder="Enter your password"
-                value={credentials.password}
-                onChange={handleChange}
-                style={{
-                  width: "100%",
-                  padding: "10px",
-                  borderRadius: "4px",
-                  border: "1px solid #ddd",
-                }}
-                required
-              />
-              <span
-                onClick={togglePasswordVisibility}
-                style={{
-                  position: "absolute",
-                  right: "10px",
-                  top: "35px",
-                  cursor: "pointer",
-                  color: "#888",
-                }}
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </span>
-            </div>
-
-            {/* Error Message */}
-            {errorMessage && (
-              <div
-                style={{
-                  color: "red",
-                  marginBottom: "15px",
-                  fontSize: "14px",
-                  textAlign: "left",
-                }}
-              >
-                {errorMessage}
-              </div>
-            )}
-
-            {/* Forgot Password Link */}
-            <div style={{ textAlign: "left", marginBottom: "15px" }}>
-              <Link
-                to="/reset-password"
-                style={{
-                  textDecoration: "none",
-                  color: "#000000",
-                  fontSize: "14px",
-                }}
-              >
-                Forgot Password?
-              </Link>
-            </div>
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              style={{
-                width: "100%",
-                padding: "10px",
-                borderRadius: "4px",
-                border: "none",
-                backgroundColor: "#007BFF",
-                color: "#fff",
-                fontWeight: "bold",
-                cursor: "pointer",
-              }}
-            >
-              Login
-            </button>
-          </form>
-        </div>
+          required
+        />
       </div>
+
+      {/* Password Input with Show/Hide Icon */}
+      <div style={{ marginBottom: "15px", position: "relative" }}>
+        <input
+          type={showPassword ? "text" : "password"}
+          id="password"
+          name="password"
+          placeholder="Password"
+          value={credentials.password}
+          onChange={handleChange}
+          style={{
+            width: "100%",
+            padding: "10px",
+            borderRadius: "4px",
+            border: "1px solid #ddd",
+          }}
+          required
+        />
+        <span
+          onClick={togglePasswordVisibility}
+          style={{
+            position: "absolute",
+            right: "10px",
+            top: "50%",
+            transform: "translateY(-50%)",
+            cursor: "pointer",
+            color: "#888",
+          }}
+        >
+          {showPassword ? (
+      <i className="bi bi-eye-slash" style={{ fontSize: "16px" }}></i> // Bootstrap icon for "eye-slash"
+    ) : (
+      <i className="bi bi-eye" style={{ fontSize: "16px" }}></i> // Bootstrap icon for "eye"
+    )}
+        </span>
+      </div>
+
+      {/* Error Message */}
+      {errorMessage && (
+        <div
+          style={{
+            color: "red",
+            marginBottom: "15px",
+            fontSize: "14px",
+            textAlign: "left",
+          }}
+        >
+          {errorMessage}
+        </div>
+      )}
+
+      {/* Forgot Password Link */}
+      <div style={{ textAlign: "left", marginBottom: "15px" }}>
+        <Link
+         
+          style={{
+            textDecoration: "none",
+            color: "#000000",
+            fontSize: "14px",
+          }}
+        >
+          Forgot your Password?
+        </Link>
+      </div>
+
+      {/* Submit Button */}
+      <button
+  type="submit"
+  style={{
+    width: "100%",
+    padding: "10px 20px", // Adjust padding to fit both text and icon
+    borderRadius: "4px",
+    border: "none",
+    backgroundColor: theme.colors.buttonPrimary,
+    color: "#fff",
+    fontWeight: "bold",
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center", // Align items vertically in the center
+    justifyContent: "space-between", // Space out the text and the icon
+    height: "48px", // You can adjust this height as needed
+  }}
+>
+  <span>Login</span>
+  <i className="bi bi-arrow-right" style={{ fontSize: "18px" }}></i> {/* Right arrow icon */}
+</button>
+
+    </form>
+  </div>
+</div>
+
     </div>
   );
 }
