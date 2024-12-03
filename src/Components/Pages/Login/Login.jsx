@@ -25,7 +25,7 @@ function Login() {
     }
 
     // Mock login logic
-    if (credentials.email === "admin@123.com" && credentials.password === "123456") {
+    if (credentials.email === "admin@123.com" && credentials.password === "123@abc") {
       localStorage.setItem("token", "mock-token");
       navigate("/");
     } else {
