@@ -2,9 +2,15 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginImage from "../../../Assets/Images/LoginImage.png";
 import LoginSide from "../../../Assets/Images/LoginSide.png";
+import RightCorner from "../../../Assets/Images/cornerright.png";
 import theme from "../../../Assets/colors/styles";
+import { useAuth } from "../../../AuthContext";
+
+
+
 
 function Login() {
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +32,8 @@ function Login() {
 
     // Mock login logic
     if (credentials.email === "admin@123.com" && credentials.password === "123@abc") {
-      localStorage.setItem("token", "mock-token");
+      const mockToken = "mock-token";
+      login(mockToken); // Update context
       navigate("/");
     } else {
       setErrorMessage("Invalid email or password. Please try again.");
@@ -129,6 +136,16 @@ function Login() {
           </form>
         </div>
       </div>
+
+      <div
+          style={{
+            position: "absolute",
+            bottom: "0px", // Adjust to your liking
+            right: "0px", // Adjust to your liking
+          }}
+        >
+          <img src={RightCorner} style={{ width: "350px", height: "auto" }} />
+        </div>
     </div>
   );
 }

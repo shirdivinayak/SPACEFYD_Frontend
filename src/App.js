@@ -1,25 +1,10 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-  useLocation,
-} from "react-router-dom";
-
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import Login from "./Components/Pages/Login/Login";
 import Sidebar from "./Components/common/Sidebar";
 import TopNavbar from "./Components/common/Topnavbar";
-import Home from "./Components/Pages/Home/MainContent";
-import Product from "./Components/Pages/Products/Products";
-import Project from "./Components/Pages/Projects/Project";
-import ProductCategory from "./Components/Pages/Category/ProductCategory/ProductCategory";
-import ProjectCategory from "./Components/Pages/Category/ProjectCategory/ProjectCategory";
-import EditProductScreen from "./Components/Pages/Products/Editproduct";
-import AddProject from "./Components/Pages/Projects/AddProjetcs";
-import EditProjectScreen from "./Components/Pages/Projects/EditProject";
-import AddProduct from "./Components/Pages/Products/AddProduct";
-import { AuthProvider, useAuth } from "./AuthContext";
+import AdminRoutes from "./Routes/AdminRoutes";
+import { AuthProvider } from "./AuthContext";
 
 function App() {
   const Layout = ({ children }) => {
@@ -51,33 +36,12 @@ function App() {
           <Routes>
             {/* Login Route */}
             <Route path="/login" element={<Login />} />
-
-            {/* Protected Routes */}
-            <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
-            <Route path="/categories/products" element={<PrivateRoute><ProductCategory /></PrivateRoute>} />
-            <Route path="/categories/projects" element={<PrivateRoute><ProjectCategory /></PrivateRoute>} />
-            <Route path="/products" element={<PrivateRoute><Product /></PrivateRoute>} />
-            <Route path="/projects" element={<PrivateRoute><Project /></PrivateRoute>} />
-            <Route path="/projects/addprojects" element={<PrivateRoute><AddProject /></PrivateRoute>} />
-            <Route path="/projects/editprojects" element={<PrivateRoute><EditProjectScreen /></PrivateRoute>} />
-            <Route path="/products/EditProduct" element={<PrivateRoute><EditProductScreen /></PrivateRoute>} />
-            <Route path="/products/AddProduct" element={<PrivateRoute><AddProduct /></PrivateRoute>} />
+            <Route path="/*" element={<AdminRoutes />} />
           </Routes>
         </Layout>
       </Router>
     </AuthProvider>
   );
 }
-
-// Protected Route Component
-const PrivateRoute = ({ children }) => {
-  const { user, loading } = useAuth();
-
-  if (loading) {
-    return <div>Loading...</div>; // Placeholder while loading
-  }
-
-  return user ? children : <Navigate to="/login" />;
-};
 
 export default App;
