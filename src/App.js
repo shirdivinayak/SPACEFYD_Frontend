@@ -31,7 +31,7 @@ function App() {
     }
 
     return (
-      <div className="d-flex">
+      <div className="d-flex" style={{backgroundColor:"#011140"}}>
         <Sidebar />
         <div
           className="flex-grow-1"

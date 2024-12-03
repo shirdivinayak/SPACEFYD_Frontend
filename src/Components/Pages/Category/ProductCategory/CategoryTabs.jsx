@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap";
 import AlertSuccesMessage from "../../../common/MessageSuccesAlert";
 import useCategoryApi from "../../../../hooks/useCategoryApi";
+import theme from "../../../../Assets/colors/styles";
 
 const CategoryTabs = () => {
   const [activeTab, setActiveTab] = useState("addCategory");
@@ -92,8 +93,8 @@ const CategoryTabs = () => {
               style={{
                 color:
                   activeTab === "addCategory"
-                    ? "#184BD3"
-                    : "rgba(24, 75, 211, 0.6)",
+                    ? theme.colors.primary
+                    : theme.colors.secondaryButton,
                 borderBottom:
                   activeTab === "addCategory" ? "5px solid #184BD3" : "none",
                 backgroundColor: "transparent",
@@ -110,8 +111,8 @@ const CategoryTabs = () => {
               style={{
                 color:
                   activeTab === "addSubCategory"
-                    ? "#184BD3"
-                    : "rgba(24, 75, 211, 0.6)",
+                  ? theme.colors.primary
+                  : theme.colors.secondaryButton,
                 borderBottom:
                   activeTab === "addSubCategory" ? "5px solid #184BD3" : "none",
                 backgroundColor: "transparent",
@@ -137,7 +138,7 @@ const CategoryTabs = () => {
                       style={{
                         fontSize: "16px",
                         fontWeight: "400",
-                        color: "#474747",
+                        color: theme.colors.TextPrimary,
                         opacity: "0.51",
                       }}
                     >
@@ -196,7 +197,7 @@ const CategoryTabs = () => {
                       style={{
                         fontSize: "16px",
                         fontWeight: "400",
-                        color: "#474747",
+                        color: theme.colors.TextPrimary,
                         opacity: "0.51",
                       }}
                     >
@@ -228,7 +229,7 @@ const CategoryTabs = () => {
                       paddingLeft: "20px",
                       paddingRight: "20px",
                       marginTop: "30px",
-                      backgroundColor: "#184BD3",
+                      backgroundColor: theme.colors.primary
                     }}
                   >
                     Submit
@@ -248,7 +249,7 @@ const CategoryTabs = () => {
                       style={{
                         fontSize: "16px",
                         fontWeight: "400",
-                        color: "#474747",
+                        color: theme.colors.TextPrimary,
                         opacity: "0.51",
                       }}
                     >
@@ -274,7 +275,7 @@ const CategoryTabs = () => {
                       paddingLeft: "20px",
                       paddingRight: "20px",
                       marginTop: "30px",
-                      backgroundColor: "#184BD3",
+                      backgroundColor: theme.colors.primary
                     }}
                   >
                     Submit

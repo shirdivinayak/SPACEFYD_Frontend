@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Button, Table, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import useFetchProducts from "../../../hooks/useAllProjectlistApi"; // Adjust the path
 import useFetchCategories from "../../../hooks/useAllProjectApi"; // Adjust path
-
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AlertMessage from "../../common/MessageAlert";
@@ -10,108 +10,15 @@ import AlertMessage from "../../common/MessageAlert";
 const ProductTable = () => {
   const navigate = useNavigate();
 
-  
-
-  const productData = [
-    {
-      id: `#56674`,
-      name: "Rigo Solid Wood",
-      category: "Furniture",
-      location: "Seating",
-      sqrft: "Home Centre",
-      image: "https://via.placeholder.com/50",
-      onlive: "1",
-    },
-    {
-      id: `#56675`,
-      name: "Modern Sofa",
-      category: "Furniture",
-      location: "Seating",
-      sqrft: "Furniture Plus",
-      image: "https://via.placeholder.com/50",
-      onlive: "1",
-    },
-    {
-      id: `#56676`,
-      name: "Indoor Plant",
-      category: "Furniture",
-      location: "Greenery",
-      sqrft: "Green Homes",
-      image: "https://via.placeholder.com/50",
-      onlive: "0",
-    },
-    {
-      id: `#56677`,
-      name: "Decorative Vase",
-      category: "Decorations",
-      location: "Vases",
-      sqrft: "Home Living",
-      image: "https://via.placeholder.com/50",
-      onlive: "1",
-    },
-    {
-      id: `#56678`,
-      name: "Dining Table Set",
-      category: "Dining",
-      location: "Furniture",
-      sqrft: "Luxury Furnishings",
-      image: "https://via.placeholder.com/50",
-      onlive: "1",
-    },
-    {
-      id: `#56679`,
-      name: "Wall Art",
-      category: "Decorations",
-      location: "Art",
-      sqrft: "DecorCraft",
-      image: "https://via.placeholder.com/50",
-      onlive: "0",
-    },
-    {
-      id: `#56680`,
-      name: "LED Ceiling Light",
-      category: "Lighting",
-      location: "Ceiling Lights",
-      sqrft: "Bright Lights",
-      image: "https://via.placeholder.com/50",
-      onlive: "0",
-    },
-    {
-      id: `#56681`,
-      name: "Outdoor Chair",
-      category: "Outdoor",
-      location: "Furniture",
-      sqrft: "Outdoor Living",
-      image: "https://via.placeholder.com/50",
-      onlive: "1",
-    },
-    {
-      id: `#56682`,
-      name: "Storage Shelf",
-      category: "Storage",
-      location: "Shelves",
-      sqrft: "Space Saver",
-      image: "https://via.placeholder.com/50",
-      onlive: "1",
-    },
-    {
-      id: `#56683`,
-      name: "Table Lamp",
-      category: "Lighting",
-      location: "Lamps",
-      sqrft: "Lighting World",
-      image: "https://via.placeholder.com/50",
-      onlive: "0",
-    },
-  ];
-
-  const [items, setItems] = useState(productData);
+  const { products, loading: productsLoading, error: productsError } = useFetchProducts();
+  const [items, setItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All Projects");
   const [message, setMessage] = useState("");
   const tabsRef = useRef(null);
   const [isOnLive, setIsOnLive] = useState(false);
-  const { categories, loading, error } = useFetchCategories();
+  const { categories, loading: categoriesLoading, error: categoriesError } = useFetchCategories();
+  console.log(products.data);
 // Setting the default selected category
 useEffect(() => {
   if (!selectedCategory) {
@@ -136,8 +43,8 @@ useEffect(() => {
     }
   };
 
-  const handleAdd = (product) => {
-    navigate('/projects/addprojects', { state: { item: product } });
+  const handleAdd = (Products) => {
+    navigate('/projects/addprojects', { state: { item: Products } });
   };
 
   const handleGlobalToggle = () => {
@@ -151,8 +58,8 @@ useEffect(() => {
       setSelectedItems([]);
     }
   };
-  const handleEdit = (product) => {
-    navigate('/projects/editprojects', { state: { item: product } });
+  const handleEdit = (s) => {
+    navigate('/projects/editprojects', { state: { item: products } });
   };
 
   const handleRemoveSelected = () => {
@@ -179,8 +86,8 @@ useEffect(() => {
     }
   };
 
-  if (loading) return <p>Loading categories...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (productsLoading || categoriesLoading) return <p>Loading...</p>;
+  if (productsError || categoriesError) return <p>Error loading data</p>;
   
   const filteredItems =
     selectedCategory === "All Projects"
@@ -253,21 +160,21 @@ useEffect(() => {
           >
 {filteredAndSortedCategories.map((category, index) => (
               <Button
-                key={index}
-                variant={
-                  selectedCategory === category ? "primary" : "btn-light"
-                }
-                className="mx-1"
-                onClick={() => handleCategorySelect(category)}
-                style={{
-                  backgroundColor:
-                    selectedCategory === category ? "#E0E8FF" : "white", // Custom background color
-                  color: selectedCategory === category ? "#184BD3" : "#011140", // Custom text color
-                  border: "none", // Match border color to the background color
-                  fontWeight: 500,
-                  fontSize: "16px",
-                }}
-              >
+              key={index}
+              variant={
+                selectedCategory === category ? "primary" : "btn-light"
+              }
+              className="mx-1"
+              onClick={() => handleCategorySelect(category)}
+              style={{
+                backgroundColor:
+                  selectedCategory === category.name ? "#E0E8FF" : "white", // Custom background color
+                color: selectedCategory === category.name ? "#184BD3" : "#011140", // Custom text color
+                border: "none", // Match border color to the background color
+                fontWeight: 500,
+                fontSize: "16px",
+              }}
+            >
                 {category.name}
               </Button>
             ))}
@@ -289,7 +196,7 @@ useEffect(() => {
             alignItems: "center",
           }}
         >
-          <i class="bi bi-chevron-compact-left"></i>
+          <i className="bi bi-chevron-compact-left"></i>
         </Button>
 
         <Button
@@ -308,7 +215,7 @@ useEffect(() => {
             alignItems: "center",
           }}
         >
-          <i class="bi bi-chevron-compact-right"></i>
+          <i className="bi bi-chevron-compact-right"></i>
         </Button>
       </div>
 
@@ -442,6 +349,7 @@ useEffect(() => {
           </thead>
           <tbody>
             {filteredItems.map((item) => (
+
               <tr key={item.id}>
                 <td style={{ borderBottom: true }}>
                   <Form.Check
@@ -456,11 +364,11 @@ useEffect(() => {
                     }}
                   />
                 </td>
-                <td style={{ borderBottom: true }}>{item.name}</td>
+                <td style={{ borderBottom: true }}>{item.projectName}</td>
                 <td style={{ borderBottom: true }}>
                   <img src={item.image} alt={item.name} width="50" />
                 </td>
-                <td style={{ borderBottom: true }}>{item.category}</td>
+                <td style={{ borderBottom: true }}>{item.categoryName}</td>
                 <td style={{ borderBottom: true }}>{item.location}</td>
                 <td style={{ borderBottom: true }}>{item.sqrft}</td>
                 <td style={{ borderBottom: true }}>

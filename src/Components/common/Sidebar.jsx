@@ -36,6 +36,7 @@ const Sidebar = () => {
     <div
       className="Sidebar"
       style={{
+        // position: "fixed",
         width: "268px",
         height: "100vh",
         backgroundColor: "#011140",

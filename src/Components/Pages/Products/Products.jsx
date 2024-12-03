@@ -310,7 +310,7 @@ const filteredAndSortedCategories = categories
             alignItems: "center",
           }}
         >
-          <i class="bi bi-chevron-compact-left"></i>
+          <i className="bi bi-chevron-compact-left"></i>
         </Button>
 
         <Button

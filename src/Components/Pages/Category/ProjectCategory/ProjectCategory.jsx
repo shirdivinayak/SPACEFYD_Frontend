@@ -18,26 +18,32 @@ const ProjectCategory = () => {
 
   useEffect(() => {
     const loadCategories = async () => {
-      const response = await fetchProjectCategories();
-      if (response && Array.isArray(response.data)) {
-        const formattedCategories = response.data.map((item) => ({
-          id: item._id,
-          category: item.name || "Unnamed",
-        }));
-        // Reverse the order of categories
-        setItems(formattedCategories.reverse());
-      } else {
-        console.error("Invalid data format:", response);
-        setItems([]);
+      try {
+        const response = await fetchProjectCategories();
+        if (response && Array.isArray(response.data)) {
+          const formattedCategories = response.data.map((item) => ({
+            id: item._id,
+            category: item.name || "Unnamed",
+          }));
+          setItems(formattedCategories.reverse());
+        } else {
+          console.error("Invalid data format:", response);
+          setItems([]);
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
       }
     };
-    loadCategories();
   
+    loadCategories();
+  }, []); // Only on mount
+  
+  useEffect(() => {
     if (message) {
       const timer = setTimeout(() => setMessage(""), 3000);
       return () => clearTimeout(timer);
     }
-  }, [fetchProjectCategories, message, setMessage]);
+  }, [message, setMessage]);
   
 
   const handleEdit = (item) => {

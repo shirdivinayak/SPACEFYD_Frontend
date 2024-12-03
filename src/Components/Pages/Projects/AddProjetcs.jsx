@@ -310,7 +310,7 @@ const AddProject = () => {
                   marginTop: "10px", // Adjust the margin as needed
                 }}
               >
-                Product Code:
+                Location:
                 <input
                   type="text"
                   name="productCode"

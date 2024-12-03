@@ -23,7 +23,7 @@ const useProjectCategoryApi = () => {
   const fetchProjectCategories = async () => {
     try {
       setLoading(true);
-      const response = await axiosInstance.post("/displayProject");
+      const response = await axiosInstance.post("/displayCategory");
       return response.data; 
     } catch (error) {
       setError(error.response?.data?.message || "Failed to fetch categories.");
