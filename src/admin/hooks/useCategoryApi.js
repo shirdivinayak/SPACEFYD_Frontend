@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axiosInstance from "../instance/axiosInstance";
+import axiosInstance from "../../instance/axiosInstance";
 
 const useCategoryApi = () => {
   const [loading, setLoading] = useState(false);
