@@ -8,6 +8,7 @@ import ProductCategory from "../Components/Pages/Category/ProductCategory/Produc
 import ProjectCategory from "../Components/Pages/Category/ProjectCategory/ProjectCategory";
 import EditProductScreen from "../Components/Pages/Products/Editproduct";
 import AddProject from "../Components/Pages/Projects/AddProjetcs";
+import AddBrand from "../Components/Pages/brands/AddBrands";
 import EditProjectScreen from "../Components/Pages/Projects/EditProject";
 
 import AddProduct from "../Components/Pages/Products/AddProduct";
@@ -23,8 +24,8 @@ const AdminRoutes = () => {
       <Route path="/brands" element={<PrivateRoute><Brands /></PrivateRoute>} />
       <Route path="/projects" element={<PrivateRoute><Project /></PrivateRoute>} />
       <Route path="/projects/addprojects" element={<PrivateRoute><AddProject /></PrivateRoute>} />
+      <Route path="/brands/addbrands" element={<PrivateRoute><AddBrand /></PrivateRoute>} />
       <Route path="/projects/editprojects" element={<PrivateRoute><EditProjectScreen /></PrivateRoute>} />
-     
       <Route path="/products/editproduct" element={<PrivateRoute><EditProductScreen /></PrivateRoute>} />
       <Route path="/products/addproduct" element={<PrivateRoute><AddProduct /></PrivateRoute>} />
     </Routes>
