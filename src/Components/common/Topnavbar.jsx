@@ -3,22 +3,36 @@ import { Link, useNavigate } from "react-router-dom";
 import { Navbar, Form, FormControl, Container, Dropdown } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
 import { BiSearch } from "react-icons/bi";
-import { useAuth } from "../../AuthContext"; // Import the useAuth hook
+import { useAuth } from "../../AuthContext";
 
 const TopNavbar = () => {
-  const navigate = useNavigate(); // Initialize navigate function
-  const { logout } = useAuth(); // Get logout function from AuthContext
+  const navigate = useNavigate();
+  const { logout } = useAuth();
 
-  // Handle search form submit
   const handleSearchSubmit = (e) => {
-    e.preventDefault(); // Prevent form from submitting and causing redirection
-    // Add your search logic here (e.g., searching for products, etc.)
-    console.log("Searching...");
+    e.preventDefault();
+    const searchQuery = e.target.elements.search.value.trim().toLowerCase();
+
+    const routes = {
+      "products category": "/categories/products", // Navigate for 'products category'
+      "projects category": "/categories/projects",
+       projects: "/products",
+       brands: "/brands",
+       projects: "/projects",
+       projects: "/projects",
+        banner:"/"
+    };
+
+    if (routes[searchQuery]) {
+      navigate(routes[searchQuery]);
+    } else {
+      alert("No matching page found. Please try another search.");
+    }
   };
 
   const handleLogout = () => {
-    logout(); // Call the logout function to handle the logout process
-    navigate("/login"); // Redirect to the login page after logout
+    logout();
+    navigate("/login");
   };
 
   return (
@@ -32,27 +46,27 @@ const TopNavbar = () => {
       }}
     >
       <Container fluid className="d-flex align-items-center">
-        {/* Left side: Search Bar */}
         <Form
           className="position-relative"
           style={{ maxWidth: "500px", width: "100%", marginLeft: "auto" }}
-          onSubmit={handleSearchSubmit} // Add onSubmit handler to prevent form submit
+          onSubmit={handleSearchSubmit}
         >
           <FormControl
             type="text"
+            name="search"
             placeholder="Search"
             style={{
               borderRadius: "20px",
               boxShadow: "none",
               border: "1px solid #eaeaea",
-              paddingRight: "40px", // Offset for the icon
+              paddingRight: "40px",
             }}
           />
           <BiSearch
             style={{
               position: "absolute",
               top: "50%",
-              right: "15px", // Positioned to the right
+              right: "15px",
               transform: "translateY(-50%)",
               fontSize: "16px",
               color: "#aaa",
@@ -60,7 +74,6 @@ const TopNavbar = () => {
           />
         </Form>
 
-        {/* Right side: Admin Profile with Dropdown */}
         <Dropdown className="ms-3">
           <Dropdown.Toggle
             variant="light"
