@@ -4,7 +4,7 @@ import LoginImage from "../../../Assets/Images/LoginImage.png";
 import LoginSide from "../../../Assets/Images/LoginSide.png";
 import RightCorner from "../../../Assets/Images/cornerright.png";
 import theme from "../../../Assets/colors/styles";
-import { useAuth } from "../../../AuthContext";
+import { useAuth } from "../../../../AuthContext";
 
 function Login() {
   const { login } = useAuth();

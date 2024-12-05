@@ -1,13 +1,13 @@
-import { React } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   useLocation,
 } from "react-router-dom";
-import Login from "./Components/Pages/Login/Login";
-import Sidebar from "./Components/common/Sidebar";
-import TopNavbar from "./Components/common/Topnavbar";
+import Login from "./admin/Components/Pages/Login/Login";
+import Sidebar from "./admin/Components/common/Sidebar";
+import TopNavbar from "./admin/Components/common/Topnavbar";
 import AdminRoutes from "./Routes/AdminRoutes";
 import { AuthProvider } from "./AuthContext";
 

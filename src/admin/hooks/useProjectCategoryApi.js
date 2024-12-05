@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axiosInstance from "../instance/axiosInstance"; // Ensure the path is correct
+import axiosInstance from "../../instance/axiosInstance"; // Ensure the path is correct
 
 const useProjectCategoryApi = () => {
   const [loading, setLoading] = useState(false);

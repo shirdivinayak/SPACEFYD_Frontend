@@ -1,17 +1,17 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "../Components/Pages/Home/MainContent";
-import Product from "../Components/Pages/Products/Products";
-import Project from "../Components/Pages/Projects/Project";
-import Brands from "../Components/Pages/brands/brands";
-import ProductCategory from "../Components/Pages/Category/ProductCategory/ProductCategory";
-import ProjectCategory from "../Components/Pages/Category/ProjectCategory/ProjectCategory";
-import EditProductScreen from "../Components/Pages/Products/Editproduct";
-import AddProject from "../Components/Pages/Projects/AddProjetcs";
-import AddBrand from "../Components/Pages/brands/AddBrands";
-import EditProjectScreen from "../Components/Pages/Projects/EditProject";
+import Home from "../admin/Components/Pages/Home/MainContent";
+import Product from "../admin/Components/Pages/Products/Products";
+import Project from "../admin/Components/Pages/Projects/Project";
+import Brands from "../admin/Components/Pages/brands/brands";
+import ProductCategory from "../admin/Components/Pages/Category/ProductCategory/ProductCategory";
+import ProjectCategory from "../admin/Components/Pages/Category/ProjectCategory/ProjectCategory";
+import EditProductScreen from "../admin/Components/Pages/Products/Editproduct";
+import AddProject from "../admin/Components/Pages/Projects/AddProjetcs";
+import AddBrand from "../admin/Components/Pages/brands/AddBrands";
+import EditProjectScreen from "../admin/Components/Pages/Projects/EditProject";
 
-import AddProduct from "../Components/Pages/Products/AddProduct";
+import AddProduct from "../admin/Components/Pages/Products/AddProduct";
 import { PrivateRoute } from "./PrivateRoute";
 
 const AdminRoutes = () => {
