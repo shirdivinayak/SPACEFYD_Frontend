@@ -392,7 +392,7 @@ const ProductTable = () => {
                 <td style={{ borderBottom: true }}>{item.name}</td>
                 <td style={{ borderBottom: true }}>
                   <img
-                    src={item.image || "/default-image.png"}
+                    src={item.image || "./LoginSide.png"}
                     alt={item.name}
                     style={{
                       width: "50px",
