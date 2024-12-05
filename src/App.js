@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { React } from "react";
 import {
   BrowserRouter as Router,
@@ -8,6 +9,13 @@ import {
 import Login from "./Components/Pages/Login/Login";
 import Sidebar from "./Components/common/Sidebar";
 import TopNavbar from "./Components/common/Topnavbar";
+=======
+import React from "react";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import Login from "./admin/Components/Pages/Login/Login";
+import Sidebar from "./admin/Components/common/Sidebar";
+import TopNavbar from "./admin/Components/common/Topnavbar";
+>>>>>>> ajay-spacifyd
 import AdminRoutes from "./Routes/AdminRoutes";
 import { AuthProvider } from "./AuthContext";
 
