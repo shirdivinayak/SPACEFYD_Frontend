@@ -1,32 +1,46 @@
 import React, { useState } from "react";
-import { FaEye, FaEyeSlash, FaArrowRight } from "react-icons/fa"; // Import eye icons for show/hide password
-import { Link } from "react-router-dom"; // Import Link for routing
+import { useNavigate } from "react-router-dom";
 import LoginImage from "../../../Assets/Images/LoginImage.png";
-import LoginSide from "../../../Assets/Images/LoginSide.jpeg";
+import LoginSide from "../../../Assets/Images/LoginSide.png";
+import RightCorner from "../../../Assets/Images/cornerright.png";
+import theme from "../../../Assets/colors/styles";
+import { useAuth } from "../../../AuthContext";
 
 function Login() {
-  const [credentials, setCredentials] = useState({
-    email: "",
-    password: "",
-  });
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setCredentials((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setCredentials((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitted Credentials:", credentials);
+    setErrorMessage("");
+
+    if (!credentials.email || !credentials.password) {
+      setErrorMessage("Please fill in both email and password.");
+      return;
+    }
+
+    // Mock login logic
+    if (
+      credentials.email === "admin@123.com" &&
+      credentials.password === "123@abc"
+    ) {
+      const mockToken = "mock-token";
+      login(mockToken); // Update context
+      navigate("/");
+    } else {
+      setErrorMessage("Invalid email or password. Please try again.");
+    }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev);
-  };
+  const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
   return (
     <div
@@ -34,71 +48,59 @@ function Login() {
         display: "flex",
         height: "100vh",
         width: "100%",
+        flexDirection: "row",
       }}
     >
-      {/* Left Half with the image */}
+      {/* Left Half */}
       <div
         style={{
-          width: "50%", // Ensure the left side takes exactly half of the width
+          flex: 1,
           backgroundImage: `url(${LoginSide})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       ></div>
 
-      {/* Right Half with logo and login form */}
+      {/* Right Half */}
       <div
         style={{
           width: "50%", // Ensure the right side takes exactly half of the width
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center", // Vertically centered
-          padding: "0 10%", // Horizontal padding for centering the content
+          justifyContent: "center",
+          paddingLeft: "50px",
           backgroundColor: "#ffffff",
           paddingBottom: "180px",
         }}
       >
-        {/* Logo */}
-        <div style={{ marginBottom: "20px", paddingBottom: "100px" }}>
+        <div style={{ position: "absolute", top: "5%" }}>
           <img
             src={LoginImage}
             alt="Logo"
-            style={{ width: "200px", height: "auto" }} // Larger logo
+            style={{ width: "250px", height: "auto" }}
           />
         </div>
-
-        {/* Title */}
-        <div
+        <h2
           style={{
-            marginBottom: "20px",
-            textAlign: "left",
             color: "#B6985A",
+            fontWeight: "bold",
+            marginBottom: 20,
+            paddingLeft: 20,
           }}
         >
-          <h2>
-            Login to Your
-            <br /> Account
-          </h2>
-        </div>
-
-        {/* Login Form */}
+          Login to Your <br /> Account
+        </h2>
         <div
-        // style={{
-        //   width: "100%",
-        //   maxWidth: "400px",
-        //   padding: "20px",
-        //   border: "1px solid #ddd",
-        //   borderRadius: "8px",
-        //   boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-        //   backgroundColor: "#fff",
-        // }}
+          style={{
+            maxWidth: "400px",
+            padding: "20px",
+            backgroundColor: "#fff",
+          }}
         >
           <form onSubmit={handleSubmit}>
-            {/* Email Input */}
             <div style={{ marginBottom: "15px" }}>
               <input
                 type="email"
-                id="email"
                 name="email"
                 placeholder="Email"
                 value={credentials.email}
@@ -112,12 +114,9 @@ function Login() {
                 required
               />
             </div>
-
-            {/* Password Input with Show/Hide Icon */}
             <div style={{ marginBottom: "15px", position: "relative" }}>
               <input
                 type={showPassword ? "text" : "password"}
-                id="password"
                 name="password"
                 placeholder="Password"
                 value={credentials.password}
@@ -130,7 +129,6 @@ function Login() {
                 }}
                 required
               />
-              {/* Eye Icon for Toggle */}
               <span
                 onClick={togglePasswordVisibility}
                 style={{
@@ -142,25 +140,16 @@ function Login() {
                   color: "#888",
                 }}
               >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                <i
+                  className={`bi ${showPassword ? "bi-eye" : "bi-eye-slash"}`}
+                />
               </span>
             </div>
-
-            {/* Forgot Password Link */}
-            <div style={{ textAlign: "left", marginBottom: "15px" }}>
-              <Link
-                to="/reset-password"
-                style={{
-                  textDecoration: "none",
-                  color: "#000000",
-                  fontSize: "14px",
-                }}
-              >
-                Forgot Password?
-              </Link>
-            </div>
-
-            {/* Submit Button */}
+            {errorMessage && (
+              <div style={{ color: "red", marginBottom: "15px" }}>
+                {errorMessage}
+              </div>
+            )}
             <button
               type="submit"
               style={{
@@ -170,18 +159,26 @@ function Login() {
                 width: "100%",
                 padding: "8px",
                 borderRadius: "4px",
-                border: "none",
-                backgroundColor: "#011140",
+                backgroundColor: theme.colors.buttonPrimary,
                 color: "#fff",
                 fontWeight: "bold",
                 cursor: "pointer",
               }}
             >
               <span>Login</span>
-              <FaArrowRight />
             </button>
           </form>
         </div>
+      </div>
+
+      <div
+        style={{
+          position: "absolute",
+          bottom: "0px", // Adjust to your liking
+          right: "0px", // Adjust to your liking
+        }}
+      >
+        <img src={RightCorner} style={{ width: "350px", height: "auto" }} />
       </div>
     </div>
   );

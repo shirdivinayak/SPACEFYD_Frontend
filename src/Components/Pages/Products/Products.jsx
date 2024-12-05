@@ -1,30 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Button, Table, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-
-
+import useFetchCategories from "../../../hooks/useAllProductApi"; // Adjust path
 import { Nav } from "react-bootstrap";
 import { Link, Navigate } from "react-router-dom";
 import AlertMessage from "../../common/MessageAlert";
 
 const ProductTable = () => {
   const navigate = useNavigate();
-  const categories = [
-    "All Products",
-    "Furniture",
-    "Plants",
-    "Decorations",
-    "Living",
-    "Dining",
-    "Lighting",
-    "Outdoor",
-    "Storage",
-    "On Sale",
-    "Lighting",
-    "Outdoor",
-    "Storage",
-    "On Sale",
-  ];
+ 
   const productData = [
     {
       id: `#56674`,
@@ -147,6 +131,8 @@ const ProductTable = () => {
   const [message, setMessage] = useState("");
   const tabsRef = useRef(null);
   const [isOnLive, setIsOnLive] = useState(false);
+  const { categories, loading, error } = useFetchCategories();
+
 
   useEffect(() => {
     if (message) {
@@ -157,8 +143,13 @@ const ProductTable = () => {
 
 
   const handleEdit = (product) => {
-    navigate('/EditProduct', { state: { item: product } });
+    navigate('/products/EditProduct', { state: { item: product } });
   };
+
+  const handleAdd = (product) => {
+    navigate('/products/AddProduct', { state: { item: product } });
+  };
+
 
   
   const handleCheckboxChange = (id) => {
@@ -195,7 +186,7 @@ const ProductTable = () => {
   };
 
   const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
+    setSelectedCategory(category.name); // Assuming category is an object with a name property
   };
 
   const scrollTabs = (direction) => {
@@ -205,12 +196,31 @@ const ProductTable = () => {
     }
   };
 
+  if (loading) return <p>Loading categories...</p>;
+  if (error) return <p>Error: {error}</p>;
+  
+  // Sorting logic to always place "All Products" first, then alphabetically for others
+ 
+
   const filteredItems =
     selectedCategory === "All Products"
       ? items.filter((item) => (isOnLive ? item.onlive === "1" : true))
       : items
           .filter((item) => item.category === selectedCategory)
           .filter((item) => (isOnLive ? item.onlive === "1" : true));
+  
+// Filter and sort categories with a check for undefined 'name' property
+const filteredAndSortedCategories = categories
+  .filter(category => category.name) // Make sure 'name' is defined
+  .sort((a, b) => {
+    // Prioritize "All Products" category
+    if (a.name === "All Products") return -1;
+    if (b.name === "All Products") return 1;
+    
+    // For the rest, sort alphabetically
+    return (a.name || '').localeCompare(b.name || '');
+  });
+
 
   return (
     <div className="container " style={{ padding: "0" }}>
@@ -231,7 +241,7 @@ const ProductTable = () => {
 
         <Button
           height="12px"
-          onClick={() => handleRemoveSelected()}
+          onClick={() => handleAdd()}
           variant="primary" // Keeps the button style, but we'll override the color
           className="text-white"
           style={{
@@ -262,7 +272,7 @@ const ProductTable = () => {
               height: "40px", // Set a fixed height for category tabs
             }}
           >
-            {categories.map((category, index) => (
+{filteredAndSortedCategories.map((category, index) => (
               <Button
                 key={index}
                 variant={
@@ -272,14 +282,14 @@ const ProductTable = () => {
                 onClick={() => handleCategorySelect(category)}
                 style={{
                   backgroundColor:
-                    selectedCategory === category ? "#E0E8FF" : "white", // Custom background color
-                  color: selectedCategory === category ? "#184BD3" : "#011140", // Custom text color
+                    selectedCategory === category.name ? "#E0E8FF" : "white", // Custom background color
+                  color: selectedCategory === category.name ? "#184BD3" : "#011140", // Custom text color
                   border: "none", // Match border color to the background color
                   fontWeight: 500,
                   fontSize: "16px",
                 }}
               >
-                {category}
+                {category.name}
               </Button>
             ))}
           </div>
@@ -300,7 +310,7 @@ const ProductTable = () => {
             alignItems: "center",
           }}
         >
-          <i class="bi bi-chevron-compact-left"></i>
+          <i className="bi bi-chevron-compact-left"></i>
         </Button>
 
         <Button

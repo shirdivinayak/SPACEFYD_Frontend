@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { IoClose } from "react-icons/io5";
+import ImageGalleryModal from "../../common/ImageGalleryModal";
 
-const Home = () => {
+const MainContent = () => {
   const [banners, setBanners] = useState({
     mainBanner: { image: null },
     banner1: { image: null },
@@ -13,6 +14,7 @@ const Home = () => {
 
   const [isChanged, setIsChanged] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const handleBannerImageUpload = (bannerKey, e) => {
     const file = e.target.files[0];
@@ -34,7 +36,8 @@ const Home = () => {
     setIsChanged(true);
   };
 
-  const handleImageClick = () => {
+  const handleImageClick = (index) => {
+    setCurrentImageIndex(index);
     setShowModal(true);
   };
 
@@ -43,21 +46,25 @@ const Home = () => {
     setIsChanged(false);
   };
 
-  const handleCancel = () => {
-    setBanners({
-      mainBanner: { image: null },
-      banner1: { image: null },
-      banner2: { image: null },
-      banner3: { image: null },
-      banner4: { image: null },
-    });
-    setIsChanged(false);
-  };
+  // const handleCancel = () => {
+  //   setBanners({
+  //     mainBanner: { image: null },
+  //     banner1: { image: null },
+  //     banner2: { image: null },
+  //     banner3: { image: null },
+  //     banner4: { image: null },
+  //   });
+  //   setIsChanged(false);
+  // };
+
+  const bannerKeys = ["banner1", "banner2", "banner3", "banner4", "mainBanner"];
+  const sampleImages = bannerKeys.map(
+    (key) => banners[key].image || `https://via.placeholder.com/150?text=${key}`
+  );
 
   return (
     <div className="container w-75 p-20" style={{ padding: "1rem" }}>
       <h3>Home</h3>
-
       <div className="container" style={{ marginTop: "2rem" }}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <div
@@ -69,14 +76,13 @@ const Home = () => {
             }}
           >
             {["banner1", "banner2", "banner3", "banner4"].map(
-              (bannerKey, index) => (
+              (bannerKey, idx) => (
                 <div
-                  key={index}
+                  key={idx}
                   style={{
                     width: "167px",
                     height: "95px",
                     border: "1px dashed #ccc",
-                    borderRadius: 0,
                     position: "relative",
                     overflow: "hidden",
                   }}
@@ -98,14 +104,14 @@ const Home = () => {
                     >
                       <img
                         src={banners[bannerKey].image}
-                        alt=""
+                        alt="Banner"
                         style={{
                           width: "100%",
                           height: "100%",
                           objectFit: "cover",
                           cursor: "pointer",
                         }}
-                        onClick={handleImageClick}
+                        onClick={() => handleImageClick(idx)}
                       />
                       <IoClose
                         style={{
@@ -155,7 +161,6 @@ const Home = () => {
                 width: "748px",
                 height: "421px",
                 border: "1px dashed #ccc",
-                borderRadius: 0,
                 overflow: "hidden",
                 position: "relative",
               }}
@@ -168,36 +173,17 @@ const Home = () => {
                 id="main-banner-upload"
               />
               {banners.mainBanner.image ? (
-                <div
+                <img
+                  src={banners.mainBanner.image}
+                  alt="Main Banner"
                   style={{
-                    position: "relative",
                     width: "100%",
                     height: "100%",
+                    objectFit: "cover",
+                    cursor: "pointer",
                   }}
-                >
-                  <img
-                    src={banners.mainBanner.image}
-                    alt=""
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      cursor: "pointer",
-                    }}
-                    onClick={handleImageClick}
-                  />
-                  <IoClose
-                    style={{
-                      position: "absolute",
-                      top: "5px",
-                      right: "5px",
-                      fontSize: "20px",
-                      color: "gray",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => handleBannerImageDelete("mainBanner")}
-                  />
-                </div>
+                  onClick={() => handleImageClick(4)}
+                />
               ) : (
                 <Button
                   variant="outline-secondary"
@@ -205,17 +191,14 @@ const Home = () => {
                     document.getElementById("main-banner-upload").click()
                   }
                   style={{
-                    textAlign: "center",
                     width: "100%",
                     height: "100%",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    fontSize: "0.9rem",
                   }}
                 >
-                  <i className="bi bi-plus-lg"></i> <br />
-                  Click here to upload Banner
+                  Upload Banner
                 </Button>
               )}
             </div>
@@ -230,14 +213,14 @@ const Home = () => {
               marginTop: "1rem",
             }}
           >
-            <Button
-              variant="outline-danger"
-              onClick={handleCancel}
-              style={{ marginRight: "0.5rem" }}
-            >
+            {/* <Button variant="outline-danger" onClick={handleCancel}>
               Cancel
-            </Button>
-            <Button variant="outline-success" onClick={handleSave}>
+            </Button> */}
+            <Button
+              variant="outline-success"
+              onClick={handleSave}
+              style={{ marginLeft: "0.5rem" }}
+            >
               Save
             </Button>
           </div>
@@ -245,64 +228,15 @@ const Home = () => {
       </div>
 
       {/* Image Modal */}
-      <Modal
+      <ImageGalleryModal
         show={showModal}
-        onHide={() => setShowModal(false)}
-        size="lg"
-        centered
-        backdrop="static"
-        style={{ backdropFilter: "blur(10px)" }}
-      >
-        <IoClose
-          style={{
-            position: "absolute",
-            top: "10px",
-            right: "20px",
-            fontSize: "25px",
-            cursor: "pointer",
-            color: "gray",
-            zIndex: "1051", // Ensure it's above the modal
-          }}
-          onClick={() => setShowModal(false)}
-        />
-        <Modal.Body
-          style={{ display: "flex", gap: "10px", background: "none" }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-              width: "30%",
-            }}
-          >
-            {["banner1", "banner2", "banner3", "banner4"].map((bannerKey) => (
-              <div
-                key={bannerKey}
-                style={{
-                  width: "167px",
-                  height: "95px",
-                  border: banners[bannerKey].image ? "none" : "1px dashed #ccc",
-                  background: banners[bannerKey].image
-                    ? `url(${banners[bannerKey].image}) center / cover`
-                    : "none",
-                }}
-              />
-            ))}
-          </div>
-          <div
-            style={{
-              width: "70%",
-              height: "421px",
-              background: banners.mainBanner.image
-                ? `url(${banners.mainBanner.image}) center / cover`
-                : "none",
-            }}
-          />
-        </Modal.Body>
-      </Modal>
+        handleClose={() => setShowModal(false)}
+        images={sampleImages}
+        currentImageIndex={currentImageIndex}
+        setCurrentImageIndex={setCurrentImageIndex}
+      />
     </div>
   );
 };
 
-export default Home;
+export default MainContent;

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Form, Button, Row, Col, Alert } from "react-bootstrap";
-import AlertSuccesMessage from "../../../common/MessageSuccesAlert";
-import useProjectCategoryApi from "../../../../hooks/useProjectCategoryApi";
+import AlertSuccesMessage from "../../common/MessageSuccesAlert";
+import useProjectCategoryApi from "../../../hooks/useProjectCategoryApi";
 
-const ProjectAddCategory = () => {
+const AddBrand = () => {
   const [categoryName, setCategoryName] = useState("");
 
   const {
@@ -16,17 +16,17 @@ const ProjectAddCategory = () => {
   } = useProjectCategoryApi();
 
   const handleAddCategory = async () => {
-    if (!categoryName.trim()) {
-      setError("Category name is required.");
-      return;
-    }
+    // if (!categoryName.trim()) {
+    //   setError("Category name is required.");
+    //   return;
+    // }
 
-    await addCategory({ name: categoryName });
-    setCategoryName(""); // Clear input field
-    setTimeout(() => {
-      setMessage(""); // Clear success message after 3 seconds
-      setError(null);  // Clear error message if present
-    }, 3000);
+    // await addCategory({ name: categoryName });
+    // setCategoryName(""); // Clear input field
+    // setTimeout(() => {
+    //   setMessage(""); // Clear success message after 3 seconds
+    //   setError(null);  // Clear error message if present
+    // }, 3000);
   };
 
   const handleKeyDown = (e) => {
@@ -51,11 +51,11 @@ const ProjectAddCategory = () => {
                   opacity: "0.8",
                 }}
               >
-                New Category Name
+                New Brand Name
               </Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter category name"
+                placeholder="Enter Brand name"
                 value={categoryName}
                 onChange={(e) => setCategoryName(e.target.value)}
                 onKeyDown={handleKeyDown}
@@ -90,4 +90,4 @@ const ProjectAddCategory = () => {
   );
 };
 
-export default ProjectAddCategory;
+export default AddBrand;

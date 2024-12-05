@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Tab,
   Nav,
@@ -10,58 +10,65 @@ import {
   Dropdown,
 } from "react-bootstrap";
 import AlertSuccesMessage from "../../../common/MessageSuccesAlert";
+import useCategoryApi from "../../../../hooks/useCategoryApi";
+import theme from "../../../../Assets/colors/styles";
 
 const CategoryTabs = () => {
   const [activeTab, setActiveTab] = useState("addCategory");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categoryName, setCategoryName] = useState("");
   const [subCategoryName, setSubCategoryName] = useState("");
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState(""); // State for validation error messages
 
-  const categories = ["furniture", "casde", "erje", "rtdt"]; // Example categories
+  const {
+    categories,
+    addCategory,
+    addSubCategory,
+    loading,
+    error,
+    message,
+    setMessage,
+    setError,
+  } = useCategoryApi();
 
-  const handleCategoryChange = (e) => {
-    setSelectedCategory(e.target.value);
-  };
+  const [filteredCategories, setFilteredCategories] = useState([]);
 
-  const handleAddCategory = () => {
-    if (!subCategoryName.trim()) {
-      setError("Category name is required.");
+  useEffect(() => {
+    // Filter out categories with empty or null names
+    const validCategories = categories.filter(
+      (category) => category.name && category.name.trim() !== ""
+    );
+    setFilteredCategories(validCategories);
+  }, [categories]);
+
+  const handleAddCategory = async () => {
+    if (!categoryName.trim()) {
+      setError("Please enter the category.");
       return;
     }
 
-    const msg = `New Category added`;
-    console.log(msg);
-    setMessage(msg);
-    setError("");
-    setSubCategoryName("");
-
-    setTimeout(() => {
-      setMessage("");
-    }, 3000);
+    await addCategory({ name: categoryName });
+    setCategoryName("");
+    setTimeout(() => setMessage(""), 3000);
   };
 
-  const handleAddSubCategory = () => {
-    if (!selectedCategory.trim()) {
+  const handleAddSubCategory = async () => {
+    if (!selectedCategory) {
       setError("Please select a category.");
       return;
     }
-    if (!categoryName.trim()) {
+
+    if (!subCategoryName.trim()) {
       setError("Sub Category name is required.");
       return;
     }
 
-    const msg = `New Sub Category added.`;
-    console.log(msg);
-    setMessage(msg);
-    setError("");
-    setCategoryName("");
+    await addSubCategory({
+      category: selectedCategory,
+      name: subCategoryName,
+    });
+    setSubCategoryName("");
     setSelectedCategory("");
-
-    setTimeout(() => {
-      setMessage("");
-    }, 3000);
+    setTimeout(() => setMessage(""), 3000);
   };
 
   const handleKeyDown = (e) => {
@@ -86,8 +93,8 @@ const CategoryTabs = () => {
               style={{
                 color:
                   activeTab === "addCategory"
-                    ? "#184BD3"
-                    : "rgba(24, 75, 211, 0.6)",
+                    ? theme.colors.primary
+                    : theme.colors.secondaryButton,
                 borderBottom:
                   activeTab === "addCategory" ? "5px solid #184BD3" : "none",
                 backgroundColor: "transparent",
@@ -104,8 +111,8 @@ const CategoryTabs = () => {
               style={{
                 color:
                   activeTab === "addSubCategory"
-                    ? "#184BD3"
-                    : "rgba(24, 75, 211, 0.6)",
+                  ? theme.colors.primary
+                  : theme.colors.secondaryButton,
                 borderBottom:
                   activeTab === "addSubCategory" ? "5px solid #184BD3" : "none",
                 backgroundColor: "transparent",
@@ -117,6 +124,7 @@ const CategoryTabs = () => {
             </Nav.Link>
           </Nav.Item>
         </Nav>
+
         <div style={{ borderBottom: "1px solid #ccc", marginTop: "0px" }}></div>
 
         <Tab.Content className="mt-4">
@@ -130,7 +138,7 @@ const CategoryTabs = () => {
                       style={{
                         fontSize: "16px",
                         fontWeight: "400",
-                        color: "#474747",
+                        color: theme.colors.TextPrimary,
                         opacity: "0.51",
                       }}
                     >
@@ -143,7 +151,7 @@ const CategoryTabs = () => {
                           width: "100%",
                           fontSize: "14px",
                           fontWeight: "400",
-                          color: "#757575", // Updated text color
+                          color: "#757575",
                           backgroundColor: "white",
                           border: "1px solid #ccc",
                           borderRadius: "4px",
@@ -151,39 +159,34 @@ const CategoryTabs = () => {
                           boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                           display: "flex",
                           justifyContent: "space-between",
-                          alignItems: "center", // Align text and icon properly
+                          alignItems: "center",
                         }}
                       >
-                        <span
-                          style={{
-                            fontSize: "14px",
-                            fontWeight: "400",
-                            color: "#757575",
-                          }}
-                        >
-                          {selectedCategory || "Select"}{" "}
-                          {/* Displays selected category or placeholder */}
-                        </span>
+                        {selectedCategory || "Select"}
                       </Dropdown.Toggle>
-
-                      <Dropdown.Menu style={{ width: "100%" }}>
-                        {categories.map((category, index) => (
-                          <Dropdown.Item
-                            key={index}
-                            onClick={() =>
-                              handleCategoryChange({
-                                target: { value: category },
-                              })
-                            }
-                            style={{
-                              fontSize: "14px",
-                              fontWeight: "400",
-                              color: "#757575",
-                            }} // Ensure consistent styling in the dropdown list
-                          >
-                            {category}
+                      <Dropdown.Menu
+                       style={{ 
+                        width: "100%", 
+                        maxHeight: "200px",  // Limit the dropdown's height
+                        overflowY: "auto",   // Enable vertical scrolling
+                        scrollbarWidth: "none", // For Firefox: hides scrollbar
+                        msOverflowStyle: "none", // For IE and Edge: hides scrollbar
+                      }}
+                      >
+                        {filteredCategories.length === 0 ? (
+                          <Dropdown.Item disabled style={{ padding: "10px" }}>
+                            No categories available
                           </Dropdown.Item>
-                        ))}
+                        ) : (
+                          filteredCategories.map((category) => (
+                            <Dropdown.Item
+                              key={category._id}
+                              onClick={() => setSelectedCategory(category.name)}
+                            >
+                              {category.name}
+                            </Dropdown.Item>
+                          ))
+                        )}
                       </Dropdown.Menu>
                     </Dropdown>
                   </Form.Group>
@@ -194,7 +197,7 @@ const CategoryTabs = () => {
                       style={{
                         fontSize: "16px",
                         fontWeight: "400",
-                        color: "#474747",
+                        color: theme.colors.TextPrimary,
                         opacity: "0.51",
                       }}
                     >
@@ -203,8 +206,8 @@ const CategoryTabs = () => {
                     <Form.Control
                       type="text"
                       placeholder="Enter sub category name"
-                      value={categoryName}
-                      onChange={(e) => setCategoryName(e.target.value)}
+                      value={subCategoryName}
+                      onChange={(e) => setSubCategoryName(e.target.value)}
                       onKeyDown={handleKeyDown}
                       style={{
                         width: "100%",
@@ -215,18 +218,18 @@ const CategoryTabs = () => {
                     />
                   </Form.Group>
                 </Col>
-                <Col md={4} className="px-4">
+                <Col md={4}>
                   <Button
                     variant="primary"
-                    type="button"
                     onClick={handleAddSubCategory}
+                    disabled={loading}
                     style={{
                       width: "auto",
                       height: "38px",
                       paddingLeft: "20px",
                       paddingRight: "20px",
                       marginTop: "30px",
-                      backgroundColor: "#184BD3",
+                      backgroundColor: theme.colors.primary
                     }}
                   >
                     Submit
@@ -235,20 +238,18 @@ const CategoryTabs = () => {
               </Row>
             </Form>
           </Tab.Pane>
+
           <Tab.Pane eventKey="addCategory">
-            <Form style={{ maxWidth: "600px", marginLeft: "0" }}>
+            <Form style={{ maxWidth: "600px" }}>
               {error && <Alert variant="danger">{error}</Alert>}
-              <Row
-                className="mb-3"
-                style={{ display: "flex", alignItems: "center" }}
-              >
+              <Row className="mb-3">
                 <Col md="auto">
                   <Form.Group controlId="subCategoryInput">
                     <Form.Label
                       style={{
                         fontSize: "16px",
                         fontWeight: "400",
-                        color: "#474747",
+                        color: theme.colors.TextPrimary,
                         opacity: "0.51",
                       }}
                     >
@@ -257,25 +258,24 @@ const CategoryTabs = () => {
                     <Form.Control
                       type="text"
                       placeholder="Enter category name"
-                      value={subCategoryName}
-                      onChange={(e) => setSubCategoryName(e.target.value)}
+                      value={categoryName}
+                      onChange={(e) => setCategoryName(e.target.value)}
                       onKeyDown={handleKeyDown}
-                      style={{ width: "281px" }}
                     />
                   </Form.Group>
                 </Col>
-                <Col md="auto" className="d-flex justify-content-start">
+                <Col md="auto">
                   <Button
                     variant="primary"
-                    type="button"
                     onClick={handleAddCategory}
+                    disabled={loading}
                     style={{
                       width: "auto",
                       height: "38px",
                       paddingLeft: "20px",
                       paddingRight: "20px",
                       marginTop: "30px",
-                      backgroundColor: "#184BD3",
+                      backgroundColor: theme.colors.primary
                     }}
                   >
                     Submit
@@ -285,9 +285,13 @@ const CategoryTabs = () => {
             </Form>
           </Tab.Pane>
         </Tab.Content>
+        {message && (
+          <AlertSuccesMessage
+            message={message}
+            onClose={() => setMessage("")}
+          />
+        )}
       </Tab.Container>
-
-      <AlertSuccesMessage message={message} />
     </div>
   );
 };

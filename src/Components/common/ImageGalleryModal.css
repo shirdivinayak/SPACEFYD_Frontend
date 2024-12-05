@@ -1,5 +1,5 @@
 /* Modal Overlay */
-.modal-overlay {
+/* .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -10,9 +10,9 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  }
+  } */
   
-  /* Image Container */
+  /* Image Container
   .image-container {
     position: relative;
     max-width: 80%;
@@ -26,9 +26,9 @@
     max-width: 100%;
     max-height: 100%;
     border-radius: 10px;
-  }
+  } */
   
-  /* Close Button */
+  /* Close Button
   .close-button {
     position: absolute;
     top: 20px;
@@ -42,7 +42,7 @@
   }
   
   /* Arrow Buttons */
-  .arrow-button {
+  /* .arrow-button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -52,13 +52,13 @@
     border-radius: 50%;
     cursor: pointer;
     font-size: 20px;
-  }
+  } */
   
-  .arrow-button.left {
+  /* .arrow-button.left {
     left: 20px;
   }
   
   .arrow-button.right {
     right: 20px;
   }
-  
+   */ 

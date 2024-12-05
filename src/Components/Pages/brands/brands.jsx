@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Button, Table, Form } from "react-bootstrap";
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import AlertMessage from "../../../common/MessageSuccesAlert";
-import EditCategoryModal from "./EditCategoryModal";
-import ProjectAddCategory from "./ProjectAddCategory";
-import useProjectCategoryApi from "../../../../hooks/useProjectCategoryApi"; // Adjust the path as needed
+import AlertMessage from "../../common/MessageSuccesAlert";
+import EditBrandModal from "./EditBrand";
+import AddBrand from "./AddBrands";
+import useProjectCategoryApi from "../../../hooks/useProjectCategoryApi"; // Adjust the path as needed
 
-const ProjectCategory = () => {
+const BrandTable = () => {
   const { fetchProjectCategories, loading, error, message, setMessage } =
     useProjectCategoryApi();
   const [items, setItems] = useState([]);
@@ -55,7 +55,7 @@ const ProjectCategory = () => {
     setItems((prevItems) =>
       prevItems.map((item) => (item.id === updatedItem.id ? updatedItem : item))
     );
-    setMessage("Category updated successfully.");
+    setMessage("Brand updated successfully.");
   };
 
   const handleCheckboxChange = (id) => {
@@ -95,7 +95,7 @@ const ProjectCategory = () => {
             Home
           </Nav.Link>
           <span> &gt; </span>
-          <span className="ms-2">Categories/ Projects</span>
+          <span className="ms-2">Brands</span>
         </h4>
       </div>
 
@@ -110,7 +110,7 @@ const ProjectCategory = () => {
               padding: "10px",
             }}
           >
-            Add Category
+            Add Brand
           </h4>
           <i
             className={`bi ${
@@ -120,7 +120,7 @@ const ProjectCategory = () => {
             onClick={() => setShowCategoryTabs(!showCategoryTabs)}
           ></i>
         </div>
-        {showCategoryTabs && <ProjectAddCategory />}
+        {showCategoryTabs && <AddBrand />}
       </div>
 
       {/* Category Table */}
@@ -132,7 +132,7 @@ const ProjectCategory = () => {
                 <Form.Check type="checkbox" onChange={handleSelectAll} />
               </th>
               <th style={{ width: "80%", fontWeight: 500, fontSize: "16px" }}>
-                Category
+                Brand
               </th>
               <th style={{ width: "23%" }}></th>
             </tr>
@@ -170,7 +170,7 @@ const ProjectCategory = () => {
 
       {/* Edit Modal */}
       {currentItem && (
-        <EditCategoryModal
+        <EditBrandModal
           show={showEditModal}
           handleClose={() => setShowEditModal(false)}
           categoryData={currentItem}
@@ -216,4 +216,4 @@ const ProjectCategory = () => {
   );
 };
 
-export default ProjectCategory;
+export default BrandTable;

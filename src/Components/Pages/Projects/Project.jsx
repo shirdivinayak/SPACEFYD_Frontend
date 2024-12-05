@@ -1,129 +1,39 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Button, Table, Form } from "react-bootstrap";
-
+import { useNavigate } from "react-router-dom";
+import useFetchProducts from "../../../hooks/useAllProjectlistApi"; // Adjust the path
+import useFetchCategories from "../../../hooks/useAllProjectApi"; // Adjust path
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AlertMessage from "../../common/MessageAlert";
 
 const ProductTable = () => {
-  const categories = [
-    "All Projects",
-    "Commercial",
-    "Residential",
-    "HealthCare",
-    "Retail",
-    "Landscaping",
-    "Lighting",
-    "Corporate",
-    
-  ];
+  const navigate = useNavigate();
 
-  const productData = [
-    {
-      id: `#56674`,
-      name: "Rigo Solid Wood",
-      category: "Furniture",
-      location: "Seating",
-      sqrft: "Home Centre",
-      image: "https://via.placeholder.com/50",
-      onlive: "1",
-    },
-    {
-      id: `#56675`,
-      name: "Modern Sofa",
-      category: "Furniture",
-      location: "Seating",
-      sqrft: "Furniture Plus",
-      image: "https://via.placeholder.com/50",
-      onlive: "1",
-    },
-    {
-      id: `#56676`,
-      name: "Indoor Plant",
-      category: "Plants",
-      location: "Greenery",
-      sqrft: "Green Homes",
-      image: "https://via.placeholder.com/50",
-      onlive: "0",
-    },
-    {
-      id: `#56677`,
-      name: "Decorative Vase",
-      category: "Decorations",
-      location: "Vases",
-      sqrft: "Home Living",
-      image: "https://via.placeholder.com/50",
-      onlive: "1",
-    },
-    {
-      id: `#56678`,
-      name: "Dining Table Set",
-      category: "Dining",
-      location: "Furniture",
-      sqrft: "Luxury Furnishings",
-      image: "https://via.placeholder.com/50",
-      onlive: "1",
-    },
-    {
-      id: `#56679`,
-      name: "Wall Art",
-      category: "Decorations",
-      location: "Art",
-      sqrft: "DecorCraft",
-      image: "https://via.placeholder.com/50",
-      onlive: "0",
-    },
-    {
-      id: `#56680`,
-      name: "LED Ceiling Light",
-      category: "Lighting",
-      location: "Ceiling Lights",
-      sqrft: "Bright Lights",
-      image: "https://via.placeholder.com/50",
-      onlive: "0",
-    },
-    {
-      id: `#56681`,
-      name: "Outdoor Chair",
-      category: "Outdoor",
-      location: "Furniture",
-      sqrft: "Outdoor Living",
-      image: "https://via.placeholder.com/50",
-      onlive: "1",
-    },
-    {
-      id: `#56682`,
-      name: "Storage Shelf",
-      category: "Storage",
-      location: "Shelves",
-      sqrft: "Space Saver",
-      image: "https://via.placeholder.com/50",
-      onlive: "1",
-    },
-    {
-      id: `#56683`,
-      name: "Table Lamp",
-      category: "Lighting",
-      location: "Lamps",
-      sqrft: "Lighting World",
-      image: "https://via.placeholder.com/50",
-      onlive: "0",
-    },
-  ];
-
-  const [items, setItems] = useState(productData);
+  const { products, loading: productsLoading, error: productsError } = useFetchProducts();
+  const [items, setItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All Projects");
   const [message, setMessage] = useState("");
   const tabsRef = useRef(null);
   const [isOnLive, setIsOnLive] = useState(false);
+  const { categories, loading: categoriesLoading, error: categoriesError } = useFetchCategories();
+  console.log(products.data);
+// Setting the default selected category
+useEffect(() => {
+  if (!selectedCategory) {
+    setSelectedCategory("All Projects");
+  }
+}, [selectedCategory]);
 
-  useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => setMessage(""), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [message]);
+// Handling message timeout
+useEffect(() => {
+  if (message) {
+    const timer = setTimeout(() => setMessage(""), 3000);
+    return () => clearTimeout(timer); // Cleanup timeout on unmount
+  }
+}, [message]);
+
 
   const handleCheckboxChange = (id) => {
     if (selectedItems.includes(id)) {
@@ -131,6 +41,10 @@ const ProductTable = () => {
     } else {
       setSelectedItems([...selectedItems, id]);
     }
+  };
+
+  const handleAdd = (Products) => {
+    navigate('/projects/addprojects', { state: { item: Products } });
   };
 
   const handleGlobalToggle = () => {
@@ -143,6 +57,9 @@ const ProductTable = () => {
     } else {
       setSelectedItems([]);
     }
+  };
+  const handleEdit = (s) => {
+    navigate('/projects/editprojects', { state: { item: products } });
   };
 
   const handleRemoveSelected = () => {
@@ -159,7 +76,7 @@ const ProductTable = () => {
   };
 
   const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
+    setSelectedCategory(category.name);
   };
 
   const scrollTabs = (direction) => {
@@ -169,13 +86,26 @@ const ProductTable = () => {
     }
   };
 
+  if (productsLoading || categoriesLoading) return <p>Loading...</p>;
+  if (productsError || categoriesError) return <p>Error loading data</p>;
+  
   const filteredItems =
     selectedCategory === "All Projects"
       ? items.filter((item) => (isOnLive ? item.onlive === "1" : true))
       : items
           .filter((item) => item.category === selectedCategory)
           .filter((item) => (isOnLive ? item.onlive === "1" : true));
-
+          const filteredAndSortedCategories = categories
+          .filter(category => category.name) // Make sure 'name' is defined
+          .sort((a, b) => {
+            // Prioritize "All Products" category
+            if (a.name === "All Projects") return -1;
+            if (b.name === "All Projects") return 1;
+            
+            // For the rest, sort alphabetically
+            return (a.name || '').localeCompare(b.name || '');
+          });
+        
   return (
     <div className="container " style={{ padding: "0" }}>
       <div
@@ -195,7 +125,7 @@ const ProductTable = () => {
 
         <Button
           height="12px"
-          onClick={() => handleRemoveSelected()}
+          onClick={() => handleAdd()}
           variant="primary" // Keeps the button style, but we'll override the color
           className="text-white"
           style={{
@@ -228,24 +158,24 @@ const ProductTable = () => {
               height: "40px", // Set a fixed height for category tabs
             }}
           >
-            {categories.map((category, index) => (
+{filteredAndSortedCategories.map((category, index) => (
               <Button
-                key={index}
-                variant={
-                  selectedCategory === category ? "primary" : "btn-light"
-                }
-                className="mx-1"
-                onClick={() => handleCategorySelect(category)}
-                style={{
-                  backgroundColor:
-                    selectedCategory === category ? "#E0E8FF" : "white", // Custom background color
-                  color: selectedCategory === category ? "#184BD3" : "#011140", // Custom text color
-                  border: "none", // Match border color to the background color
-                  fontWeight: 500,
-                  fontSize: "16px",
-                }}
-              >
-                {category}
+              key={index}
+              variant={
+                selectedCategory === category ? "primary" : "btn-light"
+              }
+              className="mx-1"
+              onClick={() => handleCategorySelect(category)}
+              style={{
+                backgroundColor:
+                  selectedCategory === category.name ? "#E0E8FF" : "white", // Custom background color
+                color: selectedCategory === category.name ? "#184BD3" : "#011140", // Custom text color
+                border: "none", // Match border color to the background color
+                fontWeight: 500,
+                fontSize: "16px",
+              }}
+            >
+                {category.name}
               </Button>
             ))}
           </div>
@@ -266,7 +196,7 @@ const ProductTable = () => {
             alignItems: "center",
           }}
         >
-          <i class="bi bi-chevron-compact-left"></i>
+          <i className="bi bi-chevron-compact-left"></i>
         </Button>
 
         <Button
@@ -285,7 +215,7 @@ const ProductTable = () => {
             alignItems: "center",
           }}
         >
-          <i class="bi bi-chevron-compact-right"></i>
+          <i className="bi bi-chevron-compact-right"></i>
         </Button>
       </div>
 
@@ -419,6 +349,7 @@ const ProductTable = () => {
           </thead>
           <tbody>
             {filteredItems.map((item) => (
+
               <tr key={item.id}>
                 <td style={{ borderBottom: true }}>
                   <Form.Check
@@ -433,17 +364,17 @@ const ProductTable = () => {
                     }}
                   />
                 </td>
-                <td style={{ borderBottom: true }}>{item.name}</td>
+                <td style={{ borderBottom: true }}>{item.projectName}</td>
                 <td style={{ borderBottom: true }}>
                   <img src={item.image} alt={item.name} width="50" />
                 </td>
-                <td style={{ borderBottom: true }}>{item.category}</td>
+                <td style={{ borderBottom: true }}>{item.categoryName}</td>
                 <td style={{ borderBottom: true }}>{item.location}</td>
                 <td style={{ borderBottom: true }}>{item.sqrft}</td>
                 <td style={{ borderBottom: true }}>
                   <Button
                     size="sm"
-                    onClick={() => {}}
+                    onClick={() => {handleEdit(item)}}
                     style={{
                       color: "blue", // Text color
                       backgroundColor: "transparent", // Background color set to transparent

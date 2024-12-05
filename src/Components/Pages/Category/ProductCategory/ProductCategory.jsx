@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import CategoryTabs from "./CategoryTabs";
 import AlertMessage from "../../../common/MessageSuccesAlert";
 import EditCategoryModal from "./EditCategoryModal";
-
+import theme from "../../../../Assets/colors/styles";
 const CategoryData = [
   {
     id: `#56674`,
@@ -203,7 +203,7 @@ const ProductCategory = () => {
                   borderBottom: true,
                   fontWeight: 500,
                   fontSize: 14,
-                  color: "#474747",
+                  color: theme.colors.TextPrimary,
                   width: "10%",
                 }}
               >
@@ -225,7 +225,7 @@ const ProductCategory = () => {
                   borderBottom: true,
                   fontWeight: 500,
                   fontSize: 16,
-                  color: "#474747",
+                  color: theme.colors.TextPrimary,
                   width: "20%",
                 }}
               >
@@ -238,7 +238,7 @@ const ProductCategory = () => {
                   borderBottom: true,
                   fontWeight: 500,
                   fontSize: "16px",
-                  color: "#474747",
+                  color: theme.colors.TextPrimary,
                   width: "50%",
                 }}
               >
@@ -251,7 +251,7 @@ const ProductCategory = () => {
                   borderBottom: true,
                   fontWeight: 500,
                   fontSize: "16px",
-                  color: "#474747",
+                  color: theme.colors.TextPrimary,
                 }}
               ></th>
             </tr>
