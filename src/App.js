@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -32,23 +32,6 @@ function App() {
         </div>
       </div>
     );
-  };
-
-  // State for the ImageGalleryModal
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [images, setImages] = useState([]);
-
-  // Function to open the modal
-  const openGallery = (imageList, index) => {
-    setImages(imageList);
-    setCurrentImageIndex(index);
-    setModalVisible(true);
-  };
-
-  // Function to close the modal
-  const closeGallery = () => {
-    setModalVisible(false);
   };
 
   return (
