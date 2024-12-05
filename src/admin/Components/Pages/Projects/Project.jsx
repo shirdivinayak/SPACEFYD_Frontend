@@ -1,65 +1,85 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Button, Table, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import useFetchProducts from "../../../hooks/useAllProjectlistApi"; // Adjust the path
-import useFetchCategories from "../../../hooks/useAllProjectApi"; // Adjust path
+import useFetchProducts from "../../../hooks/useAllProjectlistApi"; 
+import useFetchCategories from "../../../hooks/useAllProjectApi"; 
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AlertMessage from "../../common/MessageAlert";
 
 const ProductTable = () => {
   const navigate = useNavigate();
+  const {
+    products,
+    loading: productsLoading,
+    error: productsError,
+  } = useFetchProducts();
+  const {
+    categories,
+    loading: categoriesLoading,
+    error: categoriesError,
+  } = useFetchCategories();
 
-  const { products, loading: productsLoading, error: productsError } = useFetchProducts();
   const [items, setItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All Projects");
   const [message, setMessage] = useState("");
   const tabsRef = useRef(null);
   const [isOnLive, setIsOnLive] = useState(false);
-  const { categories, loading: categoriesLoading, error: categoriesError } = useFetchCategories();
-  console.log(products.data);
-// Setting the default selected category
-useEffect(() => {
-  if (!selectedCategory) {
-    setSelectedCategory("All Projects");
-  }
-}, [selectedCategory]);
+  // Setting the default selected category
+  useEffect(() => {
+    if (!selectedCategory) {
+      setSelectedCategory("All Projects");
+    }
+  }, [selectedCategory]);
 
-// Handling message timeout
-useEffect(() => {
-  if (message) {
-    const timer = setTimeout(() => setMessage(""), 3000);
-    return () => clearTimeout(timer); // Cleanup timeout on unmount
-  }
-}, [message]);
+  useEffect(() => {
+    if (products) {
+      const formattedProducts = products.map((item) => ({
+        id: item._id,
+        name: item.projectName || "Unnamed",
+        category: item.categoryName || "Uncategorized",
+        location: item.location || "N/A",
+        sqrFt: item.ProjectCode || "N/A",
+        image: item.image || null,
+        onlive: item.isVisible || "false",
+      }));
+      setItems(formattedProducts.reverse());
+    }
+  }, [products]);
 
+  // Handling message timeout
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => setMessage(""), 3000);
+      return () => clearTimeout(timer); // Cleanup timeout on unmount
+    }
+  }, [message]);
 
   const handleCheckboxChange = (id) => {
-    if (selectedItems.includes(id)) {
-      setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
-    } else {
-      setSelectedItems([...selectedItems, id]);
-    }
+    setSelectedItems((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((itemId) => itemId !== id)
+        : [...prevSelected, id]
+    );
   };
 
   const handleAdd = (Products) => {
-    navigate('/projects/addprojects', { state: { item: Products } });
+    navigate("/projects/addprojects");
   };
 
   const handleGlobalToggle = () => {
-    setIsOnLive((prevIsOnLive) => !prevIsOnLive);
+    setIsOnLive((prev) => !prev);
   };
 
   const handleSelectAll = (e) => {
-    if (e.target.checked) {
-      setSelectedItems(items.map((item) => item.id));
-    } else {
-      setSelectedItems([]);
-    }
+    setSelectedItems(e.target.checked ? items.map((item) => item.id) : []);
   };
+
   const handleEdit = (s) => {
-    navigate('/projects/editprojects', { state: { item: products } });
+    navigate("/projects/editprojects", {
+      state: { item: items.find((i) => i.id === s) },
+    });
   };
 
   const handleRemoveSelected = () => {
@@ -75,9 +95,10 @@ useEffect(() => {
     }
   };
 
-  const handleCategorySelect = (category) => {
-    setSelectedCategory(category.name);
+  const handleCategorySelect = (categoryName) => {
+    setSelectedCategory(categoryName);
   };
+
 
   const scrollTabs = (direction) => {
     if (tabsRef.current) {
@@ -87,25 +108,30 @@ useEffect(() => {
   };
 
   if (productsLoading || categoriesLoading) return <p>Loading...</p>;
-  if (productsError || categoriesError) return <p>Error loading data</p>;
-  
+  if ( categoriesError  || !categories) {
+    return <p>Error loading data or no data available</p>;
+  };
+
   const filteredItems =
-    selectedCategory === "All Projects"
-      ? items.filter((item) => (isOnLive ? item.onlive === "1" : true))
-      : items
-          .filter((item) => item.category === selectedCategory)
-          .filter((item) => (isOnLive ? item.onlive === "1" : true));
-          const filteredAndSortedCategories = categories
-          .filter(category => category.name) // Make sure 'name' is defined
-          .sort((a, b) => {
-            // Prioritize "All Products" category
-            if (a.name === "All Projects") return -1;
-            if (b.name === "All Projects") return 1;
-            
-            // For the rest, sort alphabetically
-            return (a.name || '').localeCompare(b.name || '');
-          });
-        
+  selectedCategory === "All Projects"
+    ? items.filter((item) => (isOnLive ? item.onlive === "true" : true))
+    : items.filter(
+        (item) =>
+          item.category === selectedCategory &&
+          (isOnLive ? item.onlive === "true" : true)
+      );
+
+
+  const filteredAndSortedCategories = categories
+  ?.filter((category) => category.name)
+  ?.concat()
+  ?.sort((a, b) => {
+    if (a.name === "All Projects") return -1;
+    if (b.name === "All Projects") return 1;
+    return a.name.localeCompare(b.name);
+  });
+
+
   return (
     <div className="container " style={{ padding: "0" }}>
       <div
@@ -150,7 +176,7 @@ useEffect(() => {
             className="d-flex overflow-hidden"
             ref={tabsRef}
             style={{
-              paddingRight:"90px",
+              paddingRight: "90px",
 
               maxWidth: "950px", // Control the visible width
               overflowX: "auto", // Enable horizontal scrolling
@@ -158,23 +184,24 @@ useEffect(() => {
               height: "40px", // Set a fixed height for category tabs
             }}
           >
-{filteredAndSortedCategories.map((category, index) => (
+          {filteredAndSortedCategories.map((category) => (
               <Button
-              key={index}
-              variant={
-                selectedCategory === category ? "primary" : "btn-light"
-              }
-              className="mx-1"
-              onClick={() => handleCategorySelect(category)}
-              style={{
-                backgroundColor:
-                  selectedCategory === category.name ? "#E0E8FF" : "white", // Custom background color
-                color: selectedCategory === category.name ? "#184BD3" : "#011140", // Custom text color
-                border: "none", // Match border color to the background color
-                fontWeight: 500,
-                fontSize: "16px",
-              }}
-            >
+                key={category.name}
+                variant={
+                  selectedCategory === category ? "primary" : "btn-light"
+                }
+                className="mx-1"
+                onClick={() => handleCategorySelect(category.name)}
+                style={{
+                  backgroundColor:
+                    selectedCategory === category.name ? "#E0E8FF" : "white", // Custom background color
+                  color:
+                    selectedCategory === category.name ? "#184BD3" : "#011140", // Custom text color
+                  border: "none", // Match border color to the background color
+                  fontWeight: 500,
+                  fontSize: "16px",
+                }}
+              >
                 {category.name}
               </Button>
             ))}
@@ -237,11 +264,11 @@ useEffect(() => {
                 <Form.Check
                   type="checkbox"
                   onChange={handleSelectAll}
+                  checked={selectedItems.length === items.length && items.length > 0}
                   style={{
                     transform: "scale(1.2)", // Scale the checkbox size
-                    fontSize:"20px",
-                    paddingLeft:"10px"
-
+                    fontSize: "20px",
+                    paddingLeft: "10px",
                   }}
                 />
               </th>
@@ -256,7 +283,6 @@ useEffect(() => {
                   color: "#474747",
                 }}
               >
-               
                 Name
               </th>
               <th
@@ -348,8 +374,8 @@ useEffect(() => {
             </tr>
           </thead>
           <tbody>
-            {filteredItems.map((item) => (
-
+          {filteredItems.map((item) => (
+           
               <tr key={item.id}>
                 <td style={{ borderBottom: true }}>
                   <Form.Check
@@ -358,23 +384,32 @@ useEffect(() => {
                     onChange={() => handleCheckboxChange(item.id)}
                     style={{
                       transform: "scale(1.2)", // Scale the checkbox size
-                      fontSize:"20px",
-                      paddingLeft:"10px"
-
+                      fontSize: "20px",
+                      paddingLeft: "10px",
                     }}
                   />
                 </td>
-                <td style={{ borderBottom: true }}>{item.projectName}</td>
+                <td style={{ borderBottom: true }}>{item.name}</td>
                 <td style={{ borderBottom: true }}>
-                  <img src={item.image} alt={item.name} width="50" />
+                  <img
+                    src={item.image || "/default-image.png"}
+                    alt={item.name}
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      objectFit: "cover",
+                    }}
+                  />
                 </td>
-                <td style={{ borderBottom: true }}>{item.categoryName}</td>
+                <td style={{ borderBottom: true }}>{item.category}</td>
                 <td style={{ borderBottom: true }}>{item.location}</td>
-                <td style={{ borderBottom: true }}>{item.sqrft}</td>
+                <td style={{ borderBottom: true }}>{item.sqrFt}</td>
                 <td style={{ borderBottom: true }}>
                   <Button
                     size="sm"
-                    onClick={() => {handleEdit(item)}}
+                    onClick={() => {
+                      handleEdit(item);
+                    }}
                     style={{
                       color: "blue", // Text color
                       backgroundColor: "transparent", // Background color set to transparent
@@ -402,7 +437,6 @@ useEffect(() => {
 
       {/*message section*/}
       <AlertMessage message={message} />
-
 
       {/* Footer section */}
       {selectedItems.length > 0 && (

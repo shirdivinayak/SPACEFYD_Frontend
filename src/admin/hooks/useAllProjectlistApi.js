@@ -11,15 +11,9 @@ const useFetchProducts = (apiUrl) => {
       setLoading(true);
       try {
         const response = await axiosInstance.post("/displayProject"); // Adjust endpoint as needed
-        // console.log(response)
-        // console.log(response.json());
-        // console.log(response)
-        // const {data}=response
-        // console.log(typeof(response))
-        // const {data}=response
-        console.log(typeof(response))
-        setProducts(response.data[0]); // Safset categories
-        console.log(response);
+        setProducts(response.data || []); // Safset categories
+        console.log(response.data)
+
       } catch (err) {
         setError(err.response?.data?.message || "Failed to fetch categories."); // Fix reference here
       } finally {
