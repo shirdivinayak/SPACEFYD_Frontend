@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Dropdown, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AlertSuccesMessage from "../../common/MessageSuccesAlert";
+import useAddProjectApi from "../../../hooks/useAddProjectApi.js";
 
 const categories = ["Electronics", "Furniture", "Clothing", "Toys"];
 const subCategories = {
@@ -14,21 +15,48 @@ const subCategories = {
 const brands = ["Samsung", "Ikea", "Nike", "Lego"];
 
 const AddProject = () => {
+  // Hook to handle the API request and states (loading, success, error)
+  const { addProject, loading, error, success } = useAddProjectApi();
+  // State to manage form inputs
+  const [productDetails, setProductDetails] = useState({
+    name: "",
+    description: "",
+    category: "Electronics",
+    subCategory: "",
+    brand: "Samsung",
+    productCode: "",
+    displayInHome: false,
+    displayInTrending: false,
+  });
+
+  // Handle form input changes
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setProductDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  // Handle form submission
+  const handleSave = async () => {
+    await addProject(productDetails); // Call the addProject function from the hook
+  };
   const location = useLocation();
   const navigate = useNavigate();
   const item = location.state?.item;
 
   // Initialize state with product data or fallback values
-  const [productDetails, setProductDetails] = useState({
-    name: item?.name || "",
-    description: item?.description || "",
-    category: item?.category || categories[0],
-    subCategory: item?.subCategory || "",
-    brand: item?.brand || brands[0],
-    productCode: item?.productCode || "",
-    displayInHome: item?.displayInHome || false,
-    displayInTrending: item?.displayInTrending || false,
-  });
+  // const [productDetails, setProductDetails] = useState({
+  //   name: item?.name || "",
+  //   description: item?.description || "",
+  //   category: item?.category || categories[0],
+  //   subCategory: item?.subCategory || "",
+  //   brand: item?.brand || brands[0],
+  //   productCode: item?.productCode || "",
+  //   displayInHome: item?.displayInHome || false,
+  //   displayInTrending: item?.displayInTrending || false,
+  // });
   const [image, setImage] = useState({
     image: "https://via.placeholder.com/400", // Example main image URL
     images: [
@@ -48,21 +76,21 @@ const AddProject = () => {
     }
   }, [item]);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setProductDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
+  // const handleChange = (e) => {
+  //   const { name, value, type, checked } = e.target;
+  //   setProductDetails((prevDetails) => ({
+  //     ...prevDetails,
+  //     [name]: type === "checkbox" ? checked : value,
+  //   }));
+  // };
 
-  const handleSave = () => {
-    console.log("Item saved:", productDetails);
-    setMessage("Category updated successfully.");
-    setTimeout(() => {
-      setMessage("");
-    }, 3000);
-  };
+  // const handleSave = () => {
+  //   console.log("Item saved:", productDetails);
+  //   setMessage("Category updated successfully.");
+  //   setTimeout(() => {
+  //     setMessage("");
+  //   }, 3000);
+  // };
   const handleCategoryChange = (e) => {
     const selectedCategory = e.target.value;
     setProductDetails((prev) => ({
@@ -333,43 +361,42 @@ const AddProject = () => {
             </div>
 
             <div
-  style={{
-    borderRadius: "5px",
-    display: "flex", // Flexbox for alignment
-  }}
->
-  <label
-    style={{
-      flex: "1",
-      color: "rgba(71, 71, 71, 0.51)",
-      display: "flex", // Flexbox for vertical alignment
-      flexDirection: "column", // Stack label and input vertically
-      marginTop: "10px", // Adjust the margin as needed
-    }}
-  >
-    Sq ft:
-    <input
-      type="text"
-      name="productCode"
-      value={productDetails.productCode}
-      onChange={handleChange}
-      style={{
-        width: "50%", // Full width for better alignment
-        padding: "8px", // Adjust padding for input field
-        fontSize: "14px",
-        fontWeight: "400",
-        color: "#757575",
-        backgroundColor: "white", // Set background color to white
-        border: "1px solid #ccc",
-        borderRadius: "4px",
-        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Same box-shadow as dropdown
-        cursor: "pointer", // Add cursor pointer for better UX
-        marginTop: "5px", // Add space between label and input
-      }}
-    />
-  </label>
-</div>
-
+              style={{
+                borderRadius: "5px",
+                display: "flex", // Flexbox for alignment
+              }}
+            >
+              <label
+                style={{
+                  flex: "1",
+                  color: "rgba(71, 71, 71, 0.51)",
+                  display: "flex", // Flexbox for vertical alignment
+                  flexDirection: "column", // Stack label and input vertically
+                  marginTop: "10px", // Adjust the margin as needed
+                }}
+              >
+                Sq ft:
+                <input
+                  type="text"
+                  name="productCode"
+                  value={productDetails.productCode}
+                  onChange={handleChange}
+                  style={{
+                    width: "50%", // Full width for better alignment
+                    padding: "8px", // Adjust padding for input field
+                    fontSize: "14px",
+                    fontWeight: "400",
+                    color: "#757575",
+                    backgroundColor: "white", // Set background color to white
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Same box-shadow as dropdown
+                    cursor: "pointer", // Add cursor pointer for better UX
+                    marginTop: "5px", // Add space between label and input
+                  }}
+                />
+              </label>
+            </div>
 
             <div
               style={{
