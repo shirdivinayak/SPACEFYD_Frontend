@@ -8,7 +8,7 @@ const useAddProjectApi = () => {
   const [success, setSuccess] = useState(null);
 
   // Function to make the POST request to add the project
-  const addProject = async (projectData) => {
+  const useaddProject = async (projectData) => {
     setLoading(true);
     setError(null);
     setSuccess(null);
@@ -28,7 +28,7 @@ const useAddProjectApi = () => {
   };
 
   return {
-    addProject,
+    useaddProject,
     loading,
     error,
     success,
