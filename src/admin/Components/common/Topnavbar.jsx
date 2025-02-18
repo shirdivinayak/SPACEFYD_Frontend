@@ -37,7 +37,7 @@ const TopNavbar = () => {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/admin");
   };
 
   return (

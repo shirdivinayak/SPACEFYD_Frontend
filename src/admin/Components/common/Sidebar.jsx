@@ -13,21 +13,21 @@ const Sidebar = () => {
   useEffect(() => {
     const path = location.pathname;
     if (path.includes("categories")) {
-      if (path.includes("products")) {
+      if (path.includes("/admin/products")) {
         setSelectedOption("Products");
-      } else if (path.includes("projects")) {
+      } else if (path.includes("/admin/projects")) {
         setSelectedOption("Projects");
       } else {
         setSelectedOption(""); // Reset if no sub-path is found
       }
-    } else if (path === "/brands") {
+    } else if (path === "/admin/brands") {
       setSelectedOption("Brands");
-    } else if (path === "/products") {
+    } else if (path === "/admin/products") {
       setSelectedOption("All Products");
-    } else if (path === "/projects") {
+    } else if (path === "/admin/projects") {
       setSelectedOption("All Projects");
     } else {
-      setSelectedOption("Home");
+      setSelectedOption("admin/Home");
     }
   }, [location]); // Run the effect whenever the route changes
 
@@ -77,7 +77,7 @@ const Sidebar = () => {
     >
       {/* App Logo */}
       <div className="text-center mb-4">
-        <Link to="/">
+        <Link to="/admin">
           <img
             src={GroupImage}
             alt="Group Logo"
@@ -96,7 +96,7 @@ const Sidebar = () => {
         {/* Home Link */}
         <Nav.Link
           as={Link}
-          to="/"
+          to="/admin/"
           onClick={() => handleOptionClick("Home")}
           className="mb-3"
           style={{
@@ -149,7 +149,7 @@ const Sidebar = () => {
           <div style={{ paddingLeft: "1.5rem" }}>
             <Nav.Link
               as={Link}
-              to="/categories/products"
+              to="/admin/categories/products"
               onClick={() => handleOptionClick("Products")}
               className="mb-2"
               style={{
@@ -169,7 +169,7 @@ const Sidebar = () => {
             </Nav.Link>
             <Nav.Link
               as={Link}
-              to="/categories/projects"
+              to="/admin/categories/projects"
               onClick={() => handleOptionClick("Projects")}
               className="mb-2"
               style={{
@@ -193,7 +193,7 @@ const Sidebar = () => {
         {/* All Products Link */}
         <Nav.Link
           as={Link}
-          to="/products"
+          to="/admin/products"
           onClick={() => handleOptionClick("All Products")}
           className="mb-3"
           style={{
@@ -215,7 +215,7 @@ const Sidebar = () => {
         {/* All Projects Link */}
         <Nav.Link
           as={Link}
-          to="/projects"
+          to="/admin/projects"
           onClick={() => handleOptionClick("All Projects")}
           className="mb-3"
           style={{
@@ -237,7 +237,7 @@ const Sidebar = () => {
         {/* Brands Link */}
         <Nav.Link
           as={Link}
-          to="/brands"
+          to="/admin/brands"
           onClick={() => handleOptionClick("Brands")}
           className="mb-3"
           style={{

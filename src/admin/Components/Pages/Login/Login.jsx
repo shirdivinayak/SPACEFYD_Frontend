@@ -34,7 +34,7 @@ function Login() {
     ) {
       const mockToken = "mock-token";
       login(mockToken); // Update context
-      navigate("/");
+      navigate("/admin");
     } else {
       setErrorMessage("Invalid email or password. Please try again.");
     }
