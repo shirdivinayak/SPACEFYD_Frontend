@@ -14,6 +14,8 @@ import EditProjectScreen from "../admin/Components/Pages/Projects/EditProject";
 import AddProduct from "../admin/Components/Pages/Products/AddProduct";
 import { PrivateRoute } from "./PrivateRoute";
 
+import AboutUs from "../website/AboutUs";
+
 const AdminRoutes = () => {
   return (
     <Routes>
@@ -97,11 +99,20 @@ const AdminRoutes = () => {
           </PrivateRoute>
         }
       />
+
       <Route
         path="/products/addproduct"
         element={
           <PrivateRoute>
             <AddProduct />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/w"
+        element={
+          <PrivateRoute>
+            <AboutUs />
           </PrivateRoute>
         }
       />
