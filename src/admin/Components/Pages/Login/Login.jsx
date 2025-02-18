@@ -6,9 +6,6 @@ import RightCorner from "../../../Assets/Images/cornerright.png";
 import theme from "../../../Assets/colors/styles";
 import { useAuth } from "../../../../AuthContext";
 
-
-
-
 function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -31,7 +28,10 @@ function Login() {
     }
 
     // Mock login logic
-    if (credentials.email === "admin@123.com" && credentials.password === "123@abc") {
+    if (
+      credentials.email === "admin@123.com" &&
+      credentials.password === "123@abc"
+    ) {
       const mockToken = "mock-token";
       login(mockToken); // Update context
       navigate("/");
@@ -43,7 +43,14 @@ function Login() {
   const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
   return (
-    <div style={{ display: "flex", height: "100vh", width: "100%", flexDirection: "row" }}>
+    <div
+      style={{
+        display: "flex",
+        height: "100vh",
+        width: "100%",
+        flexDirection: "row",
+      }}
+    >
       {/* Left Half */}
       <div
         style={{
@@ -57,21 +64,39 @@ function Login() {
       {/* Right Half */}
       <div
         style={{
-          flex: 1,
+          width: "50%", // Ensure the right side takes exactly half of the width
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           paddingLeft: "50px",
           backgroundColor: "#ffffff",
+          paddingBottom: "180px",
         }}
       >
         <div style={{ position: "absolute", top: "5%" }}>
-          <img src={LoginImage} alt="Logo" style={{ width: "250px", height: "auto" }} />
+          <img
+            src={LoginImage}
+            alt="Logo"
+            style={{ width: "250px", height: "auto" }}
+          />
         </div>
-        <h2 style={{ color: "#B6985A", fontWeight: "bold", marginBottom: 20, paddingLeft: 20 }}>
+        <h2
+          style={{
+            color: "#B6985A",
+            fontWeight: "bold",
+            marginBottom: 20,
+            paddingLeft: 20,
+          }}
+        >
           Login to Your <br /> Account
         </h2>
-        <div style={{ maxWidth: "400px", padding: "20px", backgroundColor: "#fff" }}>
+        <div
+          style={{
+            maxWidth: "400px",
+            padding: "20px",
+            backgroundColor: "#fff",
+          }}
+        >
           <form onSubmit={handleSubmit}>
             <div style={{ marginBottom: "15px" }}>
               <input
@@ -115,15 +140,24 @@ function Login() {
                   color: "#888",
                 }}
               >
-                <i className={`bi ${showPassword ? "bi-eye" : "bi-eye-slash"}`} />
+                <i
+                  className={`bi ${showPassword ? "bi-eye" : "bi-eye-slash"}`}
+                />
               </span>
             </div>
-            {errorMessage && <div style={{ color: "red", marginBottom: "15px" }}>{errorMessage}</div>}
+            {errorMessage && (
+              <div style={{ color: "red", marginBottom: "15px" }}>
+                {errorMessage}
+              </div>
+            )}
             <button
               type="submit"
               style={{
+                display: "flex",
+                justifyContent: "space-between", // Ensure arrow aligns to the right
+                alignItems: "center",
                 width: "100%",
-                padding: "10px",
+                padding: "8px",
                 borderRadius: "4px",
                 backgroundColor: theme.colors.buttonPrimary,
                 color: "#fff",
@@ -131,21 +165,21 @@ function Login() {
                 cursor: "pointer",
               }}
             >
-              Login
+              <span>Login</span>
             </button>
           </form>
         </div>
       </div>
 
       <div
-          style={{
-            position: "absolute",
-            bottom: "0px", // Adjust to your liking
-            right: "0px", // Adjust to your liking
-          }}
-        >
-          <img src={RightCorner} style={{ width: "350px", height: "auto" }} />
-        </div>
+        style={{
+          position: "absolute",
+          bottom: "0px", // Adjust to your liking
+          right: "0px", // Adjust to your liking
+        }}
+      >
+        <img src={RightCorner} style={{ width: "350px", height: "auto" }} />
+      </div>
     </div>
   );
 }

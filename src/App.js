@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import Login from "./admin/Components/Pages/Login/Login";
 import Sidebar from "./admin/Components/common/Sidebar";
 import TopNavbar from "./admin/Components/common/Topnavbar";

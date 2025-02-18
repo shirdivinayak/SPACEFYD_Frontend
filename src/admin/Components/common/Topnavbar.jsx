@@ -1,6 +1,12 @@
-import React from "react"; 
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Navbar, Form, FormControl, Container, Dropdown } from "react-bootstrap";
+import {
+  Navbar,
+  Form,
+  FormControl,
+  Container,
+  Dropdown,
+} from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
 import { BiSearch } from "react-icons/bi";
 import { useAuth } from "../../../AuthContext";
@@ -16,10 +22,10 @@ const TopNavbar = () => {
     const routes = {
       "products category": "/categories/products", // Navigate for 'products category'
       "projects category": "/categories/projects",
-       products: "/products",
-       brands: "/brands",
-       projects: "/projects",
-        banner:"/"
+      products: "/products",
+      brands: "/brands",
+      projects: "/projects",
+      banner: "/",
     };
 
     if (routes[searchQuery]) {
