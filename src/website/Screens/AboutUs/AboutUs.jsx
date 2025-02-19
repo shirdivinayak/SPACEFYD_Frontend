@@ -1,11 +1,18 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./website.css";
 import HeroImage from "../../Assets/AboutUs/hero.svg";
 import MainImage from "../../Assets/AboutUs/image219.svg";
 import Image3 from "../../Assets/AboutUs/view3.svg";
 import Gradient from "../../Assets/AboutUs/Gradient.svg";
-import "./website.css";
 import circles from "../../Assets/AboutUs/circles.svg";
+import { ReactComponent as EntertainIcon } from "..//../Assets/AboutUs/icon-entertain.svg";
+import { ReactComponent as CommercialIcon } from "..//../Assets/AboutUs/icon-commercial.svg";
+import { ReactComponent as EducationIcon } from "..//../Assets/AboutUs/icon-education.svg";
+import { ReactComponent as HospitalityIcon } from "..//../Assets/AboutUs/icon-hospitality.svg";
+import { ReactComponent as IndustryIcon } from "..//../Assets/AboutUs/icon-industry.svg";
+import { ReactComponent as ResidentionIcon } from "..//../Assets/AboutUs/icon-residential.svg";
+import { ReactComponent as RetailIcon } from "..//../Assets/AboutUs/icon-retail.svg";
 const AboutUs = () => {
   return (
     <div>
@@ -132,7 +139,7 @@ const AboutUs = () => {
       </div>
 
       <div
-        className="container-fluid position-relative p-5 rounded-4 mt-5"
+        className="container-fluid position-relative p-5 rounded-4 mt-5 "
         style={{
           backgroundColor: "#4C6559",
           color: "#ffffff",
@@ -159,91 +166,91 @@ const AboutUs = () => {
         </div>
 
         {/* Tags Section */}
-        <div className="d-flex-column position-absolute top-50 end-0 translate-middle-y w-50">
+        <div className="d-flex-column flex-md-row position-absolute top-50 end-0 translate-middle-y w-50 order-0 order-md-0">
           <img src={circles} alt="Background Design" className="w-100 h-auto" />
 
           {/* Tag Items */}
           <div
             className="position-absolute"
-            style={{ top: "10%", right: "15%" }}
+            style={{ top: "15%", right: "15%" }}
           >
             <span
-              className="badge bg-light text-dark p-3 shadow"
+              className="badge bg-secondary text-light px-2 shadow"
               style={{ borderRadius: "50px", backdropFilter: "blur(26.9px)" }}
             >
-              Entertainment and Leisure 🎭
+              Entertainment and Leisurelity <EntertainIcon></EntertainIcon>
             </span>
           </div>
 
           <div
             className="position-absolute"
-            style={{ top: "25%", left: "35%" }}
+            style={{ top: "30 %", left: "40%" }}
           >
             <span
-              className="badge bg-light text-dark p-3 shadow"
+              className="badge bg-secondary text-light px-2 shadow"
               style={{ borderRadius: "50px" }}
             >
-              Education 🎓
+              Education <EducationIcon></EducationIcon>
             </span>
           </div>
 
           <div
             className="position-absolute"
-            style={{ top: "40%", right: "10%" }}
+            style={{ top: "40%", right: "5%" }}
           >
             <span
-              className="badge bg-light text-dark p-3 shadow"
+              className="badge bg-secondary text-light px-2 shadow"
               style={{ borderRadius: "50px" }}
             >
-              Residential 🏠
+              Residential <ResidentionIcon></ResidentionIcon>
             </span>
           </div>
 
           <div
             className="position-absolute"
-            style={{ top: "55%", left: "25%" }}
+            style={{ top: "45%", left: "25%" }}
           >
             <span
-              className="badge bg-light text-dark p-3 shadow"
+              className="badge bg-secondary text-light px-2 shadow"
               style={{ borderRadius: "50px" }}
             >
-              Hospitality 🏨
+              Hospitality <HospitalityIcon></HospitalityIcon>
             </span>
           </div>
 
           <div
             className="position-absolute"
-            style={{ bottom: "25%", left: "10%" }}
+            style={{ bottom: "25%", left: "35%" }}
           >
             <span
-              className="badge bg-light text-dark p-3 shadow"
+              className="badge bg-secondary text-light px-2 shadow"
               style={{ borderRadius: "50px" }}
             >
-              Industrial Spaces 🏭
+              Industrial Spaces <IndustryIcon></IndustryIcon>
             </span>
           </div>
 
           <div
             className="position-absolute"
-            style={{ bottom: "10%", right: "25%" }}
+            style={{ bottom: "30%", right: "5%" }}
           >
             <span
-              className="badge bg-light text-dark p-3 shadow"
+              className="badge bg-secondary  text-light px-2 shadow"
               style={{ borderRadius: "50px" }}
             >
-              Retail 🏪
+              Retail <RetailIcon></RetailIcon>
             </span>
           </div>
 
           <div
             className="position-absolute"
-            style={{ bottom: "5%", left: "50%" }}
+            style={{ bottom: "15%", left: "60%" }}
           >
             <span
-              className="badge bg-light text-dark p-3 shadow"
+              className="badge bg-secondary text-light px-2 shadow"
               style={{ borderRadius: "50px" }}
             >
-              Commercial 🏢
+              <CommercialIcon></CommercialIcon> Commercial
             </span>
           </div>
         </div>
