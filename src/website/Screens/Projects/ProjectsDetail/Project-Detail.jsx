@@ -6,28 +6,33 @@ import Image1 from "../../../Assets/Projetcs/image1.svg";
 import Image2 from "../../../Assets/Projetcs/image2.svg";
 import Image5 from "../../../Assets/Projetcs/image5.svg";
 import "./Projetc-Detail.css"; // Import CSS file
+
 const dummyData = {
   title: "Gulf Logistics & Warehouse Facility",
   description:
     "A luxurious penthouse with seamless smart home integration, offering breathtaking views, modern interiors, and cutting-edge automation for ultimate comfort.",
   coverImage: CoverImage,
-  images: [Image1, Image2, Image2, Image1, Image5,Image2],
+  images: [Image1, Image2, Image2, Image1, Image5, Image2],
 };
 
 const projects = [
   {
     img: Image1,
     title: "Gulf Logistics & Warehouse Facility",
-    description: "A luxurious penthouse with seamless smart home integration, offering breathtaking views, modern interiors, and cutting-edge automation for ultimate comfort.",
+    description:
+      "A luxurious penthouse with seamless smart home integration, offering breathtaking views, modern interiors, and cutting-edge automation for ultimate comfort.",
   },
   {
     img: Image5,
     title: "Al Hadeera Luxury Villa",
-    description: "A luxurious penthouse with seamless smart home integration, offering breathtaking views, modern interiors, and cutting-edge automation for ultimate comfort.",
+    description:
+      "A luxurious penthouse with seamless smart home integration, offering breathtaking views, modern interiors, and cutting-edge automation for ultimate comfort.",
   },
 ];
 
-const ProjectsDetail = () => {
+const ProjectsDetail = (props) => {
+  console.log("ProjectsDetail Params:", props);
+
   return (
     <div>
       {/* Hero Section */}
