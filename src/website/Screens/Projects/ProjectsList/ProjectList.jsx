@@ -13,7 +13,7 @@ const ProjectList = () => {
 
   const projectsData = {
     Industrialspaces: [
-      {
+      { 
         img: Image1,
         title: "Gulf Logistics & Warehouse Facility",
         description:
@@ -108,11 +108,10 @@ const ProjectList = () => {
         style={{ backgroundImage: `url(${HeroImage})` }}
       >
         <div className="container px-4">
-          <h1 className="service-title">Projects</h1>
+          <h1 className="service-title">Our Projects</h1>
           <p className="service-description">
             Discover our diverse portfolio showcasing transformative
-            <br /> designs and exceptional craftsmanship
-            <br />
+            designs and <br /> exceptional craftsmanship 
             across every project
           </p>
         </div>
