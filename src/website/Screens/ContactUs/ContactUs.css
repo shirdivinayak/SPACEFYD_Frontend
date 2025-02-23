@@ -1,0 +1,137 @@
+/* General Styles */
+.contact-heading {
+    font-family: "DM Sans", sans-serif;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #9A715B;
+    margin-top: 5%;
+  }
+  
+  .contact-description {
+    margin-top: 20px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 24px;
+    color: #666;
+    margin-bottom: 30px;
+  }
+  
+  /* Contact Container */
+  .contact-container {
+    max-width: 50%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 40px 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .contact-container {
+      max-width: 100%;
+      padding: 20px;
+    }
+
+    
+  .contact-description {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 24px;
+    color: #666;
+    margin-bottom: 40px;
+  }
+  }
+  
+  /* Contact Info (Hidden on Mobile) */
+  .contact-info {
+    background-color: #fff;
+    margin-bottom: 20px;
+    border-radius: 8px;
+  }
+  
+  .contact-item {
+    display: flex;
+    align-items: center;
+    /* gap: 10px; */
+  margin-bottom: 10px;
+  }
+  
+  .contact-icon {
+    font-size: 1.5rem;
+    color: #4C6559;
+    margin-right: 15px;
+  }
+  
+  .contact-item h1 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .contact-item p {
+    font-size: 0.9rem;
+    color: #555;
+    padding-left: 100px;
+  }
+  
+  /* Contact Form */
+  .contact-form label {
+    font-family: "DM Sans", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .contact-form .form-control {
+    width: 100%;
+    height: 45px;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1.5px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 25px;
+  }
+  
+  .contact-form textarea.form-control {
+    margin-bottom: 10%;
+    height: 120px;
+    resize: none;
+  }
+  
+  .contact-form .btn {
+    width: 100%;
+    background-color: #9A715B;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .contact-form .btn:hover {
+    background-color: #4C6559;
+  }
+  
+  /* Error Messages */
+  .error-text {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    display: block;
+  }
+  .submit-btn {
+    width: auto;
+    padding: 10px 20px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .contact-info {
+      display: none;
+    }
+  }
+  
