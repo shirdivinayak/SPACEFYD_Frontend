@@ -38,6 +38,10 @@
     padding-right: 2%;
 }
   
+.main{
+    background-color: #FCF9F5;
+
+  }
   /* Description Styling */
   .project-description {
     font-family: "DM Sans", sans-serif;
@@ -46,8 +50,9 @@
     line-height: 53.41px;
     text-align: center;
     color: #9a715b;
-    margin: 20px auto;
-    max-width: 80%;
+    margin: 100px auto;
+    max-width: 70%;
+    margin-top: 40%;
   }
   
   /* Images Grid */
@@ -117,6 +122,7 @@
     text-align: left;
     max-width: 1200px;
     padding-left: 3%;
+    background-color: white;
 }
 
 .more-project-image {
@@ -135,6 +141,8 @@
     letter-spacing: 0%;
     color: #4C6559;
     margin-top: 10px;
+    padding-left: 30px;
+    padding-right: 10px;
 }
 
 .more-project-description {
@@ -145,6 +153,8 @@
     letter-spacing: 0%;
     color: #3F3F3F;
     margin-top: 5px;
+    padding-left: 30px;
+    padding-right: 10px;
 }
 
   
@@ -185,6 +195,7 @@
         line-height: 26.04px;
         text-align: center;
         color: #9a715b;
+        text-transform: capitalize;
         max-width: 90%;
       }    
     

@@ -108,9 +108,13 @@
     white-space: nowrap;
     padding: 10px 0;
     margin-left: 20%;
-    margin-top: 5%;
+    margin-top: 3%;
     scrollbar-width: thin; /* For Firefox */
     scrollbar-color: #fff; /* For Firefox */
+  }
+  .main{
+    background-color: #FCF9F5;
+
   }
   
   .category-container::-webkit-scrollbar {
@@ -152,7 +156,7 @@
   }
   
   .selected-category {
-    border-bottom: 3px solid black;
+    border-bottom: 3px solid #4C6559;
   }
   
    
