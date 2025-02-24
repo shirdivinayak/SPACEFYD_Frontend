@@ -10,7 +10,7 @@ import "./Projetc-Detail.css"; // Import CSS file
 const dummyData = {
   title: "Gulf Logistics & Warehouse Facility",
   description:
-    "A luxurious penthouse with seamless smart home integration, offering breathtaking views, modern interiors, and cutting-edge automation for ultimate comfort.",
+    "A Luxurious Penthouse With Seamless Smart Home Integration, Offering Breathtaking Views, Modern Interiors, And Cutting-Edge Automation For Ultimate Comfort.",
   coverImage: CoverImage,
   images: [Image1, Image2, Image2, Image1, Image5, Image2],
 };
@@ -34,7 +34,7 @@ const ProjectsDetail = (props) => {
   console.log("ProjectsDetail Params:", props);
 
   return (
-    <div>
+    <div className="main">
       {/* Hero Section */}
       <div
         className="services-container"
@@ -69,7 +69,7 @@ const ProjectsDetail = (props) => {
       <div>
         {/* Heading and Button */}
         <div className="more-projects-container">
-          <h2 className="more-projects-heading">More Projects</h2>
+          <h2 className="more-projects-heading">Similar Projects</h2>
           <button className="view-more-button">View More</button>
         </div>
 

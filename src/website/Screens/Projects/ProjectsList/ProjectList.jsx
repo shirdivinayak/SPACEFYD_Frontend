@@ -101,7 +101,7 @@ const ProjectList = () => {
   const categories = Object.keys(projectsData);
 
   return (
-    <div>
+    <div className="main">
       {/* Hero Section */}
       <div
         className="services-container"
