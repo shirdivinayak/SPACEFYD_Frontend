@@ -60,7 +60,7 @@ const AboutUs = () => {
       </div>
 
       <div
-        className="container-fluid d-flex flex-column flex-md-row justify-content-center align-items-center mt-5"
+        className="container-fluid d-flex flex-row  flex-md-row justify-content-center align-items-center mt-5 col-lg-6 col-sm-6 "
         style={{
           color: "#4C6559",
           backgroundImage: `url(${Gradient})`,
@@ -77,7 +77,7 @@ const AboutUs = () => {
       >
         {/* Left Section */}
         <div
-          className="d-flex flex-column text-left text-md-left"
+          className="d-flex flex-column col-lg-7 col-md-6 text-left text-md-left"
           style={{ flex: 1 }}
         >
           <h2>Innovative, Sustainable</h2>
@@ -117,8 +117,9 @@ const AboutUs = () => {
         </div>
         {/* Right Section with Image */}
         <div
-          className="d-flex justify-content-center align-items-center mt-4 mt-md-0"
+          className="d-flex flex-sm-row col-lg-5 col-md-6 justify-content-center align-items-center mt-md-0"
           style={{
+            // height: "100%",
             flex: 1,
             alignSelf: "stretch", // Ensure the image container stretches
           }}
@@ -126,11 +127,12 @@ const AboutUs = () => {
           <img
             src={Image3} // Uncomment and provide the correct image source
             alt="Interior Design"
+            id="image3"
             className="img-fluid"
             style={{
               width: "100%",
               maxWidth: "600px",
-              height: "auto", // Ensure the aspect ratio is maintained
+              height: "100vh", // Ensure the aspect ratio is maintained
               display: "block", // Ensures no inline elements affect it
               margin: "0 auto", // Centers the image horizontally if needed
             }}
@@ -139,7 +141,7 @@ const AboutUs = () => {
       </div>
 
       <div
-        className="container-fluid position-relative p-5 rounded-4 mt-5 "
+        className="container-fluid d-flex flex-column flex-md-row   position-relative p-5 rounded-4 mt-5  "
         style={{
           backgroundColor: "#4C6559",
           color: "#ffffff",
@@ -147,10 +149,19 @@ const AboutUs = () => {
         }}
       >
         {/* Left Content */}
-        <div className="w-50">
+        <div
+          className=" container "
+          style={{
+            width: "100%",
+          }}
+        >
           <button
-            className="btn btn-light px-4 py-2 mb-3 "
-            style={{ borderRadius: "50px" }}
+            className="btn btn-light px-4 py-2 mb-3 col-md-6 "
+            style={{
+              borderRadius: "50px",
+              backgroundColor: "white",
+              borderBlockWidth: "0.5px",
+            }}
           >
             Come partner with us
           </button>
@@ -166,12 +177,16 @@ const AboutUs = () => {
         </div>
 
         {/* Tags Section */}
-        <div className="d-flex-column flex-md-row position-absolute top-50 end-0 translate-middle-y w-50 order-0 order-md-0">
-          <img src={circles} alt="Background Design" className="w-100 h-auto" />
+        <div className=" col-md-6 col-12 mt-3 mt-md-0">
+          <img
+            src={circles}
+            alt="Background Design"
+            className="w-100 h-auto  "
+          />
 
           {/* Tag Items */}
-          <div
-            className="position-absolute"
+          {/* <div
+            className="position-absolute  "
             style={{ top: "15%", right: "15%" }}
           >
             <span
@@ -184,7 +199,7 @@ const AboutUs = () => {
 
           <div
             className="position-absolute"
-            style={{ top: "30 %", left: "40%" }}
+            style={{ top: "30%", left: "40%" }}
           >
             <span
               className="badge bg-secondary text-light px-2 shadow"
@@ -252,7 +267,7 @@ const AboutUs = () => {
             >
               <CommercialIcon></CommercialIcon> Commercial
             </span>
-          </div>
+          </div> */}
         </div>
       </div>
 
