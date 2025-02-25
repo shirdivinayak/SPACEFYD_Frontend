@@ -1,0 +1,192 @@
+/* Hero Section */
+.services-container {
+    width: 100%;
+    height: 614px; /* Adjust based on design */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    text-align: center;
+    color: white;
+    position: relative;
+  }
+  .service-title {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 53px;
+  }
+  
+  .service-description {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 34px;
+    letter-spacing: 0%;
+    text-align: center;
+  }
+  
+  /* Main Container */
+  .main-container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 5%;
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+  }
+  
+  .service-head {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 53px;
+    color: #9A715B;
+    margin-bottom: 10%;
+  }
+  
+  /* Content Wrapper */
+  .content-wrapper {
+    display: flex;
+    flex-direction: column; /* Stack elements */
+    align-items: flex-start; /* Align left content to start */
+    width: 100%;
+  }
+  
+  /* Left Content */
+  .content-container {
+    width: 50%;
+    text-align: left;
+  }
+  
+  /* Right Content - Positioned to Right */
+  .content-container-right {
+    width: 50%; /* Align to right half */
+    text-align: right;
+    align-self: flex-end; /* Push to right */
+    margin-top: 10%;
+    margin-bottom: 10%;
+  }
+  
+  /* Headings */
+  h2 {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 41.66px;
+  }
+  
+  .content-container-right h2 {
+    text-align: right;
+  }
+  
+  /* Paragraphs */
+  p {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20.83px;
+  }
+  
+  /* Sub-content with arrow */
+  .sub-content {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #DDCFC0;
+    padding: 10px 0;
+    color: #3F3F3F;
+  }
+  .sub-content .icon {
+    font-size: 16px;
+    color: #9A715B;
+    margin-right: 10px;
+  }
+  .sub-content-no .icon {
+    font-size: 16px;
+    color: #9A715B;
+    margin-right: 10px;
+  }
+  .sub-content-no {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    color: #3F3F3F;
+  }
+  
+ 
+  .sub-content p {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 15.33px;
+    letter-spacing: 0px;
+    margin: 0; /* Remove default margin */
+  }
+  .sub-content-no p {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 15.33px;
+    letter-spacing: 0px;
+    margin: 0; /* Remove default margin */
+  }
+  
+  .content-container-right .sub-content {
+    justify-content: flex-end;
+  }
+  
+  .content-container-right .sub-content .icon {
+    margin-left: 10px;
+    margin-right: 0;
+  }
+  .border {
+    margin-top:10%;
+    width: 100%; /* Set width */
+    border-width: 1px;
+    border-style: solid;
+    border-image-source: linear-gradient(270deg, #4DA180 0%, #97935A 27.34%, #CE893E 100%);
+    margin-bottom: 10%;
+    border-image-slice: 1; /* Ensures the full gradient is applied */
+    /* position: absolute; */
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .main-container {
+      width: 100%;
+      padding: 5%;
+    }
+  
+    .content-container-right {
+      width: 100%; /* Full width in mobile */
+      text-align: center;
+      align-self: center; /* Center align */
+      color: #3F3F3F;
+    }
+  
+    .content-container-right h2,
+    .content-container-right p {
+      text-align: center;
+    }
+  
+    .content-container .sub-content {
+      justify-content: center;
+    }
+    .content-container {
+      width: 100%; /* Full width in mobile */
+      text-align: center;
+      align-self: center; /* Center align */
+      color: #3F3F3F
+    }
+  
+    .content-container h2,
+    .content-container p {
+      text-align: center;
+    }
+  
+    .content-container .sub-content {
+      justify-content: left;
+    }
+  }
+  

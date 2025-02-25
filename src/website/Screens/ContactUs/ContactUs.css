@@ -1,0 +1,176 @@
+/* General Styles */
+.contact-heading {
+  font-family: "DM Sans", sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #9A715B;
+  margin-top: 5%;
+}
+
+.contact-description {
+  margin-top: 20px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 24px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+/* Contact Container */
+.contact-container {
+  max-width: 60%;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 40px 20px;
+}
+
+@media (max-width: 768px) {
+  .contact-container {
+      max-width: 100%;
+      padding: 20px;
+  }
+  
+  .contact-description {
+      margin: 20px;
+      font-family: "Poppins", sans-serif;
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 24px;
+      color: #666;
+      margin-bottom: 40px;
+  }
+}
+
+/* Contact Info */
+.contact-info {
+  background-color: #fff;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center; /* Aligns icon and heading vertically */
+  gap: 20px; /* Adds spacing between icon and heading */
+  margin-bottom: 20px;
+}
+
+.contact-item .contact-icon {
+  font-size: 1.5rem;
+  color: #4C6559;
+  margin-top:-20%; /* Ensures no extra margin */
+  display: flex;
+  align-items: center;
+}
+.contact-item .contact-icon-phone {
+  font-size: 1.5rem;
+  color: #4C6559;
+  margin-top:-14%; /* Ensures no extra margin */
+  display: flex;
+  align-items: center;
+}
+.contact-item .contact-icon-email {
+  font-size: 1.5rem;
+  color: #4C6559;
+  margin-top:-6%; /* Ensures no extra margin */
+  display: flex;
+  align-items: center;
+}
+ 
+.error-text {
+  color: orangered;
+  font-size: 14px;
+  margin-top: -20px;
+  margin-bottom: 10px;
+  display: block;
+  margin-left: 20px;
+}
+
+.contact-item h1 {
+  margin: 0; /* Removes any extra margin */
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+
+/* Address text aligned under heading */
+.contact-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-text h1 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.contact-text p {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0; /* Ensures text starts at the heading */
+}
+
+/* Contact Form */
+.contact-form label {
+  font-family: "DM Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Input Fields */
+.contact-form .form-control {
+  width: 100%;
+  height: 45px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1.5px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 25px;
+}
+
+/* Placeholder in Gray */
+.contact-form .form-control::placeholder {
+  color: #9F9F9F;
+  padding-left: 10px; 
+  font-size: 14px;
+}
+
+/* Remove blue border from submit button */
+.submit-btn {
+  width: auto;
+  padding: 10px 20px;
+  background-color: #9A715B;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  border: none; /* Removes blue border */
+}
+
+/* Change hover color */
+.submit-btn:hover {
+  background-color: #4C6559;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact-info {
+      display: none;
+  }
+  .submit-btn {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #9A715B;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none; /* Removes blue border */
+  }
+}
