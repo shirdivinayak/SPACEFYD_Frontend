@@ -6,13 +6,13 @@ import MainImage from "../../Assets/AboutUs/image219.svg";
 import Image3 from "../../Assets/AboutUs/view3.svg";
 import Gradient from "../../Assets/AboutUs/Gradient.svg";
 import circles from "../../Assets/AboutUs/circles.svg";
-import { ReactComponent as EntertainIcon } from "..//../Assets/AboutUs/icon-entertain.svg";
-import { ReactComponent as CommercialIcon } from "..//../Assets/AboutUs/icon-commercial.svg";
-import { ReactComponent as EducationIcon } from "..//../Assets/AboutUs/icon-education.svg";
-import { ReactComponent as HospitalityIcon } from "..//../Assets/AboutUs/icon-hospitality.svg";
-import { ReactComponent as IndustryIcon } from "..//../Assets/AboutUs/icon-industry.svg";
-import { ReactComponent as ResidentionIcon } from "..//../Assets/AboutUs/icon-residential.svg";
-import { ReactComponent as RetailIcon } from "..//../Assets/AboutUs/icon-retail.svg";
+// import { ReactComponent as EntertainIcon } from "..//../Assets/AboutUs/icon-entertain.svg";
+// import { ReactComponent as CommercialIcon } from "..//../Assets/AboutUs/icon-commercial.svg";
+// import { ReactComponent as EducationIcon } from "..//../Assets/AboutUs/icon-education.svg";
+// import { ReactComponent as HospitalityIcon } from "..//../Assets/AboutUs/icon-hospitality.svg";
+// import { ReactComponent as IndustryIcon } from "..//../Assets/AboutUs/icon-industry.svg";
+// import { ReactComponent as ResidentionIcon } from "..//../Assets/AboutUs/icon-residential.svg";
+// import { ReactComponent as RetailIcon } from "..//../Assets/AboutUs/icon-retail.svg";
 const AboutUs = () => {
   return (
     <div>
