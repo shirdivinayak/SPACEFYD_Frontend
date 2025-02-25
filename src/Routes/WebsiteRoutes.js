@@ -12,7 +12,7 @@ const WebsiteRoutes = () => {
   
   return (
     <Routes>
-      <Route path="/Home" element={<Home />} />
+      <Route path="/" element={<Home />} />
       <Route path="/AboutUs" element={<AboutUs />} />
       <Route path="/Services" element={<Services />} />
       <Route path="/ContactUs" element={<ContactUs />} />

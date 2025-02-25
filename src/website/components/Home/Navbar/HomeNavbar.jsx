@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import pic from "../../../../website/Assets/Home/companylogo.png"; // Adjust the relative path as needed
 
 const HomeNavbar = () => {
@@ -8,11 +9,11 @@ const HomeNavbar = () => {
       style={{
         padding: "36px 100px",
         backgroundColor: "#FCF9F5",
-      }} // Keep padding same as before
+      }} 
     >
       <div className="container-fluid">
         {/* Left: Logo */}
-        <a className="navbar-brand d-flex align-items-center" href="#">
+        <NavLink className="navbar-brand d-flex align-items-center" to="/">
           <img
             src={pic}
             alt="Logo"
@@ -20,7 +21,7 @@ const HomeNavbar = () => {
             height="48"
             className="d-inline-block me-2"
           />
-        </a>
+        </NavLink>
 
         {/* Navbar Toggler for Mobile */}
         <button
@@ -41,63 +42,71 @@ const HomeNavbar = () => {
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav d-flex align-items-center gap-4">
-            {["About us", "Products", "Projects", "Services"].map(
-              (item, index) => (
-                <li className="nav-item" key={index}>
-                  <a
-                    className="nav-link"
-                    href="#"
-                    style={{
-                      color: "#4C6559",
-                      fontFamily: "Kollektif, sans-serif",
-                      fontWeight: 400,
-                      fontSize: "20px",
-                      lineHeight: "24px",
-                      textAlign: "center",
-                      textDecoration: "none",
-                    }}
-                  >
-                    {item}
-                  </a>
-                </li>
-              )
-            )}
+            {[
+              { name: "About us", path: "/AboutUs" },
+              { name: "Products", path: "/ProjectList" }, 
+              { name: "Projects", path: "/ProjectsDetail/sample-title" }, 
+              { name: "Services", path: "/Services" },
+            ].map((item, index) => (
+              <li className="nav-item" key={index}>
+                <NavLink
+                  className="nav-link"
+                  to={item.path}
+                  style={({ isActive }) => ({
+                    color: isActive ? "#4C6559" : "#4C6559",
+                    fontFamily: "Kollektif, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "20px",
+                    lineHeight: "24px",
+                    textAlign: "center",
+                    textDecoration: "none",
+                    borderBottom: isActive ? "2px solid #4C6559" : "none",
+                  })}
+                >
+                  {item.name}
+                </NavLink>
+              </li>
+            ))}
           </ul>
 
           {/* Contact Us Button (Hidden on large screens, shown inside menu on mobile) */}
           <div className="d-lg-none mt-3 text-center">
-            <button
-              className="btn w-40"
-              style={{
-                color: "white",
-                border: "1px solid #4C6559",
-                background: "#4C6559",
-                fontFamily: "Kollektif, sans-serif",
-                fontWeight: 400,
-                fontSize: "20px",
-                lineHeight: "24px",
-              }}
-            >
-              Contact us
-            </button>
+            <NavLink to="/ContactUs">
+              <button
+                className="btn w-40"
+                style={{
+                  color: "white",
+                  border: "1px solid #4C6559",
+                  background: "#4C6559",
+                  fontFamily: "Kollektif, sans-serif",
+                  fontWeight: 400,
+                  fontSize: "20px",
+                  lineHeight: "24px",
+                }}
+              >
+                Contact us
+              </button>
+            </NavLink>
           </div>
         </div>
 
         {/* Right: Contact Us Button (Only visible on large screens) */}
-        <button
-          className="btn d-none d-lg-block"
-          style={{
-            color: "white",
-            border: "1px solid #4C6559",
-            background: "#4C6559",
-            fontFamily: "Kollektif, sans-serif",
-            fontWeight: 400,
-            fontSize: "20px",
-            lineHeight: "24px",
-          }}
-        >
-          Contact us
-        </button>
+        <NavLink to="/ContactUs">
+          <button
+            className="btn d-none d-lg-block"
+            style={{
+              color: "white",
+              // border: "1px solid #4C6559",
+              background: "#4C6559",
+              fontFamily: "Kollektif, sans-serif",
+              fontWeight: 400,
+              fontSize: "20px",
+              lineHeight: "24px",
+            }}
+          >
+            Contact us
+          </button>
+        </NavLink>
       </div>
     </nav>
   );
