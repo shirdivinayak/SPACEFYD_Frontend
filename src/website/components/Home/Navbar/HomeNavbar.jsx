@@ -1,14 +1,14 @@
 import React from "react";
-import pic from "../../../../website/Assets/Home/companylogo.png"; // Adjust the relative path as needed
+import pic from "../../../assets/Home/companylogo.png"; // Adjust the relative path as needed
 
 const HomeNavbar = () => {
   return (
     <nav
       className="navbar navbar-expand-lg"
       style={{
-        padding: "36px 100px",
+        padding: "clamp(20px, 3vw, 36px) clamp(10px, 5vw, 100px)", // Adjusted min padding for small screens
         backgroundColor: "#FCF9F5",
-      }} // Keep padding same as before
+      }}
     >
       <div className="container-fluid">
         {/* Left: Logo */}
@@ -16,23 +16,29 @@ const HomeNavbar = () => {
           <img
             src={pic}
             alt="Logo"
-            width="191"
-            height="48"
+            width={clamp(100, 191)} // Responsive width, smaller min for small screens
+            height={clamp(25, 48)} // Responsive height
             className="d-inline-block me-2"
+            style={{ maxWidth: "100%" }}
           />
         </a>
 
         {/* Navbar Toggler for Mobile */}
         <button
-          className="navbar-toggler"
+          className="navbar-toggler d-lg-none"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation"
+          style={{
+            border: "none",
+            padding: "clamp(0px, 1vw, 4px)", // Minimal padding on small screens
+            marginLeft: "auto", // Push to right on small screens
+          }}
         >
-          <span className="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon" />
         </button>
 
         {/* Navbar Content */}
@@ -51,8 +57,8 @@ const HomeNavbar = () => {
                       color: "#4C6559",
                       fontFamily: "Kollektif, sans-serif",
                       fontWeight: 400,
-                      fontSize: "20px",
-                      lineHeight: "24px",
+                      fontSize: "clamp(16px, 2vw, 20px)",
+                      lineHeight: "clamp(20px, 2.5vw, 24px)",
                       textAlign: "center",
                       textDecoration: "none",
                     }}
@@ -74,8 +80,9 @@ const HomeNavbar = () => {
                 background: "#4C6559",
                 fontFamily: "Kollektif, sans-serif",
                 fontWeight: 400,
-                fontSize: "20px",
-                lineHeight: "24px",
+                fontSize: "clamp(16px, 2vw, 20px)",
+                lineHeight: "clamp(20px, 2.5vw, 24px)",
+                padding: "clamp(8px, 1.5vw, 12px) clamp(15px, 2vw, 20px)",
               }}
             >
               Contact us
@@ -92,8 +99,9 @@ const HomeNavbar = () => {
             background: "#4C6559",
             fontFamily: "Kollektif, sans-serif",
             fontWeight: 400,
-            fontSize: "20px",
-            lineHeight: "24px",
+            fontSize: "clamp(16px, 2vw, 20px)",
+            lineHeight: "clamp(20px, 2.5vw, 24px)",
+            padding: "clamp(8px, 1.5vw, 12px) clamp(15px, 2vw, 20px)",
           }}
         >
           Contact us
@@ -101,6 +109,11 @@ const HomeNavbar = () => {
       </div>
     </nav>
   );
+};
+
+// Helper function to simulate clamp behavior for numbers
+const clamp = (min, max) => {
+  return Math.min(Math.max(min, window.innerWidth * 0.1), max);
 };
 
 export default HomeNavbar;
