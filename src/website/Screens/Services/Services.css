@@ -31,6 +31,8 @@
   .main-container {
     width: 90%;
     margin: 0 auto;
+    margin-top: 8%;
+    margin-bottom: 8%;
     padding: 5%;
     background-size: cover;
     background-position: center;
@@ -70,6 +72,13 @@
     margin-bottom: 10%;
   }
   
+  .content-container h2,
+.content-container-right h2 {
+    width: 100%; /* Increase width to full container width */
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+
   /* Headings */
   h2 {
     font-family: "DM Sans", sans-serif;
@@ -148,7 +157,7 @@
     width: 100%; /* Set width */
     border-width: 1px;
     border-style: solid;
-    border-image-source: linear-gradient(270deg, #4DA180 0%, #97935A 27.34%, #CE893E 100%);
+    border-image-source: "linear-gradient(270deg, #4DA180 0%, #97935A 27.34%, #CE893E 100%)";
     margin-bottom: 10%;
     border-image-slice: 1; /* Ensures the full gradient is applied */
     /* position: absolute; */

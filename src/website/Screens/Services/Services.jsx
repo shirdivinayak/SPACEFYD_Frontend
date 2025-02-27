@@ -2,10 +2,15 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Services.css"; // Import CSS file
 import HeroImage from "../../Assets/AboutUs/hero.svg";
-import BackgroundImage from "../../Assets/Services/backgroundimage.svg"; // Background image for main container
+import BackgroundImage from "../../Assets/Services/backgroundimage.svg"; 
+import HomeNavbar from "../../components/Home/NavbarDark/DarkNavbar"; // Import Navbar
+import Footer from "../../components/Home/Footer/Footer"; // Import Footer
+
 
 const Services = () => {
   return (
+    <>
+     <HomeNavbar /> {/* Navbar at the top */}
     <div>
       {/* Hero Section with Background */}
       <div
@@ -160,7 +165,7 @@ const Services = () => {
 
           {/* Right Content */}
           <div className="content-container-right">
-            <h2>Bespoke Modular Kitchens and Custom Furniture</h2>
+            <h2>Modular Kitchens and Custom Furniture</h2>
             <p>
             Tailored kitchen and furniture solutions designed for style, functionality, and space efficiency with premium materials and smart integration.
             </p>
@@ -216,7 +221,10 @@ const Services = () => {
           </div>
         </div>
       </div>
+      <Footer /> {/* Footer at the bottom */}  
     </div>
+    
+    </>
   );
 };
 

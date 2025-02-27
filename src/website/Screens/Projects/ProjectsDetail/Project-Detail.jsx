@@ -6,6 +6,8 @@ import Image1 from "../../../Assets/Projetcs/image1.svg";
 import Image2 from "../../../Assets/Projetcs/image2.svg";
 import Image5 from "../../../Assets/Projetcs/image5.svg";
 import "./Projetc-Detail.css"; // Import CSS file
+import HomeNavbar from "../../../components/Home/NavbarDark/DarkNavbar"; // Import Navbar
+import Footer from "../../../components/Home/Footer/Footer"; // Import Footer
 
 const dummyData = {
   title: "Gulf Logistics & Warehouse Facility",
@@ -34,6 +36,8 @@ const ProjectsDetail = (props) => {
   console.log("ProjectsDetail Params:", props);
 
   return (
+    <>
+    <HomeNavbar/>
     <div className="main">
       {/* Hero Section */}
       <div
@@ -89,6 +93,8 @@ const ProjectsDetail = (props) => {
         </div>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 
