@@ -1,0 +1,9 @@
+/* Custom Carousel Styles */
+.carousel-control-prev,
+.carousel-control-next {
+  display: none; /* Hide default carousel controls */
+}
+
+.carousel-section {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}

@@ -9,7 +9,7 @@
 
 .contact-description {
   margin-top: 20px;
-  font-family: "Poppins", sans-serif;
+  font-family: "DM Sans", sans-serif;
   font-weight: 400;
   font-size: 1rem;
   line-height: 24px;
@@ -33,7 +33,7 @@
   
   .contact-description {
       margin: 20px;
-      font-family: "Poppins", sans-serif;
+      font-family: "DM Sans", sans-serif;
       font-weight: 400;
       font-size: 1rem;
       line-height: 24px;
@@ -84,7 +84,7 @@
   margin-top: -20px;
   margin-bottom: 10px;
   display: block;
-  margin-left: 20px;
+  /* margin-left: 20px; */
 }
 
 .contact-item h1 {
@@ -120,7 +120,7 @@
   font-size: 1rem;
   font-weight: 600;
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 /* Input Fields */
@@ -131,7 +131,7 @@
   font-size: 1rem;
   border: 1.5px solid #ddd;
   border-radius: 10px;
-  margin-bottom: 25px;
+  margin-bottom: 35px;
 }
 
 /* Placeholder in Gray */

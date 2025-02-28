@@ -5,12 +5,14 @@ import Services from "../website/Screens/Services/Services";
 import ProjectsDetail from "../website/Screens/Projects/ProjectsDetail/Project-Detail";
 import ProjectList from "../website/Screens/Projects/ProjectsList/ProjectList";
 import ContactUs from "../website/Screens/ContactUs/ContactUs";
+import Home from "../website/Screens/Home/Home";
 
 
 const WebsiteRoutes = () => {
   
   return (
     <Routes>
+      <Route path="/" element={<Home />} />
       <Route path="/AboutUs" element={<AboutUs />} />
       <Route path="/Services" element={<Services />} />
       <Route path="/ContactUs" element={<ContactUs />} />
