@@ -6,13 +6,6 @@ import MainImage from "../../Assets/AboutUs/image219.svg";
 import Image3 from "../../Assets/AboutUs/view3.svg";
 import Gradient from "../../Assets/AboutUs/Gradient.svg";
 import circles from "../../Assets/AboutUs/circles.svg";
-// import { ReactComponent as EntertainIcon } from "..//../Assets/AboutUs/icon-entertain.svg";
-// import { ReactComponent as CommercialIcon } from "..//../Assets/AboutUs/icon-commercial.svg";
-// import { ReactComponent as EducationIcon } from "..//../Assets/AboutUs/icon-education.svg";
-// import { ReactComponent as HospitalityIcon } from "..//../Assets/AboutUs/icon-hospitality.svg";
-// import { ReactComponent as IndustryIcon } from "..//../Assets/AboutUs/icon-industry.svg";
-// import { ReactComponent as ResidentionIcon } from "..//../Assets/AboutUs/icon-residential.svg";
-// import { ReactComponent as RetailIcon } from "..//../Assets/AboutUs/icon-retail.svg";
 const AboutUs = () => {
   return (
     <div>
@@ -60,15 +53,18 @@ const AboutUs = () => {
       </div>
 
       <div
-        className="container-fluid d-flex flex-row  flex-md-row justify-content-center align-items-center mt-5 col-lg-6 col-sm-6 "
+        className="container-fluid d-flex flex-row  flex-md-row justify-content-center align-items-center mt-5 col-lg-6 col-sm-6 p-0 "
         style={{
           color: "#4C6559",
           backgroundImage: `url(${Gradient})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           width: "100%", // Full width for mobile
+          height: "80vh",
           maxWidth: "1240px",
+          overflow: "hidden",
           padding: "15px",
+          // paddingRight: "0px",
           marginLeft: "auto", // Center container for larger screens
           marginRight: "auto", // Center container for larger screens
           borderTopRightRadius: "20px",
@@ -117,7 +113,7 @@ const AboutUs = () => {
         </div>
         {/* Right Section with Image */}
         <div
-          className="d-flex flex-sm-row col-lg-5 col-md-6 justify-content-center align-items-center mt-md-0"
+          className="d-flex flex-sm-row col-lg-5 col-md-6 justify-content-center align-items-center m-0"
           style={{
             // height: "100%",
             flex: 1,
@@ -131,7 +127,8 @@ const AboutUs = () => {
             className="img-fluid"
             style={{
               width: "100%",
-              maxWidth: "600px",
+              maxWidth: "620px",
+              objectFit: "cover",
               height: "100vh", // Ensure the aspect ratio is maintained
               display: "block", // Ensures no inline elements affect it
               margin: "0 auto", // Centers the image horizontally if needed
@@ -146,6 +143,7 @@ const AboutUs = () => {
           backgroundColor: "#4C6559",
           color: "#ffffff",
           maxWidth: "1200px",
+          overflow: "hidden",
         }}
       >
         {/* Left Content */}
@@ -181,111 +179,20 @@ const AboutUs = () => {
           <img
             src={circles}
             alt="Background Design"
-            className="w-100 h-auto  "
+            className="w-100 h-auto   "
           />
-
-          {/* Tag Items */}
-          {/* <div
-            className="position-absolute  "
-            style={{ top: "15%", right: "15%" }}
-          >
-            <span
-              className="badge bg-secondary text-light px-2 shadow"
-              style={{ borderRadius: "50px", backdropFilter: "blur(26.9px)" }}
-            >
-              Entertainment and Leisurelity <EntertainIcon></EntertainIcon>
-            </span>
-          </div>
-
-          <div
-            className="position-absolute"
-            style={{ top: "30%", left: "40%" }}
-          >
-            <span
-              className="badge bg-secondary text-light px-2 shadow"
-              style={{ borderRadius: "50px" }}
-            >
-              Education <EducationIcon></EducationIcon>
-            </span>
-          </div>
-
-          <div
-            className="position-absolute"
-            style={{ top: "40%", right: "5%" }}
-          >
-            <span
-              className="badge bg-secondary text-light px-2 shadow"
-              style={{ borderRadius: "50px" }}
-            >
-              Residential <ResidentionIcon></ResidentionIcon>
-            </span>
-          </div>
-
-          <div
-            className="position-absolute"
-            style={{ top: "45%", left: "25%" }}
-          >
-            <span
-              className="badge bg-secondary text-light px-2 shadow"
-              style={{ borderRadius: "50px" }}
-            >
-              Hospitality <HospitalityIcon></HospitalityIcon>
-            </span>
-          </div>
-
-          <div
-            className="position-absolute"
-            style={{ bottom: "25%", left: "35%" }}
-          >
-            <span
-              className="badge bg-secondary text-light px-2 shadow"
-              style={{ borderRadius: "50px" }}
-            >
-              Industrial Spaces <IndustryIcon></IndustryIcon>
-            </span>
-          </div>
-
-          <div
-            className="position-absolute"
-            style={{ bottom: "30%", right: "5%" }}
-          >
-            <span
-              className="badge bg-secondary  text-light px-2 shadow"
-              style={{ borderRadius: "50px" }}
-            >
-              Retail <RetailIcon></RetailIcon>
-            </span>
-          </div>
-
-          <div
-            className="position-absolute"
-            style={{ bottom: "15%", left: "60%" }}
-          >
-            <span
-              className="badge bg-secondary text-light px-2 shadow"
-              style={{ borderRadius: "50px" }}
-            >
-              <CommercialIcon></CommercialIcon> Commercial
-            </span>
-          </div> */}
         </div>
       </div>
 
       <div className="display-flex justify-content-center align-items-center"></div>
-      <div className="container text-center mt-5">
+      <div className="container text-center mt-4">
         <p className="fs-4" style={{ color: "#9A715B" }}>
-          <em>
-            We Create <strong>Intelligent, Future-Ready</strong> Spaces By
-          </em>{" "}
+          We Create <strong>Intelligent, Future-Ready</strong> Spaces By
           <br />
-          <em>
-            Blending <strong>Design And Technology</strong>, Delivering
-          </em>{" "}
+          Blending <strong>Design And Technology</strong>, Delivering
           <br />
-          <em>Innovative, Sustainable, And Customized Interior</em> <br />
-          <em>
-            <u>Solutions With Excellence</u>
-          </em>
+          Innovative, Sustainable, And Customized Interior <br />
+          Solutions With Excellence
         </p>
       </div>
     </div>
