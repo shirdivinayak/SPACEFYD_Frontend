@@ -6,9 +6,12 @@ import MainImage from "../../Assets/AboutUs/image219.svg";
 import Image3 from "../../Assets/AboutUs/view3.svg";
 import Gradient from "../../Assets/AboutUs/Gradient.svg";
 import circles from "../../Assets/AboutUs/circles.svg";
+import HomeNavbar from "../../components/Home/Navbar/HomeNavbar";
+import Footer from "../../components/Home/Footer/Footer";
 const AboutUs = () => {
   return (
     <div>
+      <HomeNavbar />
       {/* Hero Section with Background */}
       <div
         className="d-flex align-items-center justify-content-center text-white text-center"
@@ -195,6 +198,7 @@ const AboutUs = () => {
           Solutions With Excellence
         </p>
       </div>
+      <Footer />
     </div>
   );
 };
