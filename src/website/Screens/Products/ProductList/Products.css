@@ -1,0 +1,13 @@
+.our-products {
+    width: 100%;
+    height: 614px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    position: relative;
+  }
+  

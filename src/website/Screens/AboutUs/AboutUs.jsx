@@ -1,6 +1,5 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./website.css";
 import HeroImage from "../../Assets/AboutUs/hero.svg";
 import MainImage from "../../Assets/AboutUs/image219.svg";
 import Image3 from "../../Assets/AboutUs/view3.svg";
@@ -8,6 +7,7 @@ import Gradient from "../../Assets/AboutUs/Gradient.svg";
 import circles from "../../Assets/AboutUs/circles.svg";
 import HomeNavbar from "../../components/Home/Navbar/HomeNavbar";
 import Footer from "../../components/Home/Footer/Footer";
+import "./AboutUs.css";
 const AboutUs = () => {
   return (
     <div>
@@ -62,8 +62,8 @@ const AboutUs = () => {
           backgroundImage: `url(${Gradient})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          width: "100%", // Full width for mobile
-          height: "80vh",
+          width: "90%", // Full width for mobile
+          minheight: "80vh",
           maxWidth: "1240px",
           overflow: "hidden",
           padding: "15px",
@@ -84,7 +84,7 @@ const AboutUs = () => {
 
           <div className="d-flex flex-column flex-sm-row mt-4">
             {/* Left Column */}
-            <div className="d-flex flex-column me-sm-4">
+            <div className="d-flex flex-column me-sm-4 ">
               <h5>Comprehensive Solutions</h5>
               <p>
                 From custom furniture to HVAC installations and landscape
@@ -145,6 +145,7 @@ const AboutUs = () => {
         style={{
           backgroundColor: "#4C6559",
           color: "#ffffff",
+          width: "90%",
           maxWidth: "1200px",
           overflow: "hidden",
         }}
@@ -182,12 +183,15 @@ const AboutUs = () => {
           <img
             src={circles}
             alt="Background Design"
-            className="w-100 h-auto   "
+            className="w-100 h-auto "
+            style={{
+              width: "100%",
+            }}
           />
         </div>
       </div>
 
-      <div className="display-flex justify-content-center align-items-center"></div>
+      <div className="display-flex justify-content-center align-items-center my-5"></div>
       <div className="container text-center mt-4">
         <p className="fs-4" style={{ color: "#9A715B" }}>
           We Create <strong>Intelligent, Future-Ready</strong> Spaces By
