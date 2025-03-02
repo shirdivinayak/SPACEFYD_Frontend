@@ -6,7 +6,8 @@ import ProjectsDetail from "../website/Screens/Projects/ProjectsDetail/Project-D
 import ProjectList from "../website/Screens/Projects/ProjectsList/ProjectList";
 import ContactUs from "../website/Screens/ContactUs/ContactUs";
 import Home from "../website/Screens/Home/Home";
-import Products from "../website/Screens/Products/Products";
+import Products from "../website/Screens/Products/ProductList/Products";
+import ProductDetail from "../website/Screens/Products/ProductDetails/ProductDetails";
 
 const WebsiteRoutes = () => {
   return (
@@ -19,6 +20,7 @@ const WebsiteRoutes = () => {
       <Route path="/ProjectsDetail/:title" element={<ProjectsDetail />} />{" "}
       {/* Add :title in path */}
       <Route path="/Products" element={<Products />} />
+      <Route path="/ProductDetails" element={<ProductDetail />} />
     </Routes>
   );
 };
