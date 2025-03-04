@@ -1,56 +1,72 @@
+import React from "react";
 import CarouselComponent from "../../components/Home/Carousel/CarouselComponent";
 import Footer from "../../components/Home/Footer/Footer";
 import HeroSection from "../../components/Home/HeroSection/HeroSection";
 import HomeNavbar from "../../components/Home/Navbar/HomeNavbar";
+import Sections from "../../components/Home/Sections/Sections";
+// Import images
+import image1 from "../../Assets/Home/Sections/image1.png";
+import image2 from "../../Assets/Home/Sections/image2.png";
+import image3 from "../../Assets/Home/Sections/image3.png";
+import image4 from "../../Assets/Home/Sections/image4.png";
+import image5 from "../../Assets/Home/Sections/image5.png";
+import image6 from "../../Assets/Home/Sections/image6.png";
+import ContentSection from "../../components/Home/Content/ContentSection";
+import Products from "../../components/Home/Products/Products"
+import CardSection from "../../components/CardSection/CardSection";
 
-
-function Home() {
+function App() {
   const backgroundImage = "https://via.placeholder.com/1920x1080"; // Replace with your background image URL
 
   const sections = [
     {
-      heading: "Section 1",
+      heading: "Smart Home Integration",
       col8: {
         row1: {
-          image: "https://via.placeholder.com/800x400", // Replace with your image URL
+          image: image1, // Use the imported image
           alt: "Image 1",
         },
         row2: {
-          image: "https://via.placeholder.com/800x400", // Replace with your image URL
+          image: image2, // Use the imported image
           alt: "Image 2",
         },
       },
       col4: {
-        image: "https://via.placeholder.com/400x800", // Replace with your image URL
+        image: image3, // Use the imported image
         alt: "Image 3",
       },
     },
     {
-      heading: "Section 2",
+      heading: "Interior Fit-Out & Design",
       col8: {
         row1: {
-          image: "https://via.placeholder.com/800x400", // Replace with your image URL
+          image: image4, // Use the imported image
           alt: "Image 4",
         },
         row2: {
-          image: "https://via.placeholder.com/800x400", // Replace with your image URL
+          image: image5, // Use the imported image
           alt: "Image 5",
         },
       },
       col4: {
-        image: "https://via.placeholder.com/400x800", // Replace with your image URL
+        image: image6, // Use the imported image
         alt: "Image 6",
       },
     },
   ];
+
   return (
     <>
       <HomeNavbar />
       <HeroSection />
       <CarouselComponent />
+      <Products />
+      <CardSection />
+      <Sections backgroundImage={backgroundImage} sections={sections} />
+      <ContentSection />
       <Footer />
     </>
   );
 }
 
-export default Home;
+export default App;

@@ -1,9 +1,171 @@
 /* Custom Carousel Styles */
-.carousel-control-prev,
-.carousel-control-next {
+.carousel-home-container .carousel-control-prev,
+.carousel-home-container .carousel-control-next {
   display: none; /* Hide default carousel controls */
 }
 
-.carousel-section {
+.carousel-home-section {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+/* Responsive Styles */
+@media (max-width: 991px) {
+  .carousel-home-container {
+    margin: 50px auto !important;
+    padding: 0 30px 40px 30px !important; /* Added side padding + bottom space */
+  }
+
+  .carousel-home-heading-section {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    margin-bottom: 20px !important;
+  }
+
+  .carousel-home-heading-section h2 {
+    font-size: 20px !important;
+    line-height: 26px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .carousel-home-heading-section h1 {
+    font-size: 32px !important;
+    line-height: 40px !important;
+    padding-right: 0 !important;
+  }
+
+  .carousel-home-know-more-btn.large-screen-btn {
+    display: none !important;
+  }
+
+  .carousel-home-section {
+    height: 500px !important;
+  }
+
+  .carousel-item div {
+    height: 500px !important;
+  }
+
+  .carousel-item div:nth-child(2) {
+    padding: 20px !important;
+  }
+
+  .carousel-item h3 {
+    font-size: 24px !important;
+    line-height: 30px !important;
+    margin-bottom: 15px !important;
+  }
+
+  .carousel-item p {
+    font-size: 14px !important;
+    line-height: 22px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .carousel-item hr {
+    margin-bottom: 20px !important;
+  }
+
+  .carousel-item div:nth-child(2) p {
+    font-size: 14px !important;
+  }
+
+  .carousel-item button {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 14px !important;
+  }
+
+  .carousel-home-small-screen-btn-container {
+    display: block !important;
+  }
+
+  .carousel-home-know-more-btn.small-screen-btn {
+    font-size: 14px !important;
+    padding: 6px !important;
+    min-width: 90px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .carousel-home-container {
+    margin: 30px auto !important;
+    padding: 0 20px 40px 20px !important; /* Adjusted side padding */
+  }
+
+  .carousel-home-heading-section h2 {
+    font-size: 18px !important;
+    line-height: 24px !important;
+  }
+
+  .carousel-home-heading-section h1 {
+    font-size: 24px !important;
+    line-height: 30px !important;
+  }
+
+  .carousel-home-section {
+    height: 400px !important;
+  }
+
+  .carousel-item div {
+    height: 400px !important;
+  }
+
+  .carousel-item div:nth-child(2) {
+    padding: 15px !important;
+  }
+
+  .carousel-item h3 {
+    font-size: 20px !important;
+    line-height: 26px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .carousel-item p {
+    font-size: 12px !important;
+    line-height: 18px !important;
+    margin-bottom: 15px !important;
+  }
+
+  .carousel-item hr {
+    margin-bottom: 15px !important;
+  }
+
+  .carousel-item div:nth-child(2) p {
+    font-size: 12px !important;
+  }
+
+  .carousel-item button {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 12px !important;
+  }
+
+  .carousel-home-know-more-btn.small-screen-btn {
+    font-size: 12px !important;
+    padding: 5px !important;
+    min-width: 80px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .carousel-home-container {
+    padding: 0 15px 40px 15px !important; /* Further adjusted side padding */
+  }
+
+  .carousel-home-section {
+    height: 350px !important;
+  }
+
+  .carousel-item div {
+    height: 350px !important;
+  }
+
+  .carousel-item div:nth-child(2) {
+    padding: 10px !important;
+  }
+
+  .carousel-item h3 {
+    font-size: 18px !important;
+    line-height: 24px !important;
+  }
 }

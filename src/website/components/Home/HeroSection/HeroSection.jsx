@@ -1,6 +1,6 @@
 import React from "react";
-import banner from "../../../../website/Assets/Home/homebanner.png"; // Import the local image
-import lamp from "../../../../website/Assets/Home/lamp.png";
+import banner from "../../../Assets/Home/homebanner.png";
+import lamp from "../../../Assets/Home/lamp.png";
 import "./HeroSection.css";
 
 // Button data for the Hero Section
@@ -20,6 +20,12 @@ const rightButtons = [
   { icon: "🚀", text: "Contact Us" },
 ];
 
+// Combined buttons for small screens (5 buttons for 2x2x1 layout)
+const allHeroButtons = [
+  ...topButtons,
+  ...leftButtons,
+].slice(0, 5);
+
 // Button data for the Lamp Section
 const lampButtons = [
   { icon: "🏠", text: "Smart Space Solutions" },
@@ -28,7 +34,7 @@ const lampButtons = [
   { icon: "🌿", text: "Future-Ready Designs" },
 ];
 
-// Reusable Button Component using CSS classes
+// Reusable Button Component
 const FloatingButton = ({ icon, text }) => (
   <button className="floating-btn">
     <span style={{ marginRight: "10px" }}>{icon}</span>
@@ -52,6 +58,7 @@ const HeroSection = () => {
           height: "672px",
           position: "relative",
           margin: "auto",
+          maxWidth: "100%",
         }}
       >
         {/* Heading */}
@@ -59,6 +66,7 @@ const HeroSection = () => {
           className="hero-heading"
           style={{
             width: "1086px",
+            maxWidth: "100%",
             height: "180px",
             position: "absolute",
             top: "62px",
@@ -81,51 +89,31 @@ const HeroSection = () => {
           </h1>
         </div>
 
-        {/* Floating Buttons Section */}
+        {/* Floating Buttons and Content Section */}
         <div
-          className="floating-buttons"
+          className="hero-content"
           style={{
             position: "absolute",
             top: "300px",
             left: "50%",
             transform: "translateX(-50%)",
             width: "1086px",
+            maxWidth: "100%",
             textAlign: "center",
           }}
         >
-          {/* Top Row - 3 Buttons */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "20px",
-              marginBottom: "20px",
-            }}
-          >
-            {topButtons.map((button, index) => (
-              <FloatingButton
-                key={index}
-                icon={button.icon}
-                text={button.text}
-              />
-            ))}
-          </div>
-
-          {/* Main Content Container */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              width: "100%",
-              position: "relative",
-            }}
-          >
-            {/* Left Buttons */}
+          {/* Large Screen Layout */}
+          <div className="large-screen-layout">
             <div
-              style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+              className="top-buttons"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "100px",
+                marginBottom: "20px",
+              }}
             >
-              {leftButtons.map((button, index) => (
+              {topButtons.map((button, index) => (
                 <FloatingButton
                   key={index}
                   icon={button.icon}
@@ -134,8 +122,131 @@ const HeroSection = () => {
               ))}
             </div>
 
-            {/* Center Content */}
             <div
+              className="main-content"
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <div
+                className="left-buttons"
+                style={{ display: "flex", flexDirection: "column", gap: "80px" }}
+              >
+                {leftButtons.map((button, index) => (
+                  <FloatingButton
+                    key={index}
+                    icon={button.icon}
+                    text={button.text}
+                  />
+                ))}
+              </div>
+
+              <div
+                className="center-content"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "20px",
+                }}
+              >
+                <h2
+                  style={{
+                    fontFamily: "Poppins, sans-serif",
+                    fontWeight: 500,
+                    fontSize: "36px",
+                    lineHeight: "60.22px",
+                    letterSpacing: "-0.73px",
+                    color: "#FCF9F5",
+                    textAlign: "center",
+                    margin: "0",
+                  }}
+                >
+                  Smart Tech Interior Solutions
+                </h2>
+
+                <div
+                  style={{
+                    width: "729px",
+                    maxWidth: "100%",
+                    height: "211px",
+                    borderRadius: "10px",
+                    border: "0.5px solid rgba(255, 255, 255, 0.2)",
+                    background:
+                      "linear-gradient(179.71deg, rgba(90, 90, 90, 0.4) 0.25%, rgba(90, 90, 90, 0) 108.54%)",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "20px",
+                    boxSizing: "border-box",
+                  }}
+                >
+                  <p
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      fontWeight: 400,
+                      fontSize: "18px",
+                      lineHeight: "27px",
+                      letterSpacing: "0px",
+                      color: "#FCF9F5",
+                      textAlign: "center",
+                      margin: "0 0 24px 0",
+                    }}
+                  >
+                    Transform your space with smart design and technology for a
+                    seamless, stylish, and future-ready experience.
+                  </p>
+
+                  <button className="proper-btn" style={{ marginTop: "30px" }}>
+                    Get Started With Us
+                  </button>
+                </div>
+              </div>
+
+              <div
+                className="right-buttons"
+                style={{ display: "flex", flexDirection: "column", gap: "80px" }}
+              >
+                {rightButtons.map((button, index) => (
+                  <FloatingButton
+                    key={index}
+                    icon={button.icon}
+                    text={button.text}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Small Screen Layout */}
+          <div
+            className="small-screen-layout"
+            style={{ display: "none", flexDirection: "column", gap: "30px" }}
+          >
+            <div
+              className="small-screen-buttons"
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "center",
+                gap: "20px",
+              }}
+            >
+              {allHeroButtons.map((button, index) => (
+                <FloatingButton
+                  key={index}
+                  icon={button.icon}
+                  text={button.text}
+                />
+              ))}
+            </div>
+
+            <div
+              className="small-screen-center-content"
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -143,7 +254,6 @@ const HeroSection = () => {
                 gap: "20px",
               }}
             >
-              {/* Smart Tech Interior Solutions Heading */}
               <h2
                 style={{
                   fontFamily: "Poppins, sans-serif",
@@ -159,11 +269,11 @@ const HeroSection = () => {
                 Smart Tech Interior Solutions
               </h2>
 
-              {/* Frame for Paragraph and Button */}
               <div
                 style={{
                   width: "729px",
-                  height: "211px",
+                  maxWidth: "100%",
+                  height: "auto",
                   borderRadius: "10px",
                   border: "0.5px solid rgba(255, 255, 255, 0.2)",
                   background:
@@ -176,7 +286,6 @@ const HeroSection = () => {
                   boxSizing: "border-box",
                 }}
               >
-                {/* Paragraph */}
                 <p
                   style={{
                     fontFamily: "Poppins, sans-serif",
@@ -193,24 +302,10 @@ const HeroSection = () => {
                   seamless, stylish, and future-ready experience.
                 </p>
 
-                {/* Get Started With Us Button */}
                 <button className="proper-btn" style={{ marginTop: "30px" }}>
                   Get Started With Us
                 </button>
               </div>
-            </div>
-
-            {/* Right Buttons */}
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "20px" }}
-            >
-              {rightButtons.map((button, index) => (
-                <FloatingButton
-                  key={index}
-                  icon={button.icon}
-                  text={button.text}
-                />
-              ))}
             </div>
           </div>
         </div>
@@ -225,20 +320,24 @@ const HeroSection = () => {
           backgroundPosition: "center",
           padding: "50px",
           borderRadius: "24px",
-          width: "100%", // Ensure full width
+          width: "100%",
           height: "672px",
           position: "relative",
-          margin: "0 auto", // Remove left margin
+          margin: "0 auto",
+          maxWidth: "100%",
         }}
       >
-        {/* About Us Heading */}
+        {/* Lamp Content */}
         <div
+          className="lamp-content"
           style={{
             position: "absolute",
             top: "62px",
             left: "50%",
             transform: "translateX(-50%)",
             textAlign: "center",
+            width: "100%",
+            maxWidth: "800px",
           }}
         >
           <h2
@@ -283,6 +382,7 @@ const HeroSection = () => {
             design.
           </p>
           <button
+            className="lamp-btn"
             style={{
               width: "132px",
               height: "44px",
@@ -302,8 +402,9 @@ const HeroSection = () => {
           </button>
         </div>
 
-        {/* Transparent Buttons */}
+        {/* Lamp Buttons */}
         <div
+          className="lamp-buttons"
           style={{
             position: "absolute",
             top: "441px",
@@ -321,6 +422,7 @@ const HeroSection = () => {
           {lampButtons.map((button, index) => (
             <button
               key={index}
+              className="lamp-floating-btn"
               style={{
                 width: "283.64px",
                 height: "55.15px",
