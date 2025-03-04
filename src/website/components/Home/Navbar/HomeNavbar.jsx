@@ -1,5 +1,5 @@
 import React from "react";
-import pic from "../../../assets/Home/companylogo.png"; // Adjust the relative path as needed
+import pic from "../../../Assets/Home/companylogo.png"; // Adjust the relative path as needed
 
 const HomeNavbar = () => {
   return (
