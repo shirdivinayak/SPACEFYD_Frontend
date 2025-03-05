@@ -176,6 +176,11 @@
       align-self: right; /* Center align */
       color: #3F3F3F;
     }
+    .content-container h2,
+.content-container-right h2 {
+    width: 100%; /* Increase width to full container width */
+    white-space: wrap; /* Prevent text wrapping */
+}
   
     .content-container-right h2,
     .content-container-right p {
