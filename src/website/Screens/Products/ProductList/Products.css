@@ -10,4 +10,66 @@
     color: white;
     position: relative;
   }
+  .products-menu {
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+    padding-top: 20px;
+    white-space: nowrap;
+    gap: 0px;
+    
+}
+
+.types-menu {
+  color: white;
+  display: flex;
+    justify-content: center;
+    overflow-x: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    white-space: nowrap;
+    gap: 0px;
+}
+.product-card{
+  width: 150px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #DDCFC029;
   
+}
+
+.product-image{
+  justify-content: center;
+  align-items: center;
+}
+.category-item, .type-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+    font-weight: 500;
+    color: #4C6559;
+}
+
+.category-item.active, .type-item.active {
+   
+    
+}
+
+.category-item:hover, .type-item:hover {
+   
+    
+}
+
+.types-menu{
+  
+}
+
+.similar-products{
+  display: flex;
+  flex-direction: row;
+
+}
