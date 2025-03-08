@@ -8,16 +8,20 @@ const useAllProject = () => {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      try {
-        const response = await axiosInstance.post("/displayCategory"); // Adjust endpoint as needed
-        setCategories(response.data.data || []); // Safely set categories
-      } catch (err) {
-        setError(err.response?.data?.message || "Failed to fetch categories."); // Fix reference here
-      } finally {
-        setLoading(false);
-      }
-    };
+  try {
+    const response = await axiosInstance.post("/displayCategory", {
+      type: "project", // Added type in the request body
+    });
 
+    setCategories(response.data.data || []); // Safely set categories
+  } catch (err) {
+    setError(err.response?.data?.message || "Failed to fetch categories.");
+  } finally {
+    setLoading(false);
+  }
+};
+
+    
     fetchCategories();
   }, []);
 
