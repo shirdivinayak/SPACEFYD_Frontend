@@ -144,14 +144,18 @@ const Products = () => {
             }`}
             onClick={() => handleCategoryClick(category)}
           >
-            <img
-              src={ProductCategory[category][0].img}
-              alt={ProductCategory[category][0].title}
-              className="product-image"
-            />
-            <span className="product-title">
-              {ProductCategory[category][0].title}
-            </span>
+            <div className="product-image-class p-4">
+              <img
+                src={ProductCategory[category][0].img}
+                alt={ProductCategory[category][0].title}
+                className="product-image"
+              />
+            </div>
+            <div className="product-title-class">
+              <span className="product-title">
+                {ProductCategory[category][0].title}
+              </span>
+            </div>
           </div>
         ))}
       </div>
@@ -231,7 +235,7 @@ const Products = () => {
         <h2>Similar Products</h2>
         <div>
           {" "}
-          <button>Veiw More</button>
+          <button className="view-more-button">View More</button>
         </div>
       </div>
       <div className="p-4">

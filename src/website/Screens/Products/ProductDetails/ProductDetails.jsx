@@ -26,7 +26,7 @@ const ProductDetails = () => {
         <h2>Similar Products</h2>
         <div>
           {" "}
-          <button>Veiw More</button>
+          <button className="view-more-button">Veiw More</button>
         </div>
       </div>
       <div className="p-4">
