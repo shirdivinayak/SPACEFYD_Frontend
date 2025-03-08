@@ -11,12 +11,36 @@ import ImgPlant from "../../../Assets/Products/Plants.svg";
 import ImgBath from "../../../Assets/Products/Bathroom.svg";
 import ImgWall from "../../../Assets/Products/Wall.svg";
 import ImgSmart from "../../../Assets/Products/SmartHome.svg";
-import Linetop from "../../../Assets/Products/Line.svg";
+import { ReactComponent as Linetop } from "../../../Assets/Products/Line.svg";
+import { ReactComponent as Linebot } from "../../../Assets/Products/Line.svg";
 
 const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState("Furnitures");
   const [selectedTypes, setSelectedTypes] = useState("Modular Furniture");
   const navigate = useNavigate();
+
+  const ProductGrid = [
+    {
+      title: "Grifo",
+      description: "Night lamp",
+      image: "https://via.placeholder.com/150",
+    },
+    {
+      title: "Muggo",
+      description: "Small mug",
+      image: "https://via.placeholder.com/150",
+    },
+    {
+      title: "Pingky",
+      description: "Cute bed set",
+      image: "https://via.placeholder.com/150",
+    },
+    {
+      title: "Potty",
+      description: "Minimalist flower pot",
+      image: "https://via.placeholder.com/150",
+    },
+  ];
 
   const ProductCategory = {
     Furnitures: [
@@ -159,7 +183,10 @@ const Products = () => {
           </div>
         ))}
       </div>
-      {/* <Linetop></Linetop> */}
+      <div className="container justify-content-center">
+        {" "}
+        <Linetop />
+      </div>
       {/* Horizontal Menu for Types */}
       <div className="types-menu">
         {Object.values(ProductCategory[selectedCategory][0].types).map(
@@ -231,68 +258,36 @@ const Products = () => {
         </div>
       </div>
 
+      <div className="container justify-content-center">
+        {" "}
+        <Linebot />
+      </div>
+
       <div className=" container similar-products ">
         <h2>Similar Products</h2>
         <div>
           {" "}
           <button className="view-more-button">View More</button>
         </div>
-      </div>
-      <div className="p-4">
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-          <div class="col">
-            <div class="card">
-              {/* <img src="..." class="card-img-top" alt="..."> */}
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">
-                  This is a longer card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </p>
+        <div>
+          <div className="product-grid">
+            {ProductGrid.map((product, index) => (
+              <div key={index} className="product-card">
+                <img
+                  src={ProductGrid.image}
+                  alt={ProductGrid.title}
+                  className="product-image"
+                />
+                <div className="product-info">
+                  <h3>{ProductGrid.title}</h3>
+                  <p>{ProductGrid.description}</p>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              {/* <img src="..." class="card-img-top" alt="..."> */}
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">
-                  This is a longer card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              {/* <img src="..." class="card-img-top" alt="..."> */}
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">
-                  This is a longer card with supporting text below as a natural
-                  lead-in to additional content.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              {/* <img src="..." class="card-img-top" alt="..."> */}
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">
-                  This is a longer card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
+
       <Footer />
     </div>
   );
