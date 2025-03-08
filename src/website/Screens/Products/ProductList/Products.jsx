@@ -269,25 +269,25 @@ const Products = () => {
           {" "}
           <button className="view-more-button">View More</button>
         </div>
-        <div>
-          <div className="product-grid">
-            {ProductGrid.map((product, index) => (
-              <div key={index} className="product-card">
-                <img
-                  src={ProductGrid.image}
-                  alt={ProductGrid.title}
-                  className="product-image"
-                />
-                <div className="product-info">
-                  <h3>{ProductGrid.title}</h3>
-                  <p>{ProductGrid.description}</p>
-                </div>
+        <br />
+      </div>
+      <div className="container">
+        <div className="product-grid">
+          {ProductGrid.map((product, index) => (
+            <div key={index} className="product-card">
+              <img
+                src={ProductGrid.image}
+                alt={ProductGrid.title}
+                className="product-image"
+              />
+              <div className="product-info">
+                <h3>{ProductGrid.title}</h3>
+                <p>{ProductGrid.description}</p>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
-
       <Footer />
     </div>
   );
