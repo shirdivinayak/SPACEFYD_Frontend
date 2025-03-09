@@ -20,6 +20,24 @@ const useProjectCategoryApi = () => {
       setLoading(false);
     }
   };
+
+  const editCategory = async (updatedItem) => {
+    try {
+      console.log(updatedItem)
+      setLoading(true);
+      setError(null);
+      const response = await axiosInstance.post("/editCategory", {
+        type: 'project',
+        id: updatedItem.id,
+        name: updatedItem.category,
+      });
+      setMessage("Category updated successfully.");
+    } catch (error) {
+      setError(error.response?.data?.message || "Failed to update category.");
+    } finally {
+      setLoading(false);
+    }
+  };
   const fetchProjectCategories = async () => {
     try {
       setLoading(true);
@@ -34,6 +52,27 @@ const useProjectCategoryApi = () => {
       setLoading(false);
     }
   };
+  const deleteCategory = async (categoryIds) => {
+    try {
+      setLoading(true);
+      setError(null);
+  
+      // Ensure categoryIds is always an array
+      const idsToDelete = Array.isArray(categoryIds) ? categoryIds : [categoryIds];
+  
+      await axiosInstance.post("/deleteCategory", { id: idsToDelete,   type: "project" });
+  
+      setCategories((prevItems) =>
+        prevItems.filter((item) => !idsToDelete.includes(item.id))
+      );
+  
+      setMessage("Category(ies) deleted successfully.");
+    } catch (error) {
+      setError(error.response?.data?.message || "Failed to delete category(ies).");
+    } finally {
+      setLoading(false);
+    }
+  };
   
   
 
@@ -43,8 +82,10 @@ const useProjectCategoryApi = () => {
     message,
     categories,
     addCategory,
+    editCategory, // Added editCategory function
     fetchProjectCategories,
     setMessage,
+    deleteCategory,
     setError,
   };
 };
