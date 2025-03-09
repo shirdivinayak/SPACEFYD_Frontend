@@ -13,32 +13,36 @@ import ImgWall from "../../../Assets/Products/Wall.svg";
 import ImgSmart from "../../../Assets/Products/SmartHome.svg";
 import { ReactComponent as Linetop } from "../../../Assets/Products/Line.svg";
 import { ReactComponent as Linebot } from "../../../Assets/Products/Line.svg";
+import Sample1 from "../../../Assets/Products/SampleImage1.svg";
+import Sample2 from "../../../Assets/Products/SampleImage2.svg";
+import Sample3 from "../../../Assets/Products/SampleImage3.svg";
+import Sample4 from "../../../Assets/Products/SampleImage4.svg";
 
 const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState("Furnitures");
   const [selectedTypes, setSelectedTypes] = useState("Modular Furniture");
   const navigate = useNavigate();
 
-  const ProductGrid = [
+  const ProductList = [
     {
       title: "Grifo",
       description: "Night lamp",
-      image: "https://via.placeholder.com/150",
+      image: Sample1,
     },
     {
       title: "Muggo",
       description: "Small mug",
-      image: "https://via.placeholder.com/150",
+      image: Sample2,
     },
     {
       title: "Pingky",
       description: "Cute bed set",
-      image: "https://via.placeholder.com/150",
+      image: Sample3,
     },
     {
       title: "Potty",
       description: "Minimalist flower pot",
-      image: "https://via.placeholder.com/150",
+      image: Sample4,
     },
   ];
 
@@ -140,6 +144,10 @@ const Products = () => {
     setSelectedTypes(type);
   };
 
+  const handleCardClick = () => {
+    navigate(`/ProductDetails`);
+  };
+
   return (
     <div className="main">
       <HomeNavbar />
@@ -202,60 +210,22 @@ const Products = () => {
         )}
       </div>
 
-      <div className="p-4">
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-          <div class="col">
-            <div class="card">
-              {/* <img src="..." class="card-img-top" alt="..."> */}
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">
-                  This is a longer card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </p>
-              </div>
-            </div>
+      <div className="similar-product-list">
+        {ProductList.map((product, index) => (
+          <div
+            className="similar-product-card"
+            key={index}
+            onClick={() => handleCardClick(product)}
+          >
+            <img
+              src={product.image}
+              alt={product.title}
+              className="similar-product-image"
+            />
+            <h3 className="similar-product-title">{product.title}</h3>
+            <p className="similar-product-description">{product.description}</p>
           </div>
-          <div class="col">
-            <div class="card">
-              {/* <img src="..." class="card-img-top" alt="..."> */}
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">
-                  This is a longer card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              {/* <img src="..." class="card-img-top" alt="..."> */}
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">
-                  This is a longer card with supporting text below as a natural
-                  lead-in to additional content.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              {/* <img src="..." class="card-img-top" alt="..."> */}
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">
-                  This is a longer card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
 
       <div className="container justify-content-center">
@@ -263,30 +233,30 @@ const Products = () => {
         <Linebot />
       </div>
 
-      <div className=" container similar-products ">
+      <div className=" container similar-products p-4 ">
         <h2>Similar Products</h2>
         <div>
           {" "}
           <button className="view-more-button">View More</button>
         </div>
-        <br />
       </div>
-      <div className="container">
-        <div className="product-grid">
-          {ProductGrid.map((product, index) => (
-            <div key={index} className="product-card">
-              <img
-                src={ProductGrid.image}
-                alt={ProductGrid.title}
-                className="product-image"
-              />
-              <div className="product-info">
-                <h3>{ProductGrid.title}</h3>
-                <p>{ProductGrid.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+
+      <div className="similar-product-list">
+        {ProductList.map((product, index) => (
+          <div
+            className="similar-product-card"
+            key={index}
+            onClick={() => handleCardClick(product)}
+          >
+            <img
+              src={product.image}
+              alt={product.title}
+              className="similar-product-image"
+            />
+            <h3 className="similar-product-title">{product.title}</h3>
+            <p className="similar-product-description">{product.description}</p>
+          </div>
+        ))}
       </div>
       <Footer />
     </div>
