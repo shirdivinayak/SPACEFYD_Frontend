@@ -65,7 +65,7 @@ const ProductTable = () => {
   };
 
   const handleAdd = (Products) => {
-    navigate("/projects/addprojects");
+    navigate("/admin/projects/addprojects");
   };
 
   const handleGlobalToggle = () => {
@@ -77,7 +77,7 @@ const ProductTable = () => {
   };
 
   const handleEdit = (s) => {
-    navigate("/projects/editprojects", {
+    navigate("admin/projects/editprojects", {
       state: { item: items.find((i) => i.id === s) },
     });
   };
@@ -108,9 +108,9 @@ const ProductTable = () => {
   };
 
   if (productsLoading || categoriesLoading) return <p>Loading...</p>;
-  if ( categoriesError  || !categories) {
-    return <p>Error loading data or no data available</p>;
-  };
+  // if ( categoriesError  || !categories) {
+  //   return <p>Error loading data or no data available</p>;
+  // };
 
   const filteredItems =
   selectedCategory === "All Projects"
@@ -142,7 +142,7 @@ const ProductTable = () => {
           className="d-flex align-items-center mb-0 m-0"
           style={{ fontSize: "20px" }}
         >
-          <Nav.Link as={Link} to="/" className="me-2 opacity-50">
+          <Nav.Link as={Link} to="/admin" className="me-2 opacity-50">
             Home
           </Nav.Link>
           <span> &gt; </span> {/* This ensures the ">" symbol is inline */}

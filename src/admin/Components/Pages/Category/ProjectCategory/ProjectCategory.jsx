@@ -147,7 +147,7 @@ const ProjectCategory = () => {
                     onChange={() => handleCheckboxChange(item.id)}
                   />
                 </td>
-                <td>{item.category}</td>
+                <td>{item?.category}</td>
                 <td>
                   <Button
                     size="sm"
