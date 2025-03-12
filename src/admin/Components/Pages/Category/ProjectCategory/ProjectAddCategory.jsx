@@ -21,7 +21,7 @@ const ProjectAddCategory = () => {
       return;
     }
 
-    await addCategory({ name: categoryName });
+    await addCategory({ name: categoryName, type: 'project' });
     setCategoryName(""); // Clear input field
     setTimeout(() => {
       setMessage(""); // Clear success message after 3 seconds

@@ -5,6 +5,8 @@ import Email from "../../Assets/ContactUs/Emai.svg";
 import Location from "../../Assets/ContactUs/Location.svg";
 import Phone from "../../Assets/ContactUs/Phone.svg";
 import "./ContactUs.css";
+import HomeNavbar from "../../components/Home/NavbarDark/DarkNavbar"; // Import Navbar
+import Footer from "../../components/Home/Footer/Footer"; // Import Footer
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -42,6 +44,9 @@ const ContactUs = () => {
   };
 
   return (
+    <>
+    <HomeNavbar/>
+    
     <div>
       {/* Hero Section */}
       <div
@@ -159,6 +164,8 @@ const ContactUs = () => {
         </div>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 
