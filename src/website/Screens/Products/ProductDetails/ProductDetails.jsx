@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./ProductDetails.css";
 import HomeNavbar from "../../../components/Home/Navbar/HomeNavbar";
@@ -9,10 +9,10 @@ import Sample2 from "../../../Assets/Products/SampleImage2.svg";
 import Sample3 from "../../../Assets/Products/SampleImage3.svg";
 import Sample4 from "../../../Assets/Products/SampleImage4.svg";
 import ProductImage from "../../../Assets/Products/ProductImage.svg";
-import ProductImage2 from "../../../Assets/Products/ProductImage2.svg";
-import ProductImage3 from "../../../Assets/Products/ProductImage3.svg";
-import ProductImage4 from "../../../Assets/Products/ProductImage4.svg";
-import ProductImage5 from "../../../Assets/Products/ProductImage5.svg";
+import ProductImage2 from "../../../Assets/Products/SampleImage1.svg";
+import ProductImage3 from "../../../Assets/Products/SampleImage2.svg";
+import ProductImage4 from "../../../Assets/Products/SampleImage3.svg";
+import ProductImage5 from "../../../Assets/Products/SampleImage4.svg";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
@@ -48,8 +48,14 @@ const ProductDetails = () => {
     },
   ];
 
-  const { state } = useLocation();
-  const product = state?.product;
+  // const { state } = useLocation();
+  // const product = state?.product;
+
+  const [mainImage, setMainImage] = useState(ProductImages.mainImage);
+  // Function to handle click on sub-images
+  const handleImageClick = (image) => {
+    setMainImage(image);
+  };
 
   const handleCardClick = () => {
     navigate(`/ProductDetails`);
@@ -66,12 +72,13 @@ const ProductDetails = () => {
                 src={image}
                 alt={`${ProductImages.title} view ${index + 1}`}
                 style={{ cursor: "pointer" }}
+                onClick={() => handleImageClick(image)}
               />
             ))}
           </div>
 
           <div className="main-image">
-            <img src={ProductImages.mainImage} alt={ProductImages.title} />
+            <img src={mainImage} alt={ProductImages.title} />
           </div>
         </div>
 
@@ -86,7 +93,7 @@ const ProductDetails = () => {
         <h2>Similar Products</h2>
         <div>
           {" "}
-          <button className="view-more-button">Veiw More</button>
+          <button className="view-more-button">View More</button>
         </div>
       </div>
       <div className="similar-product-list">
