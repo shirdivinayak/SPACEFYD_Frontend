@@ -4,11 +4,14 @@ import HeroImage from "../../Assets/AboutUs/hero.svg";
 import MainImage from "../../Assets/AboutUs/image219.svg";
 import Image3 from "../../Assets/AboutUs/view3.svg";
 import Gradient from "../../Assets/AboutUs/Gradient.svg";
-import "./website.css";
 import circles from "../../Assets/AboutUs/circles.svg";
+import HomeNavbar from "../../components/Home/Navbar/HomeNavbar";
+import Footer from "../../components/Home/Footer/Footer";
+import "./AboutUs.css";
 const AboutUs = () => {
   return (
     <div>
+      <HomeNavbar />
       {/* Hero Section with Background */}
       <div
         className="d-flex align-items-center justify-content-center text-white text-center"
@@ -53,15 +56,18 @@ const AboutUs = () => {
       </div>
 
       <div
-        className="container-fluid d-flex flex-column flex-md-row justify-content-center align-items-center mt-5"
+        className="container-fluid d-flex flex-row  flex-md-row justify-content-center align-items-center mt-5 col-lg-6 col-sm-6 p-0 "
         style={{
           color: "#4C6559",
           backgroundImage: `url(${Gradient})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          width: "100%", // Full width for mobile
+          width: "90%", // Full width for mobile
+          minheight: "80vh",
           maxWidth: "1240px",
+          overflow: "hidden",
           padding: "15px",
+          // paddingRight: "0px",
           marginLeft: "auto", // Center container for larger screens
           marginRight: "auto", // Center container for larger screens
           borderTopRightRadius: "20px",
@@ -70,7 +76,7 @@ const AboutUs = () => {
       >
         {/* Left Section */}
         <div
-          className="d-flex flex-column text-left text-md-left"
+          className="d-flex flex-column col-lg-7 col-md-6 text-left text-md-left"
           style={{ flex: 1 }}
         >
           <h2>Innovative, Sustainable</h2>
@@ -78,7 +84,7 @@ const AboutUs = () => {
 
           <div className="d-flex flex-column flex-sm-row mt-4">
             {/* Left Column */}
-            <div className="d-flex flex-column me-sm-4">
+            <div className="d-flex flex-column me-sm-4 ">
               <h5>Comprehensive Solutions</h5>
               <p>
                 From custom furniture to HVAC installations and landscape
@@ -110,8 +116,9 @@ const AboutUs = () => {
         </div>
         {/* Right Section with Image */}
         <div
-          className="d-flex justify-content-center align-items-center mt-4 mt-md-0"
+          className="d-flex flex-sm-row col-lg-5 col-md-6 justify-content-center align-items-center m-0"
           style={{
+            // height: "100%",
             flex: 1,
             alignSelf: "stretch", // Ensure the image container stretches
           }}
@@ -119,11 +126,13 @@ const AboutUs = () => {
           <img
             src={Image3} // Uncomment and provide the correct image source
             alt="Interior Design"
+            id="image3"
             className="img-fluid"
             style={{
               width: "100%",
-              maxWidth: "600px",
-              height: "auto", // Ensure the aspect ratio is maintained
+              maxWidth: "620px",
+              objectFit: "cover",
+              height: "100vh", // Ensure the aspect ratio is maintained
               display: "block", // Ensures no inline elements affect it
               margin: "0 auto", // Centers the image horizontally if needed
             }}
@@ -132,18 +141,29 @@ const AboutUs = () => {
       </div>
 
       <div
-        className="container-fluid position-relative p-5 rounded-4 mt-5"
+        className="container-fluid d-flex flex-column flex-md-row   position-relative p-5 rounded-4 mt-5  "
         style={{
           backgroundColor: "#4C6559",
           color: "#ffffff",
+          width: "90%",
           maxWidth: "1200px",
+          overflow: "hidden",
         }}
       >
         {/* Left Content */}
-        <div className="w-50">
+        <div
+          className=" container "
+          style={{
+            width: "100%",
+          }}
+        >
           <button
-            className="btn btn-light px-4 py-2 mb-3 "
-            style={{ borderRadius: "50px" }}
+            className="btn btn-light px-4 py-2 mb-3 col-md-6 "
+            style={{
+              borderRadius: "50px",
+              backgroundColor: "white",
+              borderBlockWidth: "0.5px",
+            }}
           >
             Come partner with us
           </button>
@@ -159,113 +179,30 @@ const AboutUs = () => {
         </div>
 
         {/* Tags Section */}
-        <div className="d-flex-column position-absolute top-50 end-0 translate-middle-y w-50">
-          <img src={circles} alt="Background Design" className="w-100 h-auto" />
-
-          {/* Tag Items */}
-          <div
-            className="position-absolute"
-            style={{ top: "10%", right: "15%" }}
-          >
-            <span
-              className="badge bg-light text-dark p-3 shadow"
-              style={{ borderRadius: "50px", backdropFilter: "blur(26.9px)" }}
-            >
-              Entertainment and Leisure 🎭
-            </span>
-          </div>
-
-          <div
-            className="position-absolute"
-            style={{ top: "25%", left: "35%" }}
-          >
-            <span
-              className="badge bg-light text-dark p-3 shadow"
-              style={{ borderRadius: "50px" }}
-            >
-              Education 🎓
-            </span>
-          </div>
-
-          <div
-            className="position-absolute"
-            style={{ top: "40%", right: "10%" }}
-          >
-            <span
-              className="badge bg-light text-dark p-3 shadow"
-              style={{ borderRadius: "50px" }}
-            >
-              Residential 🏠
-            </span>
-          </div>
-
-          <div
-            className="position-absolute"
-            style={{ top: "55%", left: "25%" }}
-          >
-            <span
-              className="badge bg-light text-dark p-3 shadow"
-              style={{ borderRadius: "50px" }}
-            >
-              Hospitality 🏨
-            </span>
-          </div>
-
-          <div
-            className="position-absolute"
-            style={{ bottom: "25%", left: "10%" }}
-          >
-            <span
-              className="badge bg-light text-dark p-3 shadow"
-              style={{ borderRadius: "50px" }}
-            >
-              Industrial Spaces 🏭
-            </span>
-          </div>
-
-          <div
-            className="position-absolute"
-            style={{ bottom: "10%", right: "25%" }}
-          >
-            <span
-              className="badge bg-light text-dark p-3 shadow"
-              style={{ borderRadius: "50px" }}
-            >
-              Retail 🏪
-            </span>
-          </div>
-
-          <div
-            className="position-absolute"
-            style={{ bottom: "5%", left: "50%" }}
-          >
-            <span
-              className="badge bg-light text-dark p-3 shadow"
-              style={{ borderRadius: "50px" }}
-            >
-              Commercial 🏢
-            </span>
-          </div>
+        <div className=" col-md-6 col-12 mt-3 mt-md-0">
+          <img
+            src={circles}
+            alt="Background Design"
+            className="w-100 h-auto "
+            style={{
+              width: "100%",
+            }}
+          />
         </div>
       </div>
 
-      <div className="display-flex justify-content-center align-items-center"></div>
-      <div className="container text-center mt-5">
+      <div className="display-flex justify-content-center align-items-center my-5"></div>
+      <div className="container text-center mt-4">
         <p className="fs-4" style={{ color: "#9A715B" }}>
-          <em>
-            We Create <strong>Intelligent, Future-Ready</strong> Spaces By
-          </em>{" "}
+          We Create <strong>Intelligent, Future-Ready</strong> Spaces By
           <br />
-          <em>
-            Blending <strong>Design And Technology</strong>, Delivering
-          </em>{" "}
+          Blending <strong>Design And Technology</strong>, Delivering
           <br />
-          <em>Innovative, Sustainable, And Customized Interior</em> <br />
-          <em>
-            <u>Solutions With Excellence</u>
-          </em>
+          Innovative, Sustainable, And Customized Interior <br />
+          Solutions With Excellence
         </p>
       </div>
+      <Footer />
     </div>
   );
 };
