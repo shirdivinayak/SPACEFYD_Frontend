@@ -39,6 +39,7 @@ const useProjectCategoryApi = () => {
     }
   };
   const fetchProjectCategories = async () => {
+    console.log("event called")
     try {
       setLoading(true);
       const response = await axiosInstance.post("/displayCategory", {
