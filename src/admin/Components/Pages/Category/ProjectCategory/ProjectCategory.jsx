@@ -6,17 +6,40 @@ import AlertMessage from "../../../common/MessageSuccesAlert";
 import EditCategoryModal from "./EditCategoryModal";
 import ProjectAddCategory from "./ProjectAddCategory";
 import useProjectCategoryApi from "../../../../hooks/useProjectCategoryApi"; // Adjust the path as needed
+import { Row, Col, Alert } from "react-bootstrap";
+import AlertSuccesMessage from "../../../common/MessageSuccesAlert";
 
 const ProjectCategory = () => {
-  const { fetchProjectCategories, loading, error, message, setMessage } =
-    useProjectCategoryApi();
+  const { fetchProjectCategories, loading, error, message, setMessage ,deleteCategory , addCategory,setError,editCategory}
+   =  useProjectCategoryApi();
   const [items, setItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [showCategoryTabs, setShowCategoryTabs] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
+  const [categoryName, setCategoryName] = useState("");
 
-  useEffect(() => {
+  const handleAddCategory = async () => {
+    if (!categoryName.trim()) {
+      setError("Category name is required.");
+      return;
+    }
+
+    await addCategory({ name: categoryName, type: 'project' });
+    setCategoryName(""); // Clear input field
+    loadCategories();
+    setTimeout(() => {
+      setMessage(""); // Clear success message after 3 seconds
+      setError(null);  // Clear error message if present
+    }, 3000);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent form submission on Enter
+      handleAddCategory(); // Optionally trigger submit on Enter
+    }
+  };
     const loadCategories = async () => {
       try {
         const response = await fetchProjectCategories();
@@ -34,7 +57,8 @@ const ProjectCategory = () => {
         console.error("Error fetching categories:", error);
       }
     };
-  
+    useEffect(() => {
+
     loadCategories();
   }, []); // Only on mount
   
@@ -51,11 +75,13 @@ const ProjectCategory = () => {
     setShowEditModal(true);
   };
 
-  const handleSave = (updatedItem) => {
+  const handleSave = async (updatedItem) => {
+    await editCategory(updatedItem);
     setItems((prevItems) =>
-      prevItems.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+      prevItems.map((item) =>
+        item.id === updatedItem.id ? updatedItem : item
+      )
     );
-    setMessage("Category updated successfully.");
   };
 
   const handleCheckboxChange = (id) => {
@@ -70,15 +96,24 @@ const ProjectCategory = () => {
     setSelectedItems(e.target.checked ? items.map((item) => item.id) : []);
   };
 
-  const handleRemoveSelected = () => {
+  const handleRemoveSelected = async () => {
     if (selectedItems.length > 0) {
-      setItems(items.filter((item) => !selectedItems.includes(item.id)));
-      setMessage(`${selectedItems.length} item(s) removed.`);
-      setSelectedItems([]);
+      try {
+        await deleteCategory(selectedItems); // Call API to delete categories
+  
+        // Update local state after successful deletion
+        setItems((prevItems) => prevItems.filter((item) => !selectedItems.includes(item.id)));
+        
+        setMessage(`${selectedItems.length} item(s) removed successfully.`);
+        setSelectedItems([]);
+      } catch (error) {
+        setMessage("Failed to remove selected items.");
+      }
     } else {
       setMessage("No items selected to remove.");
     }
   };
+  
 
   return (
     <div className="container" style={{ padding: "0" }}>
@@ -120,7 +155,58 @@ const ProjectCategory = () => {
             onClick={() => setShowCategoryTabs(!showCategoryTabs)}
           ></i>
         </div>
-        {showCategoryTabs && <ProjectAddCategory />}
+        {showCategoryTabs && 
+         <div className="container px-4 py-4" style={{ maxWidth: "100%", paddingLeft: "0" }}>
+              <Form style={{ maxWidth: "600px", marginLeft: "0" }}>
+                {error && <Alert variant="danger">{error}</Alert>}
+                <Row className="mb-3" style={{ display: "flex", alignItems: "center" }}>
+                  <Col md="auto">
+                    <Form.Group controlId="subCategoryInput">
+                      <Form.Label
+                        style={{
+                          fontSize: "16px",
+                          fontWeight: "400",
+                          color: "#474747",
+                          opacity: "0.8",
+                        }}
+                      >
+                        New Category Name
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter category name"
+                        value={categoryName}
+                        onChange={(e) => setCategoryName(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        style={{ width: "281px" }}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col md="auto" className="d-flex justify-content-start">
+                    <Button
+                      variant="primary"
+                      type="button"
+                      onClick={handleAddCategory}
+                      style={{
+                        height: "38px",
+                        paddingLeft: "20px",
+                        paddingRight: "20px",
+                        marginTop: "30px",
+                        backgroundColor: "#184BD3",
+                        border: "none",
+                      }}
+                      disabled={loading}
+                    >
+                      {loading ? "Submitting..." : "Submit"}
+                    </Button>
+                  </Col>
+                </Row>
+              </Form>
+        
+              {/* Success Message */}
+              {message && <AlertSuccesMessage message={message} />}
+            </div>
+        }
       </div>
 
       {/* Category Table */}
@@ -147,7 +233,7 @@ const ProjectCategory = () => {
                     onChange={() => handleCheckboxChange(item.id)}
                   />
                 </td>
-                <td>{item.category}</td>
+                <td>{item?.category}</td>
                 <td>
                   <Button
                     size="sm"

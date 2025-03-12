@@ -15,8 +15,8 @@ const useAddProjectApi = () => {
 
     try {
       // Make the API request using axios
-      const response = await axiosInstance.post("/api/projects", projectData);
-
+      const response = await axiosInstance.post("/addProject", projectData);
+      console.log(projectData)
       // If the request is successful, handle the response
       setSuccess(response.data); // Assuming the response contains the result you need
     } catch (err) {

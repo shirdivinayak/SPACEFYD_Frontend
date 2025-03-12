@@ -10,8 +10,9 @@ const useCategoryApi = () => {
   const fetchCategories = async () => {
     try {
       setLoading(true);
-      const response = await axiosInstance.post("/displayCategory");
-      // Assuming response.data contains the categories in response.data.data
+      const response = await axiosInstance.post("/displayCategory", {
+        type: "product", // Added type in the request body
+      });      // Assuming response.data contains the categories in response.data.data
       setCategories(response.data.data || []); // Store categories in state
     } catch (error) {
       setError(error.response?.data?.message || "Failed to fetch categories.");
