@@ -76,7 +76,6 @@ const ProductDetails = () => {
               />
             ))}
           </div>
-
           <div className="main-image">
             <img src={mainImage} alt={ProductImages.title} />
           </div>

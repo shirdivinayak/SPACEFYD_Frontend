@@ -14,7 +14,7 @@ const AboutUs = () => {
       <HomeNavbar />
       {/* Hero Section with Background */}
       <div
-        className="d-flex align-items-center justify-content-center text-white text-center"
+        className="hero-section d-flex align-items-center justify-content-center text-white text-center"
         style={{
           backgroundImage: `url(${HeroImage})`,
           backgroundSize: "cover",
@@ -30,9 +30,10 @@ const AboutUs = () => {
           <h1 className="display-3 fw-bold">About Us</h1>
           <p className="lead">
             Dedicated to delivering innovative, functional, and aesthetic
-            interior solutions with unmatched quality and care.
+            interior solutions <br />
+            with unmatched quality and care. Designs for Functional and
+            Inspiring Interiors
           </p>
-          <p>Designs for Functional and Inspiring Interiors</p>
         </div>
       </div>
 

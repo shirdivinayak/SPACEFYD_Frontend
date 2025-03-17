@@ -155,7 +155,7 @@ const Products = () => {
       {/* Hero Section with Background */}
       <div
         className="services-container"
-        style={{ backgroundImage: `url(${HeroImage})` }}
+        style={{ backgroundImage: `url(${HeroImage})`, color: "white" }}
       >
         <div className="container px-4">
           <h1 className="service-title">Our Products</h1>
