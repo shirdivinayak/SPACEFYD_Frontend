@@ -49,7 +49,7 @@ const Products = () => {
   const ProductCategory = {
     Furnitures: [
       {
-        img: ImgFurniture,
+        img: ImgWall,
         title: "Furniture",
         types: {
           type1: "Modular Furniture",
@@ -63,7 +63,7 @@ const Products = () => {
     ],
     Decor: [
       {
-        img: ImgDecor,
+        img: ImgWall,
         title: "Decor",
         types: {
           type1: "Wall Art",
@@ -77,7 +77,7 @@ const Products = () => {
     ],
     Plants: [
       {
-        img: ImgPlant,
+        img: ImgWall,
         title: "Plants",
         types: {
           type1: "Indoor",
@@ -184,16 +184,26 @@ const Products = () => {
               />
             </div>
             <div className="product-title-class">
-              <span className="product-title">
+              <p
+                className=" container product-title"
+                style={{
+                  fontSize: "14px",
+                }}
+              >
                 {ProductCategory[category][0].title}
-              </span>
+              </p>
             </div>
           </div>
         ))}
       </div>
-      <div className="container justify-content-center">
+      <div className=" first-line container justify-content-center">
         {" "}
-        <Linetop />
+        <Linetop
+          style={{
+            marginTop: 50,
+            marginBottom: 25,
+          }}
+        />
       </div>
       {/* Horizontal Menu for Types */}
       <div className="types-menu">
@@ -228,7 +238,7 @@ const Products = () => {
         ))}
       </div>
 
-      <div className="container justify-content-center">
+      <div className=" first-line container justify-content-center">
         {" "}
         <Linebot />
       </div>
