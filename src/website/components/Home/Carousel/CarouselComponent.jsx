@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Carousel, Button } from "react-bootstrap";
 import "./CarouselComponent.css"; // Import the CSS file
-import image1 from "../../../../website/Assets/Home/image1.png";
+import image1 from "../../../Assets/Home/image1.png";
+import background from "../../../Assets/Home/background.png";
 
-import background from "../../../../website/Assets/Home/background.png";
 
 const CarouselComponent = () => {
   const [index, setIndex] = useState(0); // State to track active carousel item
@@ -16,24 +16,24 @@ const CarouselComponent = () => {
   // Data for carousel items
   const carouselData = [
     {
-      image: image1, // Replace with your image URL
+      image: image1,
       heading: "Al Khaleej Serenity Villa Renovation",
       subheading: "Ruwi",
     },
     {
-      image: image1, // Replace with your image URL
+      image: image1,
       heading: "Elegant Kitchen Design",
       subheading:
         "A functional and stylish kitchen design that enhances your cooking experience.",
     },
     {
-      image: image1, // Replace with your image URL
+      image: image1,
       heading: "Cozy Bedroom Design",
       subheading:
         "A warm and inviting bedroom design that ensures a good night's sleep.",
     },
     {
-      image: image1, // Replace with your image URL
+      image: image1,
       heading: "Minimalist Office Design",
       subheading:
         "A clean and organized workspace that boosts productivity and creativity.",
@@ -42,16 +42,20 @@ const CarouselComponent = () => {
 
   return (
     <div
-      className="carousel-container"
+      className="carousel-home-container"
       style={{
-        margin: "100px auto", // Center the container with equal margins
+        margin: "100px auto",
         maxWidth: "1240px",
-        backgroundImage: `url(${background})`, // Match the width of the Know More button section
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover", // Make background responsive
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        paddingBottom: "20px", // Space for button on small screens
       }}
     >
       {/* Heading Section */}
       <div
-        className="heading-section"
+        className="carousel-home-heading-section"
         style={{
           display: "flex",
           justifyContent: "space-between",
@@ -89,19 +93,20 @@ const CarouselComponent = () => {
           </h1>
         </div>
 
-        {/* Right Side: Know More Button */}
+        {/* Right Side: Know More Button (Large Screens) */}
         <Button
           variant="outline-dark"
+          className="carousel-home-know-more-btn large-screen-btn"
           style={{
             fontFamily: "Raleway, sans-serif",
             fontSize: "16px",
             fontWeight: 500,
-            padding: "8px", // Reasonable padding (vertical, horizontal)
+            padding: "8px",
             border: "2px solid #000",
             color: "white",
             background: "#4C6559",
-            whiteSpace: "nowrap", // Keeps text on one line
-            minWidth: "100px", // Ensures enough width (adjust as needed)
+            whiteSpace: "nowrap",
+            minWidth: "100px",
           }}
         >
           Know More
@@ -110,9 +115,9 @@ const CarouselComponent = () => {
 
       {/* Carousel Section */}
       <div
-        className="carousel-section"
+        className="carousel-home-section"
         style={{
-          width: "100%", // Take full width of the container
+          width: "100%",
           height: "744px",
           borderRadius: "12px",
           overflow: "hidden",
@@ -122,9 +127,9 @@ const CarouselComponent = () => {
         <Carousel
           activeIndex={index}
           onSelect={handleSelect}
-          indicators={false} // Hide default indicators
-          prevIcon={null} // Hide default previous icon
-          nextIcon={null} // Hide default next icon
+          indicators={false}
+          prevIcon={null}
+          nextIcon={null}
         >
           {carouselData.map((item, idx) => (
             <Carousel.Item key={idx}>
@@ -151,7 +156,7 @@ const CarouselComponent = () => {
                     padding: "40px",
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "space-between", // Space between top and bottom content
+                    justifyContent: "space-between",
                     backgroundColor: "#F8F9FA",
                   }}
                 >
@@ -197,7 +202,6 @@ const CarouselComponent = () => {
                       alignItems: "center",
                     }}
                   >
-                    {/* Page Number */}
                     <p
                       style={{
                         fontFamily: "Kollektif, sans-serif",
@@ -209,7 +213,6 @@ const CarouselComponent = () => {
                       {`${idx + 1}/${carouselData.length}`}
                     </p>
 
-                    {/* Navigation Icons */}
                     <div>
                       <Button
                         variant="outline-dark"
@@ -250,6 +253,30 @@ const CarouselComponent = () => {
             </Carousel.Item>
           ))}
         </Carousel>
+      </div>
+
+      {/* Know More Button (Small Screens) */}
+      <div
+        className="carousel-home-small-screen-btn-container"
+        style={{ display: "none", textAlign: "center", marginTop: "20px" }}
+      >
+        <Button
+          variant="outline-dark"
+          className="carousel-home-know-more-btn small-screen-btn"
+          style={{
+            fontFamily: "Raleway, sans-serif",
+            fontSize: "16px",
+            fontWeight: 500,
+            padding: "8px",
+            border: "2px solid #000",
+            color: "white",
+            background: "#4C6559",
+            whiteSpace: "nowrap",
+            minWidth: "100px",
+          }}
+        >
+          Know More
+        </Button>
       </div>
     </div>
   );

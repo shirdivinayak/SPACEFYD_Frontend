@@ -1,7 +1,7 @@
-/* Floating Buttons */
+/* Floating Buttons (Hero Section) */
 .floating-btn {
-  background: transparent;
-  border: 2px solid #FCF9F5;
+  background: linear-gradient(90deg, rgba(153, 153, 153, 0.3) 0%, rgba(255, 255, 255, 0.3) 100%);
+  border: 2px  #FCF9F5;
   color: #FCF9F5;
   padding: 10px 20px;
   font-family: "Raleway, sans-serif";
@@ -9,15 +9,15 @@
   border-radius: 24px;
   cursor: pointer;
   transition: all 0.3s ease;
-  min-width: 202px; /* Added for dynamic width */
-  max-width: 300px; /* Added for dynamic width */
+  min-width: 202px;
+  max-width: 300px;
   height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  white-space: normal; /* Allow text wrapping */
+  white-space: normal;
   text-align: center;
-  word-wrap: break-word; /* Break long words */
+  word-wrap: break-word;
 }
 
 .floating-btn:hover {
@@ -25,15 +25,15 @@
   color: #000;
 }
 
-/* Proper Button */
+/* Proper Button (Hero Section) */
 .proper-btn {
   background: #FCF9F5;
   border: none;
-  color: #000;
+  color: #9A715B;
   padding: 15px 30px;
   font-family: "Raleway, sans-serif";
   font-size: 18px;
-  border-radius: 24px;
+  border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -41,4 +41,240 @@
 .proper-btn:hover {
   background: #000;
   color: #FCF9F5;
+}
+
+/* Lamp Floating Buttons */
+.lamp-floating-btn {
+  width: 283.64px;
+  height: 55.15px;
+  border-radius: 68.65px;
+  padding: 7px 16px;
+  gap: 10px;
+  background: #FFFFFF73;
+  backdropFilter: blur(7.3px);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Poppins, sans-serif";
+  font-size: 16px;
+  font-weight: 500;
+  color: #9A715B;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Lamp Button */
+.lamp-btn {
+  width: 132px;
+  height: 44px;
+  border-radius: 4px;
+  padding: 12px 16px;
+  font-family: "Poppins, sans-serif";
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  background-color: #4C6559;
+  border: 2px solid #4C6559;
+  cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (max-width: 991px) {
+  /* Hero Section */
+  .hero-section {
+    padding: 30px !important;
+    height: auto !important;
+    min-height: 800px !important; /* Increased to fit content */
+  }
+
+  .hero-heading {
+    height: auto !important;
+    top: 30px !important;
+  }
+
+  .hero-heading h1 {
+    font-size: 48px !important;
+    line-height: 50px !important;
+  }
+
+  .hero-content {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    padding: 0 10px !important;
+    margin-top: 150px !important; /* Space below heading */
+  }
+
+  .large-screen-layout {
+    display: none !important; /* Hide large screen layout */
+  }
+
+  .small-screen-layout {
+    display: flex !important; /* Show small screen layout */
+  }
+
+  .small-screen-buttons {
+    gap: 20px !important;
+    margin-bottom: 30px !important;
+  }
+
+  .floating-btn {
+    min-width: 160px !important;
+    max-width: 200px !important;
+    height: 40px !important;
+    font-size: 14px !important;
+    padding: 8px 15px !important;
+  }
+
+  .small-screen-center-content h2 {
+    font-size: 28px !important;
+    line-height: 36px !important;
+  }
+
+  .small-screen-center-content div {
+    padding: 15px !important;
+    height: auto !important;
+  }
+
+  .small-screen-center-content p {
+    font-size: 16px !important;
+    line-height: 24px !important;
+  }
+
+  .proper-btn {
+    padding: 12px 25px !important;
+    font-size: 16px !important;
+  }
+
+  /* Lamp Section */
+  .lamp-section {
+    padding: 30px !important;
+    height: auto !important;
+    min-height: 700px !important; /* Increased to fit content */
+  }
+
+  .lamp-content {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    padding: 0 10px !important;
+    margin-top: 20px !important;
+  }
+
+  .lamp-content h2 {
+    font-size: 12px !important;
+    line-height: 18px !important;
+  }
+
+  .lamp-content h1 {
+    font-size: 36px !important;
+    line-height: 42px !important;
+  }
+
+  .lamp-content p {
+    font-size: 14px !important;
+    line-height: 22px !important;
+  }
+
+  .lamp-btn {
+    width: 120px !important;
+    height: 40px !important;
+    font-size: 14px !important;
+    padding: 10px 14px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .lamp-buttons {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    flex-direction: column !important;
+    gap: 15px !important;
+    padding: 0 10px !important;
+    margin-top: 20px !important; /* Space after content */
+    align-items: center !important; /* Center buttons */
+  }
+
+  .lamp-floating-btn {
+    width: 100% !important;
+    max-width: 300px !important;
+    height: 48px !important;
+    font-size: 14px !important;
+    padding: 6px 12px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Hero Section */
+  .hero-section {
+    padding: 20px !important;
+    min-height: 700px !important;
+  }
+
+  .hero-heading h1 {
+    font-size: 36px !important;
+    line-height: 40px !important;
+  }
+
+  .hero-content {
+    margin-top: 120px !important;
+  }
+
+  .small-screen-buttons {
+    gap: 15px !important;
+  }
+
+  .floating-btn {
+    min-width: 140px !important;
+    max-width: 180px !important;
+    height: 36px !important;
+    font-size: 12px !important;
+    padding: 6px 12px !important;
+  }
+
+  .small-screen-center-content h2 {
+    font-size: 24px !important;
+    line-height: 30px !important;
+  }
+
+  .small-screen-center-content p {
+    font-size: 14px !important;
+    line-height: 20px !important;
+  }
+
+  .proper-btn {
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+  }
+
+  /* Lamp Section */
+  .lamp-section {
+    min-height: 600px !important;
+  }
+
+  .lamp-content h1 {
+    font-size: 28px !important;
+    line-height: 34px !important;
+  }
+
+  .lamp-floating-btn {
+    max-width: 250px !important;
+    height: 44px !important;
+    font-size: 12px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .floating-btn {
+    min-width: 120px !important;
+    max-width: 160px !important;
+  }
+
+  .lamp-floating-btn {
+    max-width: 200px !important;
+  }
 }

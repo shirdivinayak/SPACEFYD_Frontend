@@ -1,0 +1,326 @@
+.card-section {
+    width: 100%;
+    height: 835px;
+    padding: 90px 100px;
+    background-image: url("../../../website/Assets/Home/productsbanner.png");
+    background-size: cover;
+    background-position: center;
+    background-color: #1E1E1E;
+    position: relative;
+  }
+  
+  .heading-section {
+    float: left;
+    width: 608px;
+  }
+  
+  .heading-section h2 {
+    font-family: "Kollektif", sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 31px;
+    letter-spacing: -0.9px;
+    color: #CE893E;
+    margin-bottom: 20px;
+  }
+  
+  .heading-section h1 {
+    font-family: "Kollektif", sans-serif;
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 55px;
+    letter-spacing: -0.9px;
+    color: #FFFFFF;
+    margin-bottom: 40px;
+  }
+  
+  .button-navigation {
+    float: right;
+    margin-top: 50px;
+  }
+  
+  .view-more-btn {
+    width: 126px;
+    height: 44px;
+    border-radius: 4px;
+    padding: 12px 16px;
+    background-color: #4C6559;
+    color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+    font-family: "Kollektif", sans-serif;
+    font-size: 16px;
+  }
+  
+  .small-screen-navigation {
+    display: none;
+  }
+  
+  .small-screen-navigation button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin: 0 10px;
+  }
+  
+  .small-screen-navigation button span {
+    color: #FFFFFF;
+    font-size: 24px;
+  }
+  
+  .cards-section {
+    clear: both;
+    display: flex;
+    flex-wrap: nowrap; /* Single row on large screens */
+    gap: 30px; /* Consistent gap across all sizes */
+    margin-top: 50px;
+    justify-content: center; /* Center cards with gaps */
+  }
+  
+  .card {
+    width: 288px;
+    height: 328px;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0; /* Prevent shrinking */
+  }
+  
+  .card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .card p {
+    font-family: "Kollektif", sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    color: black;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .navigation-view-more {
+    text-align: center;
+    margin-top: 40px;
+  }
+  
+  .large-screen-navigation button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin: 0 10px;
+  }
+  
+  .large-screen-navigation button span {
+    color: #FFFFFF;
+    font-size: 24px;
+  }
+  
+  .small-screen-view-more {
+    display: none;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 1200px) {
+    .card-section {
+      padding: 70px 50px;
+    }
+  
+    .heading-section {
+      width: 500px;
+    }
+  
+    .cards-section {
+      gap: 25px; /* Slightly smaller gap */
+    }
+  
+    .card {
+      width: 260px;
+      height: 300px;
+    }
+  
+    .card img {
+      height: 180px;
+    }
+  }
+  
+  @media (max-width: 991px) {
+    .card-section {
+      padding: 60px 30px;
+      height: auto;
+      min-height: 600px;
+    }
+  
+    .heading-section {
+      float: none;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  
+    .heading-section h2 {
+      font-size: 20px;
+      line-height: 26px;
+      margin-bottom: 15px;
+    }
+  
+    .heading-section h1 {
+      font-size: 32px;
+      line-height: 40px;
+      margin-bottom: 20px;
+    }
+  
+    .button-navigation {
+      float: right;
+      margin-top: 0;
+      text-align: right;
+    }
+  
+    .large-screen-btn {
+      display: none;
+    }
+  
+    .small-screen-navigation {
+      display: inline-block;
+    }
+  
+    .small-screen-navigation button span {
+      font-size: 20px;
+    }
+  
+    .cards-section {
+      margin-top: 30px;
+      gap: 20px; /* Consistent gap */
+    }
+  
+    .card {
+      width: 220px;
+      height: 260px;
+    }
+  
+    .card img {
+      height: 160px;
+    }
+  
+    .card p {
+      font-size: 16px;
+      margin-top: 15px;
+    }
+  
+    .navigation-view-more {
+      margin-top: 30px;
+    }
+  
+    .large-screen-navigation {
+      display: none;
+    }
+  
+    .small-screen-view-more {
+      display: block;
+    }
+  
+    .small-screen-view-more .view-more-btn {
+      width: 100px;
+      height: 36px;
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .card-section {
+      padding: 40px 20px;
+      min-height: 500px;
+    }
+  
+    .heading-section h2 {
+      font-size: 18px;
+      line-height: 24px;
+    }
+  
+    .heading-section h1 {
+      font-size: 28px;
+      line-height: 34px;
+    }
+  
+    .cards-section {
+      margin-top: 20px;
+      gap: 15px; /* Reduced gap */
+    }
+  
+    .card {
+      width: 180px;
+      height: 220px;
+    }
+  
+    .card img {
+      height: 130px;
+    }
+  
+    .card p {
+      font-size: 14px;
+      margin-top: 10px;
+    }
+  
+    .navigation-view-more {
+      margin-top: 20px;
+    }
+  
+    .small-screen-navigation button span {
+      font-size: 18px;
+    }
+  
+    .small-screen-view-more .view-more-btn {
+      width: 90px;
+      height: 32px;
+      padding: 8px 10px;
+      font-size: 12px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .card-section {
+      padding: 30px 15px;
+      min-height: 450px;
+    }
+  
+    .heading-section h2 {
+      font-size: 16px;
+      line-height: 22px;
+    }
+  
+    .heading-section h1 {
+      font-size: 24px;
+      line-height: 30px;
+    }
+  
+    .cards-section {
+      gap: 10px; /* Smallest gap */
+    }
+  
+    .card {
+      width: 160px;
+      height: 200px;
+    }
+  
+    .card img {
+      height: 120px;
+    }
+  
+    .card p {
+      font-size: 12px;
+      margin-top: 8px;
+    }
+  
+    .small-screen-navigation button span {
+      font-size: 16px;
+    }
+  
+    .small-screen-view-more .view-more-btn {
+      width: 80px;
+      height: 28px;
+      padding: 6px 8px;
+      font-size: 11px;
+    }
+  }

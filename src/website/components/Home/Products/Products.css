@@ -1,0 +1,201 @@
+.products-home-container {
+  height: 919px; /* Fixed height for the container */
+  overflow: hidden;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.products-home-sections-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%; /* Ensure wrapper takes full height */
+}
+
+.products-home-left-section,
+.products-home-right-section {
+  width: 50%; /* Each section takes 50% width */
+  height: 100%; /* Ensure both sections have the same height */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+}
+
+.products-home-left-section {
+  padding: 0 100px; /* Internal padding */
+}
+
+.products-home-left-content {
+  width: 100%;
+  max-width: 600px; /* Limit content width for better readability */
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+.products-home-left-heading {
+  font-family: "Kollektif", sans-serif;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 59px;
+  letter-spacing: 0.03em;
+  color: #ffffff;
+  margin-bottom: 30px;
+}
+
+.products-home-content-row {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.products-home-content-column {
+  flex: 1;
+  max-width: 250px;
+}
+
+.products-home-subheading {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 32px;
+  color: #ffffff;
+  margin-bottom: 15px;
+}
+
+.products-home-content {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32px;
+  color: #ffffff;
+}
+
+/* Responsive Styles */
+@media (max-width: 991px) {
+  .products-home-container {
+    height: 600px !important; /* Adjust height for medium screens */
+  }
+
+  .products-home-left-section {
+    padding: 0 50px !important; /* Reduce padding for medium screens */
+  }
+
+  .products-home-left-content {
+    gap: 40px !important; /* Reduce gap for medium screens */
+  }
+
+  .products-home-left-heading {
+    font-size: 32px !important; /* Smaller heading for medium screens */
+    line-height: 40px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .products-home-content-row {
+    gap: 15px !important; /* Reduce gap for medium screens */
+  }
+
+  .products-home-content-column {
+    max-width: 200px !important; /* Adjust column width for medium screens */
+  }
+
+  .products-home-subheading {
+    font-size: 22px !important; /* Smaller subheading for medium screens */
+    line-height: 26px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .products-home-content {
+    font-size: 14px !important; /* Smaller content text for medium screens */
+    line-height: 24px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .products-home-container {
+    height: auto !important; /* Adjust height for smaller screens */
+  }
+
+  .products-home-sections-wrapper {
+    flex-direction: column !important; /* Stack sections vertically on smaller screens */
+  }
+
+  .products-home-left-section,
+  .products-home-right-section {
+    width: 100% !important; /* Full width for smaller screens */
+    height: 50vh !important; /* Each section takes 50% of the viewport height */
+  }
+
+  .products-home-left-section {
+    padding: 0 30px !important; /* Reduce padding for smaller screens */
+    order: 2; /* Move left section to the bottom */
+  }
+
+  .products-home-right-section {
+    order: 1; /* Move right section to the top */
+  }
+
+  .products-home-left-content {
+    gap: 30px !important; /* Reduce gap for smaller screens */
+    text-align: center; /* Center text content for smaller screens */
+  }
+
+  .products-home-left-heading {
+    font-size: 24px !important; /* Smaller heading for smaller screens */
+    line-height: 30px !important;
+    margin-bottom: 15px !important;
+  }
+
+  .products-home-content-row {
+    flex-direction: column !important; /* Stack content vertically for smaller screens */
+    gap: 10px !important; /* Reduce gap for smaller screens */
+    align-items: center; /* Center content horizontally for smaller screens */
+  }
+
+  .products-home-content-column {
+    max-width: 100% !important; /* Full width for smaller screens */
+  }
+
+  .products-home-subheading {
+    font-size: 18px !important; /* Smaller subheading for smaller screens */
+    line-height: 22px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .products-home-content {
+    font-size: 12px !important; /* Smaller content text for smaller screens */
+    line-height: 20px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .products-home-container {
+    height: auto !important; /* Adjust height for extra small screens */
+  }
+
+  .products-home-left-section,
+  .products-home-right-section {
+    height: 50vh !important; /* Each section takes 50% of the viewport height */
+  }
+
+  .products-home-left-section {
+    padding: 0 20px !important; /* Reduce padding for extra small screens */
+  }
+
+  .products-home-left-content {
+    gap: 20px !important; /* Reduce gap for extra small screens */
+  }
+
+  .products-home-left-heading {
+    font-size: 20px !important; /* Smaller heading for extra small screens */
+    line-height: 26px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .products-home-content-column {
+    max-width: 100% !important; /* Full width for extra small screens */
+  }
+}
