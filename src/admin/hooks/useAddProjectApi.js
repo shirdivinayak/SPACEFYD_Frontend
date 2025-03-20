@@ -8,7 +8,7 @@ const useAddProjectApi = () => {
   const [success, setSuccess] = useState(null);
 
   // Function to make the POST request to add the project
-  const useaddProject = async (projectData) => {
+  const addProject = async (projectData) => {  // Renamed from useaddProject
     setLoading(true);
     setError(null);
     setSuccess(null);
@@ -16,7 +16,7 @@ const useAddProjectApi = () => {
     try {
       // Make the API request using axios
       const response = await axiosInstance.post("/addProject", projectData);
-      console.log(projectData)
+      console.log(projectData);
       // If the request is successful, handle the response
       setSuccess(response.data); // Assuming the response contains the result you need
     } catch (err) {
@@ -28,7 +28,7 @@ const useAddProjectApi = () => {
   };
 
   return {
-    useaddProject,
+    addProject,  // Ensure you return `addProject`
     loading,
     error,
     success,

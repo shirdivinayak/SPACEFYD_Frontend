@@ -15,47 +15,50 @@ const brands = ["Samsung", "Ikea", "Nike", "Lego"];
 
 const EditProjectScreen = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-  const item = location.state?.item;
+const navigate = useNavigate();
+const item = location.state?.item;
 
-  // Initialize state with project data or fallback values
-  const [projectDetails, setprojectDetails] = useState({
-    name: item?.name || "",
-    description: item?.description || "",
-    category: item?.category || categories[0],
+console.log(item, "=----------------");
+
+// Placeholder image URL
+const placeholderImage = "https://placehold.co/600x400/EEE/31343C";
+
+// Initialize state with project data or fallback values
+const [projectDetails, setProjectDetails] = useState(() => {
+  const imagesArray = item?.images || []; // Ensure images exist as an array
+  const firstImage = imagesArray.length > 0 ? imagesArray[0] : placeholderImage;
+  const remainingImages = imagesArray.length > 1 ? imagesArray.slice(1) : [placeholderImage];
+
+  return {
+    name: item?.projectName || "",
+    description: item?.projectDescription || "",
+    category: item?.categoryId || "",
     subCategory: item?.subCategory || "",
-    brand: item?.brand || brands[0],
-    projectCode: item?.projectCode || "",
+    brand: item?.brand || "",
+    projectCode: item?.ProjectCode || "",
     displayInHome: item?.displayInHome || false,
-    displayInTrending: item?.displayInTrending || false,
-  });
-  const [image, setImage] = useState({
-    image: "https://via.placeholder.com/400", // Example main image URL
-    images: [
-      "https://via.placeholder.com/100", // Example thumbnail image URLs
-      "https://via.placeholder.com/100",
-      "https://via.placeholder.com/100",
-    ],
-  });
-  const [message, setMessage] = useState("");
-  const [isEditing, setIsEditing] = useState(false);
+    displayInTrending: item?.onlive || false,
+    image: item?.image, // 0th image (or placeholder if not available)
+    images: remainingImages, // Remaining images (or placeholder)
+  };
+});
+
+// State for managing image display
+const [image, setImage] = useState({
+  image: projectDetails.image, // Primary image
+  images: projectDetails.images, // Rest of images
+});
+
+const [message, setMessage] = useState("");
+const [isEditing, setIsEditing] = useState(false);
 
   const handleEdit = () => {
     setIsEditing(true); // Switch to edit mode
   };
 
-  useEffect(() => {
-    if (item && item.category) {
-      setprojectDetails((prev) => ({
-        ...prev,
-        subCategory: item.subCategory || subCategories[item.category][0],
-      }));
-    }
-  }, [item]);
-
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setprojectDetails((prevDetails) => ({
+    setProjectDetails((prevDetails) => ({
       ...prevDetails,
       [name]: type === "checkbox" ? checked : value,
     }));
@@ -71,23 +74,15 @@ const EditProjectScreen = () => {
   };
   const handleCategoryChange = (e) => {
     const selectedCategory = e.target.value;
-    setprojectDetails((prev) => ({
+    setProjectDetails((prev) => ({
       ...prev,
       category: selectedCategory,
-      subCategory: subCategories[selectedCategory]?.[0] || "", // Default to empty if no subcategory
     }));
   };
 
-  const handleSubCategoryChange = (e) => {
-    const selectedSubCategory = e.target.value;
-    setprojectDetails((prev) => ({
-      ...prev,
-      subCategory: selectedSubCategory,
-    }));
-  };
   const handleBrandChange = (event) => {
     const { value } = event.target;
-    setprojectDetails((prevDetails) => ({
+    setProjectDetails((prevDetails) => ({
       ...prevDetails,
       brand: value, // Update the selected brand in the project details
     }));
@@ -151,11 +146,11 @@ const EditProjectScreen = () => {
           className="d-flex align-items-center mb-0 m-0"
           style={{ fontSize: "20px" }}
         >
-          <Nav.Link as={Link} to="/" className="me-2 opacity-50">
+          <Nav.Link as={Link} to="/admin" className="me-2 opacity-50">
             Home
           </Nav.Link>
           <span style={{ marginRight: "8px" }}>&gt;</span>
-          <Nav.Link as={Link} to="/projects" className="me-2 opacity-50">
+          <Nav.Link as={Link} to="/admin/projects/" className="me-2 opacity-50">
             All projects
           </Nav.Link>
 
@@ -311,72 +306,7 @@ const EditProjectScreen = () => {
                     ))}
                   </Dropdown.Menu>
                 </Dropdown>
-              </label>
-
-              {/* Sub-Category Dropdown */}
-              {/* Sub-Category Dropdown */}
-              <label
-                style={{
-                  flex: "1",
-                  color: "rgba(71, 71, 71, 0.51)",
-                  display: "block",
-                }}
-              >
-                Sub-Category:
-                <Dropdown>
-                  <Dropdown.Toggle
-                    id="dropdown-subcategory"
-                    style={{
-                      width: "100%",
-                      fontSize: "14px",
-                      fontWeight: "400",
-                      color: "#757575", // Updated text color
-                      backgroundColor: "white",
-                      border: "1px solid #ccc",
-                      borderRadius: "4px",
-                      padding: "8px",
-                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center", // Align text and icon properly
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontSize: "14px",
-                        fontWeight: "400",
-                        color: "#757575",
-                      }}
-                      disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
-                    >
-                      {projectDetails.subCategory || "Select"}{" "}
-                      {/* Displays selected subcategory or placeholder */}
-                    </span>
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu style={{ width: "100%" }}>
-                    {(subCategories[projectDetails.category] || []).map(
-                      (sub, index) => (
-                        <Dropdown.Item
-                          key={index}
-                          onClick={() =>
-                            handleSubCategoryChange({ target: { value: sub } })
-                          }
-                          style={{
-                            fontSize: "14px",
-                            fontWeight: "400",
-                            color: "#757575",
-                            padding: "8px",
-                            cursor: "pointer",
-                          }}
-                        >
-                          {sub}
-                        </Dropdown.Item>
-                      )
-                    )}
-                  </Dropdown.Menu>
-                </Dropdown>
-              </label>
+              </label>      
             </div>
 
             <div
@@ -568,7 +498,7 @@ const EditProjectScreen = () => {
               }}
             >
               <img
-                src={image.image}
+                src={projectDetails.image}
                 alt="Main"
                 disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
                 style={{
