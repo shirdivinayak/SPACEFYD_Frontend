@@ -121,11 +121,11 @@ const ProjectList = () => {
         </div>
       </div>
       {/* Category List */}
-      <div className="category-container">
+      <div className="category-containers">
         {categories.map((category) => (
           <span
             key={category}
-            className={`category-item ${
+            className={`category-items ${
               selectedCategory === category ? "selected-category" : ""
             }`}
             onClick={() => setSelectedCategory(category)}

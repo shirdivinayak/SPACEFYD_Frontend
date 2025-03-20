@@ -15,6 +15,7 @@
     font-weight: 500;
     font-size: 48px;
     line-height: 53px;
+    color: #fff;
   }
 
 .service-description {
@@ -25,6 +26,7 @@
     letter-spacing: 0%;
     text-align: center;
     margin-top: 20px;
+    color: #fff;
   }
 
   
@@ -102,7 +104,7 @@
     margin-top: 5px;
 }
 /* Category List */
-.category-container {
+.category-containers {
     display: flex;
     overflow-x: auto;
     white-space: nowrap;
@@ -117,33 +119,31 @@
 
   }
   
-  .category-container::-webkit-scrollbar {
+  .category-containers::-webkit-scrollbar {
     height: 5px; /* Adjust scrollbar height */
   }
   
-  .category-container::-webkit-scrollbar-thumb {
-    border-radius: 10px;
+  .category-containers::-webkit-scrollbar-thumb {
+    border-radius: 1px;
   }
   
-  .category-container::-webkit-scrollbar-track {
+  .category-containers::-webkit-scrollbar-track {
     background: transparent; /* Scrollbar track color */
   }
   
-  .category-item {
+  .category-items {
     display: inline-block;
     padding: 10px 20px;
     margin: 5px;
     cursor: pointer;
     font-size: 16px;
     font-weight: 500;
-    /* border-radius: 20px; */
-    /* background-color: #f0f0f0; */
     transition: background 0.3s ease;
   }
   
  
   
-  .category-item {
+  .category-items {
     font-family: "DM Sans", sans-serif;
     font-weight: 500;
     font-size: 18px;
@@ -213,11 +213,11 @@
     color: #4C6559;
     align-items:start;
 }
-  .category-item {
+  .category-items {
     font-size: 16px;
     padding: 8px 12px;
   }
-  .category-container{
+  .category-containers{
     margin-left: 1%;
   }
 }

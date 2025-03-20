@@ -1,35 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button, Dropdown, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AlertSuccesMessage from "../../common/MessageSuccesAlert";
 import useAddProjectApi from "../../../hooks/useAddProjectApi.js";
+import useFetchCategories from "../../../hooks/useAllProjectApi"; 
 
 const categories = ["Electronics", "Furniture", "Clothing", "Toys"];
-const subCategories = {
-  Electronics: ["Phones", "Laptops", "Cameras"],
-  Furniture: ["Chairs", "Tables", "Beds"],
-  Clothing: ["Men", "Women", "Kids"],
-  Toys: ["Indoor", "Outdoor"],
-};
 const brands = ["Samsung", "Ikea", "Nike", "Lego"];
 
+
 const AddProject = () => {
-  // Hook to handle the API request and states (loading, success, error)
   const { addProject, loading, error, success } = useAddProjectApi();
-  // State to manage form inputs
+ const {
+    categories,
+    loading: Loading,
+    error: categoriesError,
+  } = useFetchCategories();
   const [productDetails, setProductDetails] = useState({
-    name: "",
-    description: "",
-    category: "Electronics",
-    subCategory: "",
-    brand: "Samsung",
-    productCode: "",
-    displayInHome: false,
-    displayInTrending: false,
+    projectName: "",
+    projectDescription: "",
+    categoryId: "",
+    ProjectCode: "",
+    isVisible: false,
+    brand:"",
+    images: [],
   });
 
   // Handle form input changes
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setProductDetails((prevDetails) => ({
@@ -38,75 +37,33 @@ const AddProject = () => {
     }));
   };
 
-  // Handle form submission
-  const handleSave = async () => {
-    await addProject(productDetails); // Call the addProject function from the hook
-  };
-  const location = useLocation();
-  const navigate = useNavigate();
-  const item = location.state?.item;
 
-  // Initialize state with product data or fallback values
-  // const [productDetails, setProductDetails] = useState({
-  //   name: item?.name || "",
-  //   description: item?.description || "",
-  //   category: item?.category || categories[0],
-  //   subCategory: item?.subCategory || "",
-  //   brand: item?.brand || brands[0],
-  //   productCode: item?.productCode || "",
-  //   displayInHome: item?.displayInHome || false,
-  //   displayInTrending: item?.displayInTrending || false,
-  // });
+  const handleSave = async () => {
+    await addProject(productDetails);
+  };
+
+  const navigate = useNavigate();
+
   const [image, setImage] = useState({
-    image: "https://via.placeholder.com/400", // Example main image URL
+    image: "https://placehold.co/600x400/EEE/31343C",
     images: [
-      "https://via.placeholder.com/100", // Example thumbnail image URLs
-      "https://via.placeholder.com/100",
-      "https://via.placeholder.com/100",
+      "https://placehold.co/600x400/EEE/31343C",
+      "https://placehold.co/600x400/EEE/31343C",
+      "https://placehold.co/600x400/EEE/31343C",
     ],
   });
+
   const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    if (item && item.category) {
-      setProductDetails((prev) => ({
-        ...prev,
-        subCategory: item.subCategory || subCategories[item.category][0],
-      }));
-    }
-  }, [item]);
-
-  // const handleChange = (e) => {
-  //   const { name, value, type, checked } = e.target;
-  //   setProductDetails((prevDetails) => ({
-  //     ...prevDetails,
-  //     [name]: type === "checkbox" ? checked : value,
-  //   }));
-  // };
-
-  // const handleSave = () => {
-  //   console.log("Item saved:", productDetails);
-  //   setMessage("Category updated successfully.");
-  //   setTimeout(() => {
-  //     setMessage("");
-  //   }, 3000);
-  // };
-  const handleCategoryChange = (e) => {
-    const selectedCategory = e.target.value;
-    setProductDetails((prev) => ({
-      ...prev,
-      category: selectedCategory,
-      subCategory: subCategories[selectedCategory]?.[0] || "", // Default to empty if no subcategory
+  const handleCategoryChange = (event) => {
+    const selectedCategoryId = event.target.value;
+  
+    setProductDetails((prevState) => ({
+      ...prevState,
+      categoryId: selectedCategoryId, // Store only the _id as a string
     }));
   };
 
-  const handleSubCategoryChange = (e) => {
-    const selectedSubCategory = e.target.value;
-    setProductDetails((prev) => ({
-      ...prev,
-      subCategory: selectedSubCategory,
-    }));
-  };
   const handleBrandChange = (event) => {
     const { value } = event.target;
     setProductDetails((prevDetails) => ({
@@ -120,7 +77,19 @@ const AddProject = () => {
     if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setImage((prevState) => ({ ...prevState, image: e.target.result }));
+        setImage((prevState) => {
+          const updatedImages = [e.target.result, ...prevState.images]; // Ensure main image is first
+  
+          setProductDetails((prevDetails) => ({
+            ...prevDetails,
+            images: updatedImages, // Update images in productDetails
+          }));
+  
+          return { 
+            image: e.target.result, 
+            images: updatedImages, 
+          };
+        });
       };
       reader.readAsDataURL(file);
     } else {
@@ -128,34 +97,58 @@ const AddProject = () => {
       setTimeout(() => setMessage(""), 3000);
     }
   };
-
+  
   const handleOtherImageUpload = (event, index) => {
     const file = event.target.files[0];
-    if (file) {
+    if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onload = (e) => {
         setImage((prevState) => {
           const updatedImages = [...prevState.images];
-          updatedImages[index] = e.target.result;
-          return { ...prevState, images: updatedImages };
+          updatedImages[index + 1] = e.target.result;
+  
+          setProductDetails((prevDetails) => ({
+            ...prevDetails,
+            images: updatedImages, // Ensure updated images are stored in productDetails
+          }));
+  
+          return { 
+            ...prevState, 
+            images: updatedImages, 
+          };
         });
       };
       reader.readAsDataURL(file);
     }
   };
+  
+  
   const handleDeleteMain = () => {
-    setImage((prevState) => ({
-      ...prevState,
-      image: "https://via.placeholder.com/448",
-    }));
+    setImage((prevState) => {
+      const updatedImages = prevState.images.length > 1 ? prevState.images.slice(1) : [];
+      
+      setProductDetails((prevDetails) => ({
+        ...prevDetails,
+        images: updatedImages, // Ensure deleted image is reflected in productDetails
+      }));
+  
+      return { 
+        image: "https://placehold.co/600x400/EEE/31343C", 
+        images: updatedImages,
+      };
+    });
   };
+
+  
   const handleDeleteOtherImage = (index) => {
     setImage((prevState) => {
       const updatedImages = [...prevState.images];
-      updatedImages[index] = "https://via.placeholder.com/100"; // Reset to placeholder
+      updatedImages.splice(index + 1, 1); // Remove the selected image
+  
       return { ...prevState, images: updatedImages };
     });
   };
+  
 
   const handleCancel = () => {
     navigate(-1); // Navigate back without saving
@@ -202,19 +195,13 @@ const AddProject = () => {
                   fontSize: "16px",
                 }}
               >
-                Product Name
+                Project Name
               </label>
-              <input
+               <input
                 type="text"
-                name="name"
-                value={productDetails.name}
+                name="projectName"
+                value={productDetails.projectName}
                 onChange={handleChange}
-                onFocus={(e) =>
-                  (e.target.style.borderColor = "rgba(24, 75, 211, 1)")
-                }
-                onBlur={(e) =>
-                  (e.target.style.borderColor = "rgba(200, 200, 200, 1)")
-                }
                 style={{
                   width: "100%",
                   padding: "5px",
@@ -237,26 +224,19 @@ const AddProject = () => {
               >
                 Description:
                 <textarea
-                  name="description"
-                  value={productDetails.description}
-                  onChange={handleChange}
-                  style={{
-                    width: "100%",
-                    padding: "5px",
-                    height: "150px", // Adjusted height
-                    color: "rgba(71, 71, 71, 1)",
-                    fontSize: "14px",
-
-                    border: "1px solid rgba(224, 224, 224, 1)",
-                    borderRadius: "4px", // Optional for rounded edges
-                  }}
-                  onFocus={(e) =>
-                    (e.target.style.borderColor = "rgba(24, 75, 211, 1)")
-                  } // Border color on focus
-                  onBlur={(e) =>
-                    (e.target.style.borderColor = "rgba(200, 200, 200, 1)")
-                  } // Border color on blur
-                />
+                name="projectDescription"
+                value={productDetails.projectDescription}
+                onChange={handleChange}
+                style={{
+                  width: "100%",
+                  padding: "5px",
+                  height: "150px",
+                  color: "rgba(71, 71, 71, 1)",
+                  fontSize: "14px",
+                  border: "1px solid rgba(224, 224, 224, 1)",
+                  borderRadius: "4px",
+                }}
+              />
               </label>
             </div>
 
@@ -278,59 +258,27 @@ const AddProject = () => {
                 }}
               >
                 Category:
-                <Dropdown>
-                  <Dropdown.Toggle
-                    id="dropdown-catefory"
-                    style={{
-                      width: "100%",
-                      fontSize: "14px",
-                      fontWeight: "400",
-                      color: "#757575", // Updated text color
-                      backgroundColor: "white",
-                      border: "1px solid #ccc",
-                      borderRadius: "4px",
-                      padding: "8px",
-                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Same box-shadow as dropdown
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center", // Align text and icon properly
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontSize: "14px",
-                        fontWeight: "400",
-                        color: "#757575",
-                      }}
-                    >
-                      {productDetails.category || "Select"}{" "}
-                      {/* Displays selected brand or placeholder */}
-                    </span>
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu style={{ width: "100%" }}>
-                    {brands.map((category) => (
-                      <Dropdown.Item
-                        key={category}
-                        onClick={() =>
-                          handleBrandChange({ target: { value: category } })
-                        }
-                        style={{
-                          fontSize: "14px",
-                          fontWeight: "400",
-                          color: "#757575",
-                          padding: "8px",
-                          cursor: "pointer",
-                        }}
-                      >
-                        {category}
-                      </Dropdown.Item>
-                    ))}
-                  </Dropdown.Menu>
-                </Dropdown>
+                <select
+                  value={productDetails.categoryId || ""}
+                  onChange={handleCategoryChange}
+                  style={{
+                    width: "100%",
+                    fontSize: "14px",
+                    padding: "8px",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                  }}
+                >
+                  <option value="">Select</option>
+                  {categories.map((category) => (
+                    <option key={category._id} value={category._id}> 
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
               </label>
 
-              <label
+              {/* <label
                 style={{
                   flex: "1",
                   color: "rgba(71, 71, 71, 0.51)",
@@ -338,34 +286,30 @@ const AddProject = () => {
                   marginTop: "10px", // Adjust the margin as needed
                 }}
               >
-                Location:
+                Brand:
                 <input
-                  type="text"
-                  name="productCode"
-                  value={productDetails.productCode}
-                  onChange={handleChange}
-                  style={{
-                    width: "100%",
-                    padding: "8px", // Adjust padding for input field
-                    fontSize: "14px",
-                    fontWeight: "400",
-                    color: "#757575",
-                    backgroundColor: "white", // Set background color to white
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Same box-shadow as dropdown
-                    cursor: "pointer", // Add cursor pointer for better UX
-                  }}
-                />
-              </label>
-            </div>
+                type="text"
+                name="brand"
+                value={productDetails.ProjectCode}
+                onChange={handleChange}
+                style={{
+                  width: "100%",
+                  padding: "5px",
+                  fontSize: "14px",
+                  color: "rgba(71, 71, 71, 1)",
+                  border: "1px solid rgba(224, 224, 224, 1)",
+                  borderRadius: "4px",
+                }}
+              />
+              </label> */}
+            {/* </div>
 
             <div
               style={{
                 borderRadius: "5px",
                 display: "flex", // Flexbox for alignment
               }}
-            >
+            > */}
               <label
                 style={{
                   flex: "1",
@@ -375,14 +319,14 @@ const AddProject = () => {
                   marginTop: "10px", // Adjust the margin as needed
                 }}
               >
-                Sq ft:
+                Brand:
                 <input
                   type="text"
-                  name="productCode"
-                  value={productDetails.productCode}
+                  name="ProjectCode"
+                  value={productDetails.ProjectCode}
                   onChange={handleChange}
                   style={{
-                    width: "50%", // Full width for better alignment
+                    width: "100%", // Full width for better alignment
                     padding: "8px", // Adjust padding for input field
                     fontSize: "14px",
                     fontWeight: "400",
@@ -421,8 +365,8 @@ const AddProject = () => {
               </label>
               <input
                 type="checkbox"
-                name="displayInTrending"
-                checked={productDetails.displayInTrending}
+                name="isVisible"
+                checked={productDetails.isVisible}
                 onChange={handleChange}
                 style={{
                   marginRight: "6px", // Margin for spacing on the right

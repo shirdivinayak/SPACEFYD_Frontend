@@ -15,6 +15,7 @@ const ProductTable = () => {
     error: productsError,
   } = useFetchProducts();
   const {
+    deleteCategory,
     categories,
     loading: categoriesLoading,
     error: categoriesError,
@@ -32,16 +33,18 @@ const ProductTable = () => {
       setSelectedCategory("All Projects");
     }
   }, [selectedCategory]);
+  const placeholderImage = "https://placehold.co/600x400/EEE/31343C";
 
   useEffect(() => {
     if (products) {
       const formattedProducts = products.map((item) => ({
         id: item._id,
-        name: item.projectName || "Unnamed",
-        category: item.categoryName || "Uncategorized",
-        location: item.location || "N/A",
-        sqrFt: item.ProjectCode || "N/A",
-        image: item.image || null,
+        projectName: item.projectName || "Unnamed",
+        projectDescription: item.projectDescription || "",
+        category: item.categories || "Uncategorized",
+        brand: item.brand || "N/A",
+        image: item?.images?.length > 0 ? item.images[0] : null, // Always take the first image
+        images: item?.images?.length > 1 ? item.images.slice(1) : [placeholderImage],
         onlive: item.isVisible || "false",
       }));
       setItems(formattedProducts.reverse());
@@ -77,23 +80,45 @@ const ProductTable = () => {
   };
 
   const handleEdit = (s) => {
-    navigate("admin/projects/editprojects", {
-      state: { item: items.find((i) => i.id === s) },
+    navigate("/admin/projects/editprojects", {
+      state: { item: s }, // Pass the selected item
     });
   };
+  
 
-  const handleRemoveSelected = () => {
+  // const handleRemoveSelected = () => {
+  //   if (selectedItems.length > 0) {
+  //     const updatedItems = items.filter(
+  //       (item) => !selectedItems.includes(item._id)
+  //     );
+  //     setItems(updatedItems);
+  //     setMessage(`${selectedItems.length} item removed`);
+  //     setSelectedItems([]);
+  //   } else {
+  //     setMessage("No items selected to remove.");
+  //   }
+  // };
+
+
+  
+  const handleRemoveSelected = async () => {
     if (selectedItems.length > 0) {
-      const updatedItems = items.filter(
-        (item) => !selectedItems.includes(item.id)
-      );
-      setItems(updatedItems);
-      setMessage(`${selectedItems.length} item removed`);
-      setSelectedItems([]);
+      try {
+        await deleteCategory(selectedItems); // Call API to delete categories
+  
+        // Update local state after successful deletion
+        setItems((prevItems) => prevItems.filter((item) => !selectedItems.includes(item._id)));
+        
+        setMessage(`${selectedItems.length} item(s) removed successfully.`);
+        setSelectedItems([]);
+      } catch (error) {
+        setMessage("Failed to remove selected items.");
+      }
     } else {
       setMessage("No items selected to remove.");
     }
   };
+  
 
   const handleCategorySelect = (categoryName) => {
     setSelectedCategory(categoryName);
@@ -191,12 +216,12 @@ const ProductTable = () => {
                   selectedCategory === category ? "primary" : "btn-light"
                 }
                 className="mx-1"
-                onClick={() => handleCategorySelect(category.name)}
+                onClick={() => handleCategorySelect(category._id)}
                 style={{
                   backgroundColor:
-                    selectedCategory === category.name ? "#E0E8FF" : "white", // Custom background color
+                    selectedCategory === category._id ? "#E0E8FF" : "white", // Custom background color
                   color:
-                    selectedCategory === category.name ? "#184BD3" : "#011140", // Custom text color
+                    selectedCategory === category._id ? "#184BD3" : "#011140", // Custom text color
                   border: "none", // Match border color to the background color
                   fontWeight: 500,
                   fontSize: "16px",
@@ -318,20 +343,9 @@ const ProductTable = () => {
                   color: "#474747",
                 }}
               >
-                Location
+                Brand
               </th>
-              <th
-                style={{
-                  height: "60px",
-                  padding: "20px 10px",
-                  borderBottom: true,
-                  fontWeight: 500,
-                  fontSize: 14,
-                  color: "#474747",
-                }}
-              >
-                Sqr ft
-              </th>
+             
               <th
                 style={{ border: "none", width: "140px", borderBottom: true }}
               >
@@ -389,10 +403,10 @@ const ProductTable = () => {
                     }}
                   />
                 </td>
-                <td style={{ borderBottom: true }}>{item.name}</td>
+                <td style={{ borderBottom: true }}>{item.projectName}</td>
                 <td style={{ borderBottom: true }}>
                   <img
-                    src={item.image || "https://via.placeholder.com/50"}
+                    src={item.image || "https://placehold.co/600x400/EEE/31343C"}
                     alt={item.name}
                     style={{
                       width: "50px",
@@ -402,8 +416,7 @@ const ProductTable = () => {
                   />
                 </td>
                 <td style={{ borderBottom: true }}>{item.category}</td>
-                <td style={{ borderBottom: true }}>{item.location}</td>
-                <td style={{ borderBottom: true }}>{item.sqrFt}</td>
+                <td style={{ borderBottom: true }}>{item.brand}</td>
                 <td style={{ borderBottom: true }}>
                   <Button
                     size="sm"

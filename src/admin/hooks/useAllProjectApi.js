@@ -25,7 +25,38 @@ const useAllProject = () => {
     fetchCategories();
   }, []);
 
-  return { categories, loading, error };
+  const deleteCategory = async (categoryIds) => {
+    try {
+      setError(null);
+  
+      // Ensure categoryIds is always an array
+      const idsToDelete = Array.isArray(categoryIds) ? categoryIds : [categoryIds];
+  
+      await axiosInstance.post("/deleteProject", { id: idsToDelete});
+  
+      // setMessage("Category(ies) deleted successfully.");
+    } catch (error) {
+      setError(error.response?.data?.message || "Failed to delete category(ies).");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+
+return {
+  loading,
+  error,
+  // message,
+  categories,
+  // addCategory,
+  // editCategory, // Added editCategory function
+  // fetchProjectCategories,
+  // setMessage,
+  deleteCategory,
+  // setError,
 };
+};
+
 
 export default useAllProject;
