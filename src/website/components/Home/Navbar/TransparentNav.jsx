@@ -8,7 +8,7 @@ const HomeNavbar = () => {
       style={{
         padding: "clamp(20px, 3vw, 36px) clamp(10px, 5vw, 100px)", // Adjusted min padding for small screens
         backgroundColor: "#FCF9F5",
-        // background: "transparent",
+        background: "transparent",
         width: "100%",
         position: "absolute",
         // top: "0",
@@ -81,9 +81,9 @@ const HomeNavbar = () => {
             <button
               className="btn w-40"
               style={{
-                color: " #4C6559",
+                color: "white",
                 border: "1px solid #4C6559",
-                background: "white",
+                background: "#4C6559",
                 fontFamily: "Kollektif, sans-serif",
                 fontWeight: 400,
                 fontSize: "clamp(16px, 2vw, 20px)",

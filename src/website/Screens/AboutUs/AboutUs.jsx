@@ -58,7 +58,7 @@ const AboutUs = () => {
           borderBottomRightRadius: "20px",
         }}
       >
-        {window.innerWidth < 600 && (
+        {window.innerWidth < 400 && (
           <h2>
             Innovative, Sustainable <br /> Interiors Tailored to Inspire.
           </h2>
@@ -70,7 +70,7 @@ const AboutUs = () => {
           style={{ flex: 1 }}
         >
           <div className=" heading-part container px-4">
-            {window.innerWidth > 600 && (
+            {window.innerWidth > 400 && (
               <h2>
                 Innovative, Sustainable <br /> Interiors Tailored to Inspire.
               </h2>
@@ -124,6 +124,8 @@ const AboutUs = () => {
             id="image3"
             className="img-fluid"
             style={{
+              borderTopRightRadius: "12px",
+              borderBottomRightRadius: "12px",
               width: "100%",
               maxWidth: "620px",
               objectFit: "cover",
@@ -190,13 +192,6 @@ const AboutUs = () => {
 
       <div className="display-flex justify-content-center align-items-center my-5"></div>
       <div className="container text-center mt-4">
-        {/* <img
-          src={circlegrad}
-          alt="gradient design"
-          style={{
-            zIndex: "0",
-          }}
-        /> */}
         <p
           style={{
             color: "#9A715B",
