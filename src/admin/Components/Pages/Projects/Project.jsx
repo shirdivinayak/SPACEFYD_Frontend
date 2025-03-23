@@ -6,6 +6,7 @@ import useFetchCategories from "../../../hooks/useAllProjectApi";
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AlertMessage from "../../common/MessageAlert";
+import Spinner from 'react-bootstrap/Spinner';
 
 const ProductTable = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const ProductTable = () => {
     products,
     loading: productsLoading,
     error: productsError,
+    refetch,
   } = useFetchProducts();
   const {
     deleteCategory,
@@ -27,12 +29,14 @@ const ProductTable = () => {
   const [message, setMessage] = useState("");
   const tabsRef = useRef(null);
   const [isOnLive, setIsOnLive] = useState(false);
+  
   // Setting the default selected category
   useEffect(() => {
     if (!selectedCategory) {
       setSelectedCategory("All Projects");
     }
   }, [selectedCategory]);
+  
   const placeholderImage = "https://placehold.co/600x400/EEE/31343C";
 
   useEffect(() => {
@@ -41,11 +45,14 @@ const ProductTable = () => {
         id: item._id,
         projectName: item.projectName || "Unnamed",
         projectDescription: item.projectDescription || "",
+        categoryId: item.categoryId || "", // Store categoryId for filtering
         category: item.categories || "Uncategorized",
         brand: item.brand || "N/A",
-        image: item?.images?.length > 0 ? item.images[0] : null, // Always take the first image
-        images: item?.images?.length > 1 ? item.images.slice(1) : [placeholderImage],
-        onlive: item.isVisible || "false",
+        image: item?.images?.length > 0 ? item.images[0] : null,
+        images: item?.images || [], // Keep all images, don't slice
+        isVisible: item.isVisible || false, // Use isVisible property for filtering
+        // Pass the entire item to ensure no data is lost
+        originalItem: item
       }));
       setItems(formattedProducts.reverse());
     }
@@ -55,7 +62,7 @@ const ProductTable = () => {
   useEffect(() => {
     if (message) {
       const timer = setTimeout(() => setMessage(""), 3000);
-      return () => clearTimeout(timer); // Cleanup timeout on unmount
+      return () => clearTimeout(timer);
     }
   }, [message]);
 
@@ -67,7 +74,7 @@ const ProductTable = () => {
     );
   };
 
-  const handleAdd = (Products) => {
+  const handleAdd = () => {
     navigate("/admin/projects/addprojects");
   };
 
@@ -79,38 +86,22 @@ const ProductTable = () => {
     setSelectedItems(e.target.checked ? items.map((item) => item.id) : []);
   };
 
-  const handleEdit = (s) => {
+  const handleEdit = (item) => {
+    // Pass the entire item object with all properties
     navigate("/admin/projects/editprojects", {
-      state: { item: s }, // Pass the selected item
+      state: { item: item.originalItem ? item.originalItem : item },
     });
   };
-  
-
-  // const handleRemoveSelected = () => {
-  //   if (selectedItems.length > 0) {
-  //     const updatedItems = items.filter(
-  //       (item) => !selectedItems.includes(item._id)
-  //     );
-  //     setItems(updatedItems);
-  //     setMessage(`${selectedItems.length} item removed`);
-  //     setSelectedItems([]);
-  //   } else {
-  //     setMessage("No items selected to remove.");
-  //   }
-  // };
-
-
   
   const handleRemoveSelected = async () => {
     if (selectedItems.length > 0) {
       try {
-        await deleteCategory(selectedItems); // Call API to delete categories
+        await deleteCategory(selectedItems);
   
-        // Update local state after successful deletion
-        setItems((prevItems) => prevItems.filter((item) => !selectedItems.includes(item._id)));
-        
+        setItems((prevItems) => prevItems.filter((item) => !selectedItems.includes(item.id)));
         setMessage(`${selectedItems.length} item(s) removed successfully.`);
         setSelectedItems([]);
+        refetch();
       } catch (error) {
         setMessage("Failed to remove selected items.");
       }
@@ -119,43 +110,60 @@ const ProductTable = () => {
     }
   };
   
-
-  const handleCategorySelect = (categoryName) => {
-    setSelectedCategory(categoryName);
+  const handleCategorySelect = (categoryId) => {
+    setSelectedCategory(categoryId);
   };
-
 
   const scrollTabs = (direction) => {
     if (tabsRef.current) {
-      const scrollAmount = direction === "right" ? 120 : -120; // Slightly larger scroll amount
+      const scrollAmount = direction === "right" ? 120 : -120;
       tabsRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
   };
 
-  if (productsLoading || categoriesLoading) return <p>Loading...</p>;
-  // if ( categoriesError  || !categories) {
-  //   return <p>Error loading data or no data available</p>;
-  // };
-
-  const filteredItems =
-  selectedCategory === "All Projects"
-    ? items.filter((item) => (isOnLive ? item.onlive === "true" : true))
-    : items.filter(
-        (item) =>
-          item.category === selectedCategory &&
-          (isOnLive ? item.onlive === "true" : true)
-      );
-
-
-  const filteredAndSortedCategories = categories
-  ?.filter((category) => category.name)
-  ?.concat()
-  ?.sort((a, b) => {
-    if (a.name === "All Projects") return -1;
-    if (b.name === "All Projects") return 1;
-    return a.name.localeCompare(b.name);
+  if (categoriesLoading) {
+    return  <div 
+    className="d-flex justify-content-center align-items-center"
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      backgroundColor: "rgba(255, 255, 255, 0.8)",
+      zIndex: 9999
+    }}
+  >
+    <Spinner animation="border" role="status" style={{ width: "5rem", height: "5rem" }}>
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>
+  </div>
+  }
+  // Fix filtering to properly use categoryId and isVisible
+  const filteredItems = items.filter((item) => {
+    // First check if the onlive filter is active
+    const passesOnliveFilter = !isOnLive || item.isVisible === true;
+    
+    // Then check category filter - use categoryId for comparison
+    const passesCategoryFilter = 
+      selectedCategory === "All Projects" || 
+      item.categoryId === selectedCategory;
+    
+    return passesOnliveFilter && passesCategoryFilter;
   });
 
+  // Add "All Projects" to category list if not present
+  const allProjectsOption = { _id: "All Projects", name: "All Projects" };
+  
+  // Ensure categories is an array before attempting to filter/sort
+  const filteredAndSortedCategories = categories && Array.isArray(categories)
+    ? [allProjectsOption, ...categories.filter(category => category.name)]
+      .sort((a, b) => {
+        if (a.name === "All Projects") return -1;
+        if (b.name === "All Projects") return 1;
+        return a.name.localeCompare(b.name);
+      })
+    : [allProjectsOption];
 
   return (
     <div className="container " style={{ padding: "0" }}>
@@ -170,30 +178,29 @@ const ProductTable = () => {
           <Nav.Link as={Link} to="/admin" className="me-2 opacity-50">
             Home
           </Nav.Link>
-          <span> &gt; </span> {/* This ensures the ">" symbol is inline */}
+          <span> &gt; </span>
           <span className="ms-2">All Projects</span>
         </h4>
 
         <Button
           height="12px"
-          onClick={() => handleAdd()}
-          variant="primary" // Keeps the button style, but we'll override the color
+          onClick={handleAdd}
+          variant="primary"
           className="text-white"
           style={{
-            backgroundColor: "#184BD3", // Replace with any custom color (example: orange-red)
-            border: "none", // Match border color to the background color
+            backgroundColor: "#184BD3",
+            border: "none",
           }}
         >
           <i className="bi bi-plus-circle"></i> Add Project
         </Button>
       </div>
 
-      {/* Add a custom gap here */}
       <div style={{ marginTop: "22px" }}></div>
 
       {/* Category Tabs */}
       <div
-        className="d-flex align-items-center  mx-4 px-4"
+        className="d-flex align-items-center mx-4 px-2"
         style={{ backgroundColor: "white" }}
       >
         <div className="m-3">
@@ -201,28 +208,27 @@ const ProductTable = () => {
             className="d-flex overflow-hidden"
             ref={tabsRef}
             style={{
-              paddingRight: "90px",
-
-              maxWidth: "950px", // Control the visible width
-              overflowX: "auto", // Enable horizontal scrolling
+              // paddingRight: "90px",
+              maxWidth: "950px",
+              overflowX: "auto",
               whiteSpace: "nowrap",
-              height: "40px", // Set a fixed height for category tabs
+              height: "40px",
             }}
           >
-          {filteredAndSortedCategories.map((category) => (
+            {filteredAndSortedCategories.map((category) => (
               <Button
-                key={category.name}
+                key={category._id}
                 variant={
-                  selectedCategory === category ? "primary" : "btn-light"
+                  selectedCategory === category._id ? "primary" : "btn-light"
                 }
                 className="mx-1"
                 onClick={() => handleCategorySelect(category._id)}
                 style={{
                   backgroundColor:
-                    selectedCategory === category._id ? "#E0E8FF" : "white", // Custom background color
+                    selectedCategory === category._id ? "#E0E8FF" : "white",
                   color:
-                    selectedCategory === category._id ? "#184BD3" : "#011140", // Custom text color
-                  border: "none", // Match border color to the background color
+                    selectedCategory === category._id ? "#184BD3" : "#011140",
+                  border: "none",
                   fontWeight: 500,
                   fontSize: "16px",
                 }}
@@ -236,15 +242,15 @@ const ProductTable = () => {
           variant="light"
           onClick={() => scrollTabs("left")}
           style={{
-            borderRadius: "50%", // Makes the button circular
-            padding: "5px", // Adds space inside the button
-            margin: "0 10px", // Adds space between buttons and other elements
-            border: "1px solid #ddd", // Optional: Adds a border to the circular button
-            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)", // Optional: Adds shadow to the button
+            borderRadius: "50%",
+            padding: "5px",
+            margin: "0 10px",
+            border: "1px solid #ddd",
+            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
             width: "24px",
             height: "24px",
-            display: "flex", // Enables flexbox
-            justifyContent: "center", // Centers content horizontally
+            display: "flex",
+            justifyContent: "center",
             alignItems: "center",
           }}
         >
@@ -255,15 +261,15 @@ const ProductTable = () => {
           variant="light"
           onClick={() => scrollTabs("right")}
           style={{
-            borderRadius: "15px", // Makes the button circular
-            padding: "5px", // Adds space inside the button
-            margin: "0 10px", // Adds space between buttons and other elements
-            border: "1px solid #ddd", // Optional: Adds a border to the circular button
-            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)", // Optional: Adds shadow to the button
+            borderRadius: "15px",
+            padding: "5px",
+            margin: "0 10px",
+            border: "1px solid #ddd",
+            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
             width: "24px",
             height: "24px",
-            display: "flex", // Enables flexbox
-            justifyContent: "center", // Centers content horizontally
+            display: "flex",
+            justifyContent: "center",
             alignItems: "center",
           }}
         >
@@ -272,14 +278,35 @@ const ProductTable = () => {
       </div>
 
       {/* Project Table */}
-      <div className="  mx-4 px-4" style={{ backgroundColor: "white" }}>
+      <div className="mx-4 px-12" 
+      // style={{ backgroundColor: "white" }}
+      >
+      {productsLoading ? (
+  <div style={{
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%", // Ensures it takes up full height of the container
+    width: "100%", // Ensures it takes up full width of the container
+    color:'transparent',
+    marginTop:"15%"
+  }}>
+    <Spinner animation="border"
+     role="status" 
+    style={{ width: "3rem", height: "3rem" }}
+    variant="primary"
+    >
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>
+  </div>
+  ):(
         <Table hover responsive>
           <thead>
             <tr>
               <th
                 style={{
                   height: "60px",
-                  padding: "20px 10px",
+                  padding: "20px 30px",
                   borderBottom: true,
                   fontWeight: 500,
                   fontSize: 14,
@@ -291,7 +318,7 @@ const ProductTable = () => {
                   onChange={handleSelectAll}
                   checked={selectedItems.length === items.length && items.length > 0}
                   style={{
-                    transform: "scale(1.2)", // Scale the checkbox size
+                    transform: "scale(1.2)",
                     fontSize: "20px",
                     paddingLeft: "10px",
                   }}
@@ -304,7 +331,6 @@ const ProductTable = () => {
                   borderBottom: true,
                   fontWeight: 500,
                   fontSize: 14,
-
                   color: "#474747",
                 }}
               >
@@ -353,9 +379,9 @@ const ProductTable = () => {
                   className="d-flex align-items-center"
                   style={{
                     width: "100%",
-                    border: "1px solid #ddd", // Adds a light border
-                    padding: "10px", // Optional: Adds padding inside the div
-                    borderRadius: "5px", // Optional: Adds rounded corners to the div
+                    border: "1px solid #ddd",
+                    padding: "10px",
+                    borderRadius: "5px",
                   }}
                 >
                   <div className="form-check form-switch">
@@ -366,9 +392,9 @@ const ProductTable = () => {
                       checked={isOnLive}
                       onChange={handleGlobalToggle}
                       style={{
-                        backgroundColor: isOnLive ? "#011140" : "#ccc", // Color when active or inactive
-                        width: "42px", // Increase the width of the switch
-                        height: "24px", // Increase the height of the switch
+                        backgroundColor: isOnLive ? "#011140" : "#ccc",
+                        width: "42px",
+                        height: "24px",
                       }}
                     />
                     <label
@@ -387,9 +413,10 @@ const ProductTable = () => {
               </th>
             </tr>
           </thead>
+          {/* <div style={{ position: "relative", minHeight: "300px" }}> */}
+  {/* </div> */}
           <tbody>
-          {filteredItems.map((item) => (
-           
+            {filteredItems.map((item) => (
               <tr key={item.id}>
                 <td style={{ borderBottom: true }}>
                   <Form.Check
@@ -397,17 +424,17 @@ const ProductTable = () => {
                     checked={selectedItems.includes(item.id)}
                     onChange={() => handleCheckboxChange(item.id)}
                     style={{
-                      transform: "scale(1.2)", // Scale the checkbox size
+                      transform: "scale(1.2)",
                       fontSize: "20px",
-                      paddingLeft: "10px",
+                      paddingLeft: "30px",
                     }}
                   />
                 </td>
                 <td style={{ borderBottom: true }}>{item.projectName}</td>
                 <td style={{ borderBottom: true }}>
                   <img
-                    src={item.image || "https://placehold.co/600x400/EEE/31343C"}
-                    alt={item.name}
+                    src={item.image || placeholderImage}
+                    alt={item.projectName}
                     style={{
                       width: "50px",
                       height: "50px",
@@ -420,32 +447,27 @@ const ProductTable = () => {
                 <td style={{ borderBottom: true }}>
                   <Button
                     size="sm"
-                    onClick={() => {
-                      handleEdit(item);
-                    }}
+                    onClick={() => handleEdit(item)}
                     style={{
-                      color: "blue", // Text color
-                      backgroundColor: "transparent", // Background color set to transparent
-                      border: "none", // Remove the border if needed
-                      // Adjust this to change the size of the text "Edit"
+                      color: "blue",
+                      backgroundColor: "transparent",
+                      border: "none",
                     }}
                   >
                     <i
                       className="bi bi-pencil"
                       style={{ color: "blue", fontSize: "20px" }}
                     ></i>{" "}
-                    {/* Increase icon size */}
                     <span style={{ fontWeight: 500, fontSize: "16px" }}>
                       {" "}
                       Edit
-                    </span>{" "}
-                    {/* Increase text size */}
+                    </span>
                   </Button>
                 </td>
               </tr>
             ))}
           </tbody>
-        </Table>
+        </Table> )}
       </div>
 
       {/*message section*/}
@@ -463,7 +485,7 @@ const ProductTable = () => {
             display: "flex",
             alignItems: "center",
             borderTop: "1px solid #ddd",
-            boxShadow: "0px -2px 5px rgba(0, 0, 0, 0.1)", // Adjusted to remove side shadows
+            boxShadow: "0px -2px 5px rgba(0, 0, 0, 0.1)",
             height: "80px",
           }}
         >
@@ -474,20 +496,18 @@ const ProductTable = () => {
               width: "1220px",
             }}
           >
-            {/* Left: Number of selected items */}
             <span
               style={{ color: "#011140", fontWeight: 500, fontSize: "22px" }}
             >
               {selectedItems.length} Selected
             </span>
 
-            {/* Right: Remove button */}
             <div>
               <Button
                 onClick={handleRemoveSelected}
                 style={{
-                  backgroundColor: "rgba(194, 0, 0, 0.6)", // 60% opacity
-                  border: "none", // Match border color to the background color
+                  backgroundColor: "rgba(194, 0, 0, 0.6)",
+                  border: "none",
                 }}
               >
                 <i className="bi bi-trash" style={{ marginRight: "15px" }}></i>

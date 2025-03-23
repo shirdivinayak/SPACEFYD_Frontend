@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Dropdown, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AlertSuccesMessage from "../../common/MessageSuccesAlert";
+import useAddProjectApi from "../../../hooks/useAddProjectApi.js";
 
 const categories = ["Electronics", "Furniture", "Clothing", "Toys"];
 const subCategories = {
@@ -15,42 +16,44 @@ const brands = ["Samsung", "Ikea", "Nike", "Lego"];
 
 const EditProjectScreen = () => {
   const location = useLocation();
-const navigate = useNavigate();
-const item = location.state?.item;
+  const navigate = useNavigate();
+  const item = location.state?.item;
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const { editProject, loading, error, success } = useAddProjectApi();
 
-console.log(item, "=----------------");
+  // Placeholder image URL
+  const placeholderImage = "https://placehold.co/600x400/EEE/31343C";
 
-// Placeholder image URL
-const placeholderImage = "https://placehold.co/600x400/EEE/31343C";
+  // Initialize state with project data or fallback values
+  const [projectDetails, setProjectDetails] = useState(() => {
+    return {
+      id: item?._id || "",
+      name: item?.projectName || "",
+      description: item?.projectDescription || "",
+      category: item?.categoryId || "",
+      subCategory: item?.subCategory || "",
+      brand: item?.brand || "",
+      projectCode: item?.ProjectCode || "",
+      displayInHome: item?.isVisible || false,
+      images: item?.images || []
+    };
+  });
 
-// Initialize state with project data or fallback values
-const [projectDetails, setProjectDetails] = useState(() => {
-  const imagesArray = item?.images || []; // Ensure images exist as an array
-  const firstImage = imagesArray.length > 0 ? imagesArray[0] : placeholderImage;
-  const remainingImages = imagesArray.length > 1 ? imagesArray.slice(1) : [placeholderImage];
+  // State for managing image display
+  const [imageDisplay, setImageDisplay] = useState(() => {
+    const imagesArray = item?.images || [];
+    const mainImage = imagesArray.length > 0 ? imagesArray[0] : placeholderImage;
+    const additionalImages = [...Array(6)].map((_, index) => {
+      return (index + 1) < imagesArray.length ? imagesArray[index + 1] : placeholderImage;
+    });
 
-  return {
-    name: item?.projectName || "",
-    description: item?.projectDescription || "",
-    category: item?.categoryId || "",
-    subCategory: item?.subCategory || "",
-    brand: item?.brand || "",
-    projectCode: item?.ProjectCode || "",
-    displayInHome: item?.displayInHome || false,
-    displayInTrending: item?.onlive || false,
-    image: item?.image, // 0th image (or placeholder if not available)
-    images: remainingImages, // Remaining images (or placeholder)
-  };
-});
-
-// State for managing image display
-const [image, setImage] = useState({
-  image: projectDetails.image, // Primary image
-  images: projectDetails.images, // Rest of images
-});
-
-const [message, setMessage] = useState("");
-const [isEditing, setIsEditing] = useState(false);
+    return {
+      mainImage: mainImage,
+      additionalImages: additionalImages
+    };
+  });
 
   const handleEdit = () => {
     setIsEditing(true); // Switch to edit mode
@@ -64,14 +67,48 @@ const [isEditing, setIsEditing] = useState(false);
     }));
   };
 
-  const handleSave = () => {
-    console.log("Item saved:", projectDetails);
-    setMessage("Category updated successfully.");
-    setTimeout(() => {
-      setMessage("");
-    }, 3000);
-    setIsEditing(false); // Exit edit mode
+  const handleSave = async () => {
+    setIsSubmitting(true);
+    
+    try {
+      // Combine the main image with additional images for saving
+      const allImages = [
+        imageDisplay.mainImage !== placeholderImage ? imageDisplay.mainImage : null, 
+        ...imageDisplay.additionalImages.filter(img => img !== placeholderImage)
+      ].filter(Boolean); // Remove null/undefined values
+      
+      // Create the data object for the API
+      const updatedProject = {
+        id: projectDetails.id,
+        projectName: projectDetails.name,
+        projectDescription: projectDetails.description,
+        categoryId: projectDetails.category,
+        ProjectCode: projectDetails.projectCode,
+        isVisible: projectDetails.displayInHome,
+        brand: projectDetails.brand,
+        images: allImages
+      };
+      await editProject(updatedProject);
+
+      // Call your update project API here (replace with your actual API call)
+      // await updateProject(updatedProject);
+      console.log("Project updated:", updatedProject);
+      
+      setMessage("Project updated successfully.");
+      setTimeout(() => {
+        setMessage("");
+        navigate(-1); // Navigate back after successful update
+      }, 3000);
+    } catch (error) {
+      console.error("Error updating project:", error);
+      setMessage("Error updating project. Please try again.");
+      setTimeout(() => setMessage(""), 3000);
+    } finally {
+      setIsSubmitting(false);
+      setIsEditing(false); // Exit edit mode
+    }
   };
+
   const handleCategoryChange = (e) => {
     const selectedCategory = e.target.value;
     setProjectDetails((prev) => ({
@@ -84,7 +121,7 @@ const [isEditing, setIsEditing] = useState(false);
     const { value } = event.target;
     setProjectDetails((prevDetails) => ({
       ...prevDetails,
-      brand: value, // Update the selected brand in the project details
+      brand: value,
     }));
   };
 
@@ -93,7 +130,13 @@ const [isEditing, setIsEditing] = useState(false);
     if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setImage((prevState) => ({ ...prevState, image: e.target.result }));
+        const imageUrl = e.target.result;
+        
+        // Update the main image in the display state
+        setImageDisplay(prev => ({
+          ...prev,
+          mainImage: imageUrl
+        }));
       };
       reader.readAsDataURL(file);
     } else {
@@ -104,29 +147,45 @@ const [isEditing, setIsEditing] = useState(false);
 
   const handleOtherImageUpload = (event, index) => {
     const file = event.target.files[0];
-    if (file) {
+    if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setImage((prevState) => {
-          const updatedImages = [...prevState.images];
-          updatedImages[index] = e.target.result;
-          return { ...prevState, images: updatedImages };
+        const imageUrl = e.target.result;
+        
+        // Update the additional image in the display state
+        setImageDisplay(prev => {
+          const updatedAdditionalImages = [...prev.additionalImages];
+          updatedAdditionalImages[index] = imageUrl;
+          return {
+            ...prev,
+            additionalImages: updatedAdditionalImages
+          };
         });
       };
       reader.readAsDataURL(file);
+    } else {
+      setMessage("Please upload a valid image file.");
+      setTimeout(() => setMessage(""), 3000);
     }
   };
+
   const handleDeleteMain = () => {
-    setImage((prevState) => ({
-      ...prevState,
-      image: "https://via.placeholder.com/448",
+    // Reset main image to placeholder
+    setImageDisplay(prev => ({
+      ...prev,
+      mainImage: placeholderImage
     }));
   };
+  
   const handleDeleteOtherImage = (index) => {
-    setImage((prevState) => {
-      const updatedImages = [...prevState.images];
-      updatedImages[index] = "https://via.placeholder.com/100"; // Reset to placeholder
-      return { ...prevState, images: updatedImages };
+    // Reset additional image to placeholder
+    setImageDisplay(prev => {
+      const updatedAdditionalImages = [...prev.additionalImages];
+      updatedAdditionalImages[index] = placeholderImage;
+      return {
+        ...prev,
+        additionalImages: updatedAdditionalImages
+      };
     });
   };
 
@@ -183,7 +242,7 @@ const [isEditing, setIsEditing] = useState(false);
                 name="name"
                 value={projectDetails.name}
                 onChange={handleChange}
-                disabled={!isEditing} // Disable input when not editing
+                disabled={!isEditing}
                 onFocus={(e) =>
                   (e.target.style.borderColor = "rgba(24, 75, 211, 1)")
                 }
@@ -215,23 +274,22 @@ const [isEditing, setIsEditing] = useState(false);
                   name="description"
                   value={projectDetails.description}
                   onChange={handleChange}
-                  disabled={!isEditing} // Disable input when not editing
+                  disabled={!isEditing}
                   style={{
                     width: "100%",
                     padding: "5px",
-                    height: "150px", // Adjusted height
+                    height: "150px",
                     color: "rgba(71, 71, 71, 1)",
                     fontSize: "14px",
-
                     border: "1px solid rgba(224, 224, 224, 1)",
-                    borderRadius: "4px", // Optional for rounded edges
+                    borderRadius: "4px",
                   }}
                   onFocus={(e) =>
                     (e.target.style.borderColor = "rgba(24, 75, 211, 1)")
-                  } // Border color on focus
+                  }
                   onBlur={(e) =>
                     (e.target.style.borderColor = "rgba(200, 200, 200, 1)")
-                  } // Border color on blur
+                  }
                 />
               </label>
             </div>
@@ -260,9 +318,7 @@ const [isEditing, setIsEditing] = useState(false);
                       width: "100%",
                       fontSize: "14px",
                       fontWeight: "400",
-                      fontSize: "14px",
-
-                      color: "#757575", // Updated text color
+                      color: "#757575",
                       backgroundColor: "white",
                       border: "1px solid #ccc",
                       borderRadius: "4px",
@@ -270,9 +326,9 @@ const [isEditing, setIsEditing] = useState(false);
                       boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                       display: "flex",
                       justifyContent: "space-between",
-                      alignItems: "center", // Align text and icon properly
+                      alignItems: "center",
                     }}
-                    disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
+                    disabled={!isEditing}
                   >
                     <span
                       style={{
@@ -281,8 +337,7 @@ const [isEditing, setIsEditing] = useState(false);
                         color: "#757575",
                       }}
                     >
-                      {projectDetails.category || "Select"}{" "}
-                      {/* Displays selected category or placeholder */}
+                      {projectDetails.category || "Select"}
                     </span>
                   </Dropdown.Toggle>
 
@@ -322,8 +377,8 @@ const [isEditing, setIsEditing] = useState(false);
                   flex: "1",
                   color: "rgba(71, 71, 71, 0.51)",
                   display: "block",
-                  marginTop: "20px", // Adjust the margin as needed
-                  marginBottom: "10px", // Space between label and dropdown
+                  marginTop: "20px",
+                  marginBottom: "10px",
                 }}
               >
                 Brand:
@@ -334,17 +389,17 @@ const [isEditing, setIsEditing] = useState(false);
                       width: "100%",
                       fontSize: "14px",
                       fontWeight: "400",
-                      color: "#757575", // Updated text color
+                      color: "#757575",
                       backgroundColor: "white",
                       border: "1px solid #ccc",
                       borderRadius: "4px",
                       padding: "8px",
-                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Same box-shadow as dropdown
+                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                       display: "flex",
                       justifyContent: "space-between",
-                      alignItems: "center", // Align text and icon properly
+                      alignItems: "center",
                     }}
-                    disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
+                    disabled={!isEditing}
                   >
                     <span
                       style={{
@@ -353,8 +408,7 @@ const [isEditing, setIsEditing] = useState(false);
                         color: "#757575",
                       }}
                     >
-                      {projectDetails.brand || "Select"}{" "}
-                      {/* Displays selected brand or placeholder */}
+                      {projectDetails.brand || "Select"}
                     </span>
                   </Dropdown.Toggle>
 
@@ -385,10 +439,10 @@ const [isEditing, setIsEditing] = useState(false);
                   flex: "1",
                   color: "rgba(71, 71, 71, 0.51)",
                   display: "block",
-                  marginTop: "10px", // Adjust the margin as needed
+                  marginTop: "10px",
                 }}
               >
-                project Code:
+                Project Code:
                 <input
                   type="text"
                   name="projectCode"
@@ -396,17 +450,17 @@ const [isEditing, setIsEditing] = useState(false);
                   onChange={handleChange}
                   style={{
                     width: "100%",
-                    padding: "8px", // Adjust padding for input field
+                    padding: "8px",
                     fontSize: "14px",
                     fontWeight: "400",
                     color: "#757575",
-                    backgroundColor: "white", // Set background color to white
+                    backgroundColor: "white",
                     border: "1px solid #ccc",
                     borderRadius: "4px",
-                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Same box-shadow as dropdown
-                    cursor: "pointer", // Add cursor pointer for better UX
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                    cursor: "pointer",
                   }}
-                  disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
+                  disabled={!isEditing}
                 />
               </label>
             </div>
@@ -417,19 +471,18 @@ const [isEditing, setIsEditing] = useState(false);
                 borderRadius: "5px",
                 marginTop: "20px",
                 padding: "7px",
-                display: "flex", // Added flexbox to align items
-                justifyContent: "space-between", // Space between label and checkbox
-                alignItems: "center", // Vertically center the items
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
             >
               <label
                 style={{
                   fontSize: "14px",
-
                   color: "rgba(71, 71, 71, 0.51)",
                   display: "block",
-                  paddingLeft: "6px", // Padding to left side
-                  flex: 1, // Allow label to take available space
+                  paddingLeft: "6px",
+                  flex: 1,
                 }}
               >
                 Display in Home Screen
@@ -439,47 +492,12 @@ const [isEditing, setIsEditing] = useState(false);
                 type="checkbox"
                 name="displayInHome"
                 checked={projectDetails.displayInHome}
-                disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
+                disabled={!isEditing}
                 onChange={handleChange}
                 style={{
-                  marginRight: "6px", // Margin for spacing on the right
-                  transform: "scale(1.5)", // Scales the checkbox by 1.5 times (you can adjust this value)
-                  cursor: "pointer", // Optional: To improve UX, change cursor on hover
-                }}
-              />
-            </div>
-
-            <div
-              style={{
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-                marginTop: "20px",
-                padding: "7px",
-                display: "flex", // Added flexbox to align items
-                justifyContent: "space-between", // Space between label and checkbox
-                alignItems: "center", // Vertically center the items
-              }}
-            >
-              <label
-                style={{
-                  color: "rgba(71, 71, 71, 0.51)",
-                  display: "block",
-                  paddingLeft: "6px", // Padding to left side
-                  flex: 1, // Allow label to take available space
-                }}
-              >
-                Display in Trending
-              </label>
-              <input
-                type="checkbox"
-                name="displayInTrending"
-                checked={projectDetails.displayInTrending}
-                disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
-                onChange={handleChange}
-                style={{
-                  marginRight: "6px", // Margin for spacing on the right
-                  transform: "scale(1.5)", // Scales the checkbox by 1.5 times (you can adjust this value)
-                  cursor: "pointer", // Optional: To improve UX, change cursor on hover
+                  marginRight: "6px",
+                  transform: "scale(1.5)",
+                  cursor: "pointer",
                 }}
               />
             </div>
@@ -487,7 +505,7 @@ const [isEditing, setIsEditing] = useState(false);
         </div>
 
         {/* Right Section */}
-        <div className=" ps-4 py-4">
+        <div className="ps-4 py-4">
           <div>
             {/* Display the main image */}
             <div
@@ -498,30 +516,26 @@ const [isEditing, setIsEditing] = useState(false);
               }}
             >
               <img
-                src={projectDetails.image}
+                src={imageDisplay.mainImage}
                 alt="Main"
-                disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
                 style={{
-                  width: "400px", // Fixed width
-                  height: "400px", // Fixed height
-                  objectFit: "cover", // Ensures the image fills the area while maintaining its aspect ratio
+                  width: "400px",
+                  height: "400px",
+                  objectFit: "cover",
                   border: "1px solid #ddd",
                   padding: "5px",
-                  cursor: "pointer",
+                  cursor: isEditing ? "pointer" : "default",
                 }}
-                onClick={() =>
-                  document.getElementById("mainImageInput").click()
-                } // Trigger file input click
+                onClick={() => isEditing && document.getElementById("mainImageInput").click()}
               />
               {isEditing && (
                 <button
                   onClick={handleDeleteMain}
-                  disabled={!isEditing} // Disable button if not in editing mode
                   style={{
                     position: "absolute",
                     top: "10px",
                     right: "10px",
-                    backgroundColor: " rgba(255, 224, 224, 0.56)",
+                    backgroundColor: "rgba(255, 224, 224, 0.56)",
                     color: "white",
                     border: "none",
                     borderRadius: "5%",
@@ -541,50 +555,45 @@ const [isEditing, setIsEditing] = useState(false);
               )}
 
               <input
-                disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
+                disabled={!isEditing}
                 type="file"
                 id="mainImageInput"
                 accept="image/*"
-                style={{ display: "none" }} // Hidden file input
+                style={{ display: "none" }}
                 onChange={handleMainImageUpload}
               />
             </div>
 
             {/* Display other images */}
             <div
-              className="d-flex"
+              className="d-flex flex-wrap"
               style={{ gap: "10px", marginTop: "10px", paddingLeft: "50px" }}
             >
-              {image.images.map((img, index) => (
+              {imageDisplay.additionalImages.map((img, index) => (
                 <div
                   key={index}
                   style={{ position: "relative", display: "inline-block" }}
                 >
                   <img
                     src={img}
-                    disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
-                    alt={`image-${index}`}
+                    alt={`Image-${index + 1}`}
                     style={{
                       width: "110px",
                       height: "110px",
+                      objectFit: "cover",
                       border: "1px solid #ddd",
                       padding: "5px",
-                      cursor: "pointer",
+                      cursor: isEditing ? "pointer" : "default",
                     }}
-                    onClick={() =>
-                      document
-                        .getElementById(`otherImageInput-${index}`)
-                        .click()
-                    } // Trigger file input click
+                    onClick={() => isEditing && document.getElementById(`otherImageInput-${index}`).click()}
                   />
                   {isEditing && (
                     <button
-                      onClick={() => handleDeleteOtherImage(index)} // Pass the index for other images
+                      onClick={() => handleDeleteOtherImage(index)}
                       style={{
                         position: "absolute",
                         top: "5px",
                         right: "5px",
-
                         backgroundColor: "transparent",
                         border: "none",
                         borderRadius: "50%",
@@ -601,17 +610,16 @@ const [isEditing, setIsEditing] = useState(false);
                   )}
                   <input
                     type="file"
-                    disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
+                    disabled={!isEditing}
                     id={`otherImageInput-${index}`}
                     accept="image/*"
-                    style={{ display: "none" }} // Hidden file input
+                    style={{ display: "none" }}
                     onChange={(e) => handleOtherImageUpload(e, index)}
                   />
                 </div>
               ))}
             </div>
           </div>
-          {/* Display other images */}
 
           <div className="mt-4 d-flex justify-content-end">
             {!isEditing ? (
@@ -626,7 +634,6 @@ const [isEditing, setIsEditing] = useState(false);
                 }}
                 onClick={handleEdit}
               >
-                {" "}
                 <i
                   className="bi bi-pencil"
                   style={{ fontSize: "16px", paddingRight: "10px" }}
@@ -637,30 +644,32 @@ const [isEditing, setIsEditing] = useState(false);
               <>
                 <Button
                   style={{
-                    backgroundColor: "transparent", // Background color
-                    border: "none", // Removes border
-                    color: "#113DBC", // Text color
-                    fontSize: "16px", // Font size
-                    fontWeight: 600, // Font weight
-                    textDecoration: "none", // Ensures no text decoration
+                    backgroundColor: "transparent",
+                    border: "none",
+                    color: "#113DBC",
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    textDecoration: "none",
                   }}
                   onClick={handleCancel}
+                  disabled={isSubmitting}
                 >
                   Cancel
                 </Button>
                 <div style={{ paddingRight: "10px" }}></div>
                 <Button
                   style={{
-                    backgroundColor: "#184BD3", // Background color
-                    border: "none", // Removes border
-                    color: "white", // Text color
-                    fontSize: "16px", // Font size
-                    fontWeight: 600, // Font weight
-                    textDecoration: "none", // Ensures no text decoration
+                    backgroundColor: "#184BD3",
+                    border: "none",
+                    color: "white",
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    textDecoration: "none",
                   }}
                   onClick={handleSave}
+                  disabled={isSubmitting}
                 >
-                  Save Changes
+                  {isSubmitting ? "Saving..." : "Save Changes"}
                 </Button>
               </>
             )}
