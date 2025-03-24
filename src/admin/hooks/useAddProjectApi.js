@@ -26,9 +26,28 @@ const useAddProjectApi = () => {
       setLoading(false);
     }
   };
+  const editProject = async (projectData) => {  // Renamed from useaddProject
+    setLoading(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      // Make the API request using axios
+      const response = await axiosInstance.post("/editProject", projectData);
+      console.log(projectData);
+      // If the request is successful, handle the response
+      setSuccess(response.data); // Assuming the response contains the result you need
+    } catch (err) {
+      // Handle errors
+      setError(err.response?.data?.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return {
     addProject,  // Ensure you return `addProject`
+    editProject,  // Ensure you return `addProject`
     loading,
     error,
     success,
