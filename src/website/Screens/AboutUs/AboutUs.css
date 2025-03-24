@@ -1,109 +1,137 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
 
 body {
-    font-family: 'DM Sans', sans-serif;
-    color: #4C6559;
+  font-family: "DM Sans", sans-serif;
+  color: #4c6559;
 }
 
 .hero-section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white; /* Ensures text remains white */
-    background-size: cover;
-    background-position: center;
-    width: 100%;
-    max-width: 1555px;
-    height: 614px;
-    position: relative;
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  .navbar-collapse.show + .hero-section {
-    margin-top: 200px; /* Adjust as needed */
-  }
-  
-  
-  .hero-section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 440px;
-    /* background: rgba(0, 0, 0, 0.5); Adds a dark overlay for readability */
-    z-index: 1;
-  }
-  
-  .hero-section .container {
-    position: relative;
-    z-index: 2; /* Ensures text is above the overlay */
-  }
-  
-  .hero-section h1 {
-    font-size: 3rem;
-    font-weight: bold;
-    margin-bottom: 15px;
-  }
-  
-  .hero-section p {
-    font-size: 1.25rem;
-    font-weight: 400;
-  }
-  
-  .overlay-image-container {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    margin-top: -100px;
-  }
-  
-  .overlay-image {
-    width: 90%;
-    max-width: 1300px;
-    z-index: 10;
-    border-radius: 20px;
-    margin-top: -20px;
-    /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); */
-  }
-  @media (max-width: 767px) {
-.hero-section{
-  padding: 20px !important;
-  height: 440px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white; /* Ensures text remains white */
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  max-width: 1555px;
+  height: 614px;
+  position: relative;
+  font-family: "DM Sans", sans-serif;
 }
-  
-    .hero-section h1 {
-      font-size: 2rem;
-    }
-  
-    .hero-section p {
-      font-size: 1rem;
-    }
 
-    .overlay-image-container {
-        display: flex;
-        justify-content: center;
-        position: relative;
-        margin-top: 5px;
-      }
+.navbar-collapse.show + .hero-section {
+  margin-top: 200px; /* Adjust as needed */
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background: rgba(0, 0, 0, 0.5); Adds a dark overlay for readability */
+  z-index: 1;
+}
+
+.hero-section .container {
+  position: relative;
+  z-index: 2; /* Ensures text is above the overlay */
+}
+
+.hero-section h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.hero-section p {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.overlay-image-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin-top: -100px;
+}
+
+.overlay-image {
+  width: 90%;
+  max-width: 1300px;
+  z-index: 10;
+  border-radius: 20px;
+  margin-top: -20px;
+  /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); */
+}
+
+.about-us p {
+  font-size: 14px;
+}
+.category-tags {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .about-us h2 {
+    font-family: kolletkif;
+    font-size: 20px !important;
+    font-weight: 400;
+    line-height: 100%;
+    justify-content: left;
+  }
+  .about-us h5 {
+    /* font-family: ; */
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 100%;
+    letter-spacing: 0%;
   }
 
-
-
-  @media (min-width:1300px) {
-
-    .about-us{
-      /* max-width: ; */
-    }
+  .about-us p {
+    /* font-family: ; */
+    font-size: 10px !important;
+    font-weight: 400;
+    line-height: 100%;
+    letter-spacing: 0%;
+  }
+  .hero-section {
+    padding: 20px !important;
+    height: 440px !important; /* Ensures it doesn't stretch */
+    max-height: 440px !important;
+    overflow: hidden !important; /* Prevents extra content from pushing height */
+    display: flex;
+    align-items: center; /* Keeps content centered */
+    justify-content: center; /* Centers content */
+    text-align: center;
   }
 
-
-  @media (max-width: 600px) {  /* Adjust the breakpoint as needed */
-    .hero-section {
-      max-height: 440px !important; 
-      overflow: hidden; /* Prevents content from exceeding max height */
-      background-size: cover;
-      background-position: center;
-    }
+  .hero-section .container {
+    padding: 0 !important; /* Removes unnecessary padding */
+    margin: 0 auto !important; /* Centers content */
   }
+
+  .hero-section h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  .hero-section p {
+    font-size: 1rem;
+    margin: 0 10px; /* Prevents text from overflowing */
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-section {
+    height: 440px !important;
+    max-height: 440px !important;
+    background-size: cover !important;
+    background-position: center !important;
+    overflow: hidden !important;
+  }
+}

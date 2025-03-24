@@ -12,6 +12,7 @@ import HomeNavbar from "../../components/Home/NavbarDark/DarkNavbar";
 import Footer from "../../components/Home/Footer/Footer";
 import ContentSection from "../../components/Home/Content/ContentSection";
 import "./AboutUs.css";
+import { JustifyLeft } from "react-bootstrap-icons";
 const AboutUs = () => {
   // const [isNavbarExpanded, setIsNavbarExpanded] = useState(false);
   return (
@@ -20,7 +21,7 @@ const AboutUs = () => {
       {/* Hero Section with Background */}
 
       <div
-        className="hero-section container"
+        className="hero-section "
         style={{
           backgroundImage: `url(${HeroImage})`,
         }}
@@ -50,11 +51,11 @@ const AboutUs = () => {
           backgroundPosition: "center",
           width: "90%", // Full width for mobile
           height: "100%",
-          minheight: "80vh",
+          // minheight: "80vh",
           minHeight: window.innerWidth ? "80vh" : "1000px",
-          maxHeight: window.innerWidth > 600 ? "640px" : "1200px",
+          // maxHeight: window.innerWidth > 600 ? "640px" : "1200px",
           overflow: "hidden",
-          padding: "15px",
+          padding: " 20px 15px",
           // paddingRight: "0px",
           marginLeft: "auto", // Center container for larger screens
           marginRight: "auto", // Center container for larger screens
@@ -84,13 +85,13 @@ const AboutUs = () => {
             {/* Left Column */}
             <div className="d-flex flex-column me-sm-4 ">
               <h5>Comprehensive Solutions</h5>
-              <p style={{ fontSize: "14px" }}>
+              <p>
                 From custom furniture to HVAC installations and landscape
                 design, we manage every detail of your project.
               </p>
 
               <h5>Sustainability Commitment</h5>
-              <p style={{ fontSize: "14px" }}>
+              <p>
                 We prioritize eco-friendly materials and energy-efficient
                 systems to ensure minimal environmental impact.
               </p>
@@ -99,13 +100,13 @@ const AboutUs = () => {
             {/* Right Column */}
             <div className=" right-column d-flex flex-column">
               <h5>Expert Team</h5>
-              <p style={{ fontSize: "14px" }}>
+              <p>
                 With a team of skilled designers, project managers, and
                 technicians, we bring creativity and expertise to every project.
               </p>
 
               <h5>Proven Track Record</h5>
-              <p style={{ fontSize: "14px" }}>
+              <p>
                 Our portfolio covers hospitality, corporate, retail, and
                 healthcare, earning trust in Oman and beyond.
               </p>
@@ -116,7 +117,6 @@ const AboutUs = () => {
         <div
           className="image-right d-flex flex-sm-row col-lg-5 col-md-6 justify-content-center align-items-center m-0"
           style={{
-            // height: "100%",
             maxWidth: "487px",
             flex: 1,
             alignSelf: "stretch", // Ensure the image container stretches
@@ -141,7 +141,12 @@ const AboutUs = () => {
         </div>
       </div>
       <div
-        className="container-fluid d-flex flex-column flex-md-row   position-relative rounded-4  "
+        // className="container-fluid d-flex flex-column flex-md-row position-relative rounded-4"
+        className={
+          window.innerWidth < 768
+            ? "d-block container-fluid flex-column flex-md-row position-relative rounded-4"
+            : "d-flex container-fluid flex-column flex-md-row position-relative rounded-4"
+        }
         style={{
           backgroundColor: "#4C6559",
           color: "#ffffff",
@@ -149,12 +154,15 @@ const AboutUs = () => {
           maxWidth: "1200px",
           overflow: "hidden",
           marginTop: "50px",
+          minHeight: "456px",
         }}
       >
         {/* Left Content */}
         <div
           className=" container "
           style={{
+            backgroundImage: [circlegrad],
+            backgroundPosition: JustifyLeft,
             width: "100%",
             marginTop: "60px",
           }}
@@ -179,17 +187,9 @@ const AboutUs = () => {
             our commitment to quality, innovation, and client satisfaction.
           </p>
         </div>
-
-        {/* Tags Section */}
-        <div className=" col-md-6 col-12 mt-3 mt-md-0">
-          <img
-            src={circles}
-            alt="Background Design"
-            className="w-100 h-auto "
-            style={{
-              width: "100%",
-            }}
-          />
+        {/* right content */}
+        <div className="d-flex justify-content-center align-items-center col-md-6 col-12">
+          <img src={circles} alt="" />
         </div>
       </div>
       <div className="display-flex justify-content-center align-items-center my-5"></div>

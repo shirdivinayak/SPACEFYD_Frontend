@@ -256,7 +256,7 @@ const Products = () => {
         <Linebot />
       </div>
 
-      <div className=" container similar-products p-4 ">
+      <div className=" container similar-products  ">
         <h2>Similar Products</h2>
         <div>
           {" "}
