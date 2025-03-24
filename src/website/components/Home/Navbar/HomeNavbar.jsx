@@ -27,6 +27,7 @@ const HomeNavbar = () => {
         {/* Navbar Toggler for Mobile */}
         <button
           className="navbar-toggler d-lg-none"
+          className="navbar-toggler d-lg-none"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent"
