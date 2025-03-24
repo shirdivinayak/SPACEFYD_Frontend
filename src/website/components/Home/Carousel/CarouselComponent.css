@@ -1,213 +1,352 @@
-/* Custom Carousel Styles */
-.carousel-home-container .carousel-control-prev,
-.carousel-home-container .carousel-control-next {
-  display: none; /* Hide default carousel controls */
+/* Base Styles */
+.carousel-home-container {
+  margin: 100px auto;
+  max-width: 1240px;
+  background-image: url('../../../Assets/Home/background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding-bottom: 20px;
 }
 
-.carousel-home-section {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+.carousel-home-heading-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 40px;
 }
 
-/* Navigation Buttons */
-.carousel-navigation-buttons button {
-  border: 1px solid #000 !important;
-  background-color: transparent !important;
-  transition: background-color 0.3s ease;
+.carousel-sub-heading {
+  font-family: 'Kollektif', sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 31px;
+  letter-spacing: -0.9px;
+  color: #9A715B;
+  margin-bottom: 10px;
 }
 
-.carousel-navigation-buttons button:hover {
-  background-color: #f0f0f0 !important;
+.carousel-main-heading {
+  font-family: 'Kollektif', sans-serif;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 59px;
+  letter-spacing: -0.9px;
+  color: #4C6559;
+  padding-right: 300px;
 }
 
-/* Ensure navigation elements are at the same level */
+/* Enhanced Know More Button */
+.carousel-home-know-more-btn {
+  font-family: 'Raleway', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 12px 24px;
+  color: white;
+  background: #4C6559;
+  white-space: nowrap;
+  min-width: 100px;
+  border: none;
+  border-radius: 4px;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.carousel-home-know-more-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+  z-index: -1;
+  transition: all 0.4s ease;
+  opacity: 0;
+}
+
+.carousel-home-know-more-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(76, 101, 89, 0.3);
+  background: #3a5045;
+}
+
+.carousel-home-know-more-btn:hover::before {
+  opacity: 1;
+}
+
+.carousel-home-know-more-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(76, 101, 89, 0.3);
+}
+
+/* Custom Carousel Implementation */
+.custom-carousel-wrapper {
+  width: 100%;
+  height: 744px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.custom-carousel {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.carousel-image-section {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  margin: 0;
+  padding: 0;
+}
+
+.carousel-content-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+}
+
+.carousel-content-inner {
+  padding: 40px;
+}
+
+.carousel-content-inner h3 {
+  font-family: 'Kollektif', sans-serif;
+  font-weight: 400;
+  font-size: 50.26px;
+  line-height: 71.16px;
+  letter-spacing: -2.35px;
+  color: #FFFFFF;
+  margin-bottom: 20px;
+}
+
+.carousel-content-inner p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 20px;
+  color: #FCF9F5;
+  margin-bottom: 30px;
+}
+
+.carousel-content-inner hr {
+  border-top: 1px solid #FFFFFF;
+  margin-bottom: 30px;
+}
+
 .carousel-navigation {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: auto; /* Push to the bottom of the content section */
+  padding: 40px;
+  margin-top: auto;
+}
+
+.carousel-navigation p {
+  font-family: 'Kollektif', sans-serif;
+  font-size: 18px;
+  color: #E6F0E9;
+  margin: 0;
+}
+
+.carousel-navigation-buttons {
+  display: flex;
+}
+
+/* Enhanced Carousel Navigation Buttons */
+.carousel-navigation-buttons button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #FFFFFF;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-navigation-buttons button:first-child {
+  margin-left: 0;
+}
+
+.carousel-navigation-buttons button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-navigation-buttons button::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.carousel-navigation-buttons button:hover::after {
+  opacity: 1;
+}
+
+.carousel-navigation-buttons button svg {
+  transition: transform 0.3s ease;
+}
+
+.carousel-navigation-buttons button:hover svg {
+  transform: scale(1.2);
+}
+
+.carousel-navigation-buttons button:first-child:hover svg {
+  transform: translateX(-2px) scale(1.2);
+}
+
+.carousel-navigation-buttons button:last-child:hover svg {
+  transform: translateX(2px) scale(1.2);
+}
+
+/* Mobile Know More Button */
+.carousel-home-small-screen-btn-container {
+  display: none;
+  text-align: center;
+  margin-top: 20px;
 }
 
 /* Responsive Styles */
 @media (max-width: 991px) {
   .carousel-home-container {
-    margin: 50px auto !important;
-    padding: 0 30px 40px 30px !important; /* Added side padding + bottom space */
+    margin: 50px auto;
+    padding: 0 30px 40px;
   }
 
   .carousel-home-heading-section {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    margin-bottom: 20px !important;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
   }
 
   .carousel-sub-heading {
-    font-size: 20px !important;
-    line-height: 26px !important;
-    margin-bottom: 8px !important;
+    font-size: 20px;
+    line-height: 26px;
   }
 
   .carousel-main-heading {
-    font-size: 36px !important; /* Increased font size */
-    line-height: 42px !important; /* Adjusted line height */
-    padding-right: 0 !important; /* Remove padding to prevent congestion */
-    word-spacing: 2px; /* Add spacing between words */
+    font-size: 36px;
+    line-height: 42px;
+    padding-right: 0;
   }
 
   .carousel-home-know-more-btn.large-screen-btn {
-    display: none !important;
+    display: none;
   }
 
-  .carousel-home-section {
-    height: 500px !important;
+  .custom-carousel-wrapper {
+    height: 500px;
   }
 
-  .carousel-item div {
-    height: 500px !important;
+  .carousel-content-inner {
+    padding: 20px;
   }
 
-  .carousel-content {
-    padding: 20px !important;
+  .carousel-content-inner h3 {
+    font-size: 28px;
+    line-height: 34px;
   }
 
-  .carousel-item h3 {
-    font-size: 28px !important; /* Increased font size */
-    line-height: 34px !important; /* Adjusted line height */
-    margin-bottom: 15px !important;
-    word-spacing: 2px; /* Add spacing between words */
+  .carousel-content-inner p {
+    font-size: 14px;
+    line-height: 22px;
   }
 
-  .carousel-item p {
-    font-size: 14px !important;
-    line-height: 22px !important;
-    margin-bottom: 20px !important;
-  }
-
-  .carousel-item hr {
-    margin-bottom: 20px !important;
-  }
-
-  .carousel-page-number {
-    font-size: 14px !important;
-  }
-
-  .carousel-navigation-buttons button {
-    width: 40px !important; /* Keep size consistent with large screens */
-    height: 40px !important;
-  }
-
-  .carousel-navigation-buttons svg {
-    width: 24px !important;
-    height: 24px !important;
+  .carousel-navigation {
+    padding: 20px;
   }
 
   .carousel-home-small-screen-btn-container {
-    display: block !important;
-  }
-
-  .carousel-home-know-more-btn.small-screen-btn {
-    font-size: 14px !important;
-    padding: 6px !important;
-    min-width: 90px !important;
+    display: block;
   }
 }
 
 @media (max-width: 767px) {
   .carousel-home-container {
-    margin: 30px auto !important;
-    padding: 0 20px 40px 20px !important; /* Adjusted side padding */
+    margin: 30px auto;
+    padding: 0 20px 40px;
   }
 
   .carousel-sub-heading {
-    font-size: 18px !important;
-    line-height: 24px !important;
+    font-size: 18px;
+    line-height: 24px;
   }
 
   .carousel-main-heading {
-    font-size: 28px !important; /* Further increased font size */
-    line-height: 34px !important; /* Further adjusted line height */
-    word-spacing: 2px; /* Add spacing between words */
+    font-size: 28px;
+    line-height: 34px;
   }
 
-  .carousel-home-section {
-    height: 400px !important;
+  .custom-carousel-wrapper {
+    height: 400px;
   }
 
-  .carousel-item div {
-    height: 400px !important;
-  }
-
-  .carousel-content {
-    padding: 15px !important;
-  }
-
-  .carousel-item h3 {
-    font-size: 24px !important; /* Further increased font size */
-    line-height: 30px !important; /* Further adjusted line height */
-    word-spacing: 2px; /* Add spacing between words */
-  }
-
-  .carousel-item p {
-    font-size: 12px !important;
-    line-height: 18px !important;
-    margin-bottom: 15px !important;
-  }
-
-  .carousel-item hr {
-    margin-bottom: 15px !important;
-  }
-
-  .carousel-page-number {
-    font-size: 12px !important;
+  .carousel-content-inner h3 {
+    font-size: 24px;
+    line-height: 30px;
   }
 
   .carousel-navigation-buttons button {
-    width: 40px !important; /* Keep size consistent with large screens */
-    height: 40px !important;
-  }
-
-  .carousel-navigation-buttons svg {
-    width: 24px !important;
-    height: 24px !important;
-  }
-
-  .carousel-home-know-more-btn.small-screen-btn {
-    font-size: 12px !important;
-    padding: 5px !important;
-    min-width: 80px !important;
+    width: 36px;
+    height: 36px;
   }
 }
 
 @media (max-width: 576px) {
   .carousel-home-container {
-    padding: 0 15px 40px 15px !important; /* Further adjusted side padding */
+    padding: 0 15px 40px;
   }
 
   .carousel-sub-heading {
-    font-size: 16px !important;
-    line-height: 20px !important;
+    font-size: 16px;
+    line-height: 20px;
   }
 
   .carousel-main-heading {
-    font-size: 24px !important; /* Further increased font size */
-    line-height: 28px !important; /* Further adjusted line height */
-    word-spacing: 2px; /* Add spacing between words */
+    font-size: 24px;
+    line-height: 28px;
   }
 
-  .carousel-home-section {
-    height: 350px !important;
+  .custom-carousel-wrapper {
+    height: 350px;
   }
 
-  .carousel-item div {
-    height: 350px !important;
+  .carousel-content-inner h3 {
+    font-size: 20px;
+    line-height: 26px;
   }
 
-  .carousel-content {
-    padding: 10px !important;
+  .carousel-navigation {
+    padding: 15px;
   }
 
-  .carousel-item h3 {
-    font-size: 20px !important;
-    line-height: 26px !important;
-    word-spacing: 2px; /* Add spacing between words */
+  .carousel-navigation-buttons button {
+    width: 32px;
+    height: 32px;
   }
 }

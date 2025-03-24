@@ -16,7 +16,26 @@ const CardSection = () => {
 
           {/* Right Side: Button (Large Screens) and Navigation (Small Screens) */}
           <div className="button-navigation">
-            <button className="view-more-btn large-screen-btn">View More</button>
+            <button
+              className="lamp-btn"
+              style={{
+                width: "132px",
+                height: "44px",
+                borderRadius: "4px",
+                padding: "12px 16px",
+                fontFamily: "Raleway, sans-serif",
+                fontSize: "16px",
+                fontWeight: 500,
+                color: "white",
+                background: "#4C6559",
+                whiteSpace: "nowrap",
+                minWidth: "100px",
+                border: "1px solid #4C6559",
+                cursor: "pointer",
+              }}
+            >
+              Know More
+            </button>
             <div className="small-screen-navigation">
               <button>
                 <span>‹</span>
@@ -50,7 +69,26 @@ const CardSection = () => {
           </button>
         </div>
         <div className="small-screen-view-more">
-          <button className="view-more-btn">View More</button>
+          <button
+            className="lamp-btn"
+            style={{
+              width: "132px",
+              height: "44px",
+              borderRadius: "4px",
+              padding: "12px 16px",
+              fontFamily: "Raleway, sans-serif",
+              fontSize: "16px",
+              fontWeight: 500,
+              color: "white",
+              background: "#4C6559",
+              whiteSpace: "nowrap",
+              minWidth: "100px",
+              border: "1px solid #4C6559",
+              cursor: "pointer",
+            }}
+          >
+            Know More
+          </button>
         </div>
       </div>
     </section>

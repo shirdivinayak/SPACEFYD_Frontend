@@ -1,18 +1,12 @@
 import React, { useState } from "react";
-import { Carousel, Button } from "react-bootstrap";
-import "./CarouselComponent.css"; // Import the CSS file
+import "./CarouselComponent.css";
 import image1 from "../../../Assets/Home/image1.png";
 import background from "../../../Assets/Home/background.png";
+import carouselbg from "../../../Assets/Home/carouselbg.png";
 
 const CarouselComponent = () => {
-  const [index, setIndex] = useState(0); // State to track active carousel item
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Handle carousel navigation
-  const handleSelect = (selectedIndex) => {
-    setIndex(selectedIndex);
-  };
-
-  // Data for carousel items
   const carouselData = [
     {
       image: image1,
@@ -36,284 +30,112 @@ const CarouselComponent = () => {
     },
   ];
 
+  const goToPrev = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 ? carouselData.length - 1 : prevIndex - 1
+    );
+  };
+
+  const goToNext = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === carouselData.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
   return (
-    <div
-      className="carousel-home-container"
-      style={{
-        margin: "100px auto",
-        maxWidth: "1240px",
-        backgroundImage: `url(${background})`,
-        backgroundSize: "cover", // Make background responsive
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        paddingBottom: "20px", // Space for button on small screens
-      }}
-    >
+    <div className="carousel-home-container">
       {/* Heading Section */}
-      <div
-        className="carousel-home-heading-section"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
-          marginBottom: "40px",
-        }}
-      >
-        {/* Left Side: Headings */}
+      <div className="carousel-home-heading-section">
         <div>
-          <h2
-            className="carousel-sub-heading"
-            style={{
-              fontFamily: "Kollektif, sans-serif",
-              fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "31px",
-              letterSpacing: "-0.9px",
-              color: "#9A715B",
-              marginBottom: "10px",
-            }}
-          >
-            Our Trending Projects
-          </h2>
-          <h1
-            className="carousel-main-heading"
-            style={{
-              fontFamily: "Kollektif, sans-serif",
-              fontWeight: 400,
-              fontSize: "48px",
-              lineHeight: "59px",
-              letterSpacing: "-0.9px",
-              color: "#4C6559",
-              paddingRight: "450px",
-            }}
-          >
+          <h2 className="carousel-sub-heading">Our Trending Projects</h2>
+          <h1 className="carousel-main-heading">
             Transforming Spaces with Seamless Interior Solutions
           </h1>
         </div>
-
-        {/* Right Side: Know More Button (Large Screens) */}
-        <Button
-          variant="outline-dark"
+        <button
           className="carousel-home-know-more-btn large-screen-btn"
           style={{
+            width: "132px",
+            height: "44px",
+            borderRadius: "4px",
+            padding: "12px 16px",
             fontFamily: "Raleway, sans-serif",
             fontSize: "16px",
             fontWeight: 500,
-            padding: "8px",
             color: "white",
             background: "#4C6559",
             whiteSpace: "nowrap",
             minWidth: "100px",
+            border: "1px solid #4C6559",
+            cursor: "pointer",
           }}
         >
           Know More
-        </Button>
+        </button>
       </div>
 
-      {/* Carousel Section */}
-      <div
-        className="carousel-home-section"
-        style={{
-          width: "100%",
-          height: "744px",
-          borderRadius: "12px",
-          overflow: "hidden",
-          position: "relative",
-        }}
-      >
-        <Carousel
-          activeIndex={index}
-          onSelect={handleSelect}
-          indicators={false}
-          prevIcon={null}
-          nextIcon={null}
-        >
-          {carouselData.map((item, idx) => (
-            <Carousel.Item key={idx}>
-              <div
-                style={{
-                  display: "flex",
-                  height: "744px",
-                }}
-              >
-                {/* Left: Image */}
-                <div
-                  style={{
-                    flex: 1,
-                    backgroundImage: `url(${item.image})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                ></div>
-
-                {/* Right: Content */}
-                <div
-                  className="carousel-content"
-                  style={{
-                    flex: 1,
-                    padding: "40px",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    backgroundColor: "#F8F9FA",
-                  }}
-                >
-                  {/* Top: Heading and Subheading */}
-                  <div>
-                    <h3
-                      style={{
-                        fontFamily: "Kollektif",
-                        fontWeight: 400,
-                        fontSize: "50.26px",
-                        lineHeight: "71.16px",
-                        letterSpacing: "-2.35px",
-                        verticalAlign: "middle",
-                        color: "#000",
-                        marginBottom: "20px",
-                      }}
-                    >
-                      {item.heading}
-                    </h3>
-                    <p
-                      style={{
-                        fontFamily: "Inter",
-                        fontWeight: 500,
-                        fontSize: "24px",
-                        lineHeight: "20px",
-                        letterSpacing: "0%",
-                        verticalAlign: "middle",
-                        color: "#505F79",
-                        marginBottom: "30px",
-                      }}
-                    >
-                      {item.subheading}
-                    </p>
-                    <hr
-                      style={{
-                        borderTop: "1px solid #000",
-                        marginBottom: "30px",
-                      }}
-                    />
-                  </div>
-
-                  {/* Bottom: Page Number and Navigation Icons */}
-                  <div
-                    className="carousel-navigation"
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      marginTop: "auto", // Push to the bottom
-                    }}
-                  >
-                    <p
-                      className="carousel-page-number"
-                      style={{
-                        fontFamily: "Kollektif, sans-serif",
-                        fontSize: "18px",
-                        color: "#000",
-                        margin: 0,
-                      }}
-                    >
-                      {`${idx + 1}/${carouselData.length}`}
-                    </p>
-
-                    <div className="carousel-navigation-buttons">
-                      <Button
-                        variant="outline-dark"
-                        onClick={() =>
-                          handleSelect(
-                            (idx - 1 + carouselData.length) %
-                              carouselData.length
-                          )
-                        }
-                        style={{
-                          marginRight: "10px",
-                          borderRadius: "50%",
-                          width: "40px",
-                          height: "40px",
-                          padding: 0,
-                          border: "1px solid #000",
-                          backgroundColor: "transparent",
-                        }}
-                      >
-                        <svg
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M15 18L9 12L15 6"
-                            stroke="#000"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </Button>
-                      <Button
-                        variant="outline-dark"
-                        onClick={() =>
-                          handleSelect((idx + 1) % carouselData.length)
-                        }
-                        style={{
-                          borderRadius: "50%",
-                          width: "40px",
-                          height: "40px",
-                          padding: 0,
-                          border: "1px solid #000",
-                          backgroundColor: "transparent",
-                        }}
-                      >
-                        <svg
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M9 18L15 12L9 6"
-                            stroke="#000"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </Button>
-                    </div>
-                  </div>
-                </div>
+      {/* Custom Carousel Implementation */}
+      <div className="custom-carousel-wrapper">
+        <div className="custom-carousel">
+          {/* Left Image Section */}
+          <div 
+            className="carousel-image-section"
+            style={{ backgroundImage: `url(${carouselData[currentIndex].image})` }}
+          />
+          
+          {/* Right Content Section */}
+          <div 
+            className="carousel-content-section"
+            style={{ backgroundImage: `url(${carouselbg})` }}
+          >
+            <div className="carousel-content-inner">
+              <h3>{carouselData[currentIndex].heading}</h3>
+              <p>{carouselData[currentIndex].subheading}</p>
+              <hr />
+            </div>
+            
+            <div className="carousel-navigation">
+              <p>{`${currentIndex + 1}/${carouselData.length}`}</p>
+              <div className="carousel-navigation-buttons">
+                <button onClick={goToPrev}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M15 18L9 12L15 6" stroke="#FFFFFF" strokeWidth="2" />
+                  </svg>
+                </button>
+                <button onClick={goToNext}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M9 18L15 12L9 6" stroke="#FFFFFF" strokeWidth="2" />
+                  </svg>
+                </button>
               </div>
-            </Carousel.Item>
-          ))}
-        </Carousel>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Know More Button (Small Screens) */}
-      <div
-        className="carousel-home-small-screen-btn-container"
-        style={{ display: "none", textAlign: "center", marginTop: "20px" }}
-      >
-        <Button
-          variant="outline-dark"
+      {/* Mobile Know More Button */}
+      <div className="carousel-home-small-screen-btn-container">
+        <button
           className="carousel-home-know-more-btn small-screen-btn"
           style={{
+            width: "132px",
+            height: "44px",
+            borderRadius: "4px",
+            padding: "12px 16px",
             fontFamily: "Raleway, sans-serif",
             fontSize: "16px",
             fontWeight: 500,
-            padding: "8px",
-            border: "2px solid #000",
             color: "white",
             background: "#4C6559",
             whiteSpace: "nowrap",
             minWidth: "100px",
+            border: "1px solid #4C6559",
+            cursor: "pointer",
+            margin: "20px auto 0",
           }}
         >
           Know More
-        </Button>
+        </button>
       </div>
     </div>
   );

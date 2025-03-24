@@ -14,7 +14,7 @@ const Sections = ({ backgroundImage, sections }) => {
       <div className="text-center mb-5">
         <h6 className="section-subtitle">Our Services</h6>
         <h1 className="section-title">
-          Tailored Solutions for Every Interior Need
+          Tailored Solutions <br/> for Every Interior Need.
         </h1>
       </div>
 
