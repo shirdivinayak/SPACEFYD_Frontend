@@ -1,25 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HeroImage from "../../Assets/AboutUs/hero.svg";
+import HeroImage2 from "../../Assets/AboutUs/heromob.svg";
 import MainImage from "../../Assets/AboutUs/image219.svg";
 import Image3 from "../../Assets/AboutUs/view3.svg";
 import circlegrad from "../../Assets/AboutUs/circlegrad.svg";
 import Gradient from "../../Assets/AboutUs/Gradient.svg";
 import circles from "../../Assets/AboutUs/circles.svg";
-import HomeNavbar from "../../components/Home/Navbar/HomeNavbar";
+import HomeNavbar from "../../components/Home/NavbarDark/DarkNavbar";
+// import HomeNavbar from "../../components/Home/Navbar/HomeNavbar";
 import Footer from "../../components/Home/Footer/Footer";
+import ContentSection from "../../components/Home/Content/ContentSection";
 import "./AboutUs.css";
 const AboutUs = () => {
+  // const [isNavbarExpanded, setIsNavbarExpanded] = useState(false);
   return (
     <div>
       <HomeNavbar />
       {/* Hero Section with Background */}
+
       <div
-        className="hero-section"
+        className="hero-section container"
         style={{
           backgroundImage: `url(${HeroImage})`,
         }}
       >
+        {" "}
         <div className="container">
           <h1>About Us</h1>
           <p>
@@ -35,9 +41,8 @@ const AboutUs = () => {
       <div className="overlay-image-container">
         <img src={MainImage} alt="Overlay" className="overlay-image" />
       </div>
-
       <div
-        className="container-fluid d-flex flex-wrap   justify-content-center align-items-center mt-5 col-lg-6 col-sm-6 p-0 "
+        className="about-us container-fluid d-flex flex-wrap   justify-content-center align-items-center mt-5 col-lg-6 col-sm-6 p-0 "
         style={{
           color: "#4C6559",
           backgroundImage: `url(${Gradient})`,
@@ -48,7 +53,6 @@ const AboutUs = () => {
           minheight: "80vh",
           minHeight: window.innerWidth ? "80vh" : "1000px",
           maxHeight: window.innerWidth > 600 ? "640px" : "1200px",
-
           overflow: "hidden",
           padding: "15px",
           // paddingRight: "0px",
@@ -110,7 +114,7 @@ const AboutUs = () => {
         </div>
         {/* Right Section with Image */}
         <div
-          className="d-flex flex-sm-row col-lg-5 col-md-6 justify-content-center align-items-center m-0"
+          className="image-right d-flex flex-sm-row col-lg-5 col-md-6 justify-content-center align-items-center m-0"
           style={{
             // height: "100%",
             maxWidth: "487px",
@@ -124,8 +128,8 @@ const AboutUs = () => {
             id="image3"
             className="img-fluid"
             style={{
-              borderTopRightRadius: "12px",
-              borderBottomRightRadius: "12px",
+              // borderTopRightRadius: "12px",
+              // borderBottomRightRadius: "12px",
               width: "100%",
               maxWidth: "620px",
               objectFit: "cover",
@@ -136,7 +140,6 @@ const AboutUs = () => {
           />
         </div>
       </div>
-
       <div
         className="container-fluid d-flex flex-column flex-md-row   position-relative rounded-4  "
         style={{
@@ -189,7 +192,6 @@ const AboutUs = () => {
           />
         </div>
       </div>
-
       <div className="display-flex justify-content-center align-items-center my-5"></div>
       <div className="container text-center mt-4">
         <p
@@ -209,6 +211,7 @@ const AboutUs = () => {
           Solutions With Excellence
         </p>
       </div>
+      <ContentSection></ContentSection>
       <Footer />
     </div>
   );

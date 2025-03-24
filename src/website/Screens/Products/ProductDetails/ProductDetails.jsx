@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./ProductDetails.css";
 import HomeNavbar from "../../../components/Home/Navbar/HomeNavbar";
 import Footer from "../../../components/Home/Footer/Footer";
+import ContentSection from "../../../components/Home/Content/ContentSection";
 import { useNavigate, useLocation } from "react-router-dom";
 import Sample1 from "../../../Assets/Products/SampleImage1.svg";
 import Sample2 from "../../../Assets/Products/SampleImage2.svg";
@@ -21,6 +22,8 @@ const ProductDetails = () => {
     mainImage: ProductImage,
     subImages: [ProductImage2, ProductImage3, ProductImage4, ProductImage5],
     title: "Asgaard sofa",
+    brand: "PepperFry",
+    category: "Furniture",
     description:
       "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
   };
@@ -83,7 +86,9 @@ const ProductDetails = () => {
 
         {/* Product Title and Description */}
         <div className="product-details">
+          <p className="product-brand">{ProductImages.brand}</p>
           <h2 className="product-title">{ProductImages.title}</h2>
+          <spam className="product-category">{ProductImages.category}</spam>
           <p className="product-description">{ProductImages.description}</p>
         </div>
       </div>
@@ -95,7 +100,7 @@ const ProductDetails = () => {
           <button className="view-more-button">View More</button>
         </div>
       </div>
-      <div className="similar-product-list">
+      {/* <div className="similar-product-list">
         {ProductList.map((product, index) => (
           <div
             className="similar-product-card"
@@ -111,7 +116,16 @@ const ProductDetails = () => {
             <p className="similar-product-description">{product.description}</p>
           </div>
         ))}
+      </div> */}
+      <div className="cards-section container">
+        {[1, 2, 3, 4, 5, 6, 7, 8].map((card) => (
+          <div key={card} className="card">
+            <img src={Sample1} alt={`Card ${card}`} />
+            <p>Grifo</p>
+          </div>
+        ))}
       </div>
+      <ContentSection></ContentSection>
       <Footer></Footer>
     </div>
   );

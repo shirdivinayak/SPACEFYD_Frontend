@@ -1,18 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import pic from "../../../Assets/Home/mainwhite.svg"; // Adjust the relative path as needed
 
 const HomeNavbar = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
   return (
     <nav
       className="navbar navbar-expand-lg"
       style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
         padding: "clamp(20px, 3vw, 36px) clamp(10px, 5vw, 100px)", // Adjusted min padding for small screens
-        backgroundColor: "transparent",
-        zIndex: 1000, // Ensures the navbar stays above other elements
+        background: "transparent",
+        position: "absolute", // Ensures navbar stays on top
+        width: "100%", // Full width
+        top: 0, // Stick to the top
+        left: 0,
+        zIndex: 1000,
       }}
     >
       <div className="container-fluid">
@@ -21,8 +22,8 @@ const HomeNavbar = () => {
           <img
             src={pic}
             alt="Logo"
-            width="191"
-            height="48"
+            width={clamp(100, 191)} // Responsive width, smaller min for small screens
+            height={clamp(25, 48)} // Responsive height
             className="d-inline-block me-2"
             style={{ maxWidth: "100%" }}
           />
@@ -42,6 +43,7 @@ const HomeNavbar = () => {
             padding: "clamp(0px, 1vw, 4px)", // Minimal padding on small screens
             marginLeft: "auto", // Push to right on small screens
           }}
+          onClick={() => setIsExpanded(!isExpanded)}
         >
           <span className="navbar-toggler-icon" />
         </button>
@@ -59,7 +61,7 @@ const HomeNavbar = () => {
                     className="nav-link"
                     href="#"
                     style={{
-                      color: "#fff",
+                      color: "white",
                       fontFamily: "Kollektif, sans-serif",
                       fontWeight: 400,
                       fontSize: "clamp(16px, 2vw, 20px)",
@@ -81,8 +83,8 @@ const HomeNavbar = () => {
               className="btn w-40"
               style={{
                 color: "#4C6559",
-                border: "1px solid white",
-                background: "#4C6559",
+                border: "1px solid #4C6559",
+                background: "white",
                 fontFamily: "Kollektif, sans-serif",
                 fontWeight: 400,
                 fontSize: "clamp(16px, 2vw, 20px)",
@@ -99,9 +101,9 @@ const HomeNavbar = () => {
         <button
           className="btn d-none d-lg-block"
           style={{
-            color: "#4C6559",
-            border: "1px solid #fff",
-            background: "#fff",
+            color: "white",
+            border: "1px solid #4C6559",
+            background: "#4C6559",
             fontFamily: "Kollektif, sans-serif",
             fontWeight: 400,
             fontSize: "clamp(16px, 2vw, 20px)",
@@ -114,6 +116,11 @@ const HomeNavbar = () => {
       </div>
     </nav>
   );
+};
+
+// Helper function to simulate clamp behavior for numbers
+const clamp = (min, max) => {
+  return Math.min(Math.max(min, window.innerWidth * 0.1), max);
 };
 
 export default HomeNavbar;

@@ -1,9 +1,21 @@
+.services-container {
+  margin-top: 0 !important; /* Ensures no unwanted margin */
+  padding-top: 0; /* Ensures no padding issue */
+}
+
+.service-title,
+.service-description {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
     .products-menu {
       display: flex;
       justify-content: center;
       overflow-x: auto;
-      overflow-y: hidden;
+      /* overflow-y: hidden; */
       padding-top: 20px;
+      padding-left: 10px;
       white-space: nowrap;
       gap: 0px;
       padding-left: 10px; /* Add padding to avoid cutoff */
@@ -15,18 +27,18 @@
       
   }
 
-  .products-menu::-webkit-scrollbar {
-    height: 8px; /* Adjust scrollbar height */
-  }
+  /* .products-menu::-webkit-scrollbar {
+    height: 8px; 
+  } */
 
-  .products-menu::-webkit-scrollbar-thumb {
+  /* .products-menu::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: #4C6559;
   }
 
   .products-menu::-webkit-scrollbar-track {
     background: #f0f0f0;
-    border-radius: 10px;}
+    border-radius: 10px;} */
 
   .product-card{
     
@@ -37,6 +49,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 8px;
+    width: 150px;
     /* padding: 10px; */
     /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
     
@@ -100,8 +113,8 @@ overflow: hidden;
   }
 
   .types-menu::-webkit-scrollbar {
-    height: 6px; /* Set the scrollbar height */
-  }
+    height: 6px; 
+  } */
 
   .types-menu::-webkit-scrollbar-thumb {
     background-color: #4C6559; /* Scrollbar color */
@@ -110,7 +123,7 @@ overflow: hidden;
 
   .types-menu::-webkit-scrollbar-track {
     background: #f0f0f0; /* Track color */
-    border-radius: 10px;
+    border-radius: 10px; 
   }
 
   .type-item {
@@ -220,7 +233,7 @@ overflow: hidden;
   }
 
   /* Custom scrollbar styling for WebKit browsers */
-  .similar-product-list::-webkit-scrollbar {
+  /* .similar-product-list::-webkit-scrollbar {
     height: 8px;
   }
 
@@ -231,7 +244,7 @@ overflow: hidden;
 
   .similar-product-list::-webkit-scrollbar-track {
     background: #f0f0f0;
-  }
+  } */
 
   .similar-product-card {
     min-width: 200px; /* Ensures cards don't shrink too much */
@@ -265,3 +278,35 @@ overflow: hidden;
     font-size: 14px;
     color: #666;
   }
+@media (max-width:768px){
+  .products-menu {
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: auto;
+    /* overflow-y: hidden; */
+    padding-top: 20px;
+    padding-left: 10px;
+    white-space: nowrap;
+    gap: 0px;
+    padding-left: 10px; /* Add padding to avoid cutoff */
+    box-sizing: border-box;
+    scroll-padding-left: 20px;
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #fff; /* For Firefox */
+    /* border: 1px solid red; */
+  }
+  .types-menu {
+    color: white;
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    white-space: nowrap;
+    gap: 0px;
+    scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch; 
+      padding-left: 10px; /* Add padding to avoid cutoff */
+      box-sizing: border-box;
+  }
+}
