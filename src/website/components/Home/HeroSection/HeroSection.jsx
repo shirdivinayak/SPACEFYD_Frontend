@@ -2,42 +2,62 @@ import React from "react";
 import banner from "../../../Assets/Home/homebanner.png";
 import lamp from "../../../Assets/Home/lamp.png";
 import "./HeroSection.css";
+import icon1 from "../../../Assets/Home/icons/hero/industrial.png";
+import icon2 from "../../../Assets/Home/icons/hero/residential.png";
+import icon3 from "../../../Assets/Home/icons/hero/entertainment.png";
+import icon4 from "../../../Assets/Home/icons/hero/retail.png";
+import icon5 from "../../../Assets/Home/icons/hero/education.png";
+import icon6 from "../../../Assets/Home/icons/hero/hospitality.png";
+import icon7 from "../../../Assets/Home/icons/hero/commercial.png";
+import lampicon1 from "../../../Assets/Home/icons/lamp/smart.png";
+import lampicon2 from "../../../Assets/Home/icons/lamp/tailored.png";
+import lampicon3 from "../../../Assets/Home/icons/lamp/innovative.png";
+import lampicon4 from "../../../Assets/Home/icons/lamp/future.png";
 
 // Button data for the Hero Section
 const topButtons = [
-  { icon: "🚀", text: "Explore Designs" },
-  { icon: "💡", text: "Smart Solutions" },
-  { icon: "🛠️", text: "Entertainment and Leisure" },
+  { icon: icon1, text: "Industrial Spaces" },
+  { icon: icon2, text: "Residential" },
+  { icon: icon3, text: "Entertainment and Leisure" },
 ];
 
 const leftButtons = [
-  { icon: "🌟", text: "Our Portfolio" },
-  { icon: "💡", text: "Testimonials" },
+  { icon: icon4, text: "Retail" },
+  { icon: icon5, text: "Education" },
 ];
 
 const rightButtons = [
-  { icon: "🛠️", text: "Our Process" },
-  { icon: "🚀", text: "Contact Us" },
+  { icon: icon6, text: "Commercial" },
+  { icon: icon7, text: "Hospitality" },
 ];
 
 // Combined buttons for small screens (5 buttons for 2x2x1 layout)
-const allHeroButtons = [
-  ...topButtons,
-  ...leftButtons,
-].slice(0, 5);
+const allHeroButtons = [...topButtons, ...leftButtons, ...rightButtons].slice(
+  0,
+  7
+);
 
 // Button data for the Lamp Section
 const lampButtons = [
-  { icon: "🏠", text: "Smart Space Solutions" },
-  { icon: "🏢", text: "Tailored Design Excellence" },
-  { icon: "🛋️", text: "Innovative Technology Integration" },
-  { icon: "🌿", text: "Future-Ready Designs" },
+  { icon: lampicon1, text: "Smart Space Solutions" },
+  { icon: lampicon2, text: "Tailored Design Excellence" },
+  { icon: lampicon3, text: "Innovative Technology Integration" },
+  { icon: lampicon4, text: "Future-Ready Designs" },
 ];
 
 // Reusable Button Component
 const FloatingButton = ({ icon, text }) => (
   <button className="floating-btn">
-    <span style={{ marginRight: "10px" }}>{icon}</span>
+    <img
+      src={icon}
+      alt={text}
+      style={{
+        width: "32px",
+        height: "32px",
+        marginRight: "10px",
+        verticalAlign: "middle",
+      }}
+    />
     {text}
   </button>
 );
@@ -110,7 +130,7 @@ const HeroSection = () => {
                 display: "flex",
                 justifyContent: "center",
                 gap: "100px",
-                marginBottom: "20px",
+                marginBottom: "35px",
               }}
             >
               {topButtons.map((button, index) => (
@@ -133,7 +153,11 @@ const HeroSection = () => {
             >
               <div
                 className="left-buttons"
-                style={{ display: "flex", flexDirection: "column", gap: "80px" }}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "80px",
+                }}
               >
                 {leftButtons.map((button, index) => (
                   <FloatingButton
@@ -195,10 +219,12 @@ const HeroSection = () => {
                       color: "#FCF9F5",
                       textAlign: "center",
                       margin: "0 0 24px 0",
+                      paddingRight: "20px",
+                      paddingLeft: "20px",
                     }}
                   >
-                    Transform your space with smart design and technology for a
-                    seamless, stylish, and future-ready experience.
+                    Transform your space with smart design and technology for{" "}
+                    <br /> a seamless, stylish, and future-ready experience.
                   </p>
 
                   <button className="proper-btn" style={{ marginTop: "30px" }}>
@@ -209,7 +235,11 @@ const HeroSection = () => {
 
               <div
                 className="right-buttons"
-                style={{ display: "flex", flexDirection: "column", gap: "80px" }}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "80px",
+                }}
               >
                 {rightButtons.map((button, index) => (
                   <FloatingButton
@@ -321,7 +351,8 @@ const HeroSection = () => {
           padding: "50px",
           borderRadius: "24px",
           width: "100%",
-          height: "672px",
+          height: "auto",
+          aspectRatio: "16/9",
           position: "relative",
           margin: "0 auto",
           maxWidth: "100%",
@@ -373,7 +404,7 @@ const HeroSection = () => {
               fontSize: "16px",
               lineHeight: "26.8px",
               letterSpacing: "0px",
-              color: "#9A715B",
+              color: "#646464",
               marginBottom: "30px",
             }}
           >
@@ -388,12 +419,14 @@ const HeroSection = () => {
               height: "44px",
               borderRadius: "4px",
               padding: "12px 16px",
-              fontFamily: "Poppins, sans-serif",
+              fontFamily: "Raleway, sans-serif",
               fontSize: "16px",
               fontWeight: 500,
               color: "white",
-              backgroundColor: "#4C6559",
-              border: "2px solid #4C6559",
+              background: "#4C6559",
+              whiteSpace: "nowrap",
+              minWidth: "100px",
+              border: "1px solid #4C6559",
               cursor: "pointer",
               marginBottom: "84px",
             }}
@@ -443,7 +476,16 @@ const HeroSection = () => {
                 transition: "all 0.3s ease",
               }}
             >
-              <span style={{ marginRight: "10px" }}>{button.icon}</span>
+              <img
+                src={button.icon}
+                alt={button.text}
+                style={{
+                  width: "32px",
+                  height: "32px",
+                  marginRight: "10px",
+                  verticalAlign: "middle",
+                }}
+              />
               {button.text}
             </button>
           ))}

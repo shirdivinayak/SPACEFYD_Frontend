@@ -3,6 +3,7 @@
   overflow: hidden;
   box-sizing: border-box;
   position: relative;
+  margin-bottom: 100px;
 }
 
 .products-home-sections-wrapper {
@@ -49,7 +50,7 @@
 .products-home-content-row {
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 50px; /* Increased from 20px */
 }
 
 .products-home-content-column {
@@ -59,7 +60,7 @@
 
 .products-home-subheading {
   font-family: "DM Sans", sans-serif;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 28px;
   line-height: 32px;
   color: #ffffff;
@@ -95,7 +96,7 @@
   }
 
   .products-home-content-row {
-    gap: 15px !important; /* Reduce gap for medium screens */
+    gap: 30px !important; /* Increased from 15px */
   }
 
   .products-home-content-column {
@@ -116,86 +117,106 @@
 
 @media (max-width: 767px) {
   .products-home-container {
-    height: auto !important; /* Adjust height for smaller screens */
+    height: auto !important; /* Allow content to define height */
   }
 
   .products-home-sections-wrapper {
-    flex-direction: column !important; /* Stack sections vertically on smaller screens */
+    flex-direction: column !important; /* Stack sections vertically */
   }
 
   .products-home-left-section,
   .products-home-right-section {
-    width: 100% !important; /* Full width for smaller screens */
-    height: 50vh !important; /* Each section takes 50% of the viewport height */
-  }
-
-  .products-home-left-section {
-    padding: 0 30px !important; /* Reduce padding for smaller screens */
-    order: 2; /* Move left section to the bottom */
+    width: 100% !important; /* Full width */
+    height: auto !important; /* Allow content to define height */
+    position: relative; /* Maintain layout positioning */
   }
 
   .products-home-right-section {
-    order: 1; /* Move right section to the top */
+    order: 1 !important; /* Ensure right section is on top */
+    min-height: 300px !important; /* Ensure it remains visible */
+    z-index: 1; /* Keep it above left section */
+  }
+
+  .products-home-left-section {
+    order: 2 !important; /* Left section appears below */
+    padding: 20px !important;
+    background-color: rgba(0, 0, 0, 0.6); /* Optional: Add contrast if needed */
+    z-index: 2;
+  }
+
+  /* Ensure the background remains visible */
+  .products-home-right-section::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: inherit; /* Keep the background image */
+    top: 0;
+    left: 0;
+    opacity: 1; /* Adjust visibility */
   }
 
   .products-home-left-content {
     gap: 30px !important; /* Reduce gap for smaller screens */
-    text-align: center; /* Center text content for smaller screens */
+    text-align: center; /* Center text content */
   }
 
   .products-home-left-heading {
-    font-size: 24px !important; /* Smaller heading for smaller screens */
-    line-height: 30px !important;
+    font-size: 28px !important; /* Smaller heading for smaller screens */
+    line-height: 34px !important;
     margin-bottom: 15px !important;
   }
 
   .products-home-content-row {
-    flex-direction: column !important; /* Stack content vertically for smaller screens */
-    gap: 10px !important; /* Reduce gap for smaller screens */
-    align-items: center; /* Center content horizontally for smaller screens */
+    flex-direction: row !important; /* Keep row layout */
+    gap: 30px !important; /* Increased from 15px */
   }
 
   .products-home-content-column {
-    max-width: 100% !important; /* Full width for smaller screens */
+    max-width: 250px !important; /* Keep column width */
   }
 
   .products-home-subheading {
-    font-size: 18px !important; /* Smaller subheading for smaller screens */
-    line-height: 22px !important;
-    margin-bottom: 8px !important;
+    font-size: 20px !important; /* Smaller subheading */
+    line-height: 24px !important;
+    margin-bottom: 10px !important;
   }
 
   .products-home-content {
-    font-size: 12px !important; /* Smaller content text for smaller screens */
-    line-height: 20px !important;
+    font-size: 14px !important; /* Smaller text */
+    line-height: 22px !important;
   }
 }
 
 @media (max-width: 576px) {
   .products-home-container {
-    height: auto !important; /* Adjust height for extra small screens */
+    height: auto !important; /* Adjust height */
   }
 
   .products-home-left-section,
   .products-home-right-section {
-    height: 50vh !important; /* Each section takes 50% of the viewport height */
+    height: auto !important; /* Sections take height of content */
   }
 
   .products-home-left-section {
-    padding: 0 20px !important; /* Reduce padding for extra small screens */
+    padding: 0 20px !important; /* Reduce padding */
+  }
+
+  .products-home-right-section {
+    min-height: 250px !important; /* Ensure visibility */
   }
 
   .products-home-left-content {
-    gap: 20px !important; /* Reduce gap for extra small screens */
+    gap: 20px !important; /* Reduce gap */
   }
 
   .products-home-left-heading {
-    font-size: 20px !important; /* Smaller heading for extra small screens */
-    line-height: 26px !important;
+    font-size: 24px !important; /* Smaller heading */
+    line-height: 28px !important;
     margin-bottom: 10px !important;
   }
 
   .products-home-content-column {
-    max-width: 100% !important; /* Full width for extra small screens */
+    max-width: 100% !important; /* Full width */
   }
 }

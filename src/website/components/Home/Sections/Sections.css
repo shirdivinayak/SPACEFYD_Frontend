@@ -1,3 +1,4 @@
+/* Background Section */
 .background-section {
   background-size: cover;
   background-position: center;
@@ -5,169 +6,247 @@
   padding: 40px 0;
   position: relative;
   z-index: 1;
-  min-height: auto;
-  height: auto;
 }
 
+/* Text Center */
+.text-center {
+  text-align: center;
+}
+
+.section-subtitle {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  color: #9a715b;
+}
+
+.section-title {
+  font-family: "Kollektif", sans-serif;
+  font-weight: 400;
+  font-size: 48px;
+  color: #4c6559;
+}
+
+/* Section Wrapper */
 .sections-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-image: url("../../../Assets/Home/Sections/servicebackground.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  border-radius: 24px;
+  padding: 24px;
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
+/* Section Container */
 .section-container {
-  /* Margin-bottom controlled inline */
+  width: 100%;
+  margin-bottom: 100px;
 }
 
+/* Section Heading */
+.section-heading {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 500;
+  font-size: 36px;
+  color: #4c6559;
+  text-align: left;
+  margin-bottom: 28px;
+}
+
+/* Image Styling */
 .img-fluid {
   border-radius: 12px;
   object-fit: cover;
+  width: 100%;
+  height: 100%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Column 2 Image Wrapper (Fix for small screens) */
+.image-wrapper {
+  width: 100%;
+  min-height: 400px; /* Ensures image does not shrink */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Overlay for text and button */
+.position-relative {
+  position: relative;
+}
+
+.image-overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.image-text {
+  font-family: "Kollektif";
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 20.62px;
+  letter-spacing: 0%;
+  color: #ffffff;
+  margin: 0;
+}
+
+.image-button {
+  background: none;
+  border: 1px solid #ffffff; /* Outline style */
+  border-radius: 50%;
+  width: 25px; /* Adjusted to fit icon */
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+}
+
+.button-icon {
+  position: relative;
+  top: 3.17px;
+  left: 3.17px;
 }
 
 /* Responsive Styles */
 @media (max-width: 991px) {
   .background-section {
-    padding: 30px 20px !important; /* Reduced padding with side padding */
-    background-image: url("../../../Assets/Home/Sections/servicebackground.png") !important;
-    background-size: cover !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
+    padding: 30px 20px;
   }
 
-  .text-center h6 {
-    width: 100% !important;
-    height: auto !important;
-    font-size: 20px !important;
-    line-height: 30px !important;
-    margin-bottom: 10px !important;
-  }
-
-  .text-center h1 {
-    width: 100% !important;
-    height: auto !important;
-    font-size: 32px !important;
-    line-height: 40px !important;
+  .section-title {
+    font-size: 32px;
   }
 
   .sections-wrapper {
-    width: 100% !important;
-    padding: 20px !important;
-    padding-bottom: 40px !important;
-    background-image: none !important;
-    border-radius: 16px !important;
+    padding: 20px;
+    border-radius: 16px;
   }
 
   .section-container {
-    height: auto !important; /* Flexible height */
-    margin-bottom: 40px !important; /* Reduced gap */
+    margin-bottom: 40px;
   }
 
-  .section-container h2 {
-    height: auto !important;
-    font-size: 28px !important;
-    line-height: 36px !important;
-    margin-bottom: 15px !important;
+  .section-heading {
+    font-size: 28px;
+    margin-bottom: 15px;
   }
 
-  .section-container .row {
-    height: auto !important; /* Flexible height */
-    min-height: 300px; /* Minimum height to avoid collapse */
+  .image-wrapper {
+    min-height: 300px; /* Prevents shrinking */
   }
 
-  .section-container .col-8,
-  .section-container .col-4 {
-    height: auto !important;
+  .image-text {
+    font-size: 20px;
+    line-height: 18px;
   }
 
-  .section-container .row .row {
-    height: auto !important; /* Remove fixed 50% height */
-    min-height: 140px; /* Minimum to ensure visibility */
+  .image-overlay {
+    bottom: 15px;
+    left: 15px;
+    gap: 8px;
   }
 
-  .section-container .col-4 > div {
-    height: auto !important; /* Flexible height */
-    min-height: 300px; /* Match row min-height */
+  .image-button {
+    width: 22px;
+    height: 22px;
   }
 }
 
 @media (max-width: 767px) {
   .background-section {
-    padding: 20px 15px !important;
+    padding: 20px 15px;
   }
 
-  .text-center h6 {
-    font-size: 18px !important;
-    line-height: 26px !important;
-  }
-
-  .text-center h1 {
-    font-size: 24px !important;
-    line-height: 32px !important;
+  .section-title {
+    font-size: 24px;
   }
 
   .sections-wrapper {
-    padding: 15px !important;
-    padding-bottom: 30px !important;
+    padding: 15px;
   }
 
   .section-container {
-    margin-bottom: 30px !important;
+    margin-bottom: 30px;
   }
 
-  .section-container h2 {
-    font-size: 24px !important;
-    line-height: 30px !important;
-    margin-bottom: 10px !important;
+  .section-heading {
+    font-size: 24px;
+    margin-bottom: 10px;
   }
 
-  .section-container .row .row {
-    min-height: 120px !important;
+  .image-wrapper {
+    min-height: 260px; /* Adjusted to maintain layout */
   }
 
-  .section-container .col-4 > div {
-    min-height: 260px !important;
+  .image-text {
+    font-size: 18px;
+    line-height: 16px;
+  }
+
+  .image-overlay {
+    bottom: 10px;
+    left: 10px;
+    gap: 6px;
+  }
+
+  .image-button {
+    width: 20px;
+    height: 20px;
   }
 }
 
 @media (max-width: 576px) {
   .background-section {
-    padding: 15px 10px !important;
+    padding: 15px 10px;
   }
 
-  .text-center h6 {
-    font-size: 16px !important;
-    line-height: 24px !important;
-  }
-
-  .text-center h1 {
-    font-size: 20px !important;
-    line-height: 28px !important;
+  .section-title {
+    font-size: 20px;
   }
 
   .sections-wrapper {
-    padding: 10px !important;
-    padding-bottom: 20px !important;
+    padding: 10px;
   }
 
   .section-container {
-    margin-bottom: 20px !important;
+    margin-bottom: 20px;
   }
 
-  .section-container h2 {
-    font-size: 20px !important;
-    line-height: 26px !important;
-    margin-bottom: 8px !important;
+  .section-heading {
+    font-size: 20px;
+    margin-bottom: 8px;
   }
 
-  .section-container .row .row {
-    min-height: 100px !important;
+  .image-wrapper {
+    min-height: 220px; /* Ensures the image does not shrink */
   }
 
-  .section-container .col-4 > div {
-    min-height: 220px !important;
+  .image-text {
+    font-size: 16px;
+    line-height: 14px;
+  }
+
+  .image-overlay {
+    bottom: 8px;
+    left: 8px;
+    gap: 5px;
+  }
+
+  .image-button {
+    width: 18px;
+    height: 18px;
   }
 }

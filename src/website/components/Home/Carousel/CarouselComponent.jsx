@@ -4,7 +4,6 @@ import "./CarouselComponent.css"; // Import the CSS file
 import image1 from "../../../Assets/Home/image1.png";
 import background from "../../../Assets/Home/background.png";
 
-
 const CarouselComponent = () => {
   const [index, setIndex] = useState(0); // State to track active carousel item
 
@@ -23,20 +22,17 @@ const CarouselComponent = () => {
     {
       image: image1,
       heading: "Elegant Kitchen Design",
-      subheading:
-        "A functional and stylish kitchen design that enhances your cooking experience.",
+      subheading: "Ruwi",
     },
     {
       image: image1,
       heading: "Cozy Bedroom Design",
-      subheading:
-        "A warm and inviting bedroom design that ensures a good night's sleep.",
+      subheading: "Ruwi",
     },
     {
       image: image1,
       heading: "Minimalist Office Design",
-      subheading:
-        "A clean and organized workspace that boosts productivity and creativity.",
+      subheading: "Ruwi",
     },
   ];
 
@@ -66,6 +62,7 @@ const CarouselComponent = () => {
         {/* Left Side: Headings */}
         <div>
           <h2
+            className="carousel-sub-heading"
             style={{
               fontFamily: "Kollektif, sans-serif",
               fontWeight: 400,
@@ -79,6 +76,7 @@ const CarouselComponent = () => {
             Our Trending Projects
           </h2>
           <h1
+            className="carousel-main-heading"
             style={{
               fontFamily: "Kollektif, sans-serif",
               fontWeight: 400,
@@ -102,7 +100,6 @@ const CarouselComponent = () => {
             fontSize: "16px",
             fontWeight: 500,
             padding: "8px",
-            border: "2px solid #000",
             color: "white",
             background: "#4C6559",
             whiteSpace: "nowrap",
@@ -151,6 +148,7 @@ const CarouselComponent = () => {
 
                 {/* Right: Content */}
                 <div
+                  className="carousel-content"
                   style={{
                     flex: 1,
                     padding: "40px",
@@ -164,11 +162,12 @@ const CarouselComponent = () => {
                   <div>
                     <h3
                       style={{
-                        fontFamily: "Kollektif, sans-serif",
+                        fontFamily: "Kollektif",
                         fontWeight: 400,
-                        fontSize: "32px",
-                        lineHeight: "39px",
-                        letterSpacing: "-0.9px",
+                        fontSize: "50.26px",
+                        lineHeight: "71.16px",
+                        letterSpacing: "-2.35px",
+                        verticalAlign: "middle",
                         color: "#000",
                         marginBottom: "20px",
                       }}
@@ -177,9 +176,12 @@ const CarouselComponent = () => {
                     </h3>
                     <p
                       style={{
-                        fontFamily: "Raleway, sans-serif",
-                        fontSize: "18px",
-                        lineHeight: "27px",
+                        fontFamily: "Inter",
+                        fontWeight: 500,
+                        fontSize: "24px",
+                        lineHeight: "20px",
+                        letterSpacing: "0%",
+                        verticalAlign: "middle",
                         color: "#505F79",
                         marginBottom: "30px",
                       }}
@@ -196,13 +198,16 @@ const CarouselComponent = () => {
 
                   {/* Bottom: Page Number and Navigation Icons */}
                   <div
+                    className="carousel-navigation"
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
+                      marginTop: "auto", // Push to the bottom
                     }}
                   >
                     <p
+                      className="carousel-page-number"
                       style={{
                         fontFamily: "Kollektif, sans-serif",
                         fontSize: "18px",
@@ -213,7 +218,7 @@ const CarouselComponent = () => {
                       {`${idx + 1}/${carouselData.length}`}
                     </p>
 
-                    <div>
+                    <div className="carousel-navigation-buttons">
                       <Button
                         variant="outline-dark"
                         onClick={() =>
@@ -228,9 +233,25 @@ const CarouselComponent = () => {
                           width: "40px",
                           height: "40px",
                           padding: 0,
+                          border: "1px solid #000",
+                          backgroundColor: "transparent",
                         }}
                       >
-                        ←
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M15 18L9 12L15 6"
+                            stroke="#000"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
                       </Button>
                       <Button
                         variant="outline-dark"
@@ -242,9 +263,25 @@ const CarouselComponent = () => {
                           width: "40px",
                           height: "40px",
                           padding: 0,
+                          border: "1px solid #000",
+                          backgroundColor: "transparent",
                         }}
                       >
-                        →
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M9 18L15 12L9 6"
+                            stroke="#000"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
                       </Button>
                     </div>
                   </div>

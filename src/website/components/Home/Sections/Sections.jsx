@@ -1,5 +1,5 @@
 import React from "react";
-import "./Sections.css"; // Custom CSS file
+import "./Sections.css"; // Importing CSS file
 import sectionbackground from "../../../Assets/Home/Sections/servicebackground.png";
 
 const Sections = ({ backgroundImage, sections }) => {
@@ -8,136 +8,120 @@ const Sections = ({ backgroundImage, sections }) => {
       className="background-section"
       style={{
         backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        padding: "40px 0", // Padding top and bottom
-        position: "relative",
-        zIndex: 1,
-        minHeight: "auto", // Fit content
-        height: "auto", // Grow with content
       }}
     >
       {/* Top Headings */}
       <div className="text-center mb-5">
-        <h6
-          style={{
-            width: "659px",
-            height: "65px",
-            fontFamily: "DM Sans",
-            fontWeight: "400",
-            fontSize: "24px",
-            lineHeight: "64.02px",
-            letterSpacing: "0%",
-            color: "#9A715B",
-            margin: "0 auto",
-          }}
-        >
-          Our Services
-        </h6>
-
-        <h1
-          style={{
-            width: "659px",
-            height: "116px",
-            fontFamily: "Kollektif",
-            fontWeight: "400",
-            fontSize: "48px",
-            lineHeight: "58px",
-            letterSpacing: "0%",
-            color: "#4C6559",
-            margin: "0 auto",
-          }}
-        >
+        <h6 className="section-subtitle">Our Services</h6>
+        <h1 className="section-title">
           Tailored Solutions for Every Interior Need
         </h1>
       </div>
 
       {/* Sections Wrapper */}
-      <div
-        className="sections-wrapper"
-        style={{
-          backgroundImage: `url(${sectionbackground})`, // Default for large screens
-          borderRadius: "24px",
-          padding: "24px",
-          width: "1112.39px",
-          margin: "0 auto",
-          paddingBottom: "64px", // Space for content
-        }}
-      >
+      <div className="sections-wrapper">
         {sections.map((section, index) => (
-          <div
-            key={index}
-            className="section-container"
-            style={{
-              width: "100%",
-              marginBottom: "100px", // Gap between sections
-            }}
-          >
+          <div key={index} className="section-container">
             {/* Section Heading */}
-            <h2
-              style={{
-                width: "100%",
-                height: "53px",
-                fontFamily: "DM Sans",
-                fontWeight: "500",
-                fontSize: "36px",
-                lineHeight: "53px",
-                letterSpacing: "0%",
-                color: "#4C6559",
-                textAlign: "left",
-                marginBottom: "28px",
-              }}
-            >
-              {section.heading}
-            </h2>
+            <h2 className="section-heading">{section.heading}</h2>
 
             {/* Section Content */}
             <div className="row">
-              {/* Column 1 (col-8) */}
+              {/* Column 1 (8-column layout) */}
               <div className="col-8 d-flex flex-column">
                 {/* Row 1 */}
                 <div className="row flex-grow-1">
-                  <div className="col-12 h-100">
+                  <div className="col-12 position-relative">
                     <img
                       src={section.col8.row1.image}
                       alt={section.col8.row1.alt}
-                      className="img-fluid h-100 w-100"
-                      style={{
-                        borderRadius: "12px",
-                        objectFit: "cover",
-                      }}
+                      className="img-fluid"
                     />
+                    <div className="image-overlay">
+                      <p className="image-text">{section.col8.row1.text}</p>
+                      <button className="image-button">
+                        <svg
+                          className="button-icon"
+                          width="19.038166046142578"
+                          height="19.038166046142578"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M5 12H19M19 12L12 5M19 12L12 19"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </button>
+                    </div>
                   </div>
                 </div>
                 {/* Row 2 */}
                 <div className="row flex-grow-1 mt-3">
-                  <div className="col-12 h-100">
+                  <div className="col-12 position-relative">
                     <img
                       src={section.col8.row2.image}
                       alt={section.col8.row2.alt}
-                      className="img-fluid h-100 w-100"
-                      style={{
-                        borderRadius: "12px",
-                        objectFit: "cover",
-                      }}
+                      className="img-fluid"
                     />
+                    <div className="image-overlay">
+                      <p className="image-text">{section.col8.row2.text}</p>
+                      <button className="image-button">
+                        <svg
+                          className="button-icon"
+                          width="19.038166046142578"
+                          height="19.038166046142578"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M5 12H19M19 12L12 5M19 12L12 19"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Column 2 (col-4) */}
-              <div className="col-4">
-                <div className="h-100">
+              {/* Column 2 (4-column layout) */}
+              <div className="col-4 d-flex">
+                <div className="image-wrapper position-relative">
                   <img
                     src={section.col4.image}
                     alt={section.col4.alt}
-                    className="img-fluid h-100 w-100"
-                    style={{
-                      borderRadius: "12px",
-                      objectFit: "cover",
-                    }}
+                    className="img-fluid"
                   />
+                  <div className="image-overlay">
+                    <p className="image-text">{section.col4.text}</p>
+                    <button className="image-button">
+                      <svg
+                        className="button-icon"
+                        width="19.038166046142578"
+                        height="19.038166046142578"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M5 12H19M19 12L12 5M19 12L12 19"
+                          stroke="white"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

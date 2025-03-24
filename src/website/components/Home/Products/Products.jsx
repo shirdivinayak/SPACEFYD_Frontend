@@ -1,6 +1,6 @@
 import React from "react";
 import "./Products.css";
-import background1 from "../../../Assets/Home/leftbackground.png";
+import background1 from "../../../Assets/Home/leftbackground1.png";
 import background2 from "../../../Assets/Home/rightbackground.jpg";
 
 const Products = () => {
@@ -19,7 +19,8 @@ const Products = () => {
         >
           <div className="products-home-left-content">
             <h1 className="products-home-left-heading">
-              Elevate Entertainment with Home Theatre Design
+              Elevate <br />
+              Entertainment with Home Theatre Design
             </h1>
             <div className="products-home-content-row">
               <div className="products-home-content-column">
