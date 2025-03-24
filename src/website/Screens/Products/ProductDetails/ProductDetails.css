@@ -71,7 +71,7 @@
 .product-title {
   font-size: 2rem;
   margin: 10px 0;
-  color: #4C6559;
+  background-color:white;
 }
 
 .product-description {
@@ -83,6 +83,15 @@
 .product-title,
 .product-description {
   color: #333 !important;
+}
+
+.product-brand{
+font-size: 24px;
+background: linear-gradient(to right,#97935A,#CE893E,#4DA180);
+background-size: 20%;
+background-clip: text;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
 }
 
 /* Similar Products Section */
@@ -113,10 +122,10 @@
   width: 200px;
   padding: 10px;
   background-color: white;
+  transition: transform 0.2s;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: transform 0.2s;
 }
 
 .similar-product-card:hover {
@@ -141,7 +150,49 @@
   color: #666;
 }
 
+.cards-section {
+  clear: both;
+  display: flex;
+  flex-wrap: wrap; /* Default: No wrapping on large screens */
+  gap: 30px; /* Consistent gap across all sizes */
+  margin-top: 50px;
+  margin-bottom: 80px;
+  justify-content: center; /* Center cards with gaps */
+}
+
+.card {
+  width: 288px;
+  height: 328px;
+  background-color: white;
+  border-radius: 0px;
+  overflow: hidden;
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card p {
+  font-family: "Kollektif", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  color: black;
+  text-align: center;
+  margin-top: 20px;
+}
+
+
 /* Responsive Styles */
+
+@media (max-width:1027px){
+.services-container{
+  margin-top: 50px;
+}
+}
+
 @media (max-width: 768px) {
   /* Stack images and text vertically */
   .product-images {
@@ -201,7 +252,31 @@
   .similar-product-list{
   margin-left: 5%;
   }
+
+  .cards-section {
+    flex-wrap: wrap ; /* Allow wrapping */
+    justify-content: space-between; /* Distribute items evenly */
+  }
+
+  .card {
+    width: 156px; /* Smaller card width */
+    height: 178px; /* Smaller card height */
+  }
+
+  .card img {
+    height: 100px; /* Adjust image height */
+  }
+
+  .card p {
+    font-size: 14px; /* Smaller text */
+    margin-top: 10px;
+  }
+
 }
 
 
-
+@media (max-width: 350px) {
+  .card {
+    width: calc(50% - 15px);
+  }
+}

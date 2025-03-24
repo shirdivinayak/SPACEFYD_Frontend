@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HeroImage from "../../../Assets/AboutUs/hero.svg";
-import HomeNavbar from "../../../components/Home/Navbar/HomeNavbar";
+import HomeNavbar from "../../../components/Home/NavbarDark/DarkNavbar";
 import Footer from "../../../components/Home/Footer/Footer";
 import "./Products.css";
 import { useNavigate } from "react-router-dom";
@@ -155,7 +155,11 @@ const Products = () => {
       {/* Hero Section with Background */}
       <div
         className="services-container"
-        style={{ backgroundImage: `url(${HeroImage})`, color: "white" }}
+        style={{
+          backgroundImage: `url(${HeroImage})`,
+
+          color: "white",
+        }}
       >
         <div className="container px-4">
           <h1 className="service-title">Our Products</h1>
@@ -167,7 +171,7 @@ const Products = () => {
       </div>
 
       {/* Horizontal Menu for Categories */}
-      <div className="products-menu">
+      <div className="products-menu ">
         {categories.map((category) => (
           <div
             key={category}
@@ -220,7 +224,7 @@ const Products = () => {
         )}
       </div>
 
-      <div className="similar-product-list">
+      {/* <div className="similar-product-list">
         {ProductList.map((product, index) => (
           <div
             className="similar-product-card"
@@ -236,6 +240,15 @@ const Products = () => {
             <p className="similar-product-description">{product.description}</p>
           </div>
         ))}
+      </div> */}
+
+      <div className="cards-section container">
+        {[...ProductList, ...ProductList, ...ProductList].map((card, index) => (
+          <div key={index} className="card">
+            <img src={card.image} alt={`Card ${card.title}`} />
+            <p>{card.title}</p>
+          </div>
+        ))}
       </div>
 
       <div className=" first-line container justify-content-center">
@@ -243,7 +256,7 @@ const Products = () => {
         <Linebot />
       </div>
 
-      <div className=" container similar-products p-4 ">
+      <div className=" container similar-products  ">
         <h2>Similar Products</h2>
         <div>
           {" "}
@@ -251,7 +264,7 @@ const Products = () => {
         </div>
       </div>
 
-      <div className="similar-product-list">
+      {/* <div className="similar-product-list">
         {ProductList.map((product, index) => (
           <div
             className="similar-product-card"
@@ -265,6 +278,15 @@ const Products = () => {
             />
             <h3 className="similar-product-title">{product.title}</h3>
             <p className="similar-product-description">{product.description}</p>
+          </div>
+        ))}
+      </div> */}
+
+      <div className="cards-section container">
+        {[1, 2, 3, 4, 5, 6, 7, 8].map((card) => (
+          <div key={card} className="card">
+            <img src={Sample1} alt={`Card ${card}`} />
+            <p>Grifo</p>
           </div>
         ))}
       </div>
