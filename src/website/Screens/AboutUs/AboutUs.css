@@ -76,6 +76,10 @@ body {
   align-items: center;
 }
 
+.heading-part {
+  /* margin-top: 10px; */
+}
+
 @media (max-width: 767px) {
   .about-us h2 {
     font-family: kolletkif;
@@ -128,7 +132,6 @@ body {
 
 @media (max-width: 600px) {
   .hero-section {
-    height: 440px !important;
     max-height: 440px !important;
     background-size: cover !important;
     background-position: center !important;

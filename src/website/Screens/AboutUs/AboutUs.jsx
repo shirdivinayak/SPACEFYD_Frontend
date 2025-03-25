@@ -74,9 +74,13 @@ const AboutUs = () => {
           className="d-flex flex-column col-lg-8 col-md-6 text-left text-md-left "
           style={{ flex: 1 }}
         >
-          <div className=" heading-part container px-4">
+          <div className=" heading-part container ">
             {window.innerWidth > 400 && (
-              <h2>
+              <h2
+                style={{
+                  marginTop: "50px !important",
+                }}
+              >
                 Innovative, Sustainable <br /> Interiors Tailored to Inspire.
               </h2>
             )}

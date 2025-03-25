@@ -276,6 +276,7 @@
   width: calc(25% - 15px); /* 4 cards per row */
   max-width: 280px; /* Prevents oversized cards */
   max-height: 328px;
+  border-radius: 12px !important;
 }
 
 @media (max-width: 1024px) {
@@ -319,6 +320,6 @@
 
 @media (max-width: 365px) {
   .card {
-    width: calc(50% - 10px); /* 2 cards per row */
+    width: calc(50% - 10px) !important; /* 2 cards per row */
   }
 }
