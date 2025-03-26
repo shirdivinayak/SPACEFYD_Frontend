@@ -35,9 +35,9 @@ const AddProject = () => {
       placeholderImage,
       placeholderImage,
       placeholderImage,
-      placeholderImage,
-      placeholderImage,
-      placeholderImage
+      // placeholderImage,
+      // placeholderImage,
+      // placeholderImage
     ]
   });
 

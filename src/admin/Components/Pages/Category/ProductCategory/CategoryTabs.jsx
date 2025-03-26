@@ -46,7 +46,7 @@ const CategoryTabs = () => {
       return;
     }
 
-    await addCategory({ name: categoryName });
+    await addCategory({ name: categoryName, type: 'product' });
     setCategoryName("");
     setTimeout(() => setMessage(""), 3000);
   };
@@ -63,8 +63,9 @@ const CategoryTabs = () => {
     }
 
     await addSubCategory({
-      category: selectedCategory,
+      category: selectedCategory._id,
       name: subCategoryName,
+      type:'product'
     });
     setSubCategoryName("");
     setSelectedCategory("");
@@ -162,7 +163,7 @@ const CategoryTabs = () => {
                           alignItems: "center",
                         }}
                       >
-                        {selectedCategory || "Select"}
+                        {selectedCategory.name || "Select"}
                       </Dropdown.Toggle>
                       <Dropdown.Menu
                        style={{ 
@@ -181,7 +182,7 @@ const CategoryTabs = () => {
                           filteredCategories.map((category) => (
                             <Dropdown.Item
                               key={category._id}
-                              onClick={() => setSelectedCategory(category.name)}
+                              onClick={() => setSelectedCategory(category)}
                             >
                               {category.name}
                             </Dropdown.Item>
@@ -210,7 +211,7 @@ const CategoryTabs = () => {
                       onChange={(e) => setSubCategoryName(e.target.value)}
                       onKeyDown={handleKeyDown}
                       style={{
-                        width: "100%",
+                        width: "150%",
                         fontSize: "14px",
                         fontWeight: 400,
                         color: "#757575",
@@ -226,13 +227,14 @@ const CategoryTabs = () => {
                     style={{
                       width: "auto",
                       height: "38px",
+                      marginLeft: "80px",
                       paddingLeft: "20px",
                       paddingRight: "20px",
                       marginTop: "30px",
                       backgroundColor: theme.colors.primary
                     }}
                   >
-                    Submit
+                   {loading ? 'Submitting...' : 'Submit' }
                   </Button>
                 </Col>
               </Row>
@@ -259,26 +261,33 @@ const CategoryTabs = () => {
                       type="text"
                       placeholder="Enter category name"
                       value={categoryName}
-                      onChange={(e) => setCategoryName(e.target.value)}
+                      onChange={(e) => {
+                        setCategoryName(e.target.value);
+                        setError('');
+                      }}
                       onKeyDown={handleKeyDown}
                     />
                   </Form.Group>
                 </Col>
                 <Col md="auto">
-                  <Button
-                    variant="primary"
-                    onClick={handleAddCategory}
-                    disabled={loading}
-                    style={{
-                      width: "auto",
-                      height: "38px",
-                      paddingLeft: "20px",
-                      paddingRight: "20px",
-                      marginTop: "30px",
-                      backgroundColor: theme.colors.primary
-                    }}
-                  >
-                    Submit
+                <Button
+                variant="primary"
+                onClick={() => {
+                  setError(''); // Clear error
+                  handleAddCategory(); // Call function
+                }}
+                disabled={loading}
+                style={{
+                  width: "auto",
+                  height: "38px",
+                  paddingLeft: "20px",
+                  paddingRight: "20px",
+                  marginTop: "30px",
+                  backgroundColor: theme.colors.primary
+                }}
+              >
+                 {loading ? 'Submitting...' : 'Submit' }
+
                   </Button>
                 </Col>
               </Row>
