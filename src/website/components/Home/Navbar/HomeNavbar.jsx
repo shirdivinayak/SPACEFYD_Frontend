@@ -1,30 +1,42 @@
 import React from "react";
-import pic from "../../../Assets/Home/companylogo.png"; // Adjust the relative path as needed
-import "./HomeNavbar.css"; // Import CSS file for custom styles
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import pic from "../../../Assets/Home/companylogo.png";
+import "./HomeNavbar.css";
 
 const HomeNavbar = () => {
+  // Navigation items with their corresponding routes
+  const navItems = [
+    { name: "About us", path: "/AboutUs" },
+    { name: "Products", path: "/Products" },
+    { name: "Projects", path: "/ProjectList" },
+    { name: "Services", path: "/Services" },
+  ];
+
+  // Contact route
+  const contactPath = "/ContactUs";
+
   return (
     <nav
       className="navbar navbar-expand-lg"
       style={{
-        padding: "clamp(20px, 3vw, 36px) clamp(10px, 5vw, 100px)", // Adjusted min padding for small screens
+        padding: "clamp(20px, 3vw, 36px) clamp(10px, 5vw, 100px)",
         backgroundColor: "#FCF9F5",
       }}
     >
       <div className="container-fluid">
-        {/* Left: Logo */}
-        <a className="navbar-brand d-flex align-items-center" href="#">
+        {/* Logo with Link */}
+        <Link className="navbar-brand d-flex align-items-center" to="/">
           <img
             src={pic}
             alt="Logo"
-            width={clamp(100, 191)} // Responsive width, smaller min for small screens
-            height={clamp(25, 48)} // Responsive height
+            width={clamp(100, 191)}
+            height={clamp(25, 48)}
             className="d-inline-block me-2"
             style={{ maxWidth: "100%" }}
           />
-        </a>
+        </Link>
 
-        {/* Navbar Toggler for Mobile */}
+        {/* Navbar Toggler */}
         <button
           className="navbar-toggler d-lg-none"
           type="button"
@@ -35,8 +47,8 @@ const HomeNavbar = () => {
           aria-label="Toggle navigation"
           style={{
             border: "none",
-            padding: "clamp(0px, 1vw, 4px)", // Minimal padding on small screens
-            marginLeft: "auto", // Push to right on small screens
+            padding: "clamp(0px, 1vw, 4px)",
+            marginLeft: "auto",
           }}
         >
           <span className="navbar-toggler-icon" />
@@ -49,36 +61,34 @@ const HomeNavbar = () => {
         >
           {/* Large Screen Menu */}
           <ul className="navbar-nav d-flex align-items-center gap-4">
-            {["About us", "Products", "Projects", "Services"].map(
-              (item, index) => (
-                <li className="nav-item" key={index}>
-                  <a
-                    className="nav-link"
-                    href="#"
-                    style={{
-                      color: "#4C6559",
-                      fontFamily: "Kollektif, sans-serif",
-                      fontWeight: 400,
-                      fontSize: "clamp(16px, 2vw, 20px)",
-                      lineHeight: "clamp(20px, 2.5vw, 24px)",
-                      textAlign: "center",
-                      textDecoration: "none",
-                      transition: "transform 0.3s ease", // Smooth transition
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.1)")} // Enlarge on hover
-                    onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")} // Reset on mouse leave
-                  >
-                    {item}
-                  </a>
-                </li>
-              )
-            )}
+            {navItems.map((item, index) => (
+              <li className="nav-item" key={index}>
+                <Link
+                  className="nav-link"
+                  to={item.path}
+                  style={{
+                    color: "#4C6559",
+                    fontFamily: "Kollektif, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "clamp(16px, 2vw, 20px)",
+                    lineHeight: "clamp(20px, 2.5vw, 24px)",
+                    textAlign: "center",
+                    textDecoration: "none",
+                    transition: "transform 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.1)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                >
+                  {item.name}
+                </Link>
+              </li>
+            ))}
           </ul>
 
           {/* Mobile Menu */}
           <div className="mobile-menu d-lg-none">
             <div className="mobile-menu-header">
-              <a className="navbar-brand d-flex align-items-center" href="#">
+              <Link className="navbar-brand d-flex align-items-center" to="/">
                 <img
                   src={pic}
                   alt="Logo"
@@ -87,7 +97,7 @@ const HomeNavbar = () => {
                   className="d-inline-block me-2"
                   style={{ maxWidth: "100%" }}
                 />
-              </a>
+              </Link>
               <button
                 className="mobile-menu-close"
                 type="button"
@@ -122,39 +132,38 @@ const HomeNavbar = () => {
               </button>
             </div>
             <ul className="navbar-nav d-flex flex-column align-items-center justify-content-center gap-4 mobile-menu-items">
-              {["About us", "Products", "Projects", "Services"].map(
-                (item, index) => (
-                  <li className="nav-item" key={index}>
-                    <a
-                      className="nav-link"
-                      href="#"
-                      style={{
-                        color: "#4C6559",
-                        fontFamily: "Kollektif, sans-serif",
-                        fontWeight: 400,
-                        fontSize: "clamp(20px, 3vw, 24px)", // Larger font for mobile
-                        lineHeight: "clamp(24px, 3.5vw, 28px)",
-                        textAlign: "center",
-                        textDecoration: "none",
-                        transition: "transform 0.3s ease", // Smooth transition
-                      }}
-                      onClick={() => {
-                        const navbarToggler = document.querySelector(".navbar-toggler");
-                        const navbarCollapse = document.querySelector("#navbarSupportedContent");
-                        if (navbarCollapse.classList.contains("show")) {
-                          navbarToggler.click(); // Simulate click to close the menu
-                        }
-                      }}
-                      onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.1)")} // Enlarge on hover
-                      onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")} // Reset on mouse leave
-                    >
-                      {item}
-                    </a>
-                  </li>
-                )
-              )}
+              {navItems.map((item, index) => (
+                <li className="nav-item" key={index}>
+                  <Link
+                    className="nav-link"
+                    to={item.path}
+                    style={{
+                      color: "#4C6559",
+                      fontFamily: "Kollektif, sans-serif",
+                      fontWeight: 400,
+                      fontSize: "clamp(20px, 3vw, 24px)",
+                      lineHeight: "clamp(24px, 3.5vw, 28px)",
+                      textAlign: "center",
+                      textDecoration: "none",
+                      transition: "transform 0.3s ease",
+                    }}
+                    onClick={() => {
+                      const navbarToggler = document.querySelector(".navbar-toggler");
+                      const navbarCollapse = document.querySelector("#navbarSupportedContent");
+                      if (navbarCollapse.classList.contains("show")) {
+                        navbarToggler.click();
+                      }
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.1)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
               <li className="nav-item">
-                <button
+                <Link
+                  to={contactPath}
                   className="btn"
                   style={{
                     fontFamily: "Raleway, sans-serif",
@@ -166,23 +175,27 @@ const HomeNavbar = () => {
                     whiteSpace: "nowrap",
                     minWidth: "100px",
                     border: "1px solid #4C6559",
+                    textDecoration: "none",
+                    display: "inline-block",
+                    textAlign: "center",
                   }}
                   onClick={() => {
                     const navbarToggler = document.querySelector(".navbar-toggler");
                     const navbarCollapse = document.querySelector("#navbarSupportedContent");
                     if (navbarCollapse.classList.contains("show")) {
-                      navbarToggler.click(); // Simulate click to close the menu
+                      navbarToggler.click();
                     }
                   }}
                 >
                   Contact us
-                </button>
+                </Link>
               </li>
             </ul>
           </div>
 
-          {/* Right: Contact Us Button (Only visible on large screens) */}
-          <button
+          {/* Contact Button for Large Screens */}
+          <Link
+            to={contactPath}
             className="btn d-none d-lg-block"
             style={{
               fontFamily: "Raleway, sans-serif",
@@ -194,10 +207,11 @@ const HomeNavbar = () => {
               whiteSpace: "nowrap",
               minWidth: "100px",
               border: "1px solid #4C6559",
+              textDecoration: "none",
             }}
           >
             Contact us
-          </button>
+          </Link>
         </div>
       </div>
     </nav>
