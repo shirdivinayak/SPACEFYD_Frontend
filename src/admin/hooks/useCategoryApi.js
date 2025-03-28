@@ -14,19 +14,19 @@ const useCategoryApi = () => {
         type: "product", // Added type in the request body
       });      // Assuming response.data contains the categories in response.data.data
       setCategories(response.data.data || []); // Store categories in state
+      console.log(response.data.data)
     } catch (error) {
       setError(error.response?.data?.message || "Failed to fetch categories.");
     } finally {
       setLoading(false);
     }
   };
-
   const addCategory = async (categoryData) => {
     try {
       setLoading(true);
       const response = await axiosInstance.post("/addCategory", categoryData);
-      const newCategory = response.data; // Expecting the new category in response
-      setCategories((prev) => [...prev, newCategory]); // Add the new category to the state
+      const newCategory = response.data;
+      setCategories((prev) => [...prev, newCategory]);
       setMessage(`Category ${categoryData.name} added successfully.`);
     } catch (error) {
       setError(error.response?.data?.message || "Failed to add category.");
@@ -34,6 +34,8 @@ const useCategoryApi = () => {
       setLoading(false);
     }
   };
+
+
 
   const addSubCategory = async (subCategoryData) => {
     try {

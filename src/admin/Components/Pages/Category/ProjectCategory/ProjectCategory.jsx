@@ -8,6 +8,7 @@ import ProjectAddCategory from "./ProjectAddCategory";
 import useProjectCategoryApi from "../../../../hooks/useProjectCategoryApi"; // Adjust the path as needed
 import { Row, Col, Alert } from "react-bootstrap";
 import AlertSuccesMessage from "../../../common/MessageSuccesAlert";
+import Spinner from 'react-bootstrap/Spinner';
 
 const ProjectCategory = () => {
   const { fetchProjectCategories, loading, error, message, setMessage ,deleteCategory , addCategory,setError,editCategory}
@@ -210,7 +211,22 @@ const ProjectCategory = () => {
       </div>
 
       {/* Category Table */}
-      <div className="my-3 bg-white px-3 mx-4">
+      <div className="my-3 px-3 mx-4">
+      {loading ? (
+  <div style={{
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor:'transparent',
+    marginTop:"15%",
+    width: "100%", // Ensures it takes up full width of the container
+    width: "100%", // Full width
+  }}>
+    <Spinner animation="border" variant="primary" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>
+  </div>
+) : (
         <Table hover responsive>
           <thead>
             <tr>
@@ -223,35 +239,38 @@ const ProjectCategory = () => {
               <th style={{ width: "23%" }}></th>
             </tr>
           </thead>
-          <tbody>
-            {items.map((item) => (
-              <tr key={item.id}>
-                <td>
-                  <Form.Check
-                    type="checkbox"
-                    checked={selectedItems.includes(item.id)}
-                    onChange={() => handleCheckboxChange(item.id)}
-                  />
-                </td>
-                <td>{item?.category}</td>
-                <td>
-                  <Button
-                    size="sm"
-                    onClick={() => handleEdit(item)}
-                    style={{
-                      backgroundColor: "transparent",
-                      border: "none",
-                      color: "blue",
-                    }}
-                  >
-                    <i className="bi bi-pencil"></i>
-                    <span> Edit </span>
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+         
+  <tbody>
+    {items.map((item) => (
+      <tr key={item.id}>
+        <td>
+          <Form.Check
+            type="checkbox"
+            checked={selectedItems.includes(item.id)}
+            onChange={() => handleCheckboxChange(item.id)}
+          />
+        </td>
+        <td>{item?.category}</td>
+        <td>
+          <Button
+            size="sm"
+            onClick={() => handleEdit(item)}
+            style={{
+              backgroundColor: "transparent",
+              border: "none",
+              color: "blue",
+            }}
+          >
+            <i className="bi bi-pencil"></i>
+            <span> Edit </span>
+          </Button>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+
         </Table>
+        )}
       </div>
 
       {/* Edit Modal */}
