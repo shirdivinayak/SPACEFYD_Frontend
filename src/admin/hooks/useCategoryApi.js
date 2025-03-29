@@ -40,7 +40,7 @@ const useCategoryApi = () => {
   const addSubCategory = async (subCategoryData) => {
     try {
       setLoading(true);
-      await axiosInstance.post("/subcategories", subCategoryData);
+      await axiosInstance.post("/addSubCategory", subCategoryData);
       setMessage(`Subcategory ${subCategoryData.name} added successfully.`);
     } catch (error) {
       setError(error.response?.data?.message || "Failed to add subcategory.");

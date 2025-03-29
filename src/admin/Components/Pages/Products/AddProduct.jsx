@@ -7,7 +7,6 @@ import Spinner from 'react-bootstrap/Spinner';
 // Import necessary hooks and APIs
 import useAddProjectApi from "../../../hooks/useAddProjectApi";
 import useFetchCategories from "../../../hooks/useAllProductApi"; // Adjust path
-import useFetchSubcategories from "../../../hooks/useAllProductApi"; // Adjust path
 import AlertSuccesMessage from "../../common/MessageSuccesAlert";
 
 const AddProject = () => {
@@ -19,16 +18,14 @@ const AddProject = () => {
   // Categories and Subcategories hooks
   const { 
     categories, 
+    subCategories,
     loading: categoriesLoading, 
-    error: categoriesError 
+    error: categoriesError,
+    fetchSubCategories,
+    subcategoriesLoading
   } = useFetchCategories();
   
-  const { 
-    subcategories, 
-    fetchSubcategories,
-    loading: subcategoriesLoading, 
-    error: subcategoriesError 
-  } = useFetchSubcategories();
+ 
 
   // Placeholder and state initialization
   const placeholderImage = "https://placehold.co/600x400/EEE/31343C";
@@ -67,7 +64,13 @@ const AddProject = () => {
   // Fetch subcategories when category changes
   useEffect(() => {
     if (productDetails.categoryId) {
-      fetchSubcategories(productDetails.categoryId);
+      fetchSubCategories(productDetails.categoryId);
+    }else {
+      // Reset subcategories when no category is selected
+      setProductDetails(prevState => ({
+        ...prevState,
+        subcategoryId: ""
+      }));
     }
   }, [productDetails.categoryId]);
 
@@ -90,6 +93,7 @@ const AddProject = () => {
     }));
   };
 
+
   // Subcategory change handler
   const handleSubcategoryChange = (event) => {
     const selectedSubcategoryId = event.target.value;
@@ -98,7 +102,6 @@ const AddProject = () => {
       subcategoryId: selectedSubcategoryId
     }));
   };
-
   // Image upload and management methods (similar to previous implementation)
   const handleMainImageUpload = (event) => {
     const file = event.target.files[0];
@@ -326,12 +329,12 @@ const AddProject = () => {
             Home
           </Nav.Link>
           <span style={{ marginRight: "8px" }}>&gt;</span>
-          <Nav.Link as={Link} to="/admin/projects" className="me-2 opacity-50">
-            All Projects
+          <Nav.Link as={Link} to="/admin/products" className="me-2 opacity-50">
+            All Products
           </Nav.Link>
 
           <span> &gt; </span>
-          <span className="ms-2"> Add Projects</span>
+          <span className="ms-2"> Add Products</span>
         </h4>
       </div>
 
@@ -489,11 +492,11 @@ const AddProject = () => {
                           ? "Loading..." 
                           : "Select Subcategory"}
                     </option>
-                    {subcategories && subcategories.map((subcategory) => (
-                      <option key={subcategory._id} value={subcategory._id}> 
-                        {subcategory.name}
-                      </option>
-                    ))}
+                    {subCategories && subCategories.map((subcategory) => (
+      <option key={subcategory._id} value={subcategory._id}> 
+        {subcategory.name}
+      </option>
+    ))}
                   </select>
                 </label>
               </div>
