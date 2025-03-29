@@ -8,11 +8,20 @@ import ProjectAddCategory from "./ProjectAddCategory";
 import useProjectCategoryApi from "../../../../hooks/useProjectCategoryApi"; // Adjust the path as needed
 import { Row, Col, Alert } from "react-bootstrap";
 import AlertSuccesMessage from "../../../common/MessageSuccesAlert";
-import Spinner from 'react-bootstrap/Spinner';
+import Spinner from "react-bootstrap/Spinner";
 
 const ProjectCategory = () => {
-  const { fetchProjectCategories, loading, error, message, setMessage ,deleteCategory , addCategory,setError,editCategory}
-   =  useProjectCategoryApi();
+  const {
+    fetchProjectCategories,
+    loading,
+    error,
+    message,
+    setMessage,
+    deleteCategory,
+    addCategory,
+    setError,
+    editCategory,
+  } = useProjectCategoryApi();
   const [items, setItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [showCategoryTabs, setShowCategoryTabs] = useState(false);
@@ -26,12 +35,12 @@ const ProjectCategory = () => {
       return;
     }
 
-    await addCategory({ name: categoryName, type: 'project' });
+    await addCategory({ name: categoryName, type: "project" });
     setCategoryName(""); // Clear input field
     loadCategories();
     setTimeout(() => {
       setMessage(""); // Clear success message after 3 seconds
-      setError(null);  // Clear error message if present
+      setError(null); // Clear error message if present
     }, 3000);
   };
 
@@ -41,35 +50,33 @@ const ProjectCategory = () => {
       handleAddCategory(); // Optionally trigger submit on Enter
     }
   };
-    const loadCategories = async () => {
-      try {
-        const response = await fetchProjectCategories();
-        if (response && Array.isArray(response.data)) {
-          const formattedCategories = response.data.map((item) => ({
-            id: item._id,
-            category: item.name || "Unnamed",
-          }));
-          setItems(formattedCategories.reverse());
-        } else {
-          console.error("Invalid data format:", response);
-          setItems([]);
-        }
-      } catch (error) {
-        console.error("Error fetching categories:", error);
+  const loadCategories = async () => {
+    try {
+      const response = await fetchProjectCategories();
+      if (response && Array.isArray(response.data)) {
+        const formattedCategories = response.data.map((item) => ({
+          id: item._id,
+          category: item.name || "Unnamed",
+        }));
+        setItems(formattedCategories.reverse());
+      } else {
+        console.error("Invalid data format:", response);
+        setItems([]);
       }
-    };
-    useEffect(() => {
-
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+  useEffect(() => {
     loadCategories();
   }, []); // Only on mount
-  
+
   useEffect(() => {
     if (message) {
       const timer = setTimeout(() => setMessage(""), 3000);
       return () => clearTimeout(timer);
     }
   }, [message, setMessage]);
-  
 
   const handleEdit = (item) => {
     setCurrentItem(item);
@@ -79,9 +86,7 @@ const ProjectCategory = () => {
   const handleSave = async (updatedItem) => {
     await editCategory(updatedItem);
     setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === updatedItem.id ? updatedItem : item
-      )
+      prevItems.map((item) => (item.id === updatedItem.id ? updatedItem : item))
     );
   };
 
@@ -101,10 +106,12 @@ const ProjectCategory = () => {
     if (selectedItems.length > 0) {
       try {
         await deleteCategory(selectedItems); // Call API to delete categories
-  
+
         // Update local state after successful deletion
-        setItems((prevItems) => prevItems.filter((item) => !selectedItems.includes(item.id)));
-        
+        setItems((prevItems) =>
+          prevItems.filter((item) => !selectedItems.includes(item.id))
+        );
+
         setMessage(`${selectedItems.length} item(s) removed successfully.`);
         setSelectedItems([]);
       } catch (error) {
@@ -114,7 +121,6 @@ const ProjectCategory = () => {
       setMessage("No items selected to remove.");
     }
   };
-  
 
   return (
     <div className="container" style={{ padding: "0" }}>
@@ -156,120 +162,127 @@ const ProjectCategory = () => {
             onClick={() => setShowCategoryTabs(!showCategoryTabs)}
           ></i>
         </div>
-        {showCategoryTabs && 
-         <div className="container px-4 py-4" style={{ maxWidth: "100%", paddingLeft: "0" }}>
-              <Form style={{ maxWidth: "600px", marginLeft: "0" }}>
-                {error && <Alert variant="danger">{error}</Alert>}
-                <Row className="mb-3" style={{ display: "flex", alignItems: "center" }}>
-                  <Col md="auto">
-                    <Form.Group controlId="subCategoryInput">
-                      <Form.Label
-                        style={{
-                          fontSize: "16px",
-                          fontWeight: "400",
-                          color: "#474747",
-                          opacity: "0.8",
-                        }}
-                      >
-                        New Category Name
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter category name"
-                        value={categoryName}
-                        onChange={(e) => setCategoryName(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                        style={{ width: "281px" }}
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col md="auto" className="d-flex justify-content-start">
-                    <Button
-                      variant="primary"
-                      type="button"
-                      onClick={handleAddCategory}
+        {showCategoryTabs && (
+          <div
+            className="container px-4 py-4"
+            style={{ maxWidth: "100%", paddingLeft: "0" }}
+          >
+            <Form style={{ maxWidth: "600px", marginLeft: "0" }}>
+              {error && <Alert variant="danger">{error}</Alert>}
+              <Row
+                className="mb-3"
+                style={{ display: "flex", alignItems: "center" }}
+              >
+                <Col md="auto">
+                  <Form.Group controlId="subCategoryInput">
+                    <Form.Label
                       style={{
-                        height: "38px",
-                        paddingLeft: "20px",
-                        paddingRight: "20px",
-                        marginTop: "30px",
-                        backgroundColor: "#184BD3",
-                        border: "none",
+                        fontSize: "16px",
+                        fontWeight: "400",
+                        color: "#474747",
+                        opacity: "0.8",
                       }}
-                      disabled={loading}
                     >
-                      {loading ? "Submitting..." : "Submit"}
-                    </Button>
-                  </Col>
-                </Row>
-              </Form>
-        
-              {/* Success Message */}
-              {message && <AlertSuccesMessage message={message} />}
-            </div>
-        }
+                      New Category Name
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter category name"
+                      value={categoryName}
+                      onChange={(e) => setCategoryName(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      style={{ width: "281px" }}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md="auto" className="d-flex justify-content-start">
+                  <Button
+                    variant="primary"
+                    type="button"
+                    onClick={handleAddCategory}
+                    style={{
+                      height: "38px",
+                      paddingLeft: "20px",
+                      paddingRight: "20px",
+                      marginTop: "30px",
+                      backgroundColor: "#184BD3",
+                      border: "none",
+                    }}
+                    disabled={loading}
+                  >
+                    {loading ? "Submitting..." : "Submit"}
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+
+            {/* Success Message */}
+            {message && <AlertSuccesMessage message={message} />}
+          </div>
+        )}
       </div>
 
       {/* Category Table */}
       <div className="my-3 px-3 mx-4">
-      {loading ? (
-  <div style={{
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor:'transparent',
-    marginTop:"15%",
-    width: "100%", // Ensures it takes up full width of the container
-    width: "100%", // Full width
-  }}>
-    <Spinner animation="border" variant="primary" role="status">
-      <span className="visually-hidden">Loading...</span>
-    </Spinner>
-  </div>
-) : (
-        <Table hover responsive>
-          <thead>
-            <tr>
-              <th style={{ width: "7%", paddingLeft: "12px" }}>
-                <Form.Check type="checkbox" onChange={handleSelectAll} />
-              </th>
-              <th style={{ width: "80%", fontWeight: 500, fontSize: "16px" }}>
-                Category
-              </th>
-              <th style={{ width: "23%" }}></th>
-            </tr>
-          </thead>
-         
-  <tbody>
-    {items.map((item) => (
-      <tr key={item.id}>
-        <td>
-          <Form.Check
-            type="checkbox"
-            checked={selectedItems.includes(item.id)}
-            onChange={() => handleCheckboxChange(item.id)}
-          />
-        </td>
-        <td>{item?.category}</td>
-        <td>
-          <Button
-            size="sm"
-            onClick={() => handleEdit(item)}
+        {loading ? (
+          <div
             style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
               backgroundColor: "transparent",
-              border: "none",
-              color: "blue",
+              marginTop: "15%",
+              width: "100%", // Ensures it takes up full width of the container
+              width: "100%", // Full width
             }}
           >
-            <i className="bi bi-pencil"></i>
-            <span> Edit </span>
-          </Button>
-        </td>
-      </tr>
-    ))}
-  </tbody>
+            <Spinner animation="border" variant="primary" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+        ) : (
+          <Table hover responsive>
+            <thead>
+              <tr>
+                <th style={{ width: "7%", paddingLeft: "12px" }}>
+                  <Form.Check type="checkbox" onChange={handleSelectAll} />
+                </th>
+                <th style={{ width: "80%", fontWeight: 500, fontSize: "16px" }}>
+                  Category
+                </th>
+                <th style={{ width: "23%" }}></th>
+              </tr>
+            </thead>
 
-        </Table>
+            <tbody>
+              {items.map((item) => (
+                <tr key={item.id}>
+                  <td>
+                    <Form.Check
+                      type="checkbox"
+                      checked={selectedItems.includes(item.id)}
+                      onChange={() => handleCheckboxChange(item.id)}
+                    />
+                  </td>
+                  <td>{item?.category}</td>
+                  <td>
+                    <Button
+                      size="sm"
+                      onClick={() => handleEdit(item)}
+                      style={{
+                        backgroundColor: "transparent",
+                        border: "none",
+                        color: "blue",
+                      }}
+                    >
+                      <i className="bi bi-pencil"></i>
+                      <span> Edit </span>
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
         )}
       </div>
 
