@@ -3,17 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { Button, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Spinner from 'react-bootstrap/Spinner';
-
-// Import necessary hooks and APIs
-import useAddProjectApi from "../../../hooks/useAddProjectApi";
+import useAddProductApi from "../../../hooks/useAddProduct";
 import useFetchCategories from "../../../hooks/useAllProductApi"; // Adjust path
 import AlertSuccesMessage from "../../common/MessageSuccesAlert";
 
-const AddProject = () => {
+const AddProduct = () => {
   const navigate = useNavigate();
   
-  // Project API hooks
-  const { addProject, loading: addProjectLoading, error: addProjectError } = useAddProjectApi();
+  // Product API hooks
+  const { addProduct, loading: addProductLoading, error: addProductError } = useAddProductApi();
   
   // Categories and Subcategories hooks
   const { 
@@ -30,16 +28,18 @@ const AddProject = () => {
   // Placeholder and state initialization
   const placeholderImage = "https://placehold.co/600x400/EEE/31343C";
   
-  // Product/Project details state
+  // Product/Product details state
   const [productDetails, setProductDetails] = useState({
-    projectName: "",
-    projectDescription: "",
+    productName: "",
+    productDescription: "",
     categoryId: "",
+    categoryName: "", // Added
     subcategoryId: "", // Added subcategory
-    ProjectCode: "",
+    subcategoryName: "", // Added
+    productCode: "",
     isVisible: false,
     brand: "",
-    images: []
+    image: []
   });
 
   // Image display state
@@ -56,10 +56,6 @@ const AddProject = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
 
-  // Fetch categories on component mount
-  useEffect(() => {
-    // Any additional setup for categories can be done here
-  }, []);
 
   // Fetch subcategories when category changes
   useEffect(() => {
@@ -69,7 +65,8 @@ const AddProject = () => {
       // Reset subcategories when no category is selected
       setProductDetails(prevState => ({
         ...prevState,
-        subcategoryId: ""
+        subcategoryId: "",
+        subcategoryName: "" 
       }));
     }
   }, [productDetails.categoryId]);
@@ -86,10 +83,15 @@ const AddProject = () => {
   // Category change handler
   const handleCategoryChange = (event) => {
     const selectedCategoryId = event.target.value;
+    const selectedCategory = categories.find(category => category._id === selectedCategoryId);
+
     setProductDetails((prevState) => ({
       ...prevState,
       categoryId: selectedCategoryId,
-      subcategoryId: "" // Reset subcategory when category changes
+      categoryName: selectedCategory ? selectedCategory.name : "",
+      subcategoryId: "" ,// Reset subcategory when category changes,
+      subcategoryName: "", // Reset subcategory when category changes
+
     }));
   };
 
@@ -97,9 +99,12 @@ const AddProject = () => {
   // Subcategory change handler
   const handleSubcategoryChange = (event) => {
     const selectedSubcategoryId = event.target.value;
+    const selectedSubcategory = subCategories.find(subcategory => subcategory._id === selectedSubcategoryId);
+
     setProductDetails((prevState) => ({
       ...prevState,
-      subcategoryId: selectedSubcategoryId
+      subcategoryId: selectedSubcategoryId,
+      subcategoryName: selectedSubcategory ? selectedSubcategory.name : "" // Set subcategoryName
     }));
   };
   // Image upload and management methods (similar to previous implementation)
@@ -116,11 +121,11 @@ const AddProject = () => {
         }));
         
         setProductDetails(prev => {
-          const updatedImages = [...prev.images];
+          const updatedImages = [...prev.image];
           updatedImages[0] = imageUrl;
           return {
             ...prev,
-            images: updatedImages
+            image: updatedImages
           };
         });
       };
@@ -148,11 +153,11 @@ const AddProject = () => {
         });
         
         setProductDetails(prev => {
-          const updatedImages = [...prev.images];
+          const updatedImages = [...prev.image];
           updatedImages[index + 1] = imageUrl;
           return {
             ...prev,
-            images: updatedImages
+            image: updatedImages
           };
         });
       };
@@ -163,10 +168,10 @@ const AddProject = () => {
     }
   };
 
-  // Save project handler
+  // Save Product handler
   const handleSave = async () => {
     // Validation
-    if (!productDetails.projectName || !productDetails.categoryId) {
+    if (!productDetails.productName || !productDetails.categoryId) {
       setMessage("Please fill in required fields.");
       setTimeout(() => setMessage(""), 3000);
       return;
@@ -181,15 +186,15 @@ const AddProject = () => {
     
     const updatedProductDetails = {
       ...productDetails,
-      images: allImages
+      image: allImages
     };
     
     try {
-      await addProject(updatedProductDetails);
+      await addProduct(updatedProductDetails);
       navigate(-1);
     } catch (error) {
-      console.error("Error saving project:", error);
-      setMessage("Failed to save project. Please try again.");
+      console.error("Error saving Product:", error);
+      setMessage("Failed to save Product. Please try again.");
       setTimeout(() => setMessage(""), 3000);
     } finally {
       setIsSubmitting(false);
@@ -204,11 +209,11 @@ const AddProject = () => {
     }));
     
     setProductDetails(prev => {
-      const updatedImages = [...prev.images];
+      const updatedImages = [...prev.image];
       updatedImages[0] = null;
       return {
         ...prev,
-        images: updatedImages.filter(Boolean)
+        image: updatedImages.filter(Boolean)
       };
     });
   };
@@ -224,11 +229,11 @@ const AddProject = () => {
     });
     
     setProductDetails(prev => {
-      const updatedImages = [...prev.images];
+      const updatedImages = [...prev.image];
       updatedImages[index + 1] = null;
       return {
         ...prev,
-        images: updatedImages.filter(Boolean)
+        image: updatedImages.filter(Boolean)
       };
     });
   };
@@ -364,7 +369,7 @@ const AddProject = () => {
           {/* Left Section */}
           <div className="w-50 pe-4 py-4 px-4">
             <form>
-              {/* Project Name Input */}
+              {/* Product Name Input */}
               <div>
                 <label
                   style={{
@@ -374,12 +379,12 @@ const AddProject = () => {
                     fontSize: "16px",
                   }}
                 >
-                  Project Name *
+                  Product Name *
                 </label>
                 <input
                   type="text"
-                  name="projectName"
-                  value={productDetails.projectName}
+                  name="productName"
+                  value={productDetails.productName}
                   onChange={handleChange}
                   style={{
                     width: "100%",
@@ -405,8 +410,8 @@ const AddProject = () => {
                 >
                   Description:
                   <textarea
-                    name="projectDescription"
-                    value={productDetails.projectDescription}
+                    name="productDescription"
+                    value={productDetails.productDescription}
                     onChange={handleChange}
                     style={{
                       width: "100%",
@@ -548,11 +553,11 @@ const AddProject = () => {
                     marginTop: "10px",
                   }}
                 >
-                  Project Code:
+                  Product Code:
                   <input
                     type="text"
-                    name="ProjectCode"
-                    value={productDetails.ProjectCode}
+                    name="productCode"
+                    value={productDetails.productCode}
                     onChange={handleChange}
                     style={{
                       width: "100%",
@@ -709,4 +714,4 @@ const AddProject = () => {
   );
 };
 
-export default AddProject;
+export default AddProduct;
