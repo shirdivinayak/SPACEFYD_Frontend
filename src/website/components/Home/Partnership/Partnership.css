@@ -1,0 +1,37 @@
+.custom-section {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 40px 20px;
+  }
+  
+  .custom-image {
+
+  }
+  
+  .section-title {
+    font-size: 32px;
+    font-weight: 500;
+    color: #4C6559;
+  }
+  
+  .section-title span {
+    color: #4C6559; /* Adjust color as needed */
+  }
+  
+  .section-text {
+    font-size: 16px;
+    color: #646464;
+    margin-bottom: 15px;
+  }
+  
+  .section-link {
+    display: inline-block;
+    color: #9A715B;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .section-link:hover {
+    color: #ff6600;
+  }
+  

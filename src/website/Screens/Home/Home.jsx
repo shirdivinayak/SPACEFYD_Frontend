@@ -14,6 +14,7 @@ import image6 from "../../Assets/Home/Section/images6.jpg";
 import ContentSection from "../../components/Home/Content/ContentSection";
 import Products from "../../components/Home/Products/Products";
 import CardSection from "../../components/CardSection/CardSection";
+import Partnership from "../../components/Home/Partnership/Partnership";
 
 function App() {
   const backgroundImage = "https://via.placeholder.com/1920x1080"; // Replace with your background image URL
@@ -66,6 +67,7 @@ function App() {
       <HomeNavbar />
       <HeroSection />
       <CarouselComponent />
+      <Partnership />
       <Products />
       <CardSection />
       <Sections backgroundImage={backgroundImage} sections={sections} />
