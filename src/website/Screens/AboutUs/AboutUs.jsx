@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./AboutUs.css";
+
 import HeroImage from "../../Assets/AboutUs/hero.svg";
 import HeroImage2 from "../../Assets/AboutUs/heromob.svg";
 import MainImage from "../../Assets/AboutUs/image219.svg";
@@ -7,13 +9,17 @@ import Image3 from "../../Assets/AboutUs/view3.svg";
 import circlegrad from "../../Assets/AboutUs/circlegrad.svg";
 import Gradient from "../../Assets/AboutUs/Gradient.svg";
 import circles from "../../Assets/AboutUs/circles.svg";
-import HomeNavbar from "../../components/Home/NavbarDark/DarkNavbar";
+
 // import HomeNavbar from "../../components/Home/Navbar/HomeNavbar";
-import Footer from "../../components/Home/Footer/Footer";
+import HomeNavbar from "../../components/Home/NavbarDark/DarkNavbar";
 import ContentSection from "../../components/Home/Content/ContentSection";
-import "./AboutUs.css";
+import Footer from "../../components/Home/Footer/Footer";
+
 import { JustifyLeft } from "react-bootstrap-icons";
+import { useTranslation } from "react-i18next";
+
 const AboutUs = () => {
+  const { t } = useTranslation("about");
   // const [isNavbarExpanded, setIsNavbarExpanded] = useState(false);
   return (
     <div>
@@ -28,12 +34,9 @@ const AboutUs = () => {
       >
         {" "}
         <div className="container">
-          <h1>About Us</h1>
+          <h1>{t("title")}</h1>
           <p>
-            Dedicated to delivering innovative, functional, and aesthetic
-            interior solutions <br />
-            with unmatched quality and care. Designs for Functional and
-            Inspiring Interiors
+            <p dangerouslySetInnerHTML={{ __html: t("title-sub") }}></p>
           </p>
         </div>
       </div>
@@ -43,7 +46,7 @@ const AboutUs = () => {
         <img src={MainImage} alt="Overlay" className="overlay-image" />
       </div>
       <div
-        className="about-us container-fluid d-flex flex-wrap   justify-content-center align-items-center mt-5 col-lg-6 col-sm-6 p-0 "
+        className="about-us container-fluid d-flex flex-wrap justify-content-center align-items-center mt-5 col-lg-6 col-sm-6 p-0 "
         style={{
           color: "#4C6559",
           backgroundImage: `url(${Gradient})`,
@@ -64,9 +67,9 @@ const AboutUs = () => {
         }}
       >
         {window.innerWidth < 400 && (
-          <h2>
-            Innovative, Sustainable <br /> Interiors Tailored to Inspire.
-          </h2>
+          <h2
+            dangerouslySetInnerHTML={{ __html: t("second-section-heading") }}
+          ></h2>
         )}
 
         {/* Left Section */}
@@ -80,40 +83,29 @@ const AboutUs = () => {
                 style={{
                   marginTop: "50px !important",
                 }}
-              >
-                Innovative, Sustainable <br /> Interiors Tailored to Inspire.
-              </h2>
+                dangerouslySetInnerHTML={{
+                  __html: t("second-section-heading"),
+                }}
+              ></h2>
             )}
           </div>
           <div className=" left-column d-flex flex-column flex-sm-row mt-4 px-4">
             {/* Left Column */}
             <div className="d-flex flex-column me-sm-4 ">
-              <h5>Comprehensive Solutions</h5>
-              <p>
-                From custom furniture to HVAC installations and landscape
-                design, we manage every detail of your project.
-              </p>
+              <h5>{t("left-column-top-head")}</h5>
+              <p>{t("left-column-top-content")}</p>
 
-              <h5>Sustainability Commitment</h5>
-              <p>
-                We prioritize eco-friendly materials and energy-efficient
-                systems to ensure minimal environmental impact.
-              </p>
+              <h5>{t("left-column-bottom-head")}</h5>
+              <p>{t("left-column-bottom-content")}</p>
             </div>
 
             {/* Right Column */}
             <div className=" right-column d-flex flex-column">
-              <h5>Expert Team</h5>
-              <p>
-                With a team of skilled designers, project managers, and
-                technicians, we bring creativity and expertise to every project.
-              </p>
+              <h5>{t("right-column-top-head")}</h5>
+              <p>{t("right-column-top-content")}</p>
 
-              <h5>Proven Track Record</h5>
-              <p>
-                Our portfolio covers hospitality, corporate, retail, and
-                healthcare, earning trust in Oman and beyond.
-              </p>
+              <h5>{t("right-column-bottom-head")}</h5>
+              <p>{t("right-column-bottom-content")}</p>
             </div>
           </div>
         </div>
@@ -179,17 +171,10 @@ const AboutUs = () => {
               borderBlockWidth: "0.5px",
             }}
           >
-            Come partner with us
+            {t("partner-button")}
           </button>
-          <h2 className="fw-bold">
-            Your Trusted Partner in Interior Solutions
-          </h2>
-          <p>
-            With a strong presence in Oman, Saudi, India, Spacifyd is proud to
-            collaborate with businesses and homeowners who seek cutting-edge
-            designs and seamless execution. Every project we undertake reflects
-            our commitment to quality, innovation, and client satisfaction.
-          </p>
+          <h2 className="fw-bold">{t("third-section-head")}</h2>
+          <p>{t("third-section-content")}</p>
         </div>
         {/* right content */}
         <div className="d-flex justify-content-center align-items-center col-md-6 col-12">
@@ -199,6 +184,7 @@ const AboutUs = () => {
       <div className="display-flex justify-content-center align-items-center my-5"></div>
       <div className="container text-center mt-4">
         <p
+          dangerouslySetInnerHTML={{ __html: t("fouth-section-content") }}
           style={{
             color: "#9A715B",
             fontSize: "45px",
@@ -206,14 +192,7 @@ const AboutUs = () => {
             lineHeight: "50px",
             fontWeight: "200px",
           }}
-        >
-          We Create <strong>Intelligent, Future-Ready</strong> Spaces By
-          <br />
-          Blending <strong>Design And Technology</strong>, Delivering
-          <br />
-          Innovative, Sustainable, And Customized Interior <br />
-          Solutions With Excellence
-        </p>
+        ></p>
       </div>
       <ContentSection></ContentSection>
       <Footer />
