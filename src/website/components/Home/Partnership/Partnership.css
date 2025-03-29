@@ -1,37 +1,88 @@
-.custom-section {
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    padding: 40px 20px;
-  }
-  
-  .custom-image {
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap');
 
+/* Frame applied using a background image */
+.custom-section {
+  background: url('../../../Assets/Home/Partner/frame.png') no-repeat center;
+  background-size: contain; /* Ensures the frame scales properly */
+  padding: 50px 30px; /* Adjust padding for better spacing inside */
+  max-width: 85%; /* Reduce section width */
+  margin: 0 auto 50px auto; /* Center and add bottom margin */
+  display: flex;
+  justify-content: center;
+}
+
+/* Ensure no border or shadow on the left image */
+.custom-image {
+  border: none;
+  box-shadow: none;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Add spacing between left and right sections */
+.left-section {
+  padding-right: 40px; /* Increased spacing for better layout */
+}
+
+/* Adjust column width for 40% - 60% */
+@media (min-width: 768px) {
+  .left-section {
+    flex: 0 0 40%;
+    max-width: 40%;
   }
   
-  .section-title {
-    font-size: 32px;
-    font-weight: 500;
-    color: #4C6559;
+  .right-section {
+    flex: 0 0 60%;
+    max-width: 60%;
   }
-  
-  .section-title span {
-    color: #4C6559; /* Adjust color as needed */
+}
+
+/* Heading Typography */
+.section-title {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 44.09px;
+  letter-spacing: -2%;
+  color: #4C6559;
+}
+
+/* Content Typography */
+.section-text {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26.8px;
+  letter-spacing: 0px;
+  color: #646464;
+  margin-bottom: 25px; /* Added more space before the link */
+}
+
+/* Spacing for the link section */
+.section-link-container {
+  margin-top: 25px; /* Added gap between content and link */
+}
+
+/* Link Typography (Reduced Boldness) */
+.section-link {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 26.8px;
+  letter-spacing: 0px;
+  display: inline-block;
+  color: #9A715B;
+  text-decoration: none;
+}
+
+.section-link:hover {
+  color: #ff6600;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 768px) {
+  .left-section {
+    padding-right: 0;
+    margin-bottom: 20px; /* Add gap between image and content on small screens */
   }
-  
-  .section-text {
-    font-size: 16px;
-    color: #646464;
-    margin-bottom: 15px;
-  }
-  
-  .section-link {
-    display: inline-block;
-    color: #9A715B;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  
-  .section-link:hover {
-    color: #ff6600;
-  }
-  
+}

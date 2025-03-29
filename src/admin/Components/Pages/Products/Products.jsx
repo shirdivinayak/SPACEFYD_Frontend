@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Button, Table, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import useFetchproducts from "../../../hooks/useAllProductlistApi";
+import useFetchProducts from "../../../hooks/useAllProductlistApi";
 import useFetchCategories from "../../../hooks/useAllProductApi"; // Adjust path
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -15,7 +15,9 @@ const ProductTable = () => {
     loading: productsLoading,
     error: productsError,
     refetch,
-  } = useFetchproducts();
+    fetchMoreProducts,
+    hasMore,
+  } = useFetchProducts();
   const {
     deleteProducts,
     categories,
@@ -29,8 +31,25 @@ const ProductTable = () => {
   const [message, setMessage] = useState("");
   const tabsRef = useRef(null);
   const [isOnLive, setIsOnLive] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
 
+  const observer = useRef();
+  const lastItemRef = useCallback(
+    (node) => {
+      if (productsLoading || loadingMore) return;
+      if (observer.current) observer.current.disconnect();
 
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setLoadingMore(true);
+          fetchMoreProducts().finally(() => setLoadingMore(false));
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [productsLoading, loadingMore, hasMore, fetchMoreProducts]
+  );
 
   useEffect(() => {
     if (productsError) {
@@ -62,8 +81,8 @@ const ProductTable = () => {
         category: item.categories || "Uncategorized",
         subCategory: item.subCategory || "Uncategorized",
         brand: item.brand || "N/A",
-        image: item?.images?.length > 0 ? item.images[0] : null,
-        images: item?.images || [], // Keep all images, don't slice
+        image: item?.image?.length > 0 ? item.image[0] : null,
+        images: item?.image || [], // Keep all images, don't slice
         isVisible: item.isVisible || false, // Use isVisible property for filtering
         // Pass the entire item to ensure no data is lost
         originalItem: item,
@@ -302,7 +321,7 @@ console.log(passesOnliveFilter,"====onive")
         className="mx-4 px-12"
         // style={{ backgroundColor: "white" }}
       >
-        {productsLoading ? (
+        {productsLoading && items.length === 0 ? (
           <div
             style={{
               display: "flex",
@@ -466,8 +485,12 @@ console.log(passesOnliveFilter,"====onive")
             {/* <div style={{ position: "relative", minHeight: "300px" }}> */}
             {/* </div> */}
             <tbody>
-              {filteredItems.map((item) => (
-                <tr key={item.id}>
+            {filteredItems.map((item, index) => {
+                // Determine if this is the last item for the ref
+                const isLastItem = index === filteredItems.length - 1;
+
+                return (
+                  <tr key={item.id}>
                   <td style={{ borderBottom: true }}>
                     <Form.Check
                       type="checkbox"
@@ -517,9 +540,21 @@ console.log(passesOnliveFilter,"====onive")
                     </Button>
                   </td>
                 </tr>
-              ))}
+                );
+              })}
             </tbody>
           </Table>
+        )}
+        {loadingMore && (
+                  <div className="text-center my-3">
+                    <Spinner animation="border" variant="primary" size="sm" />
+                    <span className="ms-2">Loading more projects...</span>
+                  </div>
+                )}
+          {!hasMore && items.length > 0 && (
+          <div className="text-center my-3 text-muted">
+            No more projects to load
+          </div>
         )}
       </div>
 
