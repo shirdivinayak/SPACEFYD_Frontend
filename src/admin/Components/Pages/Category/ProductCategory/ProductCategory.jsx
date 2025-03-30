@@ -5,69 +5,50 @@ import { Link } from "react-router-dom";
 import CategoryTabs from "./CategoryTabs";
 import AlertMessage from "../../../common/MessageSuccesAlert";
 import EditCategoryModal from "./EditCategoryModal";
+import useProductCategoryApi from "../../../../hooks/useProductCategoryApi"; // Adjust the path as needed
 import theme from "../../../../Assets/colors/styles";
-const CategoryData = [
-  {
-    id: `#56674`,
-    category: "Furniture",
-    subCategory:
-      "Seating, table, chair, counter , shelfing, sideboard, outdoor,tables,chair, bar, sdhfs",
-  },
-  {
-    id: `#56675`,
-    category: "Furniture",
-    subCategory: "Seating,  ounter , shelfing, sideboard, outdoor",
-  },
-  {
-    id: `#56676`,
-    category: "Plants",
-    subCategory: "Greenery, table, chair, counter , shelfing, ",
-  },
-  {
-    id: `#56677`,
-    category: "Decorations",
-    subCategory: "Vases  shelfing, sideboard, outdoor,tables,chair",
-  },
-  {
-    id: `#56678`,
-    category: "Dining",
-    subCategory: "Furniture,  shelfing, sideboard, outdoor,tables,chair",
-  },
-  {
-    id: `#56679`,
-    category: "Decorations",
-    subCategory: "Art, shelfing, sideboard, outdoor,tables,chair",
-  },
-  {
-    id: `#56680`,
-    category: "Lighting",
-    subCategory: "Ceiling Lights shelfing, sideboard, outdoor,tables,chair",
-  },
-  {
-    id: `#56681`,
-    category: "Outdoor",
-    subCategory: "Furniture shelfing, sideboard, outdoor,tables,chair",
-  },
-  {
-    id: `#56682`,
-    category: "Storage",
-    subCategory: "Shelves shelfing, sideboard, outdoor,tables,chair",
-  },
-  {
-    id: `#56683`,
-    category: "Lighting",
-    subCategory: "Lamps shelfing, sideboard, outdoor,tables,chair",
-  },
-];
+
+
 
 const ProductCategory = () => {
-  const [items, setItems] = useState(CategoryData); // Initialize with CategoryData
+  const {
+    fetchProjectCategories,
+    loading,
+    error,
+    message,
+    setMessage,
+    deleteCategory,
+    addCategory,
+    setError,
+    editCategory,
+  } = useProductCategoryApi();
+  const [items, setItems] = useState([]); // Initialize with CategoryData
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("Categories");
-  const [message, setMessage] = useState("");
+  // const [message, setMessage] = useState("");
   const [showCategoryTabs, setShowCategoryTabs] = useState(false); // Toggle state for CategoryTabs
   const [showEditModal, setShowEditModal] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const response = await fetchProjectCategories();
+        if (response && response.data) {
+          const formattedCategories = response.data.map((category) => ({
+            id: category.id,
+            category: category.name,
+            subCategory: category.subCategory || "",
+          }));
+          setItems(formattedCategories);
+        }
+      } catch (err) {
+        console.error("Error fetching categories:", err);
+        setError(err.message || "Failed to load categories");
+      }
+    };
+
+    loadCategories();
+  }, []); // Empty dependency array to run only on mount
 
   const handleEdit = (item) => {
     setCurrentItem(item);
@@ -89,13 +70,14 @@ const ProductCategory = () => {
   }, [message]);
 
   const handleCheckboxChange = (id) => {
-    if (selectedItems.includes(id)) {
-      setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
-    } else {
-      setSelectedItems([...selectedItems, id]);
-    }
+    setSelectedItems(prevSelected => {
+      if (prevSelected.includes(id)) {
+        return prevSelected.filter(itemId => itemId !== id);
+      } else {
+        return [...prevSelected, id];
+      }
+    });
   };
-
   const handleSelectAll = (e) => {
     if (e.target.checked) {
       setSelectedItems(items.map((item) => item.id));
@@ -193,6 +175,11 @@ const ProductCategory = () => {
 
       {/* Product Table */}
       <div className="  mx-4 px-4" style={{ backgroundColor: "white" }}>
+      {loading ? (
+          <div>Loading categories...</div>
+        ) : error ? (
+          <div>Error: {error}</div>
+        ) : (
         <Table hover responsive>
           <thead>
             <tr>
@@ -260,21 +247,19 @@ const ProductCategory = () => {
             {filteredItems.map((item) => (
               <tr key={item.id}>
                 <td style={{ borderBottom: true, padding: " 10px" }}>
-                  <Form.Check
-                    type="checkbox"
-                    checked={selectedItems.includes(item.id)}
-                    onChange={() => handleCheckboxChange(item.id)}
-                    style={{
-                      transform: "scale(1.2)", // Scale the checkbox size
-                      borderColor: "rgba(1, 17, 64, 1)",
-                      accentColor: "#011140",
-                      paddingLeft: "10px",
-                      visibility: "visible",
-                      fontSize: "20px",
-
-                      // Set the color of the checkbox
-                    }}
-                  />
+                <Form.Check
+    type="checkbox"
+    checked={selectedItems.includes(item.id)}
+    onChange={() => handleCheckboxChange(item.id)}
+    style={{
+      transform: "scale(1.2)",
+      borderColor: "rgba(1, 17, 64, 1)",
+      accentColor: "#011140",
+      paddingLeft: "10px",
+      visibility: "visible",
+      fontSize: "20px",
+    }}
+  />
                 </td>
                 <td
                   style={{
@@ -320,6 +305,7 @@ const ProductCategory = () => {
             ))}
           </tbody>
         </Table>
+        )}
       </div>
 
       {currentItem && (

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import axiosInstance from "../../instance/axiosInstance";
 
-const useFetchproducts = () => {
+const useFetchproducts= (categoryId = null) => {
   const [products, setproducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,7 +11,17 @@ const useFetchproducts = () => {
   const fetchProducts = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await axiosInstance.post("/displayProduct");
+      let response;
+            
+        if (categoryId) {
+          // Use displayCategoryById endpoint when a specific category is selected
+          const payload = { lastId: null, categoryId };
+          response = await axiosInstance.post("/displayProductByID", payload);
+        } else {
+          // Use displayProject endpoint for "All Projects"
+          const payload = { lastId: null };
+          response = await axiosInstance.post("/displayProduct", payload);
+        }
       setproducts(response.data.data || []);
       setLastId(response.data.lastFetchedId || null);
       setHasMore(response.data.data && response.data.data.length > 0);
@@ -21,14 +31,25 @@ const useFetchproducts = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [categoryId]);
 
   const fetchMoreProducts = useCallback(async () => {
     if (!lastId || !hasMore) return;
     
-    setLoading(true);
+    // setLoading(true);
     try {
-      const response = await axiosInstance.post("/displayProduct", { lastId });
+        let response;
+      
+      if (categoryId) {
+        // Use displayCategoryById endpoint when a specific category is selected
+        const payload = { lastId, categoryId };
+        response = await axiosInstance.post("/displayProductByID", payload);
+      } else {
+        // Use displayProject endpoint for "All Projects"
+        const payload = { lastId };
+        response = await axiosInstance.post("/displayProduct", payload);
+      }
+      
       const newProducts = response.data.data || [];
       
       if (newProducts.length === 0) {
@@ -43,7 +64,7 @@ const useFetchproducts = () => {
     } finally {
       setLoading(false);
     }
-  }, [lastId, hasMore]);
+  }, [lastId, hasMore, categoryId]);
 
   // Initial load
   useEffect(() => {

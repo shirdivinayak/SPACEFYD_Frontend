@@ -4,7 +4,7 @@ import { Button, Dropdown, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AlertSuccesMessage from "../../common/MessageSuccesAlert";
 import useAddProjectApi from "../../../hooks/useAddProjectApi.js";
-import useFetchCategories from "../../../hooks/useAllProductApi.js";
+import useFetchCategories from "../../../hooks/useAllProjectApi.js";
 
 // const categories = ["Electronics", "Furniture", "Clothing", "Toys"];
 const subCategories = {

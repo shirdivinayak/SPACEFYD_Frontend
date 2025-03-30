@@ -1,22 +1,29 @@
 import { useState, useEffect, useCallback } from "react";
 import axiosInstance from "../../instance/axiosInstance";
 
-const useFetchProjects = (categoryId = null) => { // Accept categoryId as a parameter
+const useFetchProjects = (categoryId = null) => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [lastId, setLastId] = useState(null);
   const [hasMore, setHasMore] = useState(true);
 
-  // Function to fetch projects with optional categoryId
+  // Function to fetch projects with the correct endpoint based on categoryId
   const fetchProjects = useCallback(async () => {
     setLoading(true);
     try {
-      const payload = { lastId: null };
+      let response;
+      
       if (categoryId) {
-        payload.categoryId = categoryId; // Include categoryId if provided
+        // Use displayCategoryById endpoint when a specific category is selected
+        const payload = { lastId: null, categoryId };
+        response = await axiosInstance.post("/displayProjectByID", payload);
+      } else {
+        // Use displayProject endpoint for "All Projects"
+        const payload = { lastId: null };
+        response = await axiosInstance.post("/displayProject", payload);
       }
-      const response = await axiosInstance.post("/displayProject", payload);
+      
       setProjects(response.data.data || []);
       setLastId(response.data.lastFetchedId || null);
       setHasMore(response.data.data && response.data.data.length > 0);
@@ -26,19 +33,26 @@ const useFetchProjects = (categoryId = null) => { // Accept categoryId as a para
     } finally {
       setLoading(false);
     }
-  }, [categoryId]); // categoryId as a dependency
+  }, [categoryId]);
 
   // Function to fetch more projects (for pagination)
   const fetchMoreProjects = useCallback(async () => {
     if (!lastId || !hasMore) return;
 
-    setLoading(true);
+    // setLoading(true);
     try {
-      const payload = { lastId };
+      let response;
+      
       if (categoryId) {
-        payload.categoryId = categoryId; // Include categoryId if provided
+        // Use displayCategoryById endpoint when a specific category is selected
+        const payload = { lastId, categoryId };
+        response = await axiosInstance.post("/displayProjectByID", payload);
+      } else {
+        // Use displayProject endpoint for "All Projects"
+        const payload = { lastId };
+        response = await axiosInstance.post("/displayProject", payload);
       }
-      const response = await axiosInstance.post("/displayProject", payload);
+      
       const newProjects = response.data.data || [];
 
       if (newProjects.length === 0) {
@@ -53,12 +67,12 @@ const useFetchProjects = (categoryId = null) => { // Accept categoryId as a para
     } finally {
       setLoading(false);
     }
-  }, [lastId, hasMore, categoryId]); // categoryId as a dependency
+  }, [lastId, hasMore, categoryId]);
 
   // Fetch projects when the component mounts or categoryId changes
   useEffect(() => {
     fetchProjects();
-  }, [fetchProjects]); // fetchProjects includes categoryId in its dependency array
+  }, [fetchProjects]);
 
   return { 
     projects, 

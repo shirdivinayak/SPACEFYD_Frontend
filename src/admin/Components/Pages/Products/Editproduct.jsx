@@ -20,14 +20,21 @@ const EditProductScreen = () => {
 
   // Initialize state with product data or fallback values
   const [productDetails, setProductDetails] = useState({
-    name: item?.name || "",
-    description: item?.description || "",
-    category: item?.category || categories[0],
-    subCategory: item?.subCategory || "",
-    brand: item?.brand || brands[0],
-    productCode: item?.productCode || "",
+    productName: item.productName || "Unnamed",
+    productDescription: item.description || "",
+    categoryId: item.categoryId || "", // Store categoryId for filtering
+    subCategoryId: item.subCategoryId || "", // Store categoryId for filtering
+    productCode: item.productCode || "",
     displayInHome: item?.displayInHome || false,
     displayInTrending: item?.displayInTrending || false,
+    id: item._id,
+    category: item.categoryName || "Uncategorized",
+    subCategory: item.subCategoryName || "Uncategorized",
+    brand: item.brand || "N/A",
+    image: item?.image?.length > 0 ? item.image[0] : null,
+    images: item?.image || [], // Keep all images, don't slice
+    isVisible: item.isVisible || false, // Use isVisible property for filtering
+    originalItem: item,
   });
   const [image, setImage] = useState({
     image: "https://via.placeholder.com/400", // Example main image URL

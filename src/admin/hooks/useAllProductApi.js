@@ -33,9 +33,9 @@ const useFetchCategories = () => {
 
     try {
       setSubcategoriesLoading(true);
-      const response = await axiosInstance.post("/displaySubCategory", {
+      const response = await axiosInstance.post("/displaySubCategoryById", {
         type: "product",
-        categoryId: categoryId // Pass the selected category ID
+        id: categoryId // Pass the selected category ID
       });
       setSubCategories(response.data.data || []);
       console.log("subcategory",response.data.data)

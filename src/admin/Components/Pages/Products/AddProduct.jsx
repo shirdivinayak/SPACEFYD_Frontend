@@ -31,7 +31,7 @@ const AddProduct = () => {
   // Product/Product details state
   const [productDetails, setProductDetails] = useState({
     productName: "",
-    productDescription: "",
+    description: "",
     categoryId: "",
     categoryName: "", // Added
     subcategoryId: "", // Added subcategory
@@ -410,8 +410,8 @@ const AddProduct = () => {
                 >
                   Description:
                   <textarea
-                    name="productDescription"
-                    value={productDetails.productDescription}
+                    name="description"
+                    value={productDetails.description}
                     onChange={handleChange}
                     style={{
                       width: "100%",

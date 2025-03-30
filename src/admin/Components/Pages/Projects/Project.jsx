@@ -10,6 +10,8 @@ import Spinner from "react-bootstrap/Spinner";
 
 const ProductTable = () => {
   const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState("All Projects");
+  
   const {
     projects,
     loading: projectsLoading,
@@ -17,7 +19,9 @@ const ProductTable = () => {
     refetch,
     fetchMoreProjects,
     hasMore,
-  } = useFetchProjects();
+  } =useFetchProjects(
+    selectedCategory === "All Projects" ? null : selectedCategory
+  );
   const {
     deleteCategory,
     categories,
@@ -27,7 +31,6 @@ const ProductTable = () => {
 
   const [items, setItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("All Projects");
   const [message, setMessage] = useState("");
   const tabsRef = useRef(null);
   const [isOnLive, setIsOnLive] = useState(false);
@@ -81,7 +84,6 @@ const ProductTable = () => {
         image: item?.images?.length > 0 ? item.images[0] : null,
         images: item?.images || [], // Keep all images, don't slice
         isVisible: item.isVisible || false, // Use isVisible property for filtering
-        // Pass the entire item to ensure no data is lost
         originalItem: item,
       }));
       setItems(formattedprojects);
@@ -114,12 +116,11 @@ const ProductTable = () => {
 
   const handleSelectAll = (e) => {
     setSelectedItems(
-      e.target.checked ? filteredItems.map((item) => item.id) : []
+      e.target.checked ? items.map((item) => item.id) : [] // Updated to use items directly
     );
   };
 
   const handleEdit = (item) => {
-    // Pass the entire item object with all properties
     navigate("/admin/projects/editprojects", {
       state: { item: item.originalItem ? item.originalItem : item },
     });
@@ -145,6 +146,8 @@ const ProductTable = () => {
   };
 
   const handleCategorySelect = (categoryId) => {
+    setItems([]);
+
     // If "All Projects" is explicitly selected or the same category is clicked again, reset to "All Projects"
     setSelectedCategory(
       categoryId === selectedCategory ? "All Projects" : categoryId
@@ -158,17 +161,8 @@ const ProductTable = () => {
     }
   };
 
-  // Fix filtering to properly use categoryId and isVisible
   const filteredItems = items.filter((item) => {
-    // First check if the onlive filter is active
-    const passesOnliveFilter = !isOnLive || item.isVisible === true;
-
-    // Then check category filter - use categoryId for comparison
-    const passesCategoryFilter =
-      selectedCategory === "All Projects" ||
-      item.categoryId === selectedCategory;
-
-    return passesOnliveFilter && passesCategoryFilter;
+    return !isOnLive || item.isVisible === true;
   });
 
   const filteredAndSortedCategories =
@@ -322,7 +316,7 @@ const ProductTable = () => {
         className="mx-4 px-12"
         // style={{ backgroundColor: "white" }}
       >
-        {projectsLoading && items.length === 0 ? (
+        {projectsLoading  ? (
           <div
             style={{
               display: "flex",
