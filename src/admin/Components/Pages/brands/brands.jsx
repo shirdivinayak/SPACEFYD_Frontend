@@ -15,37 +15,24 @@ const BrandTable = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
 
+  const loadCategories = async () => {
+    const response = await fetchBrandCategories(); // Call the API hook
+    if (response && Array.isArray(response.data)) {
+      const formattedCategories = response.data.map((name, index) => ({
+        id: index + 1,
+        category: name,
+      }));
+      setItems(formattedCategories.reverse());
+    } else {
+      console.error("Invalid data format:", response);
+      setItems([]);
+    }
+  };
+  
   useEffect(() => {
-    const loadCategories = async () => {
-      try {
-        // Simulating your sample API response
-        const sampleResponse = {
-          success: true,
-          data: ["acsas", "addiddas", "asasa", "et", "nike", "sad", "sdfsdf"]
-        };
-        
-        // In real scenario, use this instead:
-        // const response = await fetchBrandCategories();
-        const response = sampleResponse;
-
-        if (response && Array.isArray(response.data)) {
-          const formattedCategories = response.data.map((name, index) => ({
-            id: index + 1, // Simple numeric ID generation
-            category: name
-          }));
-          setItems(formattedCategories.reverse());
-        } else {
-          console.error("Invalid data format:", response);
-          setItems([]);
-        }
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
     loadCategories();
-  }, []); // Only on mount
-
+  }, []);
+  
   useEffect(() => {
     if (message) {
       const timer = setTimeout(() => setMessage(""), 3000);

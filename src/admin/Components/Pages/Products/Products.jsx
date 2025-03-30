@@ -10,6 +10,8 @@ import Spinner from "react-bootstrap/Spinner";
 
 const ProductTable = () => {
   const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState("All Projects");
+  
   const {
     products,
     loading: productsLoading,
@@ -17,7 +19,9 @@ const ProductTable = () => {
     refetch,
     fetchMoreProducts,
     hasMore,
-  } = useFetchProducts();
+  } =useFetchProducts(
+    selectedCategory === "All Products" ? null : selectedCategory
+  )
   const {
     deleteProducts,
     categories,
@@ -27,7 +31,6 @@ const ProductTable = () => {
 
   const [items, setItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("All Products");
   const [message, setMessage] = useState("");
   const tabsRef = useRef(null);
   const [isOnLive, setIsOnLive] = useState(false);
@@ -78,16 +81,15 @@ const ProductTable = () => {
         productCode: item.productCode || "",
         categoryId: item.categoryId || "", // Store categoryId for filtering
         subCategoryId: item.subCategoryId || "", // Store categoryId for filtering
-        category: item.categories || "Uncategorized",
+        category: item.categoryName || "Uncategorized",
         subCategory: item.subCategory || "Uncategorized",
         brand: item.brand || "N/A",
         image: item?.image?.length > 0 ? item.image[0] : null,
         images: item?.image || [], // Keep all images, don't slice
         isVisible: item.isVisible || false, // Use isVisible property for filtering
-        // Pass the entire item to ensure no data is lost
         originalItem: item,
       }));
-      setItems(formattedproducts.reverse());
+      setItems(formattedproducts);
     }
   }, [products]);
 
@@ -127,7 +129,6 @@ const ProductTable = () => {
   };
 
   const handleRemoveSelected = async () => {
-    console.log("remove function called",selectedItems)
     if (selectedItems.length > 0) {
       try {
         await deleteProducts(selectedItems);
@@ -147,8 +148,12 @@ const ProductTable = () => {
   };
 
   const handleCategorySelect = (categoryId) => {
-    // If "All products" is explicitly selected or the same category is clicked again, reset to "All products"
-    setSelectedCategory(categoryId === selectedCategory ? "All Products" : categoryId);
+    setItems([]);
+
+    // If "All Projects" is explicitly selected or the same category is clicked again, reset to "All Projects"
+    setSelectedCategory(
+      categoryId === selectedCategory ? "All Projects" : categoryId
+    );
   };
 
   const scrollTabs = (direction) => {
@@ -158,26 +163,16 @@ const ProductTable = () => {
     }
   };
 
-  // Fix filtering to properly use categoryId and isVisible
   const filteredItems = items.filter((item) => {
-    // First check if the onlive filter is active
-    const passesOnliveFilter = !isOnLive || item.isVisible === true;
-console.log(passesOnliveFilter,"====onive")
-    // Then check category filter - use categoryId for comparison
-    const passesCategoryFilter =
-      selectedCategory === "All Products" ||
-      item.categoryId === selectedCategory;
-
-    return passesOnliveFilter && passesCategoryFilter;
+    return !isOnLive || item.isVisible === true;
   });
 
-
   const filteredAndSortedCategories =
-  categories && Array.isArray(categories)
-    ? categories
-        .filter((category) => category.name)
-        .sort((a, b) => a.name.localeCompare(b.name))
-    : [];
+    categories && Array.isArray(categories)
+      ? categories
+          .filter((category) => category.name)
+          .sort((a, b) => a.name.localeCompare(b.name))
+      : [];
 
   return (
     <div className="container " style={{ padding: "0" }}>
@@ -321,7 +316,7 @@ console.log(passesOnliveFilter,"====onive")
         className="mx-4 px-12"
         // style={{ backgroundColor: "white" }}
       >
-        {productsLoading && items.length === 0 ? (
+        {productsLoading  ? (
           <div
             style={{
               display: "flex",
@@ -490,7 +485,7 @@ console.log(passesOnliveFilter,"====onive")
                 const isLastItem = index === filteredItems.length - 1;
 
                 return (
-                  <tr key={item.id}>
+                  <tr key={item.id} ref={isLastItem ? lastItemRef : null}>
                   <td style={{ borderBottom: true }}>
                     <Form.Check
                       type="checkbox"
