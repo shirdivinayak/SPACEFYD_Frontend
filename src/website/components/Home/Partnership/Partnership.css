@@ -1,14 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap');
 
-/* Frame applied using a background image */
-.custom-section {
+/* Main wrapper to match carousel width */
+.partnership-wrapper {
+  max-width: 1240px;
+  margin: 100px auto;
+  padding: 0 20px;
+}
+
+/* Frame container */
+.partnership-container {
   background: url('../../../Assets/Home/Partner/frame.png') no-repeat center;
-  background-size: contain; /* Ensures the frame scales properly */
-  padding: 50px 30px; /* Adjust padding for better spacing inside */
-  max-width: 85%; /* Reduce section width */
-  margin: 0 auto 50px auto; /* Center and add bottom margin */
+  background-size: cover;
+  padding: 50px 40px;
+  width: 100%;
+  min-height: 400px;
   display: flex;
-  justify-content: center;
+  align-items: center;
 }
 
 /* Ensure no border or shadow on the left image */
@@ -21,7 +28,7 @@
 
 /* Add spacing between left and right sections */
 .left-section {
-  padding-right: 40px; /* Increased spacing for better layout */
+  padding-right: 40px;
 }
 
 /* Adjust column width for 40% - 60% */
@@ -45,6 +52,11 @@
   line-height: 44.09px;
   letter-spacing: -2%;
   color: #4C6559;
+  margin-bottom: 20px;
+}
+
+.section-title span {
+  color: #4C6559;
 }
 
 /* Content Typography */
@@ -55,15 +67,10 @@
   line-height: 26.8px;
   letter-spacing: 0px;
   color: #646464;
-  margin-bottom: 25px; /* Added more space before the link */
+  margin-bottom: 25px;
 }
 
-/* Spacing for the link section */
-.section-link-container {
-  margin-top: 25px; /* Added gap between content and link */
-}
-
-/* Link Typography (Reduced Boldness) */
+/* Link styling */
 .section-link {
   font-family: 'DM Sans', sans-serif;
   font-weight: 400;
@@ -73,16 +80,71 @@
   display: inline-block;
   color: #9A715B;
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 .section-link:hover {
-  color: #ff6600;
+  color: #7a5a48;
 }
 
-/* Responsive Tweaks */
-@media (max-width: 768px) {
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .partnership-wrapper {
+    margin: 50px auto;
+    padding: 0 30px;
+  }
+  
+  .partnership-container {
+    padding: 40px 30px;
+  }
+  
   .left-section {
     padding-right: 0;
-    margin-bottom: 20px; /* Add gap between image and content on small screens */
+    margin-bottom: 20px;
+  }
+  
+  .section-title {
+    font-size: 28px;
+    line-height: 36px;
+  }
+}
+
+@media (max-width: 767px) {
+  .partnership-wrapper {
+    margin: 30px auto;
+    padding: 0 20px;
+  }
+  
+  .partnership-container {
+    padding: 30px 20px;
+  }
+  
+  .section-title {
+    font-size: 24px;
+    line-height: 32px;
+  }
+  
+  .section-text {
+    font-size: 14px;
+    line-height: 22px;
+  }
+  
+  .section-link {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .partnership-wrapper {
+    padding: 0 15px;
+  }
+  
+  .partnership-container {
+    padding: 25px 15px;
+  }
+  
+  .section-title {
+    font-size: 22px;
+    line-height: 28px;
   }
 }
