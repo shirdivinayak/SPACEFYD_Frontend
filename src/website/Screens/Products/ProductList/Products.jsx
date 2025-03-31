@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HeroImage from "../../../Assets/AboutUs/hero.svg";
 import HomeNavbar from "../../../components/Home/NavbarDark/DarkNavbar";
@@ -17,6 +17,8 @@ import Sample1 from "../../../Assets/Products/SampleImage1.svg";
 import Sample2 from "../../../Assets/Products/SampleImage2.svg";
 import Sample3 from "../../../Assets/Products/SampleImage3.svg";
 import Sample4 from "../../../Assets/Products/SampleImage4.svg";
+
+import { useTranslation } from "react-i18next";
 
 const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState("Furnitures");
@@ -148,6 +150,19 @@ const Products = () => {
     navigate(`/ProductDetails`);
   };
 
+  const { t, i18n } = useTranslation("products");
+  console.log("Rendering Products - Current i18n language:", i18n.language);
+
+  useEffect(() => {
+    const updateLanguage = () => {
+      const storedLanguage = localStorage.getItem("selected_language") || "en";
+      i18n.changeLanguage(storedLanguage);
+    };
+
+    window.addEventListener("languageChanged", updateLanguage);
+    return () => window.removeEventListener("languageChanged", updateLanguage);
+  }, [i18n]);
+
   return (
     <div className="main">
       <HomeNavbar />
@@ -162,11 +177,11 @@ const Products = () => {
         }}
       >
         <div className="container px-4">
-          <h1 className="service-title">Our Products</h1>
-          <p className="service-description">
-            Explore our curated range of premium products designed to transform
-            every <br /> corner of your space.
-          </p>
+          <h1 className="service-title">{t("title")}</h1>
+          <p
+            className="service-description"
+            dangerouslySetInnerHTML={{ __html: t("title-content") }}
+          ></p>
         </div>
       </div>
 

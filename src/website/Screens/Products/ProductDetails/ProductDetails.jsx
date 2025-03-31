@@ -9,11 +9,11 @@ import Sample1 from "../../../Assets/Products/SampleImage1.svg";
 import Sample2 from "../../../Assets/Products/SampleImage2.svg";
 import Sample3 from "../../../Assets/Products/SampleImage3.svg";
 import Sample4 from "../../../Assets/Products/SampleImage4.svg";
-import ProductImage from "../../../Assets/Products/SampleImage4.svg";
-import ProductImage2 from "../../../Assets/Products/SampleImage1.svg";
-import ProductImage3 from "../../../Assets/Products/SampleImage2.svg";
-import ProductImage4 from "../../../Assets/Products/SampleImage3.svg";
-import ProductImage5 from "../../../Assets/Products/SampleImage4.svg";
+import ProductImage from "../../../Assets/Products/ProductImage.svg";
+import ProductImage2 from "../../../Assets/Products/ProductImage2.svg";
+import ProductImage3 from "../../../Assets/Products/ProductImage3.svg";
+import ProductImage4 from "../../../Assets/Products/ProductImage4.svg";
+import ProductImage5 from "../../../Assets/Products/ProductImage5.svg";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
