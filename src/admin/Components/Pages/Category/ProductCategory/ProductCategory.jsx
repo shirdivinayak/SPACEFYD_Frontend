@@ -147,7 +147,7 @@ const ProductCategory = () => {
           >
             <h4
               className="mb-0"
-              style={{ fontSize: "20px", color: "#011140", fontWeight: 500 }}
+              style={{ fontSize: "20px", color: "#4C6559", fontWeight: 500 }}
             >
               Add more
             </h4>
@@ -270,7 +270,7 @@ const ProductCategory = () => {
                       style={{
                         transform: "scale(1.2)",
                         borderColor: "rgba(1, 17, 64, 1)",
-                        accentColor: "#011140",
+                        accentColor: "#4C6559",
                         paddingLeft: "10px",
                         visibility: "visible",
                         fontSize: "20px",
@@ -361,7 +361,7 @@ const ProductCategory = () => {
           >
             {/* Left: Number of selected items */}
             <span
-              style={{ color: "#011140", fontWeight: 500, fontSize: "22px" }}
+              style={{ color: "#4C6559", fontWeight: 500, fontSize: "22px" }}
             >
               {selectedItems.length} Selected
             </span>

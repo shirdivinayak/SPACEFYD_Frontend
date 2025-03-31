@@ -147,7 +147,7 @@ const ProjectCategory = () => {
           <h4
             style={{
               fontSize: "20px",
-              color: "#011140",
+              color: "#4C6559",
               fontWeight: 500,
               padding: "10px",
             }}
@@ -158,7 +158,7 @@ const ProjectCategory = () => {
             className={`bi ${
               showCategoryTabs ? "bi-dash-circle" : "bi-plus-circle"
             }`}
-            style={{ color: "#011140", fontSize: "20px", cursor: "pointer" }}
+            style={{ color: "#4C6559", fontSize: "20px", cursor: "pointer" }}
             onClick={() => setShowCategoryTabs(!showCategoryTabs)}
           ></i>
         </div>
@@ -314,7 +314,7 @@ const ProjectCategory = () => {
             borderTop: "1px solid #ddd",
           }}
         >
-          <span style={{ color: "#011140", fontWeight: 500, fontSize: "18px" }}>
+          <span style={{ color: "#4C6559", fontWeight: 500, fontSize: "18px" }}>
             {selectedItems.length} Selected
           </span>
           <Button

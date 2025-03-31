@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LoginImage from "../../../Assets/Images/LoginImage.png";
+import LoginImage from "../../../Assets/Images/LoginImage.svg";
 import LoginSide from "../../../Assets/Images/LoginSide.png";
 import RightCorner from "../../../Assets/Images/cornerright.png";
 import theme from "../../../Assets/colors/styles";

@@ -1,51 +1,86 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Button } from "react-bootstrap";
-import ImageModal from "./ImageModal"; // Import the modal component
+import useBannerApi from "../../../hooks/usebannerapi";
 
 const Home = () => {
-  const [banners, setBanners] = useState({
-    mainBanner: { image: null },
-    banner1: { image: null },
-    banner2: { image: null },
-    banner3: { image: null },
-    banner4: { image: null },
-  });
-
+  const { addBrand, editBrand, fetchBanner, loading, error, success } = useBannerApi();
+  const [banner, setBanner] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
   const [isChanged, setIsChanged] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [hasBanner, setHasBanner] = useState(false);
 
-  const handleBannerImageUpload = (bannerKey, e) => {
+  useEffect(() => {
+    const getBanner = async () => {
+      try {
+        const response = await fetchBanner();
+        if (response?.success && Array.isArray(response.data) && response.data.length > 0) {
+          setBanner(response.data[0].bannerUrl);
+          setHasBanner(true);
+        } else if (response?.success && response?.data?.bannerUrl) {
+          setBanner(response.data.bannerUrl);
+          setHasBanner(true);
+        }
+      } catch (err) {
+        console.error("Error fetching banner:", err);
+      }
+    };
+    
+    getBanner();
+  }, []);
+
+  const handleBannerImageUpload = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setBanners((prevState) => ({
-        ...prevState,
-        [bannerKey]: { image: URL.createObjectURL(file) },
-      }));
-      setIsChanged(true);
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const imageUrl = e.target.result;
+        setBanner(imageUrl);
+        setSelectedFile(file); // This should set the file object
+        setIsChanged(true);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      console.error("Please upload a valid image file.");
     }
   };
 
-  const handleBannerImageDelete = (bannerKey) => {
-    setBanners((prevState) => ({
-      ...prevState,
-      [bannerKey]: { image: null },
-    }));
-    setIsChanged(true);
+  const handleSave = async () => {
+    if (!selectedFile) return;
+    console.log("Selected file on save:", selectedFile); // This logs the File object
+    const formData = new FormData();
+    formData.append("defaultImage", selectedFile);
+    formData.append("bannerName", "");
+    formData.append("bannerDescription", "");
+  
+    try {
+      if (hasBanner) {
+        await editBrand(formData);
+      } else {
+        await addBrand(formData);
+        setHasBanner(true);
+      }
+      setIsChanged(false);
+    } catch (err) {
+      console.error("Error saving banner:", err);
+    }
   };
 
-  const handleSave = () => {
-    console.log("Changes saved!");
-    setIsChanged(false);
-  };
-
-  const handleCancel = () => {
-    setBanners({
-      mainBanner: { image: null },
-      banner1: { image: null },
-      banner2: { image: null },
-      banner3: { image: null },
-      banner4: { image: null },
-    });
+  
+  const handleCancel = () => { 
+    if (!hasBanner) {
+      setBanner(null);
+    } else {
+      fetchBanner().then(response => {
+        if (response?.success && Array.isArray(response.data) && response.data.length > 0) {
+          setBanner(response.data[0].bannerUrl);
+        } else if (response?.success && response?.data?.bannerUrl) {
+          setBanner(response.data.bannerUrl);
+        }
+      }).catch(err => {
+        console.error("Error restoring banner:", err);
+      });
+    }
+    setSelectedFile(null);
     setIsChanged(false);
   };
 
@@ -54,160 +89,54 @@ const Home = () => {
       <h3>Home</h3>
 
       <div className="container" style={{ marginTop: "2rem" }}>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <div
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Card
             style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-              marginRight: "10px",
-            }}
-          >
-            {["banner1", "banner2", "banner3", "banner4"].map(
-              (bannerKey, index) => (
-                <Card
-                  key={index}
-                  style={{
-                    width: "167px",
-                    height: "95px",
-                    border: "1px dashed #ccc",
-                    position: "relative",
-                  }}
-                  onClick={() => setShowModal(true)} // Open modal on click
-                >
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => handleBannerImageUpload(bannerKey, e)}
-                    style={{ display: "none" }}
-                    id={`${bannerKey}-upload`}
-                  />
-                  {banners[bannerKey].image ? (
-                    <img
-                      src={banners[bannerKey].image}
-                      alt={`Banner ${index + 1}`}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        cursor: "pointer",
-                      }}
-                      onClick={() =>
-                        document.getElementById(`${bannerKey}-upload`).click()
-                      }
-                    />
-                  ) : (
-                    <Button
-                      variant="outline-secondary"
-                      onClick={() =>
-                        document.getElementById(`${bannerKey}-upload`).click()
-                      }
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        fontSize: "2rem",
-                      }}
-                    >
-                      <i className="bi bi-file-earmark-image"></i>
-                    </Button>
-                  )}
-                </Card>
-              )
-            )}
-          </div>
-
-          <div
-            style={{
-              flex: 1,
+              width: "748px",
+              height: "421px",
+              border: "1px dashed #ccc",
               display: "flex",
               justifyContent: "center",
+              alignItems: "center",
               position: "relative",
+              cursor: "pointer",
             }}
+            onClick={() => document.getElementById("banner-upload").click()}
           >
-            <Card
-              style={{
-                width: "748px",
-                height: "421px",
-                border: "1px dashed #ccc",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                position: "relative",
-              }}
-              onClick={() => setShowModal(true)} // Open modal on click
-            >
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleBannerImageUpload("mainBanner", e)}
-                style={{ display: "none" }}
-                id="main-banner-upload"
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleBannerImageUpload}
+              style={{ display: "none" }}
+              id="banner-upload"
+            />
+            {banner ? (
+              <img
+                src={banner}
+                alt="Banner"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />
-              {banners.mainBanner.image ? (
-                <img
-                  src={banners.mainBanner.image}
-                  alt="Main Banner"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-              ) : (
-                <Button
-                  variant="outline-secondary"
-                  onClick={() =>
-                    document.getElementById("main-banner-upload").click()
-                  }
-                  style={{
-                    textAlign: "center",
-                    width: "100%",
-                    height: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    fontSize: "0.9rem",
-                  }}
-                >
-                  <i className="bi bi-plus-lg"></i> <br />
-                  Click here to upload Banner
-                </Button>
-              )}
-            </Card>
-          </div>
+            ) : (
+              <Button variant="outline-secondary" style={{ fontSize: "1rem" }}>
+                Click here to upload Banner
+              </Button>
+            )}
+          </Card>
         </div>
 
         {isChanged && (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "end",
-              marginTop: "1rem",
-            }}
-          >
-            <Button
-              variant="outline-danger"
-              onClick={handleCancel}
-              style={{ marginRight: "0.5rem" }}
-            >
+          <div style={{ display: "flex", justifyContent: "end", marginTop: "1rem" }}>
+            <Button variant="outline-danger" onClick={handleCancel} style={{ marginRight: "0.5rem" }}>
               Cancel
             </Button>
-            <Button variant="outline-success" onClick={handleSave}>
-              Save
+            <Button variant="outline-success" onClick={handleSave} disabled={loading}>
+              {loading ? "Saving..." : "Save"}
             </Button>
           </div>
         )}
+        {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
+        {success && <p style={{ color: "green", textAlign: "center" }}>Banner updated successfully!</p>}
       </div>
-
-      {/* Image Modal */}
-      <ImageModal
-        show={showModal}
-        onClose={() => setShowModal(false)}
-        banners={banners}
-      />
     </div>
   );
 };
