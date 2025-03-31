@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import pic from "../../../Assets/Home/companylogo.png";
 import "./HomeNavbar.css";
 import { useTranslation } from "react-i18next";
-import { FaGlobe } from "react-icons/fa";
+// import { FaGlobe } from "react-icons/fa";
 import LanguageSelector from "../../LanguageSelector/LanguageSelector";
 
 const HomeNavbar = () => {
