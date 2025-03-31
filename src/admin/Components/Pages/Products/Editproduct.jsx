@@ -1,152 +1,188 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Dropdown, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AlertSuccesMessage from "../../common/MessageSuccesAlert";
-
-const categories = ["Electronics", "Furniture", "Clothing", "Toys"];
-const subCategories = {
-  Electronics: ["Phones", "Laptops", "Cameras"],
-  Furniture: ["Chairs", "Tables", "Beds"],
-  Clothing: ["Men", "Women", "Kids"],
-  Toys: ["Indoor", "Outdoor"],
-};
-const brands = ["Samsung", "Ikea", "Nike", "Lego"];
+import Spinner from 'react-bootstrap/Spinner';
+import useAddProductApi from "../../../hooks/useAddProduct";
+import useFetchCategories from "../../../hooks/useAllProductApi";
 
 const EditProductScreen = () => {
-  const location = useLocation();
   const navigate = useNavigate();
+  const location = useLocation();
   const item = location.state?.item;
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const { editProduct, loading, error, success } = useAddProductApi();  const { 
+    categories, 
+    subCategories,
+    loading: categoriesLoading, 
+    error: categoriesError,
+    fetchSubCategories,
+    subcategoriesLoading
+  } = useFetchCategories();
 
-  // Initialize state with product data or fallback values
   const [productDetails, setProductDetails] = useState({
+    id: item._id,
     productName: item.productName || "Unnamed",
     productDescription: item.description || "",
     categoryId: item.categoryId || "", // Store categoryId for filtering
-    subCategoryId: item.subCategoryId || "", // Store categoryId for filtering
-    productCode: item.productCode || "",
-    displayInHome: item?.displayInHome || false,
-    displayInTrending: item?.displayInTrending || false,
-    id: item._id,
     category: item.categoryName || "Uncategorized",
+    subcategoryId: item.subCategoryId || "", // Store categoryId for filtering
     subCategory: item.subCategoryName || "Uncategorized",
     brand: item.brand || "N/A",
-    image: item?.image?.length > 0 ? item.image[0] : null,
+    productCode: item.productCode || "",
+    displayInHome: item?.displayInHome || false,
     images: item?.image || [], // Keep all images, don't slice
-    isVisible: item.isVisible || false, // Use isVisible property for filtering
-    originalItem: item,
   });
-  const [image, setImage] = useState({
-    image: "https://via.placeholder.com/400", // Example main image URL
-    images: [
-      "https://via.placeholder.com/100", // Example thumbnail image URLs
-      "https://via.placeholder.com/100",
-      "https://via.placeholder.com/100",
-    ],
+  const placeholderImage = "https://placehold.co/600x400/EEE/31343C";
+  const prevCategoryIdRef = useRef(null); // Track previous categoryId to avoid redundant calls
+
+  const [imageDisplay, setImageDisplay] = useState(() => {
+    const imagesArray = item?.image || [];
+    const mainImage = imagesArray.length > 0 ? imagesArray[0] : placeholderImage;
+    const additionalImages = [...Array(3)].map((_, index) => 
+      (index + 1) < imagesArray.length ? imagesArray[index + 1] : placeholderImage
+    );
+    return { mainImage, additionalImages };
   });
-  const [message, setMessage] = useState("");
-  const [isEditing, setIsEditing] = useState(false);
 
-  const handleEdit = () => {
-    setIsEditing(true); // Switch to edit mode
-  };
+   
 
-  useEffect(() => {
-    if (item && item.category) {
-      setProductDetails((prev) => ({
-        ...prev,
-        subCategory: item.subCategory || subCategories[item.category][0],
-      }));
+useEffect(() => {
+    // Only fetch subcategories if categoryId has changed and is valid
+    if (productDetails.categoryId && productDetails.categoryId !== prevCategoryIdRef.current) {
+      fetchSubCategories(productDetails.categoryId);
+      prevCategoryIdRef.current = productDetails.categoryId; // Update the ref after fetching
     }
-  }, [item]);
+  }, [productDetails.categoryId, fetchSubCategories]);
+
+  const handleEdit = () => setIsEditing(true);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setProductDetails((prevDetails) => ({
-      ...prevDetails,
+    setProductDetails((prev) => ({
+      ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
   };
 
-  const handleSave = () => {
-    console.log("Item saved:", productDetails);
-    setMessage("Category updated successfully.");
-    setTimeout(() => {
-      setMessage("");
-    }, 3000);
-    setIsEditing(false); // Exit edit mode
-  };
+  // Category change handler
   const handleCategoryChange = (e) => {
-    const selectedCategory = e.target.value;
+    const selectedCategoryId = e.target.value;
+    const selectedCategory = categories.find(cat => cat._id === selectedCategoryId);
     setProductDetails((prev) => ({
       ...prev,
-      category: selectedCategory,
-      subCategory: subCategories[selectedCategory]?.[0] || "", // Default to empty if no subcategory
+      categoryId: selectedCategoryId,
+      category: selectedCategory ? selectedCategory.name : "",
+      subcategoryId: "", // Reset subcategory
+      subCategory: ""
+    }));
+  };
+  const handleSubcategoryChange = (e) => {
+    const selectedSubcategoryId = e.target.value;
+    const selectedSubcategory = subCategories.find(sub => sub._id === selectedSubcategoryId);
+    setProductDetails((prev) => ({
+      ...prev,
+      subcategoryId: selectedSubcategoryId,
+      subCategory: selectedSubcategory ? selectedSubcategory.name : ""
     }));
   };
 
-  const handleSubCategoryChange = (e) => {
-    const selectedSubCategory = e.target.value;
-    setProductDetails((prev) => ({
-      ...prev,
-      subCategory: selectedSubCategory,
-    }));
-  };
-  const handleBrandChange = (event) => {
-    const { value } = event.target;
-    setProductDetails((prevDetails) => ({
-      ...prevDetails,
-      brand: value, // Update the selected brand in the product details
-    }));
-  };
+  const handleSave = async () => {
+    if (!productDetails.productName || !productDetails.categoryId) {
+      setMessage("Product name and category are required.");
+      setTimeout(() => setMessage(""), 3000);
+      return;
+    }
 
-  const handleMainImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (file && file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImage((prevState) => ({ ...prevState, image: e.target.result }));
+    setIsSubmitting(true);
+    try {
+      const allImages = [
+        imageDisplay.mainImage !== placeholderImage ? imageDisplay.mainImage : null,
+        ...imageDisplay.additionalImages.filter(img => img !== placeholderImage)
+      ].filter(Boolean);
+
+      const updatedProduct = {
+        id: productDetails.id,
+        productName: productDetails.productName,
+        productDescription: productDetails.productDescription,
+        categoryId: productDetails.categoryId,
+        categoryName: productDetails.category,
+        subcategoryId: productDetails.subcategoryId,
+        subCategoryName: productDetails.subCategory,
+        productCode: productDetails.productCode,
+        isVisible: productDetails.displayInHome,
+        brand: productDetails.brand,
+        image: allImages
       };
-      reader.readAsDataURL(file);
-    } else {
+
+      await editProduct(updatedProduct);
+      setMessage("Product updated successfully.");
+      setTimeout(() => {
+        setMessage("");
+        navigate(-1);
+      }, 3000);
+    } catch (error) {
+      console.error("Error updating product:", error);
+      setMessage("Error updating product. Please try again.");
+      setTimeout(() => setMessage(""), 3000);
+    } finally {
+      setIsSubmitting(false);
+      setIsEditing(false);
+    }
+  };
+
+ 
+
+  const handleImageUpload = (event, isMain = false, index = null) => {
+    const file = event.target.files[0];
+    if (!file || !file.type.startsWith("image/")) {
       setMessage("Please upload a valid image file.");
       setTimeout(() => setMessage(""), 3000);
+      return;
     }
-  };
 
-  const handleOtherImageUpload = (event, index) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImage((prevState) => {
-          const updatedImages = [...prevState.images];
-          updatedImages[index] = e.target.result;
-          return { ...prevState, images: updatedImages };
-        });
-      };
-      reader.readAsDataURL(file);
-    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const imageUrl = e.target.result;
+      setImageDisplay(prev => {
+        if (isMain) {
+          return { ...prev, mainImage: imageUrl };
+        }
+        const updatedAdditionalImages = [...prev.additionalImages];
+        updatedAdditionalImages[index] = imageUrl;
+        return { ...prev, additionalImages: updatedAdditionalImages };
+      });
+    };
+    reader.readAsDataURL(file);
   };
   const handleDeleteMain = () => {
-    setImage((prevState) => ({
-      ...prevState,
-      image: "https://via.placeholder.com/448",
-    }));
+    setImageDisplay(prev => ({ ...prev, mainImage: placeholderImage }));
   };
   const handleDeleteOtherImage = (index) => {
-    setImage((prevState) => {
-      const updatedImages = [...prevState.images];
-      updatedImages[index] = "https://via.placeholder.com/100"; // Reset to placeholder
-      return { ...prevState, images: updatedImages };
+    setImageDisplay(prev => {
+      const updatedAdditionalImages = [...prev.additionalImages];
+      updatedAdditionalImages[index] = placeholderImage;
+      return { ...prev, additionalImages: updatedAdditionalImages };
     });
   };
 
   const handleCancel = () => {
-    navigate(-1); // Navigate back without saving
-    setIsEditing(false); // Exit edit mode
+    navigate(-1);
+    setIsEditing(false);
   };
-
+  
+  if (categoriesLoading || loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    );
+  }
   return (
     <div className="container " style={{ padding: "0" }}>
       {/* Breadcrumb Section */}
@@ -158,11 +194,11 @@ const EditProductScreen = () => {
           className="d-flex align-items-center mb-0 m-0"
           style={{ fontSize: "20px" }}
         >
-          <Nav.Link as={Link} to="/" className="me-2 opacity-50">
+          <Nav.Link as={Link} to="/admin" className="me-2 opacity-50">
             Home
           </Nav.Link>
           <span style={{ marginRight: "8px" }}>&gt;</span>
-          <Nav.Link as={Link} to="/products" className="me-2 opacity-50">
+          <Nav.Link as={Link} to="/admin/products" className="me-2 opacity-50">
             All Products
           </Nav.Link>
 
@@ -188,13 +224,13 @@ const EditProductScreen = () => {
                   fontSize: "16px",
                 }}
               >
-                Product Name
+                Product Name *
               </label>
               <input
-                type="text"
-                name="name"
-                value={productDetails.name}
-                onChange={handleChange}
+                 type="text"
+                 name="productName"
+                 value={productDetails.productName}
+                 onChange={handleChange}
                 disabled={!isEditing} // Disable input when not editing
                 onFocus={(e) =>
                   (e.target.style.borderColor = "rgba(24, 75, 211, 1)")
@@ -224,8 +260,8 @@ const EditProductScreen = () => {
               >
                 Description:
                 <textarea
-                  name="description"
-                  value={productDetails.description}
+                  name="productDescription"
+                  value={productDetails.productDescription}
                   onChange={handleChange}
                   disabled={!isEditing} // Disable input when not editing
                   style={{
@@ -265,59 +301,26 @@ const EditProductScreen = () => {
                 }}
               >
                 Category:
-                <Dropdown>
-                  <Dropdown.Toggle
-                    id="dropdown"
+                <select
+                    value={productDetails.categoryId || ""}
+                    onChange={handleCategoryChange}
                     style={{
                       width: "100%",
                       fontSize: "14px",
-                      fontWeight: "400",
-                      fontSize: "14px",
-
-                      color: "#757575", // Updated text color
-                      backgroundColor: "white",
+                      padding: "8px",
                       border: "1px solid #ccc",
                       borderRadius: "4px",
-                      padding: "8px",
-                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center", // Align text and icon properly
                     }}
+                    required
                     disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
                   >
-                    <span
-                      style={{
-                        fontSize: "14px",
-                        fontWeight: "400",
-                        color: "#757575",
-                      }}
-                    >
-                      {productDetails.category || "Select"}{" "}
-                      {/* Displays selected category or placeholder */}
-                    </span>
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu style={{ width: "100%" }}>
-                    {categories.map((category, index) => (
-                      <Dropdown.Item
-                        key={index}
-                        onClick={() =>
-                          handleCategoryChange({ target: { value: category } })
-                        }
-                        style={{
-                          fontSize: "14px",
-                          fontWeight: "400",
-                          color: "#757575",
-                          padding: "8px",
-                          cursor: "pointer",
-                        }}
-                      >
-                        {category}
-                      </Dropdown.Item>
+                    <option value="">Select Category</option>
+                    {categories && categories.map((category) => (
+                      <option key={category._id} value={category._id}> 
+                        {category.name}
+                      </option>
                     ))}
-                  </Dropdown.Menu>
-                </Dropdown>
+                  </select>
               </label>
 
               {/* Sub-Category Dropdown */}
@@ -330,59 +333,26 @@ const EditProductScreen = () => {
                 }}
               >
                 Sub-Category:
-                <Dropdown>
-                  <Dropdown.Toggle
-                    id="dropdown-subcategory"
+                <select
+                    value={productDetails.subcategoryId || ""}
+                    onChange={handleSubcategoryChange}
                     style={{
                       width: "100%",
                       fontSize: "14px",
-                      fontWeight: "400",
-                      color: "#757575", // Updated text color
-                      backgroundColor: "white",
+                      padding: "8px",
                       border: "1px solid #ccc",
                       borderRadius: "4px",
-                      padding: "8px",
-                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center", // Align text and icon properly
                     }}
-                  >
-                    <span
-                      style={{
-                        fontSize: "14px",
-                        fontWeight: "400",
-                        color: "#757575",
-                      }}
-                      disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
+                    disabled={!productDetails.categoryId || subcategoriesLoading || !isEditing}
                     >
-                      {productDetails.subCategory || "Select"}{" "}
-                      {/* Displays selected subcategory or placeholder */}
-                    </span>
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu style={{ width: "100%" }}>
-                    {(subCategories[productDetails.category] || []).map(
-                      (sub, index) => (
-                        <Dropdown.Item
-                          key={index}
-                          onClick={() =>
-                            handleSubCategoryChange({ target: { value: sub } })
-                          }
-                          style={{
-                            fontSize: "14px",
-                            fontWeight: "400",
-                            color: "#757575",
-                            padding: "8px",
-                            cursor: "pointer",
-                          }}
-                        >
-                          {sub}
-                        </Dropdown.Item>
-                      )
-                    )}
-                  </Dropdown.Menu>
-                </Dropdown>
+                  <option value="">
+                    {!productDetails.categoryId ? "Select Category First" : 
+                     subcategoriesLoading ? "Loading..." : "Select Subcategory"}
+                  </option>
+                  {subCategories?.map((subcategory) => (
+                    <option key={subcategory._id} value={subcategory._id}>{subcategory.name}</option>
+                  ))}
+                  </select>
               </label>
             </div>
 
@@ -394,67 +364,33 @@ const EditProductScreen = () => {
                 gap: "20px",
               }}
             >
-              <label
-                style={{
-                  flex: "1",
-                  color: "rgba(71, 71, 71, 0.51)",
-                  display: "block",
-                  marginTop: "20px", // Adjust the margin as needed
-                  marginBottom: "10px", // Space between label and dropdown
-                }}
-              >
-                Brand:
-                <Dropdown>
-                  <Dropdown.Toggle
-                    id="dropdown-brand"
+                 <label
+                  style={{
+                    flex: "1",
+                    color: "rgba(71, 71, 71, 0.51)",
+                    display: "flex",
+                    flexDirection: "column",
+                    marginTop: "10px",
+                  }}
+                >
+                  Brand:
+                  <input
+                    type="text"
+                    name="brand"
+                    value={productDetails.brand}
+                    onChange={handleChange}
                     style={{
                       width: "100%",
+                      padding: "8px",
                       fontSize: "14px",
                       fontWeight: "400",
-                      color: "#757575", // Updated text color
+                      color: "#757575",
                       backgroundColor: "white",
                       border: "1px solid #ccc",
                       borderRadius: "4px",
-                      padding: "8px",
-                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Same box-shadow as dropdown
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center", // Align text and icon properly
+                      marginTop: "5px",
                     }}
-                    disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
-                  >
-                    <span
-                      style={{
-                        fontSize: "14px",
-                        fontWeight: "400",
-                        color: "#757575",
-                      }}
-                    >
-                      {productDetails.brand || "Select"}{" "}
-                      {/* Displays selected brand or placeholder */}
-                    </span>
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu style={{ width: "100%" }}>
-                    {brands.map((brand) => (
-                      <Dropdown.Item
-                        key={brand}
-                        onClick={() =>
-                          handleBrandChange({ target: { value: brand } })
-                        }
-                        style={{
-                          fontSize: "14px",
-                          fontWeight: "400",
-                          color: "#757575",
-                          padding: "8px",
-                          cursor: "pointer",
-                        }}
-                      >
-                        {brand}
-                      </Dropdown.Item>
-                    ))}
-                  </Dropdown.Menu>
-                </Dropdown>
+                  />
               </label>
 
               <label
@@ -509,13 +445,13 @@ const EditProductScreen = () => {
                   flex: 1, // Allow label to take available space
                 }}
               >
-                Display in Home Screen
+                Display in Home 
               </label>
 
               <input
                 type="checkbox"
                 name="displayInHome"
-                checked={productDetails.displayInHome}
+                checked={productDetails.displayInHome}  // Fixed: Changed from isVisible to displayInHome
                 disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
                 onChange={handleChange}
                 style={{
@@ -526,7 +462,7 @@ const EditProductScreen = () => {
               />
             </div>
 
-            <div
+            {/* <div
               style={{
                 border: "1px solid #ccc",
                 borderRadius: "5px",
@@ -559,7 +495,7 @@ const EditProductScreen = () => {
                   cursor: "pointer", // Optional: To improve UX, change cursor on hover
                 }}
               />
-            </div>
+            </div> */}
           </form>
         </div>
 
@@ -575,8 +511,8 @@ const EditProductScreen = () => {
               }}
             >
               <img
-                src={image.image}
-                alt="Main"
+                  src={imageDisplay.mainImage}
+                  alt="Main"
                 disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
                 style={{
                   width: "400px", // Fixed width
@@ -586,7 +522,7 @@ const EditProductScreen = () => {
                   padding: "5px",
                   cursor: "pointer",
                 }}
-                onClick={() =>
+                onClick={() => isEditing && 
                   document.getElementById("mainImageInput").click()
                 } // Trigger file input click
               />
@@ -623,8 +559,7 @@ const EditProductScreen = () => {
                 id="mainImageInput"
                 accept="image/*"
                 style={{ display: "none" }} // Hidden file input
-                onChange={handleMainImageUpload}
-              />
+                onChange={(e) => handleImageUpload(e, true)}                />
             </div>
 
             {/* Display other images */}
@@ -632,7 +567,7 @@ const EditProductScreen = () => {
               className="d-flex"
               style={{ gap: "10px", marginTop: "10px", paddingLeft: "50px" }}
             >
-              {image.images.map((img, index) => (
+              {imageDisplay.additionalImages.map((img, index) => (
                 <div
                   key={index}
                   style={{ position: "relative", display: "inline-block" }}
@@ -640,19 +575,15 @@ const EditProductScreen = () => {
                   <img
                     src={img}
                     disabled={!isEditing} // Disable the dropdown toggle if not in editing mode
-                    alt={`image-${index}`}
+                    alt={`Image-${index + 1}`}
                     style={{
                       width: "110px",
                       height: "110px",
                       border: "1px solid #ddd",
                       padding: "5px",
-                      cursor: "pointer",
+                      cursor: isEditing ? "pointer" : "default",
                     }}
-                    onClick={() =>
-                      document
-                        .getElementById(`otherImageInput-${index}`)
-                        .click()
-                    } // Trigger file input click
+                    onClick={() => isEditing && document.getElementById(`otherImageInput-${index}`).click()}
                   />
                   {isEditing && (
                     <button
@@ -682,8 +613,8 @@ const EditProductScreen = () => {
                     id={`otherImageInput-${index}`}
                     accept="image/*"
                     style={{ display: "none" }} // Hidden file input
-                    onChange={(e) => handleOtherImageUpload(e, index)}
-                  />
+                    onChange={(e) => handleImageUpload(e, false, index)}
+                    />
                 </div>
               ))}
             </div>
@@ -722,6 +653,7 @@ const EditProductScreen = () => {
                     textDecoration: "none", // Ensures no text decoration
                   }}
                   onClick={handleCancel}
+                  disabled={isSubmitting}
                 >
                   Cancel
                 </Button>
@@ -736,9 +668,11 @@ const EditProductScreen = () => {
                     textDecoration: "none", // Ensures no text decoration
                   }}
                   onClick={handleSave}
+                  disabled={isSubmitting}
+
                 >
-                  Save Changes
-                </Button>
+                  {isSubmitting ? "Saving..." : "Save Changes"}
+                  </Button>
               </>
             )}
           </div>

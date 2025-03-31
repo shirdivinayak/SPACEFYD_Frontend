@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Nav } from "react-bootstrap";
 import { BiChevronDown, BiGrid, BiHome, BiBox, BiClipboard, BiTag } from "react-icons/bi";
 import { Link, useLocation } from "react-router-dom";
-import GroupImage from "../../Assets/Images/Group.png";
+import GroupImage from "../../Assets/Images/Group.svg";
 
 const Sidebar = () => {
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
@@ -12,10 +12,10 @@ const Sidebar = () => {
   // Effect to set the selected option based on the current path
   useEffect(() => {
     const path = location.pathname;
-    if (path.includes("categories")) {
-      if (path.includes("/admin/products")) {
+    if (path.includes("/admin/categories")) {
+      if (path.includes("products")) {
         setSelectedOption("Products");
-      } else if (path.includes("/admin/projects")) {
+      } else if (path.includes("projects")) {
         setSelectedOption("Projects");
       } else {
         setSelectedOption(""); // Reset if no sub-path is found
@@ -54,10 +54,10 @@ const Sidebar = () => {
       transition: "background-color 0.3s ease",
     },
     hover: {
-      backgroundColor: "rgba(255, 255, 255, 0.1)", // Hover color
+      backgroundColor: "rgba(255, 255, 255, 0.7)", // Hover color
     },
     active: {
-      backgroundColor: "#012A6C", // Active selection color
+      backgroundColor: "rgba(255, 255, 255, 0.2)", // Active selection color
     },
   };
 
@@ -68,7 +68,7 @@ const Sidebar = () => {
         position: "",
         width: "268px",
         height: "100vh",
-        backgroundColor: "#011140",
+        backgroundColor: "#4C6559",
         color: "white",
         display: "flex",
         flexDirection: "column",

@@ -50,7 +50,7 @@ const TopNavbar = () => {
         borderBottom: "1px solid #eaeaea",
       }}
     >
-      <Container fluid className="d-flex align-items-center">
+      <Container fluid className="d-flex align-items-flex-end">
         <Form
           className="position-relative"
           style={{ maxWidth: "500px", width: "100%", marginLeft: "auto" }}
@@ -78,30 +78,30 @@ const TopNavbar = () => {
             }}
           />
         </Form>
-
-        <Dropdown className="ms-3">
-          <Dropdown.Toggle
-            variant="light"
-            id="dropdown-basic"
-            className="d-flex align-items-center"
-            style={{
-              color: "#555",
-              fontWeight: "500",
-              backgroundColor: "transparent",
-              border: "none",
-            }}
-          >
-            <FaUserCircle className="fs-4 me-2" />
-            <span>Admin</span>
-          </Dropdown.Toggle>
-
-          <Dropdown.Menu align="end">
-            <Dropdown.Item as={Link} to="/">
-              Reset Password
-            </Dropdown.Item>
-            <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+        <select
+          className="ms-3 form-select"
+          style={{
+            width: "10%",
+            color: "#4C6559",
+            fontWeight: "500",
+            backgroundColor: "transparent",
+            border: "none",
+            cursor: "pointer",
+          }}
+          onChange={(e) => {
+            if (e.target.value === "logout") {
+              handleLogout();
+            } else if (e.target.value === "reset") {
+              navigate("/"); // Navigate to Reset Password page
+            }
+          }}
+        >
+          <option value="" hidden>
+            <FaUserCircle className="fs-4 me-2" /> Admin
+          </option>
+          <option value="reset">Reset Password</option>
+          <option value="logout">Logout</option>
+        </select>
       </Container>
     </Navbar>
   );

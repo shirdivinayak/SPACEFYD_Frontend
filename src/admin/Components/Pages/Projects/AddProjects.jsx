@@ -295,25 +295,7 @@ const AddProject = () => {
       </div>
 
       {/* Main Form Section */}
-      { isSubmitting ? 
-    (   <div 
-      className="d-flex justify-content-center align-items-center"
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        backgroundColor: "rgba(255, 255, 255, 0.8)",
-        zIndex: 9999
-      }}
-    >
-      <Spinner animation="border" role="status" style={{ width: "5rem", height: "5rem" }}>
-        <span className="visually-hidden">Loading...</span>
-      </Spinner>
-    </div>)
-    :
-          (<div
+     <div
         className="d-flex mx-4 px-4 "
         style={{ backgroundColor: "white", marginTop: "20px" }}
       >
@@ -412,7 +394,7 @@ const AddProject = () => {
                 </select>
               </label>
 
-              <label
+              {/* <label
                 style={{
                   flex: "1",
                   color: "rgba(71, 71, 71, 0.51)",
@@ -441,7 +423,7 @@ const AddProject = () => {
                     marginTop: "5px", // Add space between label and input
                   }}
                 />
-              </label>
+              </label> */}
             </div>
 
             <div
@@ -571,12 +553,12 @@ const AddProject = () => {
               }}
               onClick={handleSave}
             >
-              Save Changes
+             {isSubmitting ? ('Saving.....') :( 'Save Changes') } 
             </Button>
           </div>
           <AlertSuccesMessage message={message} />
         </div>
-      </div>)}
+      </div>
     </div>
   );
 };

@@ -10,7 +10,7 @@ import Spinner from "react-bootstrap/Spinner";
 
 const ProductTable = () => {
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState("All Projects");
+  const [selectedCategory, setSelectedCategory] = useState("All Products");
   
   const {
     products,
@@ -82,7 +82,7 @@ const ProductTable = () => {
         categoryId: item.categoryId || "", // Store categoryId for filtering
         subCategoryId: item.subCategoryId || "", // Store categoryId for filtering
         category: item.categoryName || "Uncategorized",
-        subCategory: item.subCategory || "Uncategorized",
+        subCategory: item.subcategoryName || "Uncategorized",
         brand: item.brand || "N/A",
         image: item?.image?.length > 0 ? item.image[0] : null,
         images: item?.image || [], // Keep all images, don't slice
@@ -123,6 +123,7 @@ const ProductTable = () => {
 
   const handleEdit = (item) => {
     // Pass the entire item object with all properties
+    console.log(item.originalItem)
     navigate("/admin/products/EditProduct", {
       state: { item: item.originalItem ? item.originalItem : item },
     });
@@ -152,7 +153,7 @@ const ProductTable = () => {
 
     // If "All Projects" is explicitly selected or the same category is clicked again, reset to "All Projects"
     setSelectedCategory(
-      categoryId === selectedCategory ? "All Projects" : categoryId
+      categoryId === selectedCategory ? "All Products" : categoryId
     );
   };
 
@@ -240,7 +241,7 @@ const ProductTable = () => {
                   backgroundColor:
                     selectedCategory === "All Products" ? "#E0E8FF" : "white",
                   color:
-                    selectedCategory === "All Products" ? "#184BD3" : "#011140",
+                    selectedCategory === "All Products" ? "#184BD3" : "#4C6559",
                   border: "none",
                   fontWeight: 500,
                   fontSize: "16px",
@@ -260,7 +261,7 @@ const ProductTable = () => {
                     backgroundColor:
                       selectedCategory === category._id ? "#E0E8FF" : "white",
                     color:
-                      selectedCategory === category._id ? "#184BD3" : "#011140",
+                      selectedCategory === category._id ? "#184BD3" : "#4C6559",
                     border: "none",
                     fontWeight: 500,
                     fontSize: "16px",
@@ -456,7 +457,7 @@ const ProductTable = () => {
                         checked={isOnLive}
                         onChange={handleGlobalToggle}
                         style={{
-                          backgroundColor: isOnLive ? "#011140" : "#ccc",
+                          backgroundColor: isOnLive ? "#4C6559" : "#ccc",
                           width: "42px",
                           height: "24px",
                         }}
@@ -543,12 +544,12 @@ const ProductTable = () => {
         {loadingMore && (
                   <div className="text-center my-3">
                     <Spinner animation="border" variant="primary" size="sm" />
-                    <span className="ms-2">Loading more projects...</span>
+                    <span className="ms-2">Loading more products...</span>
                   </div>
                 )}
           {!hasMore && items.length > 0 && (
           <div className="text-center my-3 text-muted">
-            No more projects to load
+            No more products to load
           </div>
         )}
       </div>
@@ -580,7 +581,7 @@ const ProductTable = () => {
             }}
           >
             <span
-              style={{ color: "#011140", fontWeight: 500, fontSize: "22px" }}
+              style={{ color: "#4C6559", fontWeight: 500, fontSize: "22px" }}
             >
               {selectedItems.length} Selected
             </span>

@@ -240,7 +240,7 @@ const ProductTable = () => {
                   backgroundColor:
                     selectedCategory === "All Projects" ? "#E0E8FF" : "white",
                   color:
-                    selectedCategory === "All Projects" ? "#184BD3" : "#011140",
+                    selectedCategory === "All Projects" ? "#184BD3" : "#4C6559",
                   border: "none",
                   fontWeight: 500,
                   fontSize: "16px",
@@ -260,7 +260,7 @@ const ProductTable = () => {
                     backgroundColor:
                       selectedCategory === category._id ? "#E0E8FF" : "white",
                     color:
-                      selectedCategory === category._id ? "#184BD3" : "#011140",
+                      selectedCategory === category._id ? "#184BD3" : "#4C6559",
                     border: "none",
                     fontWeight: 500,
                     fontSize: "16px",
@@ -400,7 +400,7 @@ const ProductTable = () => {
                 >
                   Category
                 </th>
-                <th
+                {/* <th
                   style={{
                     height: "60px",
                     padding: "20px 10px",
@@ -411,7 +411,7 @@ const ProductTable = () => {
                   }}
                 >
                   Brand
-                </th>
+                </th> */}
 
                 <th
                   style={{ border: "none", width: "140px", borderBottom: true }}
@@ -433,7 +433,7 @@ const ProductTable = () => {
                         checked={isOnLive}
                         onChange={handleGlobalToggle}
                         style={{
-                          backgroundColor: isOnLive ? "#011140" : "#ccc",
+                          backgroundColor: isOnLive ? "#4C6559" : "#ccc",
                           width: "42px",
                           height: "24px",
                         }}
@@ -488,7 +488,7 @@ const ProductTable = () => {
                       />
                     </td>
                     <td style={{ borderBottom: true }}>{item.category}</td>
-                    <td style={{ borderBottom: true }}>{item.brand}</td>
+                    {/* <td style={{ borderBottom: true }}>{item.brand}</td> */}
                     <td style={{ borderBottom: true }}>
                       <Button
                         size="sm"
@@ -554,7 +554,7 @@ const ProductTable = () => {
             }}
           >
             <span
-              style={{ color: "#011140", fontWeight: 500, fontSize: "22px" }}
+              style={{ color: "#4C6559", fontWeight: 500, fontSize: "22px" }}
             >
               {selectedItems.length} Selected
             </span>

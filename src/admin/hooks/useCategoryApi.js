@@ -7,20 +7,23 @@ const useCategoryApi = () => {
   const [message, setMessage] = useState("");
   const [categories, setCategories] = useState([]);
 
-  const fetchCategories = async () => {
+  const fetchProjectCategories = async () => {
     try {
       setLoading(true);
       const response = await axiosInstance.post("/displayCategory", {
-        type: "product", // Added type in the request body
-      });      // Assuming response.data contains the categories in response.data.data
-      setCategories(response.data.data || []); // Store categories in state
-      console.log(response.data.data)
+        type: "product",
+      });
+      const fetchedCategories = response.data.data || []; 
+      setCategories(fetchedCategories); // Update the hook's state
+      return response.data; // Return the data for manual calls if needed
     } catch (error) {
       setError(error.response?.data?.message || "Failed to fetch categories.");
+      return { data: [] };
     } finally {
       setLoading(false);
     }
   };
+
   const addCategory = async (categoryData) => {
     try {
       setLoading(true);
@@ -28,20 +31,21 @@ const useCategoryApi = () => {
       const newCategory = response.data;
       setCategories((prev) => [...prev, newCategory]);
       setMessage(`Category ${categoryData.name} added successfully.`);
-    } catch (error) {
+      await fetchProjectCategories(); // Refresh categories from server    
+      } catch (error) {
       setError(error.response?.data?.message || "Failed to add category.");
     } finally {
       setLoading(false);
     }
   };
 
-
-
   const addSubCategory = async (subCategoryData) => {
     try {
       setLoading(true);
       await axiosInstance.post("/addSubCategory", subCategoryData);
       setMessage(`Subcategory ${subCategoryData.name} added successfully.`);
+     await fetchProjectCategories();
+
     } catch (error) {
       setError(error.response?.data?.message || "Failed to add subcategory.");
     } finally {
@@ -49,9 +53,32 @@ const useCategoryApi = () => {
     }
   };
 
+  // Fetch categories on mount
   useEffect(() => {
-    fetchCategories(); // Fetch categories when the component mounts
+    fetchProjectCategories();
   }, []);
+
+   const deleteCategory = async (categoryIds) => {
+      try {
+        setLoading(true);
+        setError(null);
+    
+        // Ensure categoryIds is always an array
+        const idsToDelete = Array.isArray(categoryIds) ? categoryIds : [categoryIds];
+    
+        await axiosInstance.post("/deleteCategory", { id: idsToDelete,   type: "product" });
+    
+        setCategories((prevItems) =>
+          prevItems.filter((item) => !idsToDelete.includes(item.id))
+        );
+    
+        setMessage("Category(ies) deleted successfully.");
+      } catch (error) {
+        setError(error.response?.data?.message || "Failed to delete category(ies).");
+      } finally {
+        setLoading(false);
+      }
+    };
 
   return {
     loading,
@@ -62,6 +89,8 @@ const useCategoryApi = () => {
     addSubCategory,
     setMessage,
     setError,
+    deleteCategory,
+    fetchProjectCategories, // Export this for manual calls if needed
   };
 };
 

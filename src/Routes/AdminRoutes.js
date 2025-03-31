@@ -19,7 +19,7 @@ import { useAuth } from "../AuthContext"; // Import authentication context
 
 const AdminLayout = ({ children }) => {
   return (
-    <div className="d-flex" style={{ backgroundColor: "#011140" }}>
+    <div className="d-flex" style={{ backgroundColor: "#4C6559" }}>
       <Sidebar />
       <div
         className="flex-grow-1"

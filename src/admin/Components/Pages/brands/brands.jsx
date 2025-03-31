@@ -6,6 +6,7 @@ import AlertMessage from "../../common/MessageSuccesAlert";
 import EditBrandModal from "./EditBrand";
 import AddBrand from "./AddBrands";
 import useBrandCategoryApi from "../../../hooks/usebrandApi"; // Adjust the path as needed
+import Spinner from "react-bootstrap/Spinner";
 
 const BrandTable = () => {
   const { fetchBrandCategories, loading, error, message, setMessage } = useBrandCategoryApi();
@@ -99,7 +100,7 @@ const BrandTable = () => {
           <h4
             style={{
               fontSize: "20px",
-              color: "#011140",
+              color: "#4C6559",
               fontWeight: 500,
               padding: "10px",
             }}
@@ -110,7 +111,7 @@ const BrandTable = () => {
             className={`bi ${
               showCategoryTabs ? "bi-dash-circle" : "bi-plus-circle"
             }`}
-            style={{ color: "#011140", fontSize: "20px", cursor: "pointer" }}
+            style={{ color: "#4C6559", fontSize: "20px", cursor: "pointer" }}
             onClick={() => setShowCategoryTabs(!showCategoryTabs)}
           ></i>
         </div>
@@ -118,6 +119,29 @@ const BrandTable = () => {
       </div>
 
       {/* Category Table */}
+      {loading ? (
+ <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%", // Ensures it takes up full height of the container
+              width: "100%", // Ensures it takes up full width of the container
+              color: "transparent",
+              marginTop: "15%",
+            }}
+          >
+            <Spinner
+              animation="border"
+              role="status"
+              style={{ width: "3rem", height: "3rem" }}
+              variant="primary"
+            >
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+      ):(
+
       <div className="my-3 bg-white px-3 mx-4">
         <Table hover responsive>
           <thead>
@@ -161,7 +185,7 @@ const BrandTable = () => {
           </tbody>
         </Table>
       </div>
-
+      )}
       {/* Edit Modal */}
       {currentItem && (
         <EditBrandModal
@@ -190,7 +214,7 @@ const BrandTable = () => {
             borderTop: "1px solid #ddd",
           }}
         >
-          <span style={{ color: "#011140", fontWeight: 500, fontSize: "18px" }}>
+          <span style={{ color: "#4C6559", fontWeight: 500, fontSize: "18px" }}>
             {selectedItems.length} Selected
           </span>
           <Button

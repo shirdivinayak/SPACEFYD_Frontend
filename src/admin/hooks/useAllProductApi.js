@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axiosInstance from "../../instance/axiosInstance";
 
 const useFetchCategories = () => {
@@ -25,8 +25,8 @@ const useFetchCategories = () => {
     fetchCategories();
   }, []);
 
-  const fetchSubCategories = async (categoryId) => {
-    if (!categoryId) {
+  const fetchSubCategories = useCallback(async (categoryId) => {
+        if (!categoryId) {
       setSubCategories([]);
       return;
     }
@@ -45,7 +45,7 @@ const useFetchCategories = () => {
     } finally {
       setSubcategoriesLoading(false);
     }
-  };
+  }, []); // Empty dependency array to memoize the function
 
   const deleteProducts = async (categoryIds) => {
     try {
