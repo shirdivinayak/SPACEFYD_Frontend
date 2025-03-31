@@ -19,8 +19,18 @@ import { JustifyLeft } from "react-bootstrap-icons";
 import { useTranslation } from "react-i18next";
 
 const AboutUs = () => {
-  const { t } = useTranslation("about");
-  // const [isNavbarExpanded, setIsNavbarExpanded] = useState(false);
+  const { t, i18n } = useTranslation("about");
+
+  console.log("Rendering AboutUs - Current i18n language:", i18n.language);
+
+  // const LanguageSwitcher = () => {
+  //   const { i18n } = useTranslation();
+
+  //   const changeLanguage = (lng) => {
+  //     i18n.changeLanguage(lng); // Switches language dynamically
+  //   };
+  // <button onClick={() => changeLanguage("en")}>English</button>
+
   return (
     <div>
       <HomeNavbar />
@@ -35,63 +45,67 @@ const AboutUs = () => {
         {" "}
         <div className="container">
           <h1>{t("title")}</h1>
-          <p>
-            <p dangerouslySetInnerHTML={{ __html: t("title-sub") }}></p>
-          </p>
+
+          <p dangerouslySetInnerHTML={{ __html: t("title-sub") }}></p>
         </div>
       </div>
 
       {/* Overlay Image */}
-      <div className="overlay-image-container">
-        <img src={MainImage} alt="Overlay" className="overlay-image" />
-      </div>
       <div
-        className="about-us container-fluid d-flex flex-wrap justify-content-center align-items-center mt-5 col-lg-6 col-sm-6 p-0 "
+        className="overlay-image-container"
         style={{
-          color: "#4C6559",
-          backgroundImage: `url(${Gradient})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          width: "90%", // Full width for mobile
-          height: "100%",
-          // minheight: "80vh",
-          minHeight: window.innerWidth ? "80vh" : "1000px",
-          // maxHeight: window.innerWidth > 600 ? "640px" : "1200px",
-          overflow: "hidden",
-          padding: " 20px 15px",
-          // paddingRight: "0px",
-          marginLeft: "auto", // Center container for larger screens
-          marginRight: "auto", // Center container for larger screens
-          borderTopRightRadius: "20px",
-          borderBottomRightRadius: "20px",
+          marginBottom: "50px",
         }}
       >
-        {window.innerWidth < 400 && (
-          <h2
-            dangerouslySetInnerHTML={{ __html: t("second-section-heading") }}
-          ></h2>
-        )}
+        <img src={MainImage} alt="Overlay" className="overlay-image" />
+      </div>
 
-        {/* Left Section */}
+      <div
+        className="about-us container-fluid d-flex flex-wrap justify-content-start align-items-center mt-5 col-lg-6 col-sm-6 p-0"
+        style={{
+          color: "white",
+          backgroundImage: `url(${Image3})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover", // Changed from "contain" to avoid repetition
+          backgroundPosition: "center",
+          width: "90%", // Full width for mobile
+          minHeight: "80vh",
+          padding: "20px 15px",
+          marginLeft: "auto",
+          marginRight: "auto",
+          borderTopRightRadius: "20px",
+          borderBottomRightRadius: "20px",
+          display: "flex",
+          justifyContent: "flex-start", // Ensures content stays on the left
+        }}
+      >
+        {/* Left Section (Text) */}
         <div
-          className="d-flex flex-column col-lg-8 col-md-6 text-left text-md-left "
-          style={{ flex: 1 }}
+          className="d-flex flex-column col-lg-6 col-md-6 text-left text-md-left"
+          style={{
+            width: "50%", // Keeps content in the left half
+            textAlign: "left",
+            paddingLeft: "16px", // Ensures text is justified to the left
+          }}
         >
-          <div className=" heading-part container ">
+          <div
+            style={{
+              paddingLeft: "22px",
+            }}
+          >
             {window.innerWidth > 400 && (
               <h2
-                style={{
-                  marginTop: "50px !important",
-                }}
+                style={{ marginTop: "50px" }}
                 dangerouslySetInnerHTML={{
                   __html: t("second-section-heading"),
                 }}
               ></h2>
             )}
           </div>
-          <div className=" left-column d-flex flex-column flex-sm-row mt-4 px-4">
+
+          <div className="left-column d-flex flex-column flex-sm-row mt-4 px-4">
             {/* Left Column */}
-            <div className="d-flex flex-column me-sm-4 ">
+            <div className="d-flex flex-column me-sm-4">
               <h5>{t("left-column-top-head")}</h5>
               <p>{t("left-column-top-content")}</p>
 
@@ -100,7 +114,7 @@ const AboutUs = () => {
             </div>
 
             {/* Right Column */}
-            <div className=" right-column d-flex flex-column">
+            <div className="right-column d-flex flex-column">
               <h5>{t("right-column-top-head")}</h5>
               <p>{t("right-column-top-content")}</p>
 
@@ -109,33 +123,8 @@ const AboutUs = () => {
             </div>
           </div>
         </div>
-        {/* Right Section with Image */}
-        <div
-          className="image-right d-flex flex-sm-row col-lg-5 col-md-6 justify-content-center align-items-center m-0"
-          style={{
-            maxWidth: "487px",
-            flex: 1,
-            alignSelf: "stretch", // Ensure the image container stretches
-          }}
-        >
-          <img
-            src={Image3}
-            alt="Interior Design"
-            id="image3"
-            className="img-fluid"
-            style={{
-              // borderTopRightRadius: "12px",
-              // borderBottomRightRadius: "12px",
-              width: "100%",
-              maxWidth: "620px",
-              objectFit: "cover",
-              height: "100vh", // Ensure the aspect ratio is maintained
-              display: "block", // Ensures no inline elements affect it
-              margin: "0 auto", // Centers the image horizontally if needed
-            }}
-          />
-        </div>
       </div>
+
       <div
         // className="container-fluid d-flex flex-column flex-md-row position-relative rounded-4"
         className={
@@ -164,11 +153,12 @@ const AboutUs = () => {
           }}
         >
           <button
-            className="btn btn-light px-4 py-2 mb-3 col-md-6 "
+            className="btn btn-light  mb-3 col-md-6 "
             style={{
               borderRadius: "50px",
               backgroundColor: "white",
               borderBlockWidth: "0.5px",
+              paddingLeft: "20px",
             }}
           >
             {t("partner-button")}
@@ -188,7 +178,6 @@ const AboutUs = () => {
           style={{
             color: "#9A715B",
             fontSize: "45px",
-            fontStyle: "italic",
             lineHeight: "50px",
             fontWeight: "200px",
           }}

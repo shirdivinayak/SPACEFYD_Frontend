@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import pic from "../../../Assets/Home/companylogo.png";
 import "./HomeNavbar.css";
+import { useTranslation } from "react-i18next";
+import { FaGlobe } from "react-icons/fa";
+import LanguageSelector from "../../LanguageSelector/LanguageSelector";
 
 const HomeNavbar = () => {
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const { i18n } = useTranslation();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    localStorage.removeItem("selected_lanuage");
+    localStorage.setItem("selected_language", lng);
+    setShowDropdown(false);
+  };
+
   // Navigation items with their corresponding routes
   const navItems = [
     { name: "About us", path: "/AboutUs" },
@@ -76,8 +90,12 @@ const HomeNavbar = () => {
                     textDecoration: "none",
                     transition: "transform 0.3s ease",
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.1)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.transform = "scale(1.1)")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.transform = "scale(1)")
+                  }
                 >
                   {item.name}
                 </Link>
@@ -148,14 +166,21 @@ const HomeNavbar = () => {
                       transition: "transform 0.3s ease",
                     }}
                     onClick={() => {
-                      const navbarToggler = document.querySelector(".navbar-toggler");
-                      const navbarCollapse = document.querySelector("#navbarSupportedContent");
+                      const navbarToggler =
+                        document.querySelector(".navbar-toggler");
+                      const navbarCollapse = document.querySelector(
+                        "#navbarSupportedContent"
+                      );
                       if (navbarCollapse.classList.contains("show")) {
                         navbarToggler.click();
                       }
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.1)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.transform = "scale(1.1)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.transform = "scale(1)")
+                    }
                   >
                     {item.name}
                   </Link>
@@ -180,8 +205,11 @@ const HomeNavbar = () => {
                     textAlign: "center",
                   }}
                   onClick={() => {
-                    const navbarToggler = document.querySelector(".navbar-toggler");
-                    const navbarCollapse = document.querySelector("#navbarSupportedContent");
+                    const navbarToggler =
+                      document.querySelector(".navbar-toggler");
+                    const navbarCollapse = document.querySelector(
+                      "#navbarSupportedContent"
+                    );
                     if (navbarCollapse.classList.contains("show")) {
                       navbarToggler.click();
                     }
@@ -191,6 +219,11 @@ const HomeNavbar = () => {
                 </Link>
               </li>
             </ul>
+          </div>
+
+          {/* Language Switcher */}
+          <div className="language-dropdown position-relative mx-3">
+            <LanguageSelector />
           </div>
 
           {/* Contact Button for Large Screens */}
