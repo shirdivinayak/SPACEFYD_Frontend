@@ -5,15 +5,16 @@ import HeroSection from "../../components/Home/HeroSection/HeroSection";
 import HomeNavbar from "../../components/Home/Navbar/HomeNavbar";
 import Sections from "../../components/Home/Sections/Sections";
 // Import images
-import image1 from "../../Assets/Home/Section/images1.png";
-import image2 from "../../Assets/Home/Section/images2.jpg";
-import image3 from "../../Assets/Home/Section/images3.jpg";
-import image4 from "../../Assets/Home/Section/images4.jpg";
-import image5 from "../../Assets/Home/Section/images5.jpg";
-import image6 from "../../Assets/Home/Section/images6.jpg";
+import image1 from "../../Assets/Home/Section/pic1.png";
+import image2 from "../../Assets/Home/Section/pic2.png";
+import image3 from "../../Assets/Home/Section/pic3.png";
+import image4 from "../../Assets/Home/Section/pic4.png";
+import image5 from "../../Assets/Home/Section/pic5.png";
+import image6 from "../../Assets/Home/Section/pic6.png";
 import ContentSection from "../../components/Home/Content/ContentSection";
 import Products from "../../components/Home/Products/Products";
 import CardSection from "../../components/CardSection/CardSection";
+import Partnership from "../../components/Home/Partnership/Partnership";
 
 function App() {
   const backgroundImage = "https://via.placeholder.com/1920x1080"; // Replace with your background image URL
@@ -66,6 +67,7 @@ function App() {
       <HomeNavbar />
       <HeroSection />
       <CarouselComponent />
+      <Partnership />
       <Products />
       <CardSection />
       <Sections backgroundImage={backgroundImage} sections={sections} />

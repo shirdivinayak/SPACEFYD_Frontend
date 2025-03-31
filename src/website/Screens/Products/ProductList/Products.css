@@ -109,7 +109,7 @@
 .types-menu::-webkit-scrollbar {
   height: 6px;
 }
-*/ .types-menu::-webkit-scrollbar-thumb {
+.types-menu::-webkit-scrollbar-thumb {
   background-color: #4c6559; /* Scrollbar color */
   border-radius: 10px;
 }

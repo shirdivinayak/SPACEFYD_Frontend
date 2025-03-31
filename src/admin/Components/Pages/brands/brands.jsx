@@ -5,38 +5,33 @@ import { Link } from "react-router-dom";
 import AlertMessage from "../../common/MessageSuccesAlert";
 import EditBrandModal from "./EditBrand";
 import AddBrand from "./AddBrands";
-import useProjectCategoryApi from "../../../hooks/useProjectCategoryApi"; // Adjust the path as needed
+import useBrandCategoryApi from "../../../hooks/usebrandApi"; // Adjust the path as needed
 
 const BrandTable = () => {
-  const { fetchProjectCategories, loading, error, message, setMessage } =
-    useProjectCategoryApi();
+  const { fetchBrandCategories, loading, error, message, setMessage } = useBrandCategoryApi();
   const [items, setItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [showCategoryTabs, setShowCategoryTabs] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
 
-  useEffect(() => {
-    const loadCategories = async () => {
-      try {
-        const response = await fetchProjectCategories();
-        if (response && Array.isArray(response.data)) {
-          const formattedCategories = response.data.map((item) => ({
-            id: item._id,
-            category: item.name || "Unnamed",
-          }));
-          setItems(formattedCategories.reverse());
-        } else {
-          console.error("Invalid data format:", response);
-          setItems([]);
-        }
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
+  const loadCategories = async () => {
+    const response = await fetchBrandCategories(); // Call the API hook
+    if (response && Array.isArray(response.data)) {
+      const formattedCategories = response.data.map((name, index) => ({
+        id: index + 1,
+        category: name,
+      }));
+      setItems(formattedCategories.reverse());
+    } else {
+      console.error("Invalid data format:", response);
+      setItems([]);
+    }
+  };
   
+  useEffect(() => {
     loadCategories();
-  }, []); // Only on mount
+  }, []);
   
   useEffect(() => {
     if (message) {
@@ -44,7 +39,6 @@ const BrandTable = () => {
       return () => clearTimeout(timer);
     }
   }, [message, setMessage]);
-  
 
   const handleEdit = (item) => {
     setCurrentItem(item);
@@ -94,7 +88,7 @@ const BrandTable = () => {
           <Nav.Link as={Link} to="/" className="me-2 opacity-50">
             Home
           </Nav.Link>
-          <span> &gt; </span>
+          <span> &gt;</span>
           <span className="ms-2">Brands</span>
         </h4>
       </div>
@@ -148,7 +142,7 @@ const BrandTable = () => {
                   />
                 </td>
                 <td>{item.category}</td>
-                <td>
+                {/* <td>
                   <Button
                     size="sm"
                     onClick={() => handleEdit(item)}
@@ -161,7 +155,7 @@ const BrandTable = () => {
                     <i className="bi bi-pencil"></i>
                     <span> Edit </span>
                   </Button>
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>

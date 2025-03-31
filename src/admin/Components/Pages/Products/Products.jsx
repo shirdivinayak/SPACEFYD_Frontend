@@ -1,139 +1,99 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Button, Table, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import useFetchProducts from "../../../hooks/useAllProductlistApi";
 import useFetchCategories from "../../../hooks/useAllProductApi"; // Adjust path
 import { Nav } from "react-bootstrap";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AlertMessage from "../../common/MessageAlert";
+import Spinner from "react-bootstrap/Spinner";
 
 const ProductTable = () => {
   const navigate = useNavigate();
- 
-  const productData = [
-    {
-      id: `#56674`,
-      name: "Rigo Solid Wood",
-      category: "Furniture",
-      subCategory: "Seating",
-      description: "lorem ipsum sysb fskehg ekfbekr tehein vdjkvnskjfbvs vsfbvskjbk vskjrgbskjrbgsknvks",
-      brand: "Home Centre",
-      image: "https://via.placeholder.com/50",
-      onlive: "1",
-      productCode: "RIG001",
-    },
-    {
-      id: `#56675`,
-      name: "Modern Sofa",
-      category: "Furniture",
-      subCategory: "Seating",
-      description: "lorem ipsum sysb fskehg ekfbekr tehein vdjkvnskjfbvs vsfbvskjbk vskjrgbskjrbgsknvks",
-      brand: "Furniture Plus",
-      image: "https://via.placeholder.com/50",
-      onlive: "1",
-      productCode: "SOF002",
-      displayInHome:'true'
-    },
-    {
-      id: `#56676`,
-      name: "Indoor Plant",
-      category: "Plants",
-      subCategory: "Greenery",
-      description: "lorem ipsum sysb fskehg ekfbekr tehein vdjkvnskjfbvs vsfbvskjbk vskjrgbskjrbgsknvks",
-      brand: "Green Homes",
-      image: "https://via.placeholder.com/50",
-      onlive: "0",
-      productCode: "PLT003",
-    },
-    {
-      id: `#56677`,
-      name: "Decorative Vase",
-      category: "Decorations",
-      subCategory: "Vases",
-      description: "lorem ipsum sysb fskehg ekfbekr tehein vdjkvnskjfbvs vsfbvskjbk vskjrgbsknvks",
-      brand: "Home Living",
-      image: "https://via.placeholder.com/50",
-      onlive: "1",
-      productCode: "VAS004",
-    },
-    {
-      id: `#56678`,
-      name: "Dining Table Set",
-      category: "Dining",
-      subCategory: "Furniture",
-      description: "lorem ipsum sysb fskehg ekfbekr tehein vdjkvnskjfbvs vsfbvskjbk vskjrgbsknvks",
-      brand: "Luxury Furnishings",
-      image: "https://via.placeholder.com/50",
-      onlive: "1",
-      productCode: "DNT005",
-    },
-    {
-      id: `#56679`,
-      name: "Wall Art",
-      category: "Decorations",
-      subCategory: "Art",
-      description: "lorem ipsum sysb fskehg ekfbekr tehein vdjkvnskjfbvs vsfbvskjbk vskjrgbsknvks",
-      brand: "DecorCraft",
-      image: "https://via.placeholder.com/50",
-      onlive: "0",
-      productCode: "ART006",
-    },
-    {
-      id: `#56680`,
-      name: "LED Ceiling Light",
-      category: "Lighting",
-      subCategory: "Ceiling Lights",
-      description: "lorem ipsum sysb fskehg ekfbekr tehein vdjkvnskjfbvs vsfbvskjbk vskjrgbsknvks",
-      brand: "Bright Lights",
-      image: "https://via.placeholder.com/50",
-      onlive: "0",
-      productCode: "LGT007",
-    },
-    {
-      id: `#56681`,
-      name: "Outdoor Chair",
-      category: "Outdoor",
-      subCategory: "Furniture",
-      description: "lorem ipsum sysb fskehg ekfbekr tehein vdjkvnskjfbvs vsfbvskjbk vskjrgbsknvks",
-      brand: "Outdoor Living",
-      image: "https://via.placeholder.com/50",
-      onlive: "1",
-      productCode: "CHA008",
-    },
-    {
-      id: `#56682`,
-      name: "Storage Shelf",
-      category: "Storage",
-      subCategory: "Shelves",
-      description: "lorem ipsum sysb fskehg ekfbekr tehein vdjkvnskjfbvs vsfbvskjbk vskjrgbsknvks",
-      brand: "Space Saver",
-      image: "https://via.placeholder.com/50",
-      onlive: "1",
-      productCode: "SHF009",
-      displayInHome: true
-    },
-    {
-      id: `#56683`,
-      name: "Table Lamp",
-      category: "Lighting",
-      subCategory: "Lamps",
-      description: "lorem ipsum sysb fskehg ekfbekr tehein vdjkvnskjfbvs vsfbvskjbk vskjrgbsknvks",
-      brand: "Lighting World",
-      image: "https://via.placeholder.com/50",
-      onlive: "0",
-      productCode: "LMP010",
-    },
-  ];
+  const [selectedCategory, setSelectedCategory] = useState("All Projects");
   
+  const {
+    products,
+    loading: productsLoading,
+    error: productsError,
+    refetch,
+    fetchMoreProducts,
+    hasMore,
+  } =useFetchProducts(
+    selectedCategory === "All Products" ? null : selectedCategory
+  )
+  const {
+    deleteProducts,
+    categories,
+    loading: categoriesLoading,
+    error: categoriesError,
+  } = useFetchCategories();
 
-  const [items, setItems] = useState(productData);
+  const [items, setItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("All Products");
   const [message, setMessage] = useState("");
   const tabsRef = useRef(null);
   const [isOnLive, setIsOnLive] = useState(false);
-  const { categories, loading, error } = useFetchCategories();
+  const [loadingMore, setLoadingMore] = useState(false);
 
+  const observer = useRef();
+  const lastItemRef = useCallback(
+    (node) => {
+      if (productsLoading || loadingMore) return;
+      if (observer.current) observer.current.disconnect();
 
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setLoadingMore(true);
+          fetchMoreProducts().finally(() => setLoadingMore(false));
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [productsLoading, loadingMore, hasMore, fetchMoreProducts]
+  );
+
+  useEffect(() => {
+    if (productsError) {
+      console.log(productsError);
+    }
+    if (categoriesError) {
+      console.log(categoriesError);
+    }
+  }, [productsError, categoriesError]);
+  
+  // Setting the default selected category
+  useEffect(() => {
+    if (!selectedCategory) {
+      setSelectedCategory("All Products");
+    }
+  }, [selectedCategory]);
+
+  const placeholderImage = "https://placehold.co/600x400/EEE/31343C";
+
+  useEffect(() => {
+    if (products) {
+      const formattedproducts = products.map((item) => ({
+        id: item._id,
+        productName: item.productName || "Unnamed",
+        productDescription: item.description || "",
+        productCode: item.productCode || "",
+        categoryId: item.categoryId || "", // Store categoryId for filtering
+        subCategoryId: item.subCategoryId || "", // Store categoryId for filtering
+        category: item.categoryName || "Uncategorized",
+        subCategory: item.subCategory || "Uncategorized",
+        brand: item.brand || "N/A",
+        image: item?.image?.length > 0 ? item.image[0] : null,
+        images: item?.image || [], // Keep all images, don't slice
+        isVisible: item.isVisible || false, // Use isVisible property for filtering
+        originalItem: item,
+      }));
+      setItems(formattedproducts);
+    }
+  }, [products]);
+
+  // Handling message timeout
   useEffect(() => {
     if (message) {
       const timer = setTimeout(() => setMessage(""), 3000);
@@ -141,86 +101,78 @@ const ProductTable = () => {
     }
   }, [message]);
 
-
-  const handleEdit = (product) => {
-    navigate('/products/EditProduct', { state: { item: product } });
-  };
-
-  const handleAdd = (product) => {
-    navigate('/products/AddProduct', { state: { item: product } });
-  };
-
-
-  
   const handleCheckboxChange = (id) => {
-    if (selectedItems.includes(id)) {
-      setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
-    } else {
-      setSelectedItems([...selectedItems, id]);
-    }
+    setSelectedItems((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((itemId) => itemId !== id)
+        : [...prevSelected, id]
+    );
+  };
+
+  const handleAdd = () => {
+    navigate('/admin/products/addproduct');
   };
 
   const handleGlobalToggle = () => {
-    setIsOnLive((prevIsOnLive) => !prevIsOnLive);
+    setIsOnLive((prev) => !prev);
   };
 
   const handleSelectAll = (e) => {
-    if (e.target.checked) {
-      setSelectedItems(items.map((item) => item.id));
-    } else {
-      setSelectedItems([]);
-    }
+    setSelectedItems(e.target.checked ? items.map((item) => item._id) : []);
   };
 
-  const handleRemoveSelected = () => {
+  const handleEdit = (item) => {
+    // Pass the entire item object with all properties
+    navigate("/admin/products/EditProduct", {
+      state: { item: item.originalItem ? item.originalItem : item },
+    });
+  };
+
+  const handleRemoveSelected = async () => {
     if (selectedItems.length > 0) {
-      const updatedItems = items.filter(
-        (item) => !selectedItems.includes(item.id)
-      );
-      setItems(updatedItems);
-      setMessage(`${selectedItems.length} item removed`);
-      setSelectedItems([]);
+      try {
+        await deleteProducts(selectedItems);
+
+        setItems((prevItems) =>
+          prevItems.filter((item) => !selectedItems.includes(item._id))
+        );
+        setMessage(`${selectedItems.length} item(s) removed successfully.`);
+        setSelectedItems([]);
+        refetch();
+      } catch (error) {
+        setMessage("Failed to remove selected items.");
+      }
     } else {
       setMessage("No items selected to remove.");
     }
   };
 
-  const handleCategorySelect = (category) => {
-    setSelectedCategory(category.name); // Assuming category is an object with a name property
+  const handleCategorySelect = (categoryId) => {
+    setItems([]);
+
+    // If "All Projects" is explicitly selected or the same category is clicked again, reset to "All Projects"
+    setSelectedCategory(
+      categoryId === selectedCategory ? "All Projects" : categoryId
+    );
   };
 
   const scrollTabs = (direction) => {
     if (tabsRef.current) {
-      const scrollAmount = direction === "right" ? 120 : -120; // Slightly larger scroll amount
+      const scrollAmount = direction === "right" ? 120 : -120;
       tabsRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
   };
 
-  if (loading) return <p>Loading categories...</p>;
-  if (error) return <p>Error: {error}</p>;
-  
-  // Sorting logic to always place "All Products" first, then alphabetically for others
- 
-
-  const filteredItems =
-    selectedCategory === "All Products"
-      ? items.filter((item) => (isOnLive ? item.onlive === "1" : true))
-      : items
-          .filter((item) => item.category === selectedCategory)
-          .filter((item) => (isOnLive ? item.onlive === "1" : true));
-  
-// Filter and sort categories with a check for undefined 'name' property
-const filteredAndSortedCategories = categories
-  .filter(category => category.name) // Make sure 'name' is defined
-  .sort((a, b) => {
-    // Prioritize "All Products" category
-    if (a.name === "All Products") return -1;
-    if (b.name === "All Products") return 1;
-    
-    // For the rest, sort alphabetically
-    return (a.name || '').localeCompare(b.name || '');
+  const filteredItems = items.filter((item) => {
+    return !isOnLive || item.isVisible === true;
   });
 
+  const filteredAndSortedCategories =
+    categories && Array.isArray(categories)
+      ? categories
+          .filter((category) => category.name)
+          .sort((a, b) => a.name.localeCompare(b.name))
+      : [];
 
   return (
     <div className="container " style={{ padding: "0" }}>
@@ -232,81 +184,107 @@ const filteredAndSortedCategories = categories
           className="d-flex align-items-center mb-0 m-0"
           style={{ fontSize: "20px" }}
         >
-          <Nav.Link as={Link} to="/" className="me-2 opacity-50">
+          <Nav.Link as={Link} to="/admin" className="me-2 opacity-50">
             Home
           </Nav.Link>
-          <span> &gt; </span> {/* This ensures the ">" symbol is inline */}
+          <span> &gt; </span>
           <span className="ms-2">All Products</span>
         </h4>
 
         <Button
           height="12px"
-          onClick={() => handleAdd()}
-          variant="primary" // Keeps the button style, but we'll override the color
+          onClick={handleAdd}
+          variant="primary"
           className="text-white"
           style={{
-            backgroundColor: "#184BD3", // Replace with any custom color (example: orange-red)
-            border: "none", // Match border color to the background color
+            backgroundColor: "#184BD3",
+            border: "none",
           }}
         >
           <i className="bi bi-plus-circle"></i> Add Product
         </Button>
       </div>
 
-      {/* Add a custom gap here */}
       <div style={{ marginTop: "22px" }}></div>
 
       {/* Category Tabs */}
       <div
-        className="d-flex align-items-center  mx-4 px-4"
+        className="d-flex align-items-center mx-4 px-2"
         style={{ backgroundColor: "white" }}
       >
         <div className="m-3">
-          <div
-            className="d-flex overflow-hidden"
-            ref={tabsRef}
-            style={{
-              maxWidth: "950px", // Control the visible width
-              overflowX: "auto", // Enable horizontal scrolling
-              whiteSpace: "nowrap",
-              height: "40px", // Set a fixed height for category tabs
-            }}
-          >
-{filteredAndSortedCategories.map((category, index) => (
+          {categoriesLoading ? (
+            <div
+              className="d-flex justify-content-center align-items-center"
+              style={{ height: "40px" }}
+            >
+              <p>Loading...</p>
+            </div>
+          ) : (
+            <div
+              className="d-flex overflow-hidden"
+              ref={tabsRef}
+              style={{
+                // paddingRight: "90px",
+                maxWidth: "950px",
+                overflowX: "auto",
+                whiteSpace: "nowrap",
+                height: "40px",
+              }}
+            >
               <Button
-                key={index}
-                variant={
-                  selectedCategory === category ? "primary" : "btn-light"
-                }
+                variant={selectedCategory === "All Products" ? "primary" : "btn-light"}
                 className="mx-1"
-                onClick={() => handleCategorySelect(category)}
+                onClick={() => handleCategorySelect("All Products")}
                 style={{
                   backgroundColor:
-                    selectedCategory === category.name ? "#E0E8FF" : "white", // Custom background color
-                  color: selectedCategory === category.name ? "#184BD3" : "#011140", // Custom text color
-                  border: "none", // Match border color to the background color
+                    selectedCategory === "All Products" ? "#E0E8FF" : "white",
+                  color:
+                    selectedCategory === "All Products" ? "#184BD3" : "#011140",
+                  border: "none",
                   fontWeight: 500,
                   fontSize: "16px",
                 }}
               >
-                {category.name}
+                All Products
               </Button>
-            ))}
-          </div>
+              {filteredAndSortedCategories.map((category) => (
+                <Button
+                  key={category._id}
+                  variant={
+                    selectedCategory === category._id ? "primary" : "btn-light"
+                  }
+                  className="mx-1"
+                  onClick={() => handleCategorySelect(category._id)}
+                  style={{
+                    backgroundColor:
+                      selectedCategory === category._id ? "#E0E8FF" : "white",
+                    color:
+                      selectedCategory === category._id ? "#184BD3" : "#011140",
+                    border: "none",
+                    fontWeight: 500,
+                    fontSize: "16px",
+                  }}
+                >
+                  {category.name}
+                </Button>
+              ))}
+            </div>
+          )}
         </div>
         <Button
           variant="light"
           onClick={() => scrollTabs("left")}
           style={{
-            borderRadius: "50%", // Makes the button circular
-            padding: "5px", // Adds space inside the button
-            margin: "0 10px", // Adds space between buttons and other elements
-            border: "1px solid #ddd", // Optional: Adds a border to the circular button
-            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)", // Optional: Adds shadow to the button
+            borderRadius: "50%",
+            padding: "5px",
+            margin: "0 10px",
+            border: "1px solid #ddd",
+            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
             width: "24px",
             height: "24px",
-            display: "flex", // Enables flexbox
-            justifyContent: "center", // Centers content horizontally
+            display: "flex",
+            justifyContent: "center",
             alignItems: "center",
           }}
         >
@@ -317,15 +295,15 @@ const filteredAndSortedCategories = categories
           variant="light"
           onClick={() => scrollTabs("right")}
           style={{
-            borderRadius: "15px", // Makes the button circular
-            padding: "5px", // Adds space inside the button
-            margin: "0 10px", // Adds space between buttons and other elements
-            border: "1px solid #ddd", // Optional: Adds a border to the circular button
-            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)", // Optional: Adds shadow to the button
+            borderRadius: "15px",
+            padding: "5px",
+            margin: "0 10px",
+            border: "1px solid #ddd",
+            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
             width: "24px",
             height: "24px",
-            display: "flex", // Enables flexbox
-            justifyContent: "center", // Centers content horizontally
+            display: "flex",
+            justifyContent: "center",
             alignItems: "center",
           }}
         >
@@ -333,206 +311,250 @@ const filteredAndSortedCategories = categories
         </Button>
       </div>
 
-      {/* Product Table */}
-      <div className="  mx-4 px-4" style={{ backgroundColor: "white" }}>
-        <Table hover responsive>
-          <thead>
-            <tr>
-              <th
-                style={{
-                  height: "60px",
-                  width:"5%",
-
-                  padding: "20px 10px",
-                  borderBottom: true,
-                  fontWeight: 500,
-                  fontSize: 14,
-                  color: "#474747",
-                }}
-              >
-                <Form.Check
-                  type="checkbox"
-                  onChange={handleSelectAll}
+      {/* Project Table */}
+      <div
+        className="mx-4 px-12"
+        // style={{ backgroundColor: "white" }}
+      >
+        {productsLoading  ? (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%", // Ensures it takes up full height of the container
+              width: "100%", // Ensures it takes up full width of the container
+              color: "transparent",
+              marginTop: "15%",
+            }}
+          >
+            <Spinner
+              animation="border"
+              role="status"
+              style={{ width: "3rem", height: "3rem" }}
+              variant="primary"
+            >
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+        ) : (
+          <Table hover responsive>
+            <thead>
+              <tr>
+                <th
                   style={{
-                    transform: "scale(1.2)", // Scale the checkbox size
-                    fontSize:"20px",
-                    paddingLeft:"10px"
-
-
-                  }}
-                />
-              </th>
-              <th
-                style={{
-                  height: "60px",
-                  width:"10%",
-                  padding: "20px 10px",
-                  borderBottom: true,
-                  fontWeight: 500,
-                  fontSize: 14,
-
-                  color: "#474747",
-                }}
-              >
-                Product ID
-              </th>
-              <th
-                style={{
-                  height: "60px",
-                  padding: "20px 10px",
-                  borderBottom: true,
-                  fontWeight: 500,
-                  fontSize: 14,
-                  color: "#474747",
-                }}
-              >
-                Name
-              </th>
-              <th
-                style={{
-                  padding: "20px 10px",
-                  borderBottom: true,
-                  fontWeight: 500,
-                  fontSize: 14,
-                  color: "#474747",
-                }}
-              >
-                Image
-              </th>
-              <th
-                style={{
-                  height: "60px",
-                  padding: "20px 10px",
-                  borderBottom: true,
-                  fontWeight: 500,
-                  fontSize: 14,
-                  color: "#474747",
-                }}
-              >
-                Category
-              </th>
-              <th
-                style={{
-                  height: "60px",
-                  padding: "20px 10px",
-                  borderBottom: true,
-                  fontWeight: 500,
-                  fontSize: 14,
-                  color: "#474747",
-                }}
-              >
-                Sub-Category
-              </th>
-              <th
-                style={{
-                  height: "60px",
-                  padding: "20px 10px",
-                  borderBottom: true,
-                  fontWeight: 500,
-                  fontSize: 14,
-                  color: "#474747",
-                }}
-              >
-                Brand
-              </th>
-              <th
-                style={{ border: "none", width: "140px", borderBottom: true }}
-              >
-                <div
-                  className="d-flex align-items-center"
-                  style={{
-                    width: "100%",
-                    border: "1px solid #ddd", // Adds a light border
-                    padding: "10px", // Optional: Adds padding inside the div
-                    borderRadius: "5px", // Optional: Adds rounded corners to the div
+                    height: "60px",
+                    padding: "20px 30px",
+                    borderBottom: true,
+                    fontWeight: 500,
+                    fontSize: 14,
+                    color: "#474747",
                   }}
                 >
-                  <div className="form-check form-switch">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id="liveToggle"
-                      checked={isOnLive}
-                      onChange={handleGlobalToggle}
-                      style={{
-                        backgroundColor: isOnLive ? "#011140" : "#ccc", // Color when active or inactive
-                        width: "42px", // Increase the width of the switch
-                        height: "24px", // Increase the height of the switch
-                      }}
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="liveToggle"
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        marginLeft: "10px",
-                      }}
-                    >
-                      On live
-                    </label>
-                  </div>
-                </div>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredItems.map((item) => (
-              <tr key={item.id}>
-                <td style={{ borderBottom: true }}>
                   <Form.Check
                     type="checkbox"
-                    checked={selectedItems.includes(item.id)}
-                    onChange={() => handleCheckboxChange(item.id)}
+                    onChange={handleSelectAll}
+                    checked={
+                      selectedItems.length === items.length && items.length > 0
+                    }
                     style={{
-                      transform: "scale(1.2)", // Scale the checkbox size
-                      fontSize:"20px",
-                      paddingLeft:"10px"
-
-
+                      transform: "scale(1.2)",
+                      fontSize: "20px",
+                      paddingLeft: "10px",
                     }}
                   />
-                </td>
-                <td style={{ borderBottom: true }}>{item.id}</td>
-                <td style={{ borderBottom: true }}>{item.name}</td>
-                <td style={{ borderBottom: true }}>
-                  <img src={item.image} alt={item.name} width="50" />
-                </td>
-                <td style={{ borderBottom: true }}>{item.category}</td>
-                <td style={{ borderBottom: true }}>{item.subCategory}</td>
-                <td style={{ borderBottom: true }}>{item.brand}</td>
-                <td style={{ borderBottom: true }}>
-                  <Button
-                    size="sm"
-                    onClick={() => handleEdit(item)}
+                </th>
+                <th
+                  style={{
+                    height: "60px",
+                    padding: "20px 10px",
+                    borderBottom: true,
+                    fontWeight: 500,
+                    fontSize: 14,
+                    color: "#474747",
+                  }}
+                >
+                  Product ID
+                </th>
+                <th
+                  style={{
+                    height: "60px",
+                    padding: "20px 10px",
+                    borderBottom: true,
+                    fontWeight: 500,
+                    fontSize: 14,
+                    color: "#474747",
+                  }}
+                >
+                  Name
+                </th>
+                <th
+                  style={{
+                    padding: "20px 10px",
+                    borderBottom: true,
+                    fontWeight: 500,
+                    fontSize: 14,
+                    color: "#474747",
+                  }}
+                >
+                  Image
+                </th>
+                <th
+                  style={{
+                    height: "60px",
+                    padding: "20px 10px",
+                    borderBottom: true,
+                    fontWeight: 500,
+                    fontSize: 14,
+                    color: "#474747",
+                  }}
+                >
+                  Category
+                </th>
+                <th
+                  style={{
+                    height: "60px",
+                    padding: "20px 10px",
+                    borderBottom: true,
+                    fontWeight: 500,
+                    fontSize: 14,
+                    color: "#474747",
+                  }}
+                >
+                  Sub-Category
+                </th>
+                <th
+                  style={{
+                    height: "60px",
+                    padding: "20px 10px",
+                    borderBottom: true,
+                    fontWeight: 500,
+                    fontSize: 14,
+                    color: "#474747",
+                  }}
+                >
+                  Brand
+                </th>
+
+                <th
+                  style={{ border: "none", width: "140px", borderBottom: true }}
+                >
+                  <div
+                    className="d-flex align-items-center"
                     style={{
-                      color: "blue", // Text color
-                      backgroundColor: "transparent", // Background color set to transparent
-                      border: "none", // Remove the border if needed
-                      // Adjust this to change the size of the text "Edit"
+                      width: "100%",
+                      border: "1px solid #ddd",
+                      padding: "10px",
+                      borderRadius: "5px",
                     }}
                   >
-                    <i
-                      className="bi bi-pencil"
-                      style={{ color: "blue", fontSize: "20px" }}
-                    ></i>{" "}
-                    {/* Increase icon size */}
-                    <span style={{ fontWeight: 500, fontSize: "16px" }}>
-                      {" "}
-                      Edit
-                    </span>{" "}
-                    {/* Increase text size */}
-                  </Button>
-                </td>
+                    <div className="form-check form-switch">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="liveToggle"
+                        checked={isOnLive}
+                        onChange={handleGlobalToggle}
+                        style={{
+                          backgroundColor: isOnLive ? "#011140" : "#ccc",
+                          width: "42px",
+                          height: "24px",
+                        }}
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="liveToggle"
+                        style={{
+                          fontWeight: 500,
+                          fontSize: "14px",
+                          marginLeft: "10px",
+                        }}
+                      >
+                        On live
+                      </label>
+                    </div>
+                  </div>
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            {/* <div style={{ position: "relative", minHeight: "300px" }}> */}
+            {/* </div> */}
+            <tbody>
+            {filteredItems.map((item, index) => {
+                // Determine if this is the last item for the ref
+                const isLastItem = index === filteredItems.length - 1;
+
+                return (
+                  <tr key={item.id} ref={isLastItem ? lastItemRef : null}>
+                  <td style={{ borderBottom: true }}>
+                    <Form.Check
+                      type="checkbox"
+                      checked={selectedItems.includes(item.id)}
+                      onChange={() => handleCheckboxChange(item.id)}
+                      style={{
+                        transform: "scale(1.2)",
+                        fontSize: "20px",
+                        paddingLeft: "30px",
+                      }}
+                    />
+                  </td>
+                  <td style={{ borderBottom: true }}>{item.productCode}</td>
+                  <td style={{ borderBottom: true }}>{item.productName}</td>
+                  <td style={{ borderBottom: true }}>
+                    <img
+                      src={item.image || placeholderImage}
+                      alt={item.productName}
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </td>
+                  <td style={{ borderBottom: true }}>{item.category}</td>
+                  <td style={{ borderBottom: true }}>{item.subCategory}</td>
+                  <td style={{ borderBottom: true }}>{item.brand}</td>
+                  <td style={{ borderBottom: true }}>
+                    <Button
+                      size="sm"
+                      onClick={() => handleEdit(item)}
+                      style={{
+                        color: "blue",
+                        backgroundColor: "transparent",
+                        border: "none",
+                      }}
+                    >
+                      <i
+                        className="bi bi-pencil"
+                        style={{ color: "blue", fontSize: "20px" }}
+                      ></i>{" "}
+                      <span style={{ fontWeight: 500, fontSize: "16px" }}>
+                        {" "}
+                        Edit
+                      </span>
+                    </Button>
+                  </td>
+                </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        )}
+        {loadingMore && (
+                  <div className="text-center my-3">
+                    <Spinner animation="border" variant="primary" size="sm" />
+                    <span className="ms-2">Loading more projects...</span>
+                  </div>
+                )}
+          {!hasMore && items.length > 0 && (
+          <div className="text-center my-3 text-muted">
+            No more projects to load
+          </div>
+        )}
       </div>
 
       {/*message section*/}
       <AlertMessage message={message} />
-
 
       {/* Footer section */}
       {selectedItems.length > 0 && (
@@ -546,7 +568,7 @@ const filteredAndSortedCategories = categories
             display: "flex",
             alignItems: "center",
             borderTop: "1px solid #ddd",
-            boxShadow: "0px -2px 5px rgba(0, 0, 0, 0.1)", // Adjusted to remove side shadows
+            boxShadow: "0px -2px 5px rgba(0, 0, 0, 0.1)",
             height: "80px",
           }}
         >
@@ -557,20 +579,18 @@ const filteredAndSortedCategories = categories
               width: "1220px",
             }}
           >
-            {/* Left: Number of selected items */}
             <span
               style={{ color: "#011140", fontWeight: 500, fontSize: "22px" }}
             >
               {selectedItems.length} Selected
             </span>
 
-            {/* Right: Remove button */}
             <div>
               <Button
                 onClick={handleRemoveSelected}
                 style={{
-                  backgroundColor: "rgba(194, 0, 0, 0.6)", // 60% opacity
-                  border: "none", // Match border color to the background color
+                  backgroundColor: "rgba(194, 0, 0, 0.6)",
+                  border: "none",
                 }}
               >
                 <i className="bi bi-trash" style={{ marginRight: "15px" }}></i>

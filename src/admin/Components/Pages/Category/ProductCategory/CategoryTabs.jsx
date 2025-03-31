@@ -63,9 +63,9 @@ const CategoryTabs = () => {
     }
 
     await addSubCategory({
-      category: selectedCategory._id,
+      categoryId: selectedCategory._id,
       name: subCategoryName,
-      type:'product'
+      // type:'product'
     });
     setSubCategoryName("");
     setSelectedCategory("");

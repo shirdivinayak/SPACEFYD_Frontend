@@ -4,8 +4,9 @@ import { Button, Dropdown, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AlertSuccesMessage from "../../common/MessageSuccesAlert";
 import useAddProjectApi from "../../../hooks/useAddProjectApi.js";
+import useFetchCategories from "../../../hooks/useAllProjectApi.js";
 
-const categories = ["Electronics", "Furniture", "Clothing", "Toys"];
+// const categories = ["Electronics", "Furniture", "Clothing", "Toys"];
 const subCategories = {
   Electronics: ["Phones", "Laptops", "Cameras"],
   Furniture: ["Chairs", "Tables", "Beds"],
@@ -13,6 +14,7 @@ const subCategories = {
   Toys: ["Indoor", "Outdoor"],
 };
 const brands = ["Samsung", "Ikea", "Nike", "Lego"];
+
 
 const EditProjectScreen = () => {
   const location = useLocation();
@@ -22,7 +24,11 @@ const EditProjectScreen = () => {
   const [message, setMessage] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const { editProject, loading, error, success } = useAddProjectApi();
-
+  const {
+    categories,
+    loading: Loading,
+    error: categoriesError,
+  } = useFetchCategories();
   // Placeholder image URL
   const placeholderImage = "https://placehold.co/600x400/EEE/31343C";
 
@@ -83,6 +89,7 @@ const EditProjectScreen = () => {
         projectName: projectDetails.name,
         projectDescription: projectDetails.description,
         categoryId: projectDetails.category,
+        categoryName: 'hulk',
         ProjectCode: projectDetails.projectCode,
         isVisible: projectDetails.displayInHome,
         brand: projectDetails.brand,
@@ -356,7 +363,7 @@ const EditProjectScreen = () => {
                           cursor: "pointer",
                         }}
                       >
-                        {category}
+                        {category.name}
                       </Dropdown.Item>
                     ))}
                   </Dropdown.Menu>

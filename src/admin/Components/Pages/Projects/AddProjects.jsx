@@ -22,6 +22,7 @@ const AddProject = () => {
     projectName: "",
     projectDescription: "",
     categoryId: "",
+    categoryName: "",
     ProjectCode: "",
     isVisible: false,
     brand: "",
@@ -82,12 +83,15 @@ const AddProject = () => {
 
   const handleCategoryChange = (event) => {
     const selectedCategoryId = event.target.value;
+    // Find the selected category object to get its name
+    const selectedCategory = categories.find(category => category._id === selectedCategoryId);
+    
     setProductDetails((prevState) => ({
       ...prevState,
-      categoryId: selectedCategoryId
+      categoryId: selectedCategoryId,
+      categoryName: selectedCategory ? selectedCategory.name : ""
     }));
   };
-
   const handleMainImageUpload = (event) => {
     const file = event.target.files[0];
     if (file && file.type.startsWith("image/")) {
