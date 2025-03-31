@@ -5,10 +5,9 @@ import { Link } from "react-router-dom";
 import CategoryTabs from "./CategoryTabs";
 import AlertMessage from "../../../common/MessageSuccesAlert";
 import EditCategoryModal from "./EditCategoryModal";
-import useProductCategoryApi from "../../../../hooks/useProductCategoryApi"; // Adjust the path as needed
+import useProductCategoryApi from "../../../../hooks/useCategoryApi"; // Adjust the path as needed
 import theme from "../../../../Assets/colors/styles";
-
-
+import Spinner from "react-bootstrap/Spinner";
 
 const ProductCategory = () => {
   const {
@@ -17,38 +16,35 @@ const ProductCategory = () => {
     error,
     message,
     setMessage,
-    deleteCategory,
-    addCategory,
     setError,
-    editCategory,
+    deleteCategory,
+    categories, // Use the categories from the hook
   } = useProductCategoryApi();
   const [items, setItems] = useState([]); // Initialize with CategoryData
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("Categories");
-  // const [message, setMessage] = useState("");
   const [showCategoryTabs, setShowCategoryTabs] = useState(false); // Toggle state for CategoryTabs
   const [showEditModal, setShowEditModal] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
-  useEffect(() => {
-    const loadCategories = async () => {
-      try {
-        const response = await fetchProjectCategories();
-        if (response && response.data) {
-          const formattedCategories = response.data.map((category) => ({
-            id: category.id,
-            category: category.name,
-            subCategory: category.subCategory || "",
-          }));
-          setItems(formattedCategories);
-        }
-      } catch (err) {
-        console.error("Error fetching categories:", err);
-        setError(err.message || "Failed to load categories");
-      }
-    };
+  
 
-    loadCategories();
-  }, []); // Empty dependency array to run only on mount
+  useEffect(() => {
+    if (categories.length > 0) {
+      const formattedCategories = categories.map((category) => ({
+        id: category._id,
+        category: category.name,
+        subCategory: category.subCategory || "",
+      }));
+      setItems(formattedCategories);
+    }
+  }, [categories]); // Depend on `categories` from the hook
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => setMessage(""), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message, setMessage]);
 
   const handleEdit = (item) => {
     setCurrentItem(item);
@@ -62,21 +58,19 @@ const ProductCategory = () => {
     setMessage("Category updated successfully.");
   };
 
-  useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => setMessage(""), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [message]);
 
   const handleCheckboxChange = (id) => {
-    setSelectedItems(prevSelected => {
+    setSelectedItems((prevSelected) =>
+    {
       if (prevSelected.includes(id)) {
-        return prevSelected.filter(itemId => itemId !== id);
+        // If it is, remove it (uncheck)
+        return prevSelected.filter((itemId) => itemId !== id);
       } else {
+        // If it's not, add it (check)
         return [...prevSelected, id];
       }
-    });
+    }
+    );
   };
   const handleSelectAll = (e) => {
     if (e.target.checked) {
@@ -86,28 +80,36 @@ const ProductCategory = () => {
     }
   };
 
-  const handleRemoveSelected = () => {
+  const handleRemoveSelected = async () => {
     if (selectedItems.length > 0) {
-      const updatedItems = items.filter(
-        (item) => !selectedItems.includes(item.id)
-      );
-      setItems(updatedItems);
-      setMessage(`${selectedItems.length} item removed`);
-      setSelectedItems([]);
+      try {
+        await deleteCategory(selectedItems); // Call API to delete categories
+
+        // Update local state after successful deletion
+        setItems((prevItems) =>
+          prevItems.filter((item) => !selectedItems.includes(item.id))
+        );
+        await fetchProjectCategories();
+        setMessage(`${selectedItems.length} item(s) removed successfully.`);
+        setSelectedItems([]);
+      } catch (error) {
+        setMessage("Failed to remove selected items.");
+      }
     } else {
       setMessage("No items selected to remove.");
     }
   };
+
 
   const toggleCategoryTabs = () => {
     setShowCategoryTabs(!showCategoryTabs);
   };
 
   // Filter items based on the selected category
-  const filteredItems =
-    selectedCategory === "Categories"
-      ? items
-      : items.filter((item) => item.category === selectedCategory);
+  // const filteredItems =
+  //   selectedCategory === "Categories"
+  //     ? items
+  //     : items.filter((item) => item.category === selectedCategory);
 
   return (
     <div className="container " style={{ padding: "0" }}>
@@ -174,139 +176,153 @@ const ProductCategory = () => {
       <div style={{ marginTop: "22px" }}></div>
 
       {/* Product Table */}
-      <div className="  mx-4 px-4" style={{ backgroundColor: "white" }}>
-      {loading ? (
-          <div>Loading categories...</div>
+        {loading ? (
+          <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        backgroundColor: "transparent",
+                        marginTop: "15%",
+                        width: "100%", // Ensures it takes up full width of the container
+                        width: "100%", // Full width
+                      }}
+                    >
+                      <Spinner animation="border" variant="primary" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </Spinner>
+                    </div>
         ) : error ? (
           <div>Error: {error}</div>
         ) : (
-        <Table hover responsive>
-          <thead>
-            <tr>
-              <th
-                style={{
-                  height: "60px",
-                  padding: "20px 10px",
-                  borderBottom: true,
-                  fontWeight: 500,
-                  fontSize: 14,
-                  color: theme.colors.TextPrimary,
-                  width: "10%",
-                }}
-              >
-                <Form.Check
-                  type="checkbox"
-                  onChange={handleSelectAll}
+            <div className="  mx-4 px-4" style={{ backgroundColor: "white" }}>
+          <Table hover responsive>
+            <thead>
+              <tr>
+                <th
                   style={{
-                    transform: "scale(1.2)", // Scale the checkbox size
-                    paddingLeft: "10px",
-                    fontSize: "20px",
-                  }}
-                />
-              </th>
-
-              <th
-                style={{
-                  height: "60px",
-                  padding: "20px 10px",
-                  borderBottom: true,
-                  fontWeight: 500,
-                  fontSize: 16,
-                  color: theme.colors.TextPrimary,
-                  width: "20%",
-                }}
-              >
-                Category
-              </th>
-              <th
-                style={{
-                  height: "60px",
-                  padding: "20px 10px",
-                  borderBottom: true,
-                  fontWeight: 500,
-                  fontSize: "16px",
-                  color: theme.colors.TextPrimary,
-                  width: "50%",
-                }}
-              >
-                Sub-Category
-              </th>
-              <th
-                style={{
-                  height: "60px",
-                  padding: "20px 10px",
-                  borderBottom: true,
-                  fontWeight: 500,
-                  fontSize: "16px",
-                  color: theme.colors.TextPrimary,
-                }}
-              ></th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredItems.map((item) => (
-              <tr key={item.id}>
-                <td style={{ borderBottom: true, padding: " 10px" }}>
-                <Form.Check
-    type="checkbox"
-    checked={selectedItems.includes(item.id)}
-    onChange={() => handleCheckboxChange(item.id)}
-    style={{
-      transform: "scale(1.2)",
-      borderColor: "rgba(1, 17, 64, 1)",
-      accentColor: "#011140",
-      paddingLeft: "10px",
-      visibility: "visible",
-      fontSize: "20px",
-    }}
-  />
-                </td>
-                <td
-                  style={{
-                    borderBottom: true,
+                    height: "60px",
                     padding: "20px 10px",
-                    fontSize: 16,
+                    borderBottom: true,
+                    fontWeight: 500,
+                    fontSize: 14,
+                    color: theme.colors.TextPrimary,
+                    width: "10%",
                   }}
                 >
-                  {item.category}
-                </td>
-                <td
-                  style={{
-                    borderBottom: true,
-                    padding: "20px 10px",
-                    fontSize: 16,
-                    overflow: "hidden", // Hide overflow content
-                    textOverflow: "ellipsis", // Add ellipsis for overflowed content
-                  }}
-                >
-                  {item.subCategory}
-                </td>
-
-                <td style={{ borderTop: true, padding: "20px 10px" }}>
-                  <Button
-                    size="sm"
-                    onClick={() => handleEdit(item)}
+                  <Form.Check
+                    type="checkbox"
+                    onChange={handleSelectAll}
                     style={{
-                      color: "blue",
-                      backgroundColor: "transparent",
-                      border: "none",
+                      transform: "scale(1.2)", // Scale the checkbox size
+                      paddingLeft: "10px",
+                      fontSize: "20px",
+                    }}
+                  />
+                </th>
+
+                <th
+                  style={{
+                    height: "60px",
+                    padding: "20px 10px",
+                    borderBottom: true,
+                    fontWeight: 500,
+                    fontSize: 16,
+                    color: theme.colors.TextPrimary,
+                    width: "20%",
+                  }}
+                >
+                  Category
+                </th>
+                <th
+                  style={{
+                    height: "60px",
+                    padding: "20px 10px",
+                    borderBottom: true,
+                    fontWeight: 500,
+                    fontSize: "16px",
+                    color: theme.colors.TextPrimary,
+                    width: "50%",
+                  }}
+                >
+                  Sub-Category
+                </th>
+                <th
+                  style={{
+                    height: "60px",
+                    padding: "20px 10px",
+                    borderBottom: true,
+                    fontWeight: 500,
+                    fontSize: "16px",
+                    color: theme.colors.TextPrimary,
+                  }}
+                ></th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map((item) => (
+                <tr key={item.id}>
+                  <td style={{ borderBottom: true, padding: " 10px" }}>
+                    <Form.Check
+                      type="checkbox"
+                      checked={selectedItems.includes(item.id)}
+                      onChange={() => handleCheckboxChange(item.id)}
+                      style={{
+                        transform: "scale(1.2)",
+                        borderColor: "rgba(1, 17, 64, 1)",
+                        accentColor: "#011140",
+                        paddingLeft: "10px",
+                        visibility: "visible",
+                        fontSize: "20px",
+                      }}
+                    />
+                  </td>
+                  <td
+                    style={{
+                      borderBottom: true,
+                      padding: "20px 10px",
+                      fontSize: 16,
                     }}
                   >
-                    <i
-                      className="bi bi-pencil"
-                      style={{ color: "blue", fontSize: "20px" }}
-                    ></i>{" "}
-                    <span style={{ fontWeight: 500, fontSize: "16px" }}>
-                      Edit
-                    </span>
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-        )}
+                    {item.category}
+                  </td>
+                  <td
+                    style={{
+                      borderBottom: true,
+                      padding: "20px 10px",
+                      fontSize: 16,
+                      overflow: "hidden", // Hide overflow content
+                      textOverflow: "ellipsis", // Add ellipsis for overflowed content
+                    }}
+                  >
+                    {item.subCategory}
+                  </td>
+
+                  <td style={{ borderTop: true, padding: "20px 10px" }}>
+                    <Button
+                      size="sm"
+                      onClick={() => handleEdit(item)}
+                      style={{
+                        color: "blue",
+                        backgroundColor: "transparent",
+                        border: "none",
+                      }}
+                    >
+                      <i
+                        className="bi bi-pencil"
+                        style={{ color: "blue", fontSize: "20px" }}
+                      ></i>{" "}
+                      <span style={{ fontWeight: 500, fontSize: "16px" }}>
+                        Edit
+                      </span>
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
       </div>
+        )}
 
       {currentItem && (
         <EditCategoryModal

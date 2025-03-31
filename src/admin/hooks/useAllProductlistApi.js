@@ -7,6 +7,7 @@ const useFetchproducts= (categoryId = null) => {
   const [error, setError] = useState(null);
   const [lastId, setLastId] = useState(null);
   const [hasMore, setHasMore] = useState(true);
+  
   // Function to fetch products
   const fetchProducts = useCallback(async () => {
     setLoading(true);

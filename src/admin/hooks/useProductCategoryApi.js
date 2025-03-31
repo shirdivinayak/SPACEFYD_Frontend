@@ -14,6 +14,7 @@ const useProjectCategoryApi = () => {
       const newCategory = response.data;
       setCategories((prev) => [...prev, newCategory]);
       setMessage(`Category ${categoryData.name} added successfully.`);
+      
     } catch (error) {
       setError(error.response?.data?.message || "Failed to add category.");
     } finally {

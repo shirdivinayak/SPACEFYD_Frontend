@@ -400,7 +400,7 @@ const ProductTable = () => {
                 >
                   Category
                 </th>
-                <th
+                {/* <th
                   style={{
                     height: "60px",
                     padding: "20px 10px",
@@ -411,7 +411,7 @@ const ProductTable = () => {
                   }}
                 >
                   Brand
-                </th>
+                </th> */}
 
                 <th
                   style={{ border: "none", width: "140px", borderBottom: true }}
@@ -488,7 +488,7 @@ const ProductTable = () => {
                       />
                     </td>
                     <td style={{ borderBottom: true }}>{item.category}</td>
-                    <td style={{ borderBottom: true }}>{item.brand}</td>
+                    {/* <td style={{ borderBottom: true }}>{item.brand}</td> */}
                     <td style={{ borderBottom: true }}>
                       <Button
                         size="sm"

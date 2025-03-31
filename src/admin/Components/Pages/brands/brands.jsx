@@ -6,6 +6,7 @@ import AlertMessage from "../../common/MessageSuccesAlert";
 import EditBrandModal from "./EditBrand";
 import AddBrand from "./AddBrands";
 import useBrandCategoryApi from "../../../hooks/usebrandApi"; // Adjust the path as needed
+import Spinner from "react-bootstrap/Spinner";
 
 const BrandTable = () => {
   const { fetchBrandCategories, loading, error, message, setMessage } = useBrandCategoryApi();
@@ -118,6 +119,29 @@ const BrandTable = () => {
       </div>
 
       {/* Category Table */}
+      {loading ? (
+ <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%", // Ensures it takes up full height of the container
+              width: "100%", // Ensures it takes up full width of the container
+              color: "transparent",
+              marginTop: "15%",
+            }}
+          >
+            <Spinner
+              animation="border"
+              role="status"
+              style={{ width: "3rem", height: "3rem" }}
+              variant="primary"
+            >
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+      ):(
+
       <div className="my-3 bg-white px-3 mx-4">
         <Table hover responsive>
           <thead>
@@ -161,7 +185,7 @@ const BrandTable = () => {
           </tbody>
         </Table>
       </div>
-
+      )}
       {/* Edit Modal */}
       {currentItem && (
         <EditBrandModal

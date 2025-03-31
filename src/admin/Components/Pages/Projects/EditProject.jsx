@@ -38,7 +38,8 @@ const EditProjectScreen = () => {
       id: item?._id || "",
       name: item?.projectName || "",
       description: item?.projectDescription || "",
-      category: item?.categoryId || "",
+      category: item?.categoryName || "",
+      categoryId: item?.categoryId || "",
       subCategory: item?.subCategory || "",
       brand: item?.brand || "",
       projectCode: item?.ProjectCode || "",
@@ -51,7 +52,7 @@ const EditProjectScreen = () => {
   const [imageDisplay, setImageDisplay] = useState(() => {
     const imagesArray = item?.images || [];
     const mainImage = imagesArray.length > 0 ? imagesArray[0] : placeholderImage;
-    const additionalImages = [...Array(6)].map((_, index) => {
+    const additionalImages = [...Array(3)].map((_, index) => {
       return (index + 1) < imagesArray.length ? imagesArray[index + 1] : placeholderImage;
     });
 
@@ -88,8 +89,8 @@ const EditProjectScreen = () => {
         id: projectDetails.id,
         projectName: projectDetails.name,
         projectDescription: projectDetails.description,
-        categoryId: projectDetails.category,
-        categoryName: 'hulk',
+        categoryId: projectDetails.categoryId,
+        categoryName: projectDetails.category,
         ProjectCode: projectDetails.projectCode,
         isVisible: projectDetails.displayInHome,
         brand: projectDetails.brand,
@@ -379,7 +380,7 @@ const EditProjectScreen = () => {
                 gap: "20px",
               }}
             >
-              <label
+              {/* <label
                 style={{
                   flex: "1",
                   color: "rgba(71, 71, 71, 0.51)",
@@ -439,9 +440,9 @@ const EditProjectScreen = () => {
                     ))}
                   </Dropdown.Menu>
                 </Dropdown>
-              </label>
+              </label> */}
 
-              <label
+              {/* <label
                 style={{
                   flex: "1",
                   color: "rgba(71, 71, 71, 0.51)",
@@ -469,7 +470,7 @@ const EditProjectScreen = () => {
                   }}
                   disabled={!isEditing}
                 />
-              </label>
+              </label> */}
             </div>
 
             <div
