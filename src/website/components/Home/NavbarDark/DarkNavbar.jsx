@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import pic from "../../../Assets/Home/mainwhite.svg"; // Adjust the relative path as needed
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 // import { FaGlobe } from "react-icons/fa";
 import LanguageSelector from "../../LanguageSelector/LanguageSelector";
 
@@ -18,6 +19,17 @@ const HomeNavbar = () => {
     setShowDropdown(false);
   };
 
+  // Navigation items with their corresponding routes
+  const navItems = [
+    { name: "About us", path: "/AboutUs" },
+    { name: "Products", path: "/Products" },
+    { name: "Projects", path: "/ProjectList" },
+    { name: "Services", path: "/Services" },
+  ];
+
+  // Contact route
+  const contactPath = "/ContactUs";
+
   return (
     <nav
       className="navbar navbar-expand-lg"
@@ -33,16 +45,16 @@ const HomeNavbar = () => {
     >
       <div className="container-fluid">
         {/* Left: Logo */}
-        <a className="navbar-brand d-flex align-items-center" href="#">
+        <Link className="navbar-brand d-flex align-items-center" to="/">
           <img
             src={pic}
             alt="Logo"
-            width={clamp(100, 191)} // Responsive width, smaller min for small screens
-            height={clamp(25, 48)} // Responsive height
+            width="191"
+            height="48"
             className="d-inline-block me-2"
-            style={{ maxWidth: "100%" }}
+            style={{ maxWidth: "100%" }} // Ensure responsive behavior
           />
-        </a>
+        </Link>
 
         {/* Navbar Toggler for Mobile */}
         <button
@@ -64,37 +76,33 @@ const HomeNavbar = () => {
         </button>
 
         {/* Navbar Content */}
-        <div
-          className="collapse navbar-collapse justify-content-center"
-          id="navbarSupportedContent"
-        >
+        <div className={`collapse navbar-collapse ${isExpanded ? "show" : ""}`}>
           <ul className="navbar-nav d-flex align-items-center gap-4">
-            {["About us", "Products", "Projects", "Services"].map(
-              (item, index) => (
-                <li className="nav-item" key={index}>
-                  <a
-                    className="nav-link"
-                    href="#"
-                    style={{
-                      color: "white",
-                      fontFamily: "Kollektif, sans-serif",
-                      fontWeight: 400,
-                      fontSize: "clamp(16px, 2vw, 20px)",
-                      lineHeight: "clamp(20px, 2.5vw, 24px)",
-                      textAlign: "center",
-                      textDecoration: "none",
-                    }}
-                  >
-                    {item}
-                  </a>
-                </li>
-              )
-            )}
+            {navItems.map((item, index) => (
+              <li className="nav-item" key={index}>
+                <Link
+                  className="nav-link"
+                  to={item.path}
+                  style={{
+                    color: "white",
+                    fontFamily: "Kollektif, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "clamp(16px, 2vw, 20px)",
+                    lineHeight: "clamp(20px, 2.5vw, 24px)",
+                    textAlign: "center",
+                    textDecoration: "none",
+                  }}
+                >
+                  {item.name}
+                </Link>
+              </li>
+            ))}
           </ul>
 
           {/* Contact Us Button (Hidden on large screens, shown inside menu on mobile) */}
           <div className="d-lg-none mt-3 text-center">
-            <button
+            <Link
+              to="/ContactUs"
               className="btn w-40"
               style={{
                 color: "#4C6559",
@@ -108,7 +116,7 @@ const HomeNavbar = () => {
               }}
             >
               Contact us
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -118,7 +126,8 @@ const HomeNavbar = () => {
         </div>
 
         {/* Right: Contact Us Button (Only visible on large screens) */}
-        <button
+        <Link
+          to="/ContactUs"
           className="btn d-none d-lg-block"
           style={{
             color: "white",
@@ -132,7 +141,7 @@ const HomeNavbar = () => {
           }}
         >
           Contact us
-        </button>
+        </Link>
       </div>
     </nav>
   );
