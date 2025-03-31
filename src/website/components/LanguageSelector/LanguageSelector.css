@@ -1,0 +1,38 @@
+.language-selector {
+  position: relative;
+  display: inline-block;
+}
+
+.selected-lang {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown {
+  position: absolute;
+  list-style: none;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 5px 0;
+  margin: 0;
+  display: none;
+  width: 150px;
+}
+
+.language-selector:hover .dropdown {
+  display: block;
+}
+
+.dropdown li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropdown li:hover {
+  background: #f0f0f0;
+}

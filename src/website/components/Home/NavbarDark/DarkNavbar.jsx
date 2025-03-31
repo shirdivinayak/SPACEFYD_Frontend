@@ -1,8 +1,23 @@
 import React, { useState } from "react";
 import pic from "../../../Assets/Home/mainwhite.svg"; // Adjust the relative path as needed
+import { useTranslation } from "react-i18next";
+// import { FaGlobe } from "react-icons/fa";
+import LanguageSelector from "../../LanguageSelector/LanguageSelector";
 
 const HomeNavbar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const { i18n } = useTranslation();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    localStorage.removeItem("selected_lanuage");
+    localStorage.setItem("selected_language", lng);
+    setShowDropdown(false);
+  };
+
   return (
     <nav
       className="navbar navbar-expand-lg"
@@ -95,6 +110,11 @@ const HomeNavbar = () => {
               Contact us
             </button>
           </div>
+        </div>
+
+        {/* Language Switcher */}
+        <div className="language-dropdown position-relative mx-3">
+          <LanguageSelector />
         </div>
 
         {/* Right: Contact Us Button (Only visible on large screens) */}
