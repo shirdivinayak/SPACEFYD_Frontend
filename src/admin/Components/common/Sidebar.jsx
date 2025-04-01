@@ -54,7 +54,7 @@ const Sidebar = () => {
       transition: "background-color 0.3s ease",
     },
     hover: {
-      backgroundColor: "rgba(255, 255, 255, 0.7)", // Hover color
+      backgroundColor: "rgba(255, 255, 255, 0.07)", // Hover color
     },
     active: {
       backgroundColor: "rgba(255, 255, 255, 0.2)", // Active selection color
