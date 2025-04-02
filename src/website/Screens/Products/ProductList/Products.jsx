@@ -216,7 +216,6 @@ const Products = () => {
         ))}
       </div>
       <div className=" first-line container justify-content-center">
-        {" "}
         <Linetop
           style={{
             marginTop: 50,
