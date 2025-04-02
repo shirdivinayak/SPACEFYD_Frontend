@@ -46,7 +46,7 @@ const CategoryTabs = () => {
       return;
     }
 
-    await addCategory({ name: categoryName, type: 'product' });
+    await addCategory({ name: categoryName, type: "product" });
     setCategoryName("");
     setTimeout(() => setMessage(""), 3000);
   };
@@ -97,7 +97,7 @@ const CategoryTabs = () => {
                     ? theme.colors.primary
                     : theme.colors.secondaryButton,
                 borderBottom:
-                  activeTab === "addCategory" ? "5px solid #184BD3" : "none",
+                  activeTab === "addCategory" ? "5px solid #9A715B" : "none",
                 backgroundColor: "transparent",
                 fontSize: "18px",
                 fontWeight: 500,
@@ -112,10 +112,10 @@ const CategoryTabs = () => {
               style={{
                 color:
                   activeTab === "addSubCategory"
-                  ? theme.colors.primary
-                  : theme.colors.secondaryButton,
+                    ? theme.colors.primary
+                    : theme.colors.secondaryButton,
                 borderBottom:
-                  activeTab === "addSubCategory" ? "5px solid #184BD3" : "none",
+                  activeTab === "addSubCategory" ? "5px solid #9A715B" : "none",
                 backgroundColor: "transparent",
                 fontSize: "18px",
                 fontWeight: 500,
@@ -145,51 +145,40 @@ const CategoryTabs = () => {
                     >
                       Select Category
                     </Form.Label>
-                    <Dropdown>
-                      <Dropdown.Toggle
-                        id="dropdown"
-                        style={{
-                          width: "100%",
-                          fontSize: "14px",
-                          fontWeight: "400",
-                          color: "#757575",
-                          backgroundColor: "white",
-                          border: "1px solid #ccc",
-                          borderRadius: "4px",
-                          padding: "8px",
-                          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                        }}
-                      >
-                        {selectedCategory.name || "Select"}
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu
-                       style={{ 
-                        width: "100%", 
-                        maxHeight: "200px",  // Limit the dropdown's height
-                        overflowY: "auto",   // Enable vertical scrolling
-                        scrollbarWidth: "none", // For Firefox: hides scrollbar
-                        msOverflowStyle: "none", // For IE and Edge: hides scrollbar
+                    <select
+                      value={selectedCategory._id || ""}
+                      onChange={(e) => {
+                        const selected = filteredCategories.find(
+                          (cat) => cat._id === e.target.value
+                        );
+                        setSelectedCategory(selected || {});
                       }}
-                      >
-                        {filteredCategories.length === 0 ? (
-                          <Dropdown.Item disabled style={{ padding: "10px" }}>
-                            No categories available
-                          </Dropdown.Item>
-                        ) : (
-                          filteredCategories.map((category) => (
-                            <Dropdown.Item
-                              key={category._id}
-                              onClick={() => setSelectedCategory(category)}
-                            >
-                              {category.name}
-                            </Dropdown.Item>
-                          ))
-                        )}
-                      </Dropdown.Menu>
-                    </Dropdown>
+                      style={{
+                        width: "100%",
+                        fontSize: "14px",
+                        fontWeight: "400",
+                        color: "#757575",
+                        backgroundColor: "white",
+                        border: "1px solid #ccc",
+                        borderRadius: "4px",
+                        padding: "8px",
+                        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                        appearance: "none", // Hides default dropdown arrow
+                      }}
+                    >
+                      <option value="" disabled>
+                        Select
+                      </option>
+                      {filteredCategories.length === 0 ? (
+                        <option disabled>No categories available</option>
+                      ) : (
+                        filteredCategories.map((category) => (
+                          <option key={category._id} value={category._id}>
+                            {category.name}
+                          </option>
+                        ))
+                      )}
+                    </select>
                   </Form.Group>
                 </Col>
                 <Col md={4}>
@@ -231,10 +220,13 @@ const CategoryTabs = () => {
                       paddingLeft: "20px",
                       paddingRight: "20px",
                       marginTop: "30px",
-                      backgroundColor: theme.colors.primary
+                      backgroundColor: theme.colors.primary,
+                      boxShadow: "none", // Removes Bootstrap's default focus shadow
+                      border: "none",
+                      outline: "none",
                     }}
                   >
-                   {loading ? 'Submitting...' : 'Submit' }
+                    {loading ? "Submitting..." : "Submit"}
                   </Button>
                 </Col>
               </Row>
@@ -263,31 +255,37 @@ const CategoryTabs = () => {
                       value={categoryName}
                       onChange={(e) => {
                         setCategoryName(e.target.value);
-                        setError('');
+                        setError("");
                       }}
                       onKeyDown={handleKeyDown}
                     />
                   </Form.Group>
                 </Col>
+                
+                {/* <Col md="auto">
+                  <h3>Add Image</h3>
+                </Col> */}
                 <Col md="auto">
-                <Button
-                variant="primary"
-                onClick={() => {
-                  setError(''); // Clear error
-                  handleAddCategory(); // Call function
-                }}
-                disabled={loading}
-                style={{
-                  width: "auto",
-                  height: "38px",
-                  paddingLeft: "20px",
-                  paddingRight: "20px",
-                  marginTop: "30px",
-                  backgroundColor: theme.colors.primary
-                }}
-              >
-                 {loading ? 'Submitting...' : 'Submit' }
-
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      setError(""); // Clear error
+                      handleAddCategory(); // Call function
+                    }}
+                    disabled={loading}
+                    style={{
+                      width: "auto",
+                      height: "38px",
+                      paddingLeft: "20px",
+                      paddingRight: "20px",
+                      marginTop: "30px",
+                      backgroundColor: theme.colors.primary,
+                      boxShadow: "none", // Removes Bootstrap's default focus shadow
+                      border: "none",
+                      outline: "none",
+                    }}
+                  >
+                    {loading ? "Submitting..." : "Submit"}
                   </Button>
                 </Col>
               </Row>

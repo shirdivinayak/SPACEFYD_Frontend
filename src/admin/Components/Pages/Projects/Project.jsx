@@ -195,7 +195,7 @@ const ProductTable = () => {
           variant="primary"
           className="text-white"
           style={{
-            backgroundColor: "#184BD3",
+            backgroundColor: "#9A715B",
             border: "none",
           }}
         >
@@ -238,9 +238,9 @@ const ProductTable = () => {
                 onClick={() => handleCategorySelect("All Projects")}
                 style={{
                   backgroundColor:
-                    selectedCategory === "All Projects" ? "#E0E8FF" : "white",
+                    selectedCategory === "All Projects" ? "rgba(154, 113, 91, 0.2" : "white",
                   color:
-                    selectedCategory === "All Projects" ? "#184BD3" : "#4C6559",
+                    selectedCategory === "All Projects" ?"#9A715B" : "#5A5A5A",
                   border: "none",
                   fontWeight: 500,
                   fontSize: "16px",
@@ -258,9 +258,9 @@ const ProductTable = () => {
                   onClick={() => handleCategorySelect(category._id)}
                   style={{
                     backgroundColor:
-                      selectedCategory === category._id ? "#E0E8FF" : "white",
+                      selectedCategory === category._id ? "rgba(154, 113, 91, 0.2)" : "white",
                     color:
-                      selectedCategory === category._id ? "#184BD3" : "#4C6559",
+                      selectedCategory === category._id ? "#9A715B" : "#5A5A5A",
                     border: "none",
                     fontWeight: 500,
                     fontSize: "16px",
@@ -494,14 +494,14 @@ const ProductTable = () => {
                         size="sm"
                         onClick={() => handleEdit(item)}
                         style={{
-                          color: "blue",
+                          color: "#9A715B",
                           backgroundColor: "transparent",
                           border: "none",
                         }}
                       >
                         <i
                           className="bi bi-pencil"
-                          style={{ color: "blue", fontSize: "20px" }}
+                          style={{ color: "9A715B", fontSize: "20px" }}
                         ></i>{" "}
                         <span style={{ fontWeight: 500, fontSize: "16px" }}>
                           {" "}

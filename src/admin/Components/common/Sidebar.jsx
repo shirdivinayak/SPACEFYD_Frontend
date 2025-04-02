@@ -27,7 +27,7 @@ const Sidebar = () => {
     } else if (path === "/admin/projects") {
       setSelectedOption("All Projects");
     } else {
-      setSelectedOption("admin/Home");
+      setSelectedOption("Home");
     }
   }, [location]); // Run the effect whenever the route changes
 

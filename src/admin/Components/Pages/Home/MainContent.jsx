@@ -5,6 +5,7 @@ import useBannerApi from "../../../hooks/usebannerapi";
 const Home = () => {
   const { addBrand, editBrand, fetchBanner, loading, error, success } = useBannerApi();
   const [banner, setBanner] = useState(null);
+  const [bannerId, setBannerId] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isChanged, setIsChanged] = useState(false);
   const [hasBanner, setHasBanner] = useState(false);
@@ -15,7 +16,8 @@ const Home = () => {
       try {
         const response = await fetchBanner();
         if (response?.success && Array.isArray(response.data) && response.data.length > 0) {
-          setBanner(response.data[0].bannerUrl);
+          setBanner(response.data[0].defaultImage);
+          setBannerId(response.data[0]._id)
           setHasBanner(true);
         } else if (response?.success && response?.data?.bannerUrl) {
           setBanner(response.data.bannerUrl);
@@ -57,6 +59,7 @@ const Home = () => {
     try {
       // Create the payload for the API
       const bannerData = {
+        id: bannerId ? bannerId : null,
         defaultImage: banner,
         bannerName: '',
         bannerDescription: ''
@@ -107,8 +110,8 @@ const Home = () => {
             style={{
               width: "100%",
               height: "auto",
-              maxWidth: "1400px",
-              maxHeight: "800px",
+              maxWidth: "100%",
+              maxHeight: "1000px",
               border: "1px dashed #ccc",
               display: "flex",
               justifyContent: "center",

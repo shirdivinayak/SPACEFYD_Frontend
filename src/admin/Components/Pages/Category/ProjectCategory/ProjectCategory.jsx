@@ -205,8 +205,11 @@ const ProjectCategory = () => {
                       paddingLeft: "20px",
                       paddingRight: "20px",
                       marginTop: "30px",
-                      backgroundColor: "#184BD3",
+                      backgroundColor: "#9A715B",
                       border: "none",
+                      outline: "none",
+                      boxShadow: "none", // Removes Bootstrap's default focus shadow
+                      border: "none"
                     }}
                     disabled={loading}
                   >
@@ -272,7 +275,7 @@ const ProjectCategory = () => {
                       style={{
                         backgroundColor: "transparent",
                         border: "none",
-                        color: "blue",
+                        color: "#9A715B",
                       }}
                     >
                       <i className="bi bi-pencil"></i>
