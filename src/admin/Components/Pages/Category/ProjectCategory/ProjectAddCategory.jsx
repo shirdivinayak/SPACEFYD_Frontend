@@ -73,8 +73,11 @@ const ProjectAddCategory = () => {
                 paddingLeft: "20px",
                 paddingRight: "20px",
                 marginTop: "30px",
-                backgroundColor: "#184BD3",
+                backgroundColor: "#9A715B",
                 border: "none",
+                outline: "none",
+                 boxShadow: "none", // Removes Bootstrap's default focus shadow
+              border: "none"
               }}
               disabled={loading}
             >
