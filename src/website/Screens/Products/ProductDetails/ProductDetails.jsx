@@ -14,6 +14,8 @@ import ProductImage2 from "../../../Assets/Products/ProductImage2.svg";
 import ProductImage3 from "../../../Assets/Products/ProductImage3.svg";
 import ProductImage4 from "../../../Assets/Products/ProductImage4.svg";
 import ProductImage5 from "../../../Assets/Products/ProductImage5.svg";
+import { ReactComponent as Linetop } from "../../../Assets/Products/Line.svg";
+import { Line } from "react-bootstrap-icons";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
@@ -91,6 +93,16 @@ const ProductDetails = () => {
           <spam className="product-category">{ProductImages.category}</spam>
           <p className="product-description">{ProductImages.description}</p>
         </div>
+      </div>
+      <div className=" first-line container justify-content-center">
+        <Linetop
+          style={{
+            marginTop: 50,
+            marginBottom: 25,
+          }}
+        >
+          {" "}
+        </Linetop>
       </div>
 
       <div className=" container similar-products ">
