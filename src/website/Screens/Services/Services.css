@@ -61,6 +61,7 @@
   width: 50%;
   text-align: left;
   font-weight: 400;
+  padding: 2%;
 }
 
 /* Right Content - Positioned to Right */
@@ -70,6 +71,7 @@
   align-self: flex-end; /* Push to right */
   margin-top: 10%;
   margin-bottom: 10%;
+  padding: 2%;
 }
 
 .content-container h2,
@@ -161,6 +163,20 @@ p {
   /* position: absolute; */
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.image-fixed {
+  max-width: 514px;
+  max-height: 300px;
+  width: 100%; /* Ensures responsiveness */
+  height: auto;
+  display: block;
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
   .main-container {
@@ -202,5 +218,10 @@ p {
 
   .content-container .sub-content {
     justify-content: left;
+  }
+
+  .image-right {
+    display: flex;
+    justify-content: flex-end; /* Align image to the right */
   }
 }
