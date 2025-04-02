@@ -532,7 +532,7 @@ const AddProject = () => {
               style={{
                 backgroundColor: "transparent", // Background color
                 border: "none", // Removes border
-                color: "#113DBC", // Text color
+                color: "#9A715B", // Text color
                 fontSize: "16px", // Font size
                 fontWeight: 600, // Font weight
                 textDecoration: "none", // Ensures no text decoration
@@ -544,12 +544,15 @@ const AddProject = () => {
             <div style={{ paddingRight: "10px" }}></div>
             <Button
               style={{
-                backgroundColor: "#184BD3", // Background color
+                backgroundColor: "#9A715B", // Background color
                 border: "none", // Removes border
                 color: "white", // Text color
                 fontSize: "16px", // Font size
                 fontWeight: 600, // Font weight
                 textDecoration: "none", // Ensures no text decoration
+                boxShadow: "none", // Removes Bootstrap's default focus shadow
+                border: "none",
+                outline: "none",
               }}
               onClick={handleSave}
             >

@@ -95,7 +95,7 @@ const BrandTable = () => {
       </div>
 
       {/* Add Category Section */}
-      <div className="my-3 bg-white px-3 py-2 mx-4">
+      {/* <div className="my-3 bg-white px-3 py-2 mx-4">
         <div className="d-flex justify-content-between align-items-center">
           <h4
             style={{
@@ -116,7 +116,7 @@ const BrandTable = () => {
           ></i>
         </div>
         {showCategoryTabs && <AddBrand />}
-      </div>
+      </div> */}
 
       {/* Category Table */}
       {loading ? (
@@ -152,7 +152,7 @@ const BrandTable = () => {
               <th style={{ width: "80%", fontWeight: 500, fontSize: "16px" }}>
                 Brand
               </th>
-              <th style={{ width: "23%" }}></th>
+              {/* <th style={{ width: "23%" }}></th> */}
             </tr>
           </thead>
           <tbody>

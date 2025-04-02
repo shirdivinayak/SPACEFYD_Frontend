@@ -682,7 +682,7 @@ const AddProduct = () => {
                 style={{
                   backgroundColor: "transparent",
                   border: "none",
-                  color: "#113DBC",
+                  color: "#9A715B",
                   fontSize: "16px",
                   fontWeight: 600,
                   textDecoration: "none",
@@ -694,12 +694,15 @@ const AddProduct = () => {
               <div style={{ paddingRight: "10px" }}></div>
               <Button
                 style={{
-                  backgroundColor: "#184BD3",
+                  backgroundColor: "#9A715B",
                   border: "none",
                   color: "white",
                   fontSize: "16px",
                   fontWeight: 600,
                   textDecoration: "none",
+                  boxShadow: "none", // Removes Bootstrap's default focus shadow
+                  border: "none",
+                  outline: "none",
                 }}
                 onClick={handleSave}
               >
