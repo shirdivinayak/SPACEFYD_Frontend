@@ -19,7 +19,7 @@ const ContentSection = () => {
         className="row m-0 align-items-center justify-content-center"
         style={{
           minHeight: "auto",
-          paddingLeft: "100px", // Default for large screens
+          paddingLeft: "100px",
           paddingRight: "100px",
           paddingTop: "31px",
           paddingBottom: "31px",
@@ -40,7 +40,7 @@ const ContentSection = () => {
               width: "383px",
               maxWidth: "100%",
               height: "19px",
-              fontFamily: "Kollektif",
+              fontFamily: "DM Sans, sans-serif",
               fontWeight: "400",
               fontSize: "17.76px",
               lineHeight: "18.78px",
@@ -57,14 +57,14 @@ const ContentSection = () => {
               width: "383px",
               maxWidth: "100%",
               height: "auto",
-              fontFamily: "Kollektif",
+              fontFamily: "DM Sans, sans-serif",
               fontWeight: "400",
               fontSize: "48px",
               lineHeight: "48px",
               color: "#FFFFFF",
             }}
           >
-            Let’s Bring Your Vision to Life
+            Let's Bring Your Vision to Life
           </h1>
 
           {/* Paragraph */}
@@ -74,7 +74,7 @@ const ContentSection = () => {
               width: "443px",
               maxWidth: "100%",
               height: "auto",
-              fontFamily: "DM Sans",
+              fontFamily: "DM Sans, sans-serif",
               fontWeight: "300",
               fontSize: "20px",
               lineHeight: "24px",
@@ -82,7 +82,7 @@ const ContentSection = () => {
             }}
           >
             Partner with Spacifyd to create interiors that inspire and impress.
-            Whether it’s a single-room makeover or a large-scale commercial
+            Whether it's a single-room makeover or a large-scale commercial
             project, we are here to turn your ideas into reality.
           </p>
 
@@ -99,7 +99,7 @@ const ContentSection = () => {
               padding: "8px 16px",
               backgroundColor: "#FCF9F5",
               color: "#9A715B",
-              fontFamily: "DM Sans",
+              fontFamily: "DM Sans, sans-serif",
               fontWeight: "400",
               fontSize: "14px",
               lineHeight: "20px",
@@ -124,7 +124,7 @@ const ContentSection = () => {
               borderRadius: "24px",
               overflow: "hidden",
               height: "426px",
-              marginLeft: "50px", // Default for large screens
+              marginLeft: "50px",
             }}
             className="mx-auto"
           >
@@ -180,13 +180,13 @@ const ContentSection = () => {
           }
           div[style*="height: 426px"] {
             height: 300px !important;
-            margin-left: 0 !important; // Ensure no extra margin
-            margin-right: 0 !important; // Explicitly set to match left
-            width: 100%; // Full width within padding
-            max-width: 100%; // Override any max-width constraints
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            width: 100%;
+            max-width: 100%;
           }
           .col-12 {
-            padding-left: 0 !important; // Remove column padding
+            padding-left: 0 !important;
             padding-right: 0 !important;
           }
         }
