@@ -1,86 +1,113 @@
 /* Mobile Menu Styles */
 .navbar-collapse {
-    position: relative;
-    background-color: transparent; /* Default for large screens */
+  position: relative;
+  background-color: transparent;
+  transition: all 0.3s ease-out;
+  overflow: hidden;
+  max-height: 0;
+}
+
+.navbar-collapse.show {
+  max-height: 100vh;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Large Screen Styles */
+@media (min-width: 992px) {
+  .navbar-nav {
+    justify-content: center !important;
+    flex-grow: 1;
   }
-  
-  .navbar-collapse.show {
+
+  .navbar-collapse {
+    max-height: none !important;
     display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  display: none;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #FCF9F5;
+  z-index: 1050;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+/* Show mobile menu when navbar is collapsed on small screens */
+@media (max-width: 991px) {
+  .navbar-collapse.show .mobile-menu {
+    display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: space-between;
   }
-  
-  /* Large Screen Styles */
-  @media (min-width: 992px) {
-    .navbar-nav {
-      justify-content: center !important; /* Center the menu items */
-      flex-grow: 1; /* Allow the menu to take up available space */
-    }
-  
-    .navbar-collapse {
-      display: flex !important;
-      justify-content: space-between !important;
-      align-items: center !important;
-    }
-  }
-  
-  /* Mobile Menu */
-  .mobile-menu {
-    display: none;
-    width: 100%;
-    height: 100vh; /* Full viewport height */
+
+  .navbar-collapse.show {
+    background-color: #FCF9F5;
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #FCF9F5; /* Match the navbar background */
-    z-index: 1050; /* Ensure it overlays other content */
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  /* Show mobile menu when navbar is collapsed on small screens */
-  @media (max-width: 991px) {
-    .navbar-collapse.show .mobile-menu {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-  
-    .navbar-collapse.show {
-      background-color: #FCF9F5; /* Ensure background covers the screen */
-    }
-  }
-  
-  /* Mobile Menu Header (Logo and Close Button) */
-  .mobile-menu-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    right: 0;
+    bottom: 0;
+    z-index: 1040;
     padding: 20px;
   }
-  
-  .mobile-menu-close {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-  }
-  
-  /* Mobile Menu Items */
-  .mobile-menu-items {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 30px !important; /* Increased spacing between items */
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-  
-  /* Ensure navbar doesn't interfere with layout */
-  .navbar-collapse.show ~ * {
-    visibility: hidden;
-  }
+}
+
+/* Mobile Menu Header */
+.mobile-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.3s ease;
+}
+
+.mobile-menu-close:hover {
+  transform: rotate(90deg);
+}
+
+/* Mobile Menu Items */
+.mobile-menu-items {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px !important;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+/* Navbar Toggler Animation */
+.navbar-toggler {
+  transition: transform 0.3s ease;
+}
+
+.navbar-toggler.collapsed {
+  transform: rotate(0deg);
+}
+
+.navbar-toggler:not(.collapsed) {
+  transform: rotate(90deg);
+}

@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link } from "react-router-dom";
 import pic from "../../../Assets/Home/companylogo.png";
 import "./HomeNavbar.css";
 import { useTranslation } from "react-i18next";
-// import { FaGlobe } from "react-icons/fa";
 import LanguageSelector from "../../LanguageSelector/LanguageSelector";
 
 const HomeNavbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
-
   const { i18n } = useTranslation();
 
   const changeLanguage = (lng) => {
@@ -18,7 +16,6 @@ const HomeNavbar = () => {
     setShowDropdown(false);
   };
 
-  // Navigation items with their corresponding routes
   const navItems = [
     { name: "About us", path: "/AboutUs" },
     { name: "Products", path: "/Products" },
@@ -26,7 +23,6 @@ const HomeNavbar = () => {
     { name: "Services", path: "/Services" },
   ];
 
-  // Contact route
   const contactPath = "/ContactUs";
 
   return (
@@ -38,7 +34,6 @@ const HomeNavbar = () => {
       }}
     >
       <div className="container-fluid">
-        {/* Logo with Link */}
         <Link className="navbar-brand d-flex align-items-center" to="/">
           <img
             src={pic}
@@ -50,7 +45,6 @@ const HomeNavbar = () => {
           />
         </Link>
 
-        {/* Navbar Toggler */}
         <button
           className="navbar-toggler d-lg-none"
           type="button"
@@ -68,12 +62,10 @@ const HomeNavbar = () => {
           <span className="navbar-toggler-icon" />
         </button>
 
-        {/* Navbar Content */}
         <div
           className="collapse navbar-collapse justify-content-center"
           id="navbarSupportedContent"
         >
-          {/* Large Screen Menu */}
           <ul className="navbar-nav d-flex align-items-center gap-4">
             {navItems.map((item, index) => (
               <li className="nav-item" key={index}>
@@ -103,7 +95,6 @@ const HomeNavbar = () => {
             ))}
           </ul>
 
-          {/* Mobile Menu */}
           <div className="mobile-menu d-lg-none">
             <div className="mobile-menu-header">
               <Link className="navbar-brand d-flex align-items-center" to="/">
@@ -166,11 +157,8 @@ const HomeNavbar = () => {
                       transition: "transform 0.3s ease",
                     }}
                     onClick={() => {
-                      const navbarToggler =
-                        document.querySelector(".navbar-toggler");
-                      const navbarCollapse = document.querySelector(
-                        "#navbarSupportedContent"
-                      );
+                      const navbarToggler = document.querySelector(".navbar-toggler");
+                      const navbarCollapse = document.querySelector("#navbarSupportedContent");
                       if (navbarCollapse.classList.contains("show")) {
                         navbarToggler.click();
                       }
@@ -205,11 +193,8 @@ const HomeNavbar = () => {
                     textAlign: "center",
                   }}
                   onClick={() => {
-                    const navbarToggler =
-                      document.querySelector(".navbar-toggler");
-                    const navbarCollapse = document.querySelector(
-                      "#navbarSupportedContent"
-                    );
+                    const navbarToggler = document.querySelector(".navbar-toggler");
+                    const navbarCollapse = document.querySelector("#navbarSupportedContent");
                     if (navbarCollapse.classList.contains("show")) {
                       navbarToggler.click();
                     }
@@ -221,12 +206,11 @@ const HomeNavbar = () => {
             </ul>
           </div>
 
-          {/* Language Switcher */}
-          <div className="language-dropdown position-relative mx-3">
+          {/* Language Switcher - Now hidden on mobile screens */}
+          <div className="language-dropdown position-relative mx-3 d-none d-lg-block">
             <LanguageSelector />
           </div>
 
-          {/* Contact Button for Large Screens */}
           <Link
             to={contactPath}
             className="btn d-none d-lg-block"
@@ -251,7 +235,6 @@ const HomeNavbar = () => {
   );
 };
 
-// Helper function to simulate clamp behavior for numbers
 const clamp = (min, max) => {
   return Math.min(Math.max(min, window.innerWidth * 0.1), max);
 };
