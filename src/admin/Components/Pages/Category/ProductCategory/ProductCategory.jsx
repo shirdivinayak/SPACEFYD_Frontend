@@ -23,6 +23,7 @@ const ProductCategory = () => {
     loading,
     error,
     addCategory,
+    editCategory,
     addSubCategory,
     message,
     setMessage,
@@ -181,10 +182,18 @@ const ProductCategory = () => {
     console.log(item);
   };
 
-  const handleSave = (updatedItem) => {
-    setItems((prevItems) =>
-      prevItems.map((item) => (item.id === updatedItem.id ? updatedItem : item))
-    );
+  const handleSave = async  (updatedItem) => {
+console.log(updatedItem,"=======")
+    await editCategory({
+      id: updatedItem.id,
+      name: updatedItem.category,
+      type: "product",
+      image:updatedItem.image
+    });
+    // setItems((prevItems) =>
+    //   prevItems.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+    // );
+    // fetchProjectCategories();
     setMessage("Category updated successfully.");
   };
 
