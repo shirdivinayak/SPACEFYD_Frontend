@@ -38,6 +38,20 @@ const useCategoryApi = () => {
       setLoading(false);
     }
   };
+  const editCategory = async (categoryData) => {
+    try {
+      setLoading(true);
+      const response = await axiosInstance.post("/editCategory", categoryData);
+      const newCategory = response.data;
+      // setCategories((prev) => [...prev, newCategory]);
+      await fetchProjectCategories(); // Refresh categories from server    
+      setMessage(`Category ${categoryData.name} editted successfully.`);
+      } catch (error) {
+      setError(error.response?.data?.message || "Failed to add category.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const addSubCategory = async (subCategoryData) => {
     try {
@@ -86,6 +100,7 @@ const useCategoryApi = () => {
     message,
     categories,
     addCategory,
+    editCategory,
     addSubCategory,
     setMessage,
     setError,

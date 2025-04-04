@@ -49,6 +49,11 @@ const AddProduct = () => {
       placeholderImage,
       placeholderImage,
       placeholderImage,
+      placeholderImage,
+      placeholderImage,
+      placeholderImage,
+      placeholderImage,
+      placeholderImage,
     ]
   });
 

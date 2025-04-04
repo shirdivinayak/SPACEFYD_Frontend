@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, Button } from "react-bootstrap";
 import useBannerApi from "../../../hooks/usebannerapi";
+import Spinner from 'react-bootstrap/Spinner';
 
 const Home = () => {
   const { addBrand, editBrand, fetchBanner, loading, error, success } = useBannerApi();
@@ -106,6 +107,22 @@ const Home = () => {
       <div className="container" style={{ marginTop: "2rem" ,backgroundColor:'#fff',padding:'20px', width:'100%'
       }}>
         <div style={{ display: "flex", justifyContent: "center" }}>
+          {loading ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      backgroundColor: "transparent",
+                      marginTop: "15%",
+                      width: "100%",
+                    }}
+                  >
+                    <Spinner animation="border" variant="primary" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                  </div>
+                ) : (
           <Card
             style={{
               width: "100%",
@@ -139,7 +156,7 @@ const Home = () => {
                 Click here to upload Banner
               </Button>
             )}
-          </Card>
+          </Card> )}
         </div>
 
         {isChanged && (
