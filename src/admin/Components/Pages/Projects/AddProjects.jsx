@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Dropdown, Nav } from "react-bootstrap";
+import { Button, Dropdown, Nav, Placeholder } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AlertSuccesMessage from "../../common/MessageSuccesAlert";
 import useAddProjectApi from "../../../hooks/useAddProjectApi.js";
 import useFetchCategories from "../../../hooks/useAllProjectApi"; 
 import Spinner from 'react-bootstrap/Spinner';
+import Placeholders from "../../../Assets/Images/PlaceholderInput.svg";
 
 const AddProject = () => {
   const { addProject, loading, error, success } = useAddProjectApi();
@@ -15,7 +16,7 @@ const AddProject = () => {
     error: categoriesError,
   } = useFetchCategories();
   
-  const placeholderImage = "https://placehold.co/600x400/EEE/31343C";
+  const placeholderImage = Placeholders;
   
   // Initialize product details with empty images array
   const [productDetails, setProductDetails] = useState({

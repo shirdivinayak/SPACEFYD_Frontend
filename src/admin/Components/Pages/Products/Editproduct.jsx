@@ -6,6 +6,7 @@ import AlertSuccesMessage from "../../common/MessageSuccesAlert";
 import Spinner from 'react-bootstrap/Spinner';
 import useAddProductApi from "../../../hooks/useAddProduct";
 import useFetchCategories from "../../../hooks/useAllProductApi";
+import Placeholder from "../../../Assets/Images/PlaceholderInput.svg";
 
 const EditProductScreen = () => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const EditProductScreen = () => {
     displayInHome: item?.displayInHome || false,
     images: item?.image || [], // Keep all images, don't slice
   });
-  const placeholderImage = "https://placehold.co/600x400/EEE/31343C";
+  const placeholderImage = Placeholder;
   const prevCategoryIdRef = useRef(null); // Track previous categoryId to avoid redundant calls
 
   const [imageDisplay, setImageDisplay] = useState(() => {

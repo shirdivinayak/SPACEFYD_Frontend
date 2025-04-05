@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import AlertSuccesMessage from "../../common/MessageSuccesAlert";
 import useAddProjectApi from "../../../hooks/useAddProjectApi.js";
 import useFetchCategories from "../../../hooks/useAllProjectApi.js";
+import Placeholder from "../../../Assets/Images/PlaceholderInput.svg";
 
 // const categories = ["Electronics", "Furniture", "Clothing", "Toys"];
 const subCategories = {
@@ -30,7 +31,7 @@ const EditProjectScreen = () => {
     error: categoriesError,
   } = useFetchCategories();
   // Placeholder image URL
-  const placeholderImage = "https://placehold.co/600x400/EEE/31343C";
+  const placeholderImage = Placeholder;
 
   // Initialize state with project data or fallback values
   const [projectDetails, setProjectDetails] = useState(() => {
