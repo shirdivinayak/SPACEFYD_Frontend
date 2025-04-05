@@ -6,7 +6,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import useAddProductApi from "../../../hooks/useAddProduct";
 import useFetchCategories from "../../../hooks/useAllProductApi"; // Adjust path
 import AlertSuccesMessage from "../../common/MessageSuccesAlert";
-
+import Placeholder from "../../../Assets/Images/PlaceholderInput.svg";
 const AddProduct = () => {
   const navigate = useNavigate();
   
@@ -26,7 +26,7 @@ const AddProduct = () => {
  
 
   // Placeholder and state initialization
-  const placeholderImage = "https://placehold.co/600x400/EEE/31343C";
+  const placeholderImage = Placeholder;
   
   // Product/Product details state
   const [productDetails, setProductDetails] = useState({
