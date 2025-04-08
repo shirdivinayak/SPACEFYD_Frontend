@@ -13,7 +13,7 @@ import ProductImage from "../../../Assets/Products/ProductImage.svg";
 import ProductImage2 from "../../../Assets/Products/ProductImage2.svg";
 import ProductImage3 from "../../../Assets/Products/ProductImage3.svg";
 import ProductImage4 from "../../../Assets/Products/ProductImage4.svg";
-import ProductImage5 from "../../../Assets/Products/ProductImage5.svg";
+import ProductImage5 from "../../../Assets/Products/ProductImage5.png";
 import { ReactComponent as Linetop } from "../../../Assets/Products/Line.svg";
 import { Line } from "react-bootstrap-icons";
 

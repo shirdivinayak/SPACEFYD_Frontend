@@ -5,6 +5,8 @@ import CoverImage from "../../../Assets/Projetcs/cover.svg"; // Dummy cover imag
 import Image1 from "../../../Assets/Projetcs/image1.svg";
 import Image2 from "../../../Assets/Projetcs/image2.svg";
 import Image5 from "../../../Assets/Projetcs/image5.svg";
+import { ReactComponent as Linebot } from "../../../Assets/Products/Line.svg";
+
 import "./Projetc-Detail.css"; // Import CSS file
 import HomeNavbar from "../../../components/Home/NavbarDark/DarkNavbar"; // Import Navbar
 import Footer from "../../../components/Home/Footer/Footer"; // Import Footer
@@ -37,63 +39,66 @@ const ProjectsDetail = (props) => {
 
   return (
     <>
-    <HomeNavbar/>
-    <div className="main">
-      {/* Hero Section */}
-      <div
-        className="services-container"
-        style={{ backgroundImage: `url(${HeroImage})` }}
-      >
-        <div className="container px-4">
-          <h1 className="service-title">{dummyData.title}</h1>
-        </div>
-      </div>
-
-      {/* Cover Image */}
-      <div className="cover-image-container">
-        <img src={dummyData.coverImage} alt="Cover" className="cover-image" />
-      </div>
-
-      {/* Description */}
-      <div className="content-contatiner">
-        <p className="project-description">{dummyData.description}</p>
-
-        {/* Images Grid */}
-        <div className="images-grid">
-          {dummyData.images.map((img, index) => (
-            <img
-              key={index}
-              src={img}
-              alt={`Project ${index}`}
-              className="grid-image"
-            />
-          ))}
-        </div>
-      </div>
-      <div>
-        {/* Heading and Button */}
-        <div className="more-projects-container">
-          <h2 className="more-projects-heading">Similar Projects</h2>
-          <button className="view-more-button">View More</button>
+      <HomeNavbar />
+      <div className="main">
+        {/* Hero Section */}
+        <div
+          className="services-container"
+          style={{ backgroundImage: `url(${HeroImage})` }}
+        >
+          <div className="container px-4">
+            <h1 className="service-title">{dummyData.title}</h1>
+          </div>
         </div>
 
-        {/* Projects Grid */}
-        <div className="more-projects-grid">
-          {projects.map((project, index) => (
-            <div key={index} className="more-project-item">
+        {/* Cover Image */}
+        <div className="cover-image-container">
+          <img src={dummyData.coverImage} alt="Cover" className="cover-image" />
+        </div>
+
+        {/* Description */}
+        <div className="content-contatiner">
+          <p className="project-description">{dummyData.description}</p>
+
+          {/* Images Grid */}
+          <div className="images-grid">
+            {dummyData.images.map((img, index) => (
               <img
-                src={project.img}
-                alt={project.title}
-                className="more-project-image"
+                key={index}
+                src={img}
+                alt={`Project ${index}`}
+                className="grid-image"
               />
-              <h3 className="more-project-title">{project.title}</h3>
-              <p className="more-project-description">{project.description}</p>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+        <div>
+          <Linebot />
+          {/* Heading and Button */}
+          <div className="more-projects-container">
+            <h2 className="more-projects-heading">Similar Projects</h2>
+            <button className="view-more-button">View More</button>
+          </div>
+
+          {/* Projects Grid */}
+          <div className="more-projects-grid">
+            {projects.map((project, index) => (
+              <div key={index} className="more-project-item">
+                <img
+                  src={project.img}
+                  alt={project.title}
+                  className="more-project-image"
+                />
+                <h3 className="more-project-title">{project.title}</h3>
+                <p className="more-project-description">
+                  {project.description}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-    <Footer/>
+      <Footer />
     </>
   );
 };
