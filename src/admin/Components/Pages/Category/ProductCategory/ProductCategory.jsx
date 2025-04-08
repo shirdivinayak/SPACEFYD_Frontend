@@ -23,6 +23,7 @@ const ProductCategory = () => {
     loading,
     error,
     addCategory,
+    editCategory,
     addSubCategory,
     message,
     setMessage,
@@ -181,10 +182,18 @@ const ProductCategory = () => {
     console.log(item);
   };
 
-  const handleSave = (updatedItem) => {
-    setItems((prevItems) =>
-      prevItems.map((item) => (item.id === updatedItem.id ? updatedItem : item))
-    );
+  const handleSave = async  (updatedItem) => {
+console.log(updatedItem,"=======")
+    await editCategory({
+      id: updatedItem.id,
+      name: updatedItem.category,
+      type: "product",
+      image:updatedItem.image
+    });
+    // setItems((prevItems) =>
+    //   prevItems.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+    // );
+    // fetchProjectCategories();
     setMessage("Category updated successfully.");
   };
 
@@ -239,7 +248,7 @@ const ProductCategory = () => {
           className="d-flex align-items-center mb-0 m-0"
           style={{ fontSize: "20px" }}
         >
-          <Nav.Link as={Link} to="/" className="me-2 opacity-50">
+          <Nav.Link as={Link} to="/admin" className="me-2 opacity-50">
             Home
           </Nav.Link>
           <span> &gt; </span>

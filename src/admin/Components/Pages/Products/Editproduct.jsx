@@ -6,6 +6,7 @@ import AlertSuccesMessage from "../../common/MessageSuccesAlert";
 import Spinner from 'react-bootstrap/Spinner';
 import useAddProductApi from "../../../hooks/useAddProduct";
 import useFetchCategories from "../../../hooks/useAllProductApi";
+import Placeholder from "../../../Assets/Images/PlaceholderInput.svg";
 
 const EditProductScreen = () => {
   const navigate = useNavigate();
@@ -36,13 +37,13 @@ const EditProductScreen = () => {
     displayInHome: item?.displayInHome || false,
     images: item?.image || [], // Keep all images, don't slice
   });
-  const placeholderImage = "https://placehold.co/600x400/EEE/31343C";
+  const placeholderImage = Placeholder;
   const prevCategoryIdRef = useRef(null); // Track previous categoryId to avoid redundant calls
 
   const [imageDisplay, setImageDisplay] = useState(() => {
     const imagesArray = item?.image || [];
     const mainImage = imagesArray.length > 0 ? imagesArray[0] : placeholderImage;
-    const additionalImages = [...Array(3)].map((_, index) => 
+    const additionalImages = [...Array(8)].map((_, index) => 
       (index + 1) < imagesArray.length ? imagesArray[index + 1] : placeholderImage
     );
     return { mainImage, additionalImages };
@@ -563,7 +564,7 @@ useEffect(() => {
             </div>
 
             {/* Display other images */}
-            <div
+            {/* <div
               className="d-flex"
               style={{ gap: "10px", marginTop: "10px", paddingLeft: "50px" }}
             >
@@ -617,7 +618,77 @@ useEffect(() => {
                     />
                 </div>
               ))}
-            </div>
+            </div> */}
+  
+<div style={{ marginTop: "20px", paddingLeft: "50px" }}>
+  {/* Display images in rows of 3 */}
+  {Array.from({ length: Math.ceil(imageDisplay.additionalImages.length / 3) }).map((_, rowIndex) => (
+    <div 
+      key={`row-${rowIndex}`} 
+      className="d-flex" 
+      style={{ gap: "15px", marginBottom: "15px" }}
+    >
+      {imageDisplay.additionalImages.slice(rowIndex * 3, (rowIndex + 1) * 3).map((img, colIndex) => {
+        const index = rowIndex * 3 + colIndex;
+        return (
+          <div
+            key={index}
+            style={{ 
+              position: "relative", 
+              display: "inline-block",
+              width: "120px",
+              height: "120px"
+            }}
+          >
+            <img
+              src={img}
+              alt={`Image-${index + 1}`}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                border: "1px solid #ddd",
+                padding: "5px",
+                cursor: isEditing ? "pointer" : "default",
+                borderRadius: "4px"
+              }}
+              onClick={() => isEditing && document.getElementById(`otherImageInput-${index}`).click()}
+            />
+            {isEditing && (
+              <button
+                onClick={() => handleDeleteOtherImage(index)}
+                style={{
+                  position: "absolute",
+                  top: "5px",
+                  right: "5px",
+                  backgroundColor: "rgba(255, 255, 255, 0.7)",
+                  border: "none",
+                  borderRadius: "50%",
+                  width: "24px",
+                  height: "24px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
+              >
+                <i className="bi bi-trash" style={{ color: "red", fontSize: "14px" }}></i>
+              </button>
+            )}
+            <input
+              type="file"
+              disabled={!isEditing}
+              id={`otherImageInput-${index}`}
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={(e) => handleImageUpload(e, false, index)}
+            />
+          </div>
+        );
+      })}
+    </div>
+  ))}
+</div>
           </div>
           {/* Display other images */}
 

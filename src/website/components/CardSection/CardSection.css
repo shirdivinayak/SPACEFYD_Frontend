@@ -29,7 +29,7 @@
 }
 
 .heading-section h2 {
-  font-family: "Kollektif", sans-serif;
+  font-family: "DM Sans", sans-serif; /* Changed to DM Sans */
   font-weight: 400;
   font-size: 24px;
   line-height: 31px;
@@ -39,7 +39,7 @@
 }
 
 .heading-section h1 {
-  font-family: "Kollektif", sans-serif;
+  font-family: "DM Sans", sans-serif; /* Changed to DM Sans */
   font-weight: 400;
   font-size: 48px;
   line-height: 55px;
@@ -62,7 +62,7 @@
   color: #ffffff;
   border: none;
   cursor: pointer;
-  font-family: "Kollektif", sans-serif;
+  font-family: "DM Sans", sans-serif; /* Changed to DM Sans */
   font-size: 16px;
   transition: background-color 0.3s ease; /* Smooth transition for hover */
 }
@@ -117,15 +117,15 @@
 }
 
 .card p {
-  font-family: "Poppins", sans-serif;
-  font-weight: 600;
+  font-family: "DM Sans", sans-serif; /* Changed to DM Sans */
+  font-weight: 700; /* Increased font weight for emphasis */
   font-size: 24px;
   line-height: 120%;
   letter-spacing: 0%;
   color: black;
-  text-align: left; /* Changed to left-align */
+  text-align: right; /* Changed from left to right */
   margin-top: 20px;
-  padding-left: 20px; /* Add some padding to the left for better spacing */
+  padding-right: 20px; /* Changed from padding-left to padding-right for right alignment */
 }
 
 /* Navigation Icons (Large Screens) and View More (Small Screens) */
@@ -217,7 +217,7 @@
 
   .card p {
     font-size: 20px; /* Adjusted for smaller screens */
-    padding-left: 15px; /* Adjust padding for smaller screens */
+    padding-right: 15px; /* Changed from padding-left to padding-right */
   }
 
   .large-screen-navigation {
@@ -266,7 +266,7 @@
 
   .card p {
     font-size: 18px; /* Adjusted for smaller screens */
-    padding-left: 10px; /* Adjust padding for smaller screens */
+    padding-right: 10px; /* Changed from padding-left to padding-right */
   }
 
   .small-screen-navigation button span {
@@ -313,7 +313,7 @@
 
   .card p {
     font-size: 16px; /* Adjusted for smaller screens */
-    padding-left: 10px; /* Adjust padding for smaller screens */
+    padding-right: 10px; /* Changed from padding-left to padding-right */
   }
 
   .small-screen-navigation button span {

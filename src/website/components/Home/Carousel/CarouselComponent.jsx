@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import "./CarouselComponent.css";
 import image1 from "../../../Assets/Home/image1.png";
-import background from "../../../Assets/Home/background.png";
-import carouselbg from "../../../Assets/Home/carouselbg.png";
 
 const CarouselComponent = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -11,33 +9,29 @@ const CarouselComponent = () => {
     {
       image: image1,
       heading: "Al Khaleej Serenity Villa Renovation",
-      subheading: "Ruwi",
     },
     {
       image: image1,
       heading: "Elegant Kitchen Design",
-      subheading: "Ruwi",
     },
     {
       image: image1,
       heading: "Cozy Bedroom Design",
-      subheading: "Ruwi",
     },
     {
       image: image1,
       heading: "Minimalist Office Design",
-      subheading: "Ruwi",
     },
   ];
 
   const goToPrev = () => {
-    setCurrentIndex((prevIndex) => 
+    setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? carouselData.length - 1 : prevIndex - 1
     );
   };
 
   const goToNext = () => {
-    setCurrentIndex((prevIndex) => 
+    setCurrentIndex((prevIndex) =>
       prevIndex === carouselData.length - 1 ? 0 : prevIndex + 1
     );
   };
@@ -78,33 +72,42 @@ const CarouselComponent = () => {
       <div className="custom-carousel-wrapper">
         <div className="custom-carousel">
           {/* Left Image Section */}
-          <div 
+          <div
             className="carousel-image-section"
-            style={{ backgroundImage: `url(${carouselData[currentIndex].image})` }}
+            style={{
+              backgroundImage: `url(${carouselData[currentIndex].image})`,
+            }}
           />
-          
+
           {/* Right Content Section */}
-          <div 
+          <div
             className="carousel-content-section"
-            style={{ backgroundImage: `url(${carouselbg})` }}
+            style={{ backgroundColor: "#9A715B" }}
           >
             <div className="carousel-content-inner">
               <h3>{carouselData[currentIndex].heading}</h3>
-              <p>{carouselData[currentIndex].subheading}</p>
               <hr />
             </div>
-            
+
             <div className="carousel-navigation">
               <p>{`${currentIndex + 1}/${carouselData.length}`}</p>
               <div className="carousel-navigation-buttons">
                 <button onClick={goToPrev}>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M15 18L9 12L15 6" stroke="#FFFFFF" strokeWidth="2" />
+                    <path
+                      d="M15 18L9 12L15 6"
+                      stroke="#FFFFFF"
+                      strokeWidth="2"
+                    />
                   </svg>
                 </button>
                 <button onClick={goToNext}>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M9 18L15 12L9 6" stroke="#FFFFFF" strokeWidth="2" />
+                    <path
+                      d="M9 18L15 12L9 6"
+                      stroke="#FFFFFF"
+                      strokeWidth="2"
+                    />
                   </svg>
                 </button>
               </div>
