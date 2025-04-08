@@ -1,159 +1,178 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import for navigation
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HeroImage from "../../../Assets/AboutUs/hero.svg";
-import Image1 from "../../../Assets/Projetcs/image1.svg";
-import Image2 from "../../../Assets/Projetcs/image2.svg";
-import Image5 from "../../../Assets/Projetcs/image5.svg";
-import "./ProjectList.css"; // Import CSS file
-import HomeNavbar from "../../../components/Home/NavbarDark/DarkNavbar"; // Import Navbar
-import Footer from "../../../components/Home/Footer/Footer"; // Import Footer
+import "./ProjectList.css";
+import HomeNavbar from "../../../components/Home/NavbarDark/DarkNavbar";
+import Footer from "../../../components/Home/Footer/Footer";
+import axiosInstance from "../../../../instance/axiosInstance";
 
 const ProjectList = () => {
-  const [selectedCategory, setSelectedCategory] = useState("Industrialspaces");
-  const navigate = useNavigate(); // Hook for navigation
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [loadingCategories, setLoadingCategories] = useState(true);
+  const [loadingProjects, setLoadingProjects] = useState(true);
+  const [projects, setProjects] = useState([]);
+  const navigate = useNavigate();
 
-  const projectsData = {
-    Industrialspaces: [
-      { 
-        img: Image1,
-        title: "Gulf Logistics & Warehouse Facility",
-        description:
-          "A luxurious penthouse with seamless smart home integration, offering breathtaking views, modern interiors, and cutting-edge automation for ultimate comfort.",
-      },
-      {
-        img: Image5,
-        title: "Al Hadeera Luxury Villa",
-        description:
-          "A luxurious penthouse with seamless smart home integration, offering breathtaking views, modern interiors, and cutting-edge automation for ultimate comfort.",
-      },
-    ],
-    Commercial: [
-      {
-        img: Image2,
-        title: "Modern Office Space",
-        description:
-          "An innovative office design with ergonomic furniture and smart technology to enhance productivity and comfort.",
-      },
-      {
-        img: Image1,
-        title: "Luxury Hotel Suite",
-        description:
-          "An elegant hotel suite with premium interiors and state-of-the-art automation for an unforgettable experience.",
-      },
-    ],
-    Residential: [
-      {
-        img: Image1,
-        title: "Gulf Logistics & Warehouse Facility",
-        description:
-          "A luxurious penthouse with seamless smart home integration, offering breathtaking views, modern interiors, and cutting-edge automation for ultimate comfort.",
-      },
-      {
-        img: Image5,
-        title: "Al Hadeera Luxury Villa",
-        description:
-          "A luxurious penthouse with seamless smart home integration, offering breathtaking views, modern interiors, and cutting-edge automation for ultimate comfort.",
-      },
-    ],
-    Hospitality: [
-      {
-        img: Image2,
-        title: "Modern Office Space",
-        description:
-          "An innovative office design with ergonomic furniture and smart technology to enhance productivity and comfort.",
-      },
-      {
-        img: Image1,
-        title: "Luxury Hotel Suite",
-        description:
-          "An elegant hotel suite with premium interiors and state-of-the-art automation for an unforgettable experience.",
-      },
-    ],
-    Retail: [
-      {
-        img: Image1,
-        title: "Gulf Logistics & Warehouse Facility",
-        description:
-          "A luxurious penthouse with seamless smart home integration, offering breathtaking views, modern interiors, and cutting-edge automation for ultimate comfort.",
-      },
-      {
-        img: Image5,
-        title: "Al Hadeera Luxury Villa",
-        description:
-          "A luxurious penthouse with seamless smart home integration, offering breathtaking views, modern interiors, and cutting-edge automation for ultimate comfort.",
-      },
-    ],
-    Education: [
-      {
-        img: Image2,
-        title: "Modern Office Space",
-        description:
-          "An innovative office design with ergonomic furniture and smart technology to enhance productivity and comfort.",
-      },
-      {
-        img: Image1,
-        title: "Luxury Hotel Suite",
-        description:
-          "An elegant hotel suite with premium interiors and state-of-the-art automation for an unforgettable experience.",
-      },
-    ],
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    if (selectedCategory) {
+      fetchProjects(selectedCategory);
+    }
+  }, [selectedCategory]);
+
+  const fetchCategories = async () => {
+    setLoadingCategories(true);
+    try {
+      const response = await axiosInstance.post("/displayCategory", {
+        type: "project"
+      });
+      
+      if (response.data && response.data.data && Array.isArray(response.data.data)) {
+        setCategories(response.data.data);
+        if (response.data.data.length > 0) {
+          setSelectedCategory(response.data.data[0]._id);
+        }
+      } else {
+        console.error("Invalid category data format:", response.data);
+        setCategories([]);
+      }
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      setCategories([]);
+    } finally {
+      setLoadingCategories(false);
+    }
   };
 
-  const categories = Object.keys(projectsData);
+  const fetchProjects = async (categoryId) => {
+    setLoadingProjects(true);
+    try {
+      const response = await axiosInstance.post('/displayProjectByID', { 
+        categoryId: categoryId 
+      });
+      
+      if (response.data && response.data.data) {
+        setProjects(response.data.data);
+      } else {
+        setProjects([]);
+      }
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+      setProjects([]);
+    } finally {
+      setLoadingProjects(false);
+    }
+  };
 
-  return (
-    <>
-    <HomeNavbar/>
-    <div className="main">
-      {/* Hero Section */}
-      <div
-        className="services-container"
-        style={{ backgroundImage: `url(${HeroImage})` }}
-      >
-        <div className="container px-4">
-          <h1 className="service-title">Our Projects</h1>
-          <p className="service-description">
-            Discover our diverse portfolio showcasing transformative
-            designs and <br /> exceptional craftsmanship 
-            across every project
-          </p>
-        </div>
-      </div>
-      {/* Category List */}
-      <div className="category-containers">
-        {categories.map((category) => (
-          <span
-            key={category}
-            className={`category-items ${
-              selectedCategory === category ? "selected-category" : ""
-            }`}
-            onClick={() => setSelectedCategory(category)}
-          >
-            {category}
+  const handleCategoryClick = (categoryId) => {
+    setSelectedCategory(categoryId);
+  };
+
+  // Placeholder loader for categories
+  const CategoryPlaceholders = () => {
+    return (
+      <div className="category-placeholder-container">
+        {[1, 2, 3, 4, 5].map((item) => (
+          <span key={item} className="placeholder-glow category-placeholder">
+            <span className="placeholder col-12"></span>
           </span>
         ))}
       </div>
+    );
+  };
 
-      {/* Project List */}
+  // Placeholder loader for projects
+  const ProjectPlaceholders = () => {
+    return (
       <div className="more-projects-grid">
-        {projectsData[selectedCategory].map((project, index) => (
-          <div key={index} className="more-project-item">
-            <img
-              onClick={() =>
-                navigate(`/ProjectsDetail/${encodeURIComponent(project.title)}`)
-              }
-              src={project.img}
-              alt={project.title}
-              className="more-project-image"
-            />
-            <h3 className="more-project-title">{project.title}</h3>
-            <p className="more-project-description">{project.description}</p>
+        {[1, 2, 3, 4].map((item) => (
+          <div key={item} className="more-project-item placeholder-project">
+            <div className="placeholder-glow project-image-placeholder">
+              <span className="placeholder col-12 h-100"></span>
+            </div>
+            <h3 className="placeholder-glow more-project-title">
+              <span className="placeholder col-7"></span>
+            </h3>
+            <p className="placeholder-glow more-project-description">
+              <span className="placeholder col-9"></span>
+              <span className="placeholder col-12"></span>
+            </p>
           </div>
         ))}
       </div>
-    </div>
-    <Footer/>
+    );
+  };
+
+  return (
+    <>
+      <HomeNavbar />
+      <div className="main">
+        {/* Hero Section */}
+        <div
+          className="services-container"
+          style={{ backgroundImage: `url(${HeroImage})` }}
+        >
+          <div className="container px-4">
+            <h1 className="service-title">Our Projects</h1>
+            <p className="service-description">
+              Discover our diverse portfolio showcasing transformative
+              designs and <br /> exceptional craftsmanship 
+              across every project
+            </p>
+          </div>
+        </div>
+        
+        {/* Category List */}
+        <div className="category-containers">
+          {loadingCategories ? (
+            <CategoryPlaceholders />
+          ) : (
+            categories.map((category) => (
+              <span
+                key={category._id}
+                className={`category-items ${
+                  selectedCategory === category._id ? "selected-category" : ""
+                }`}
+                onClick={() => handleCategoryClick(category._id)}
+              >
+                {category.name}
+              </span>
+            ))
+          )}
+        </div>
+
+        {/* Project List */}
+        {loadingProjects ? (
+          <ProjectPlaceholders />
+        ) : projects.length > 0 ? (
+          <div className="more-projects-grid">
+            {projects.map((project, index) => (
+              <div key={index} className="more-project-item">
+                <img
+                  onClick={() => 
+                    navigate(`/ProjectsDetail/${encodeURIComponent(project.projectName)}`, { state: { project } })
+                  }
+                  src={project.images[0] || project.img}
+                  alt={project.projectName}
+                  className="more-project-image"
+                />
+                <h3 className="more-project-title">{project.projectName}</h3>
+                <p className="more-project-description">{project.projectDescription}</p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="no-projects-container">
+            <p className="no-projects-message">No projects found for this category</p>
+          </div>
+        )}
+      </div>
+      <Footer />
     </>
   );
 };
