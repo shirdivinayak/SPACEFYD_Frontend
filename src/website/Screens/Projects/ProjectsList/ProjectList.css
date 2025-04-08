@@ -158,6 +158,35 @@
   .selected-category {
     border-bottom: 3px solid #4C6559;
   }
+
+  .no-projects-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 400px; /* Increased height for better visibility */
+    text-align: center;
+    margin: 0 auto;
+  }
+  
+  .no-projects-message {
+    font-family: "DM Sans", sans-serif;
+    font-size: 18px;
+    color: #666;
+    padding: 20px 40px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .projects-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 300px;
+  }
+  
+
   
    
 
@@ -179,7 +208,14 @@
         border-radius: 12px;
     
     }
+    .no-projects-container {
+      height: 300px; /* Slightly reduced height on mobile */
+    }
     
+    .no-projects-message {
+      padding: 15px 25px;
+      font-size: 16px;
+    }
 
     .more-project-title {
         font-family: "Kollektif", sans-serif;
@@ -222,3 +258,62 @@
   }
 }
 
+.category-placeholder-container {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10px 0;
+  margin-left: 20%;
+  margin-top: 3%;
+}
+
+.category-placeholder {
+  display: inline-block;
+  width: 120px;
+  height: 40px;
+  margin: 5px;
+  border-radius: 4px;
+}
+
+/* Project placeholder styling */
+.placeholder-project {
+  text-align: left;
+  max-width: 1200px;
+  padding-left: 3%;
+}
+
+.project-image-placeholder {
+  width: 608px;
+  height: 455px;
+  margin-bottom: 5%;
+  border-radius: 12px;
+}
+
+/* Bootstrap placeholder animation override */
+.placeholder {
+  background-color: #e9ecef;
+  opacity: 0.7;
+  animation: placeholder-wave 2s ease-in-out infinite;
+}
+
+/* Make the placeholders match your site color scheme */
+.placeholder-glow .placeholder {
+  background-color: #e5ebe8; /* Light version of your theme color #4C6559 */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .category-placeholder-container {
+    margin-left: 1%;
+  }
+  
+  .project-image-placeholder {
+    width: 100%;
+    height: 248px;
+  }
+  
+  .category-placeholder {
+    width: 100px;
+    height: 34px;
+  }
+}
