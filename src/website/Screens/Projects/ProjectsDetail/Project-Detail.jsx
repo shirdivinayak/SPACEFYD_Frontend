@@ -86,14 +86,14 @@ const ProjectsDetail = () => {
 
           {/* Images Grid - use project images if available, otherwise use fallback */}
           <div className="images-grid">
-            {(projectData.images || fallbackData.images).map((img, index) => (
-              <img
-                key={index}
-                src={img}
-                alt={`Project ${index}`}
-                className="grid-image"
-              />
-            ))}
+          {(projectData.images || fallbackData.images).slice(1).map((img, index) => (
+  <img
+    key={index}
+    src={img}
+    alt={`Project ${index + 1}`}
+    className="grid-image"
+  />
+))}
           </div>
         </div>
         <div>
