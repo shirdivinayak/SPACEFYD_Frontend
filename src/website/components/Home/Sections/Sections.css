@@ -101,32 +101,29 @@
   margin: 0;
 }
 
-.image-button {
+/* Arrow Button Styling */
+.arrow-button {
   background: none;
-  border: 1px solid #ffffff;
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: none;
   padding: 0;
   cursor: pointer;
   transition: all 0.3s ease;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.image-button:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.1);
+.arrow-icon {
+  transition: all 0.3s ease;
 }
 
-.button-icon {
-  position: relative;
-  top: 3.17px;
-  left: 3.17px;
+.arrow-button:hover .arrow-icon {
+  transform: translateX(5px);
 }
 
-/* Responsive Styles - Only for smaller screens */
+/* Responsive Styles */
 @media (max-width: 991px) {
   .background-section {
     padding: 30px 0;
@@ -150,10 +147,9 @@
     margin-bottom: 15px;
   }
 
-  /* Make all images same width in smaller screens */
   .col-8 .img-fluid,
   .col-4 .img-fluid {
-    height: 200px; /* Fixed height for consistency */
+    height: 200px;
   }
 
   .image-wrapper {
@@ -192,7 +188,6 @@
     font-size: 18px;
   }
 
-  /* Stack columns on mobile */
   .row {
     flex-direction: column;
   }

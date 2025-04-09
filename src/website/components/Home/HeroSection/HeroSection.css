@@ -1,3 +1,4 @@
+/* HeroSection.css */
 /* Floating Button */
 .floating-btn {
   background: linear-gradient(90deg, rgba(153, 153, 153, 0.3) 0%, rgba(255, 255, 255, 0.3) 100%);
@@ -27,22 +28,25 @@
 
 /* Proper Button */
 .proper-btn {
-  background: #FCF9F5;
-  border: none;
-  color: #9A715B;
-  padding: 15px 30px;
-  font-family: "Raleway", sans-serif;
-  font-size: 18px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  background: #FCF9F5 !important;
+  border: none !important;
+  color: #9A715B !important;
+  padding: 15px 30px !important;
+  font-family: "Raleway", sans-serif !important;
+  font-size: 18px !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  margin-top: 30px !important;
+  position: relative !important;
+  z-index: 10 !important;
 }
 
 .proper-btn:hover {
-  background: #4C6559;
-  color: #FCF9F5;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  transform: translateY(-2px);
+  background: #4C6559 !important;
+  color: #FCF9F5 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+  transform: translateY(-2px) !important;
 }
 
 /* Lamp Floating Button */
@@ -105,6 +109,8 @@
     padding: 30px !important;
     height: auto !important;
     min-height: 800px !important;
+    margin: 0 20px 20px 20px !important;
+    width: calc(100% - 40px) !important;
   }
 
   .hero-heading {
@@ -171,6 +177,13 @@
   .proper-btn {
     padding: 12px 25px !important;
     font-size: 16px !important;
+    background: #FCF9F5 !important;
+    color: #9A715B !important;
+  }
+
+  .proper-btn:hover {
+    background: #4C6559 !important;
+    color: #FCF9F5 !important;
   }
 
   /* Lamp Section */
@@ -244,6 +257,8 @@
   .hero-section {
     padding: 20px !important;
     min-height: 700px !important;
+    margin: 0 15px 15px 15px !important;
+    width: calc(100% - 30px) !important;
   }
 
   .hero-heading h1 {
@@ -280,6 +295,13 @@
   .proper-btn {
     padding: 10px 20px !important;
     font-size: 14px !important;
+    background: #FCF9F5 !important;
+    color: #9A715B !important;
+  }
+
+  .proper-btn:hover {
+    background: #4C6559 !important;
+    color: #FCF9F5 !important;
   }
 
   /* Lamp Section */
@@ -302,6 +324,11 @@
 }
 
 @media (max-width: 576px) {
+  .hero-section {
+    margin: 0 10px 10px 10px !important;
+    width: calc(100% - 20px) !important;
+  }
+  
   .floating-btn {
     min-width: 140px !important;
     max-width: 180px !important;

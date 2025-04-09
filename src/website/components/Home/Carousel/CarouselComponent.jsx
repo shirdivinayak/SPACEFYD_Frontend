@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import "./CarouselComponent.css";
 import image1 from "../../../Assets/Home/image1.png";
 
 const CarouselComponent = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate();
 
   const carouselData = [
     {
@@ -36,6 +39,11 @@ const CarouselComponent = () => {
     );
   };
 
+  const handleKnowMoreClick = () => {
+    navigate("/projectlist");
+    window.scrollTo(0, 0);
+  };
+
   return (
     <div className="carousel-home-container">
       {/* Heading Section */}
@@ -46,8 +54,10 @@ const CarouselComponent = () => {
             Transforming Spaces with Seamless Interior Solutions
           </h1>
         </div>
-        <button
+        <Button
+          variant="dark"
           className="carousel-home-know-more-btn large-screen-btn"
+          onClick={handleKnowMoreClick}
           style={{
             width: "132px",
             height: "44px",
@@ -65,7 +75,7 @@ const CarouselComponent = () => {
           }}
         >
           Know More
-        </button>
+        </Button>
       </div>
 
       {/* Custom Carousel Implementation */}
@@ -118,8 +128,10 @@ const CarouselComponent = () => {
 
       {/* Mobile Know More Button */}
       <div className="carousel-home-small-screen-btn-container">
-        <button
+        <Button
+          variant="dark"
           className="carousel-home-know-more-btn small-screen-btn"
+          onClick={handleKnowMoreClick}
           style={{
             width: "132px",
             height: "44px",
@@ -138,7 +150,7 @@ const CarouselComponent = () => {
           }}
         >
           Know More
-        </button>
+        </Button>
       </div>
     </div>
   );

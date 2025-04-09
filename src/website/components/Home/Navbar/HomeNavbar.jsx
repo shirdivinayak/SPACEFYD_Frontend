@@ -38,10 +38,10 @@ const HomeNavbar = () => {
           <img
             src={pic}
             alt="Logo"
-            width={clamp(100, 191)}
-            height={clamp(25, 48)}
+            width={clamp(150, 250)} // Increased width range
+            height="auto"
             className="d-inline-block me-2"
-            style={{ maxWidth: "100%" }}
+            style={{ maxWidth: "100%", height: "auto" }}
           />
         </Link>
 
@@ -59,7 +59,20 @@ const HomeNavbar = () => {
             marginLeft: "auto",
           }}
         >
-          <span className="navbar-toggler-icon" />
+          <span
+            className="navbar-toggler-icon"
+            style={{
+              display: "inline-block",
+              width: "1.5em",
+              height: "1.5em",
+              verticalAlign: "middle",
+              backgroundImage: "var(--bs-navbar-toggler-icon-bg)",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+              backgroundSize: "100%",
+              transition: "transform 0.3s ease",
+            }}
+          />
         </button>
 
         <div
@@ -101,10 +114,10 @@ const HomeNavbar = () => {
                 <img
                   src={pic}
                   alt="Logo"
-                  width={clamp(100, 191)}
-                  height={clamp(25, 48)}
+                  width={clamp(150, 250)}
+                  height="auto"
                   className="d-inline-block me-2"
-                  style={{ maxWidth: "100%" }}
+                  style={{ maxWidth: "100%", height: "auto" }}
                 />
               </Link>
               <button
@@ -157,8 +170,11 @@ const HomeNavbar = () => {
                       transition: "transform 0.3s ease",
                     }}
                     onClick={() => {
-                      const navbarToggler = document.querySelector(".navbar-toggler");
-                      const navbarCollapse = document.querySelector("#navbarSupportedContent");
+                      const navbarToggler =
+                        document.querySelector(".navbar-toggler");
+                      const navbarCollapse = document.querySelector(
+                        "#navbarSupportedContent"
+                      );
                       if (navbarCollapse.classList.contains("show")) {
                         navbarToggler.click();
                       }
@@ -193,8 +209,11 @@ const HomeNavbar = () => {
                     textAlign: "center",
                   }}
                   onClick={() => {
-                    const navbarToggler = document.querySelector(".navbar-toggler");
-                    const navbarCollapse = document.querySelector("#navbarSupportedContent");
+                    const navbarToggler =
+                      document.querySelector(".navbar-toggler");
+                    const navbarCollapse = document.querySelector(
+                      "#navbarSupportedContent"
+                    );
                     if (navbarCollapse.classList.contains("show")) {
                       navbarToggler.click();
                     }
