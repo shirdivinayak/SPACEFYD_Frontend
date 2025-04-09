@@ -30,7 +30,7 @@ const Partnership = () => {
             </p>
             <div className="section-link-container">
               <a href="#" className="section-link">
-                Discover More About Our Partnership →
+                Discover More About Our Partnership <span className="arrow">→</span>
               </a>
             </div>
           </Col>

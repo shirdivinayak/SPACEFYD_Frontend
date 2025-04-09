@@ -1,21 +1,27 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   FaFacebookF,
   FaTwitter,
   FaInstagram,
   FaLinkedinIn,
 } from "react-icons/fa";
+import logo from "../../../Assets/Home/logo.png";
 
 const Footer = () => {
+  const handleNavigate = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <footer
       style={{
         backgroundColor: "#f8f9fa",
-        padding: "clamp(20px, 5vw, 50px) clamp(20px, 8vw, 100px)", // Responsive padding
+        padding: "clamp(20px, 5vw, 50px) clamp(20px, 8vw, 100px)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: "clamp(20px, 4vw, 40px)", // Responsive gap
+        gap: "clamp(20px, 4vw, 40px)",
         borderTop: "1px solid",
         borderImageSource:
           "linear-gradient(270deg, #4DA180 0%, #97935A 27.34%, #CE893E 100%)",
@@ -29,41 +35,48 @@ const Footer = () => {
           justifyContent: "space-between",
           alignItems: "flex-start",
           width: "100%",
-          flexWrap: "wrap", // Allow wrapping on very small screens
-          gap: "20px", // Add gap for when wrapping occurs
+          flexWrap: "wrap",
+          gap: "20px",
         }}
       >
-        {/* Left: Company Name */}
-        <div
-          style={{
-            width: "clamp(200px, 40vw, 553px)", // Responsive width
-            height: "clamp(60px, 12vw, 149px)", // Responsive height
-            fontFamily: "Kollektif, sans-serif",
-            fontWeight: 400,
-            fontSize: "clamp(30px, 8vw, 133.27px)", // Adjusted responsive font size
-            lineHeight: "clamp(40px, 10vw, 148.08px)", // Responsive line height
-            letterSpacing: "0px",
-            color: "#4C6559",
+        {/* Left: Company Logo */}
+        <Link 
+          to="/" 
+          onClick={handleNavigate} 
+          style={{ 
+            textDecoration: "none",
+            width: "clamp(200px, 40vw, 553px)",
+            height: "clamp(60px, 12vw, 149px)",
+            display: "flex",
+            alignItems: "center"
           }}
         >
-          Spacifyd.
-        </div>
+          <img 
+            src={logo} 
+            alt="Spacifyd Logo"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
+            }}
+          />
+        </Link>
 
         {/* Right: Two Columns */}
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "clamp(20px, 3vw, 40px)", // Responsive gap
-            minWidth: "200px", // Minimum width to maintain readability
+            gap: "clamp(20px, 3vw, 40px)",
+            minWidth: "200px",
           }}
         >
           {/* Top Row: Links */}
           <div
             style={{
               display: "flex",
-              gap: "clamp(20px, 5vw, 100px)", // Responsive gap between columns
-              flexWrap: "wrap", // Allow wrapping on small screens
+              gap: "clamp(20px, 5vw, 100px)",
+              flexWrap: "wrap",
             }}
           >
             {/* First Column */}
@@ -71,18 +84,18 @@ const Footer = () => {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                gap: "clamp(15px, 2vw, 30px)", // Responsive gap
+                gap: "clamp(15px, 2vw, 30px)",
               }}
             >
-              <a href="#" style={linkStyle}>
+              <Link to="/AboutUs" style={linkStyle} onClick={handleNavigate}>
                 About Us
-              </a>
-              <a href="#" style={linkStyle}>
+              </Link>
+              <Link to="/Services" style={linkStyle} onClick={handleNavigate}>
                 Service
-              </a>
-              <a href="#" style={linkStyle}>
+              </Link>
+              <Link to="/ProjectList" style={linkStyle} onClick={handleNavigate}>
                 Our Projects
-              </a>
+              </Link>
             </div>
 
             {/* Second Column */}
@@ -90,15 +103,15 @@ const Footer = () => {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                gap: "clamp(15px, 2vw, 30px)", // Responsive gap
+                gap: "clamp(15px, 2vw, 30px)",
               }}
             >
-              <a href="#" style={linkStyle}>
+              <Link to="/Products" style={linkStyle} onClick={handleNavigate}>
                 Products
-              </a>
-              <a href="#" style={linkStyle}>
+              </Link>
+              <Link to="/ContactUs" style={linkStyle} onClick={handleNavigate}>
                 Contact Us
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -107,8 +120,8 @@ const Footer = () => {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "clamp(10px, 2vw, 20px)", // Responsive gap
-              flexWrap: "wrap", // Allow wrapping if needed
+              gap: "clamp(10px, 2vw, 20px)",
+              flexWrap: "wrap",
             }}
           >
             <p
@@ -116,8 +129,8 @@ const Footer = () => {
                 fontWeight: "bold",
                 color: "#505F79",
                 fontFamily: "Raleway, sans-serif",
-                fontSize: "clamp(12px, 2vw, 16.5px)", // Responsive font size
-                lineHeight: "clamp(20px, 3vw, 30px)", // Responsive line height
+                fontSize: "clamp(12px, 2vw, 16.5px)",
+                lineHeight: "clamp(20px, 3vw, 30px)",
                 margin: 0,
               }}
             >
@@ -126,7 +139,7 @@ const Footer = () => {
             <div
               style={{
                 display: "flex",
-                gap: "clamp(8px, 1.5vw, 15px)", // Responsive gap between icons
+                gap: "clamp(8px, 1.5vw, 15px)",
               }}
             >
               <FaFacebookF style={iconStyle} />
@@ -146,25 +159,38 @@ const Footer = () => {
           borderImageSource:
             "linear-gradient(270deg, #4DA180 0%, #97935A 27.34%, #CE893E 100%)",
           borderImageSlice: 1,
-          margin: "clamp(15px, 2vw, 20px) 0", // Responsive margin
+          margin: "clamp(15px, 2vw, 20px) 0",
         }}
       />
 
-      {/* Privacy Policy Section */}
+      {/* Privacy Policy Section - Updated to keep all links on one line */}
       <div
         style={{
           fontFamily: "Raleway, sans-serif",
           fontWeight: 400,
-          fontSize: "clamp(10px, 1.5vw, 13.5px)", // Responsive font size
-          lineHeight: "clamp(15px, 2vw, 22.5px)", // Responsive line height
+          fontSize: "clamp(10px, 1.5vw, 13.5px)",
+          lineHeight: "clamp(15px, 2vw, 22.5px)",
           letterSpacing: "0px",
           textAlign: "center",
           color: "#3F3F3F",
-          width: "clamp(200px, 50vw, 331.5px)", // Responsive width
-          height: "auto", // Allow height to adjust
+          width: "100%",  // Changed from fixed width to 100%
+          whiteSpace: "nowrap",  // Prevent wrapping
+          overflow: "hidden",  // Hide overflow if needed
+          textOverflow: "ellipsis",  // Add ellipsis if text is too long
+          height: "auto",
         }}
       >
-        Privacy Policy | Terms & Conditions | Cookies Policy
+        <Link to="/privacy" style={linkStyle} onClick={handleNavigate}>
+          Privacy Policy
+        </Link>{" "}
+        |{" "}
+        <Link to="/terms" style={linkStyle} onClick={handleNavigate}>
+          Terms & Conditions
+        </Link>{" "}
+        |{" "}
+        <Link to="/cookies" style={linkStyle} onClick={handleNavigate}>
+          Cookies Policy
+        </Link>
       </div>
     </footer>
   );
@@ -175,14 +201,15 @@ const linkStyle = {
   textDecoration: "none",
   color: "#3F3F3F",
   fontFamily: "Raleway, sans-serif",
-  fontSize: "clamp(12px, 2vw, 16.5px)", // Responsive font size
-  lineHeight: "clamp(20px, 3vw, 30px)", // Responsive line height
+  fontSize: "clamp(12px, 2vw, 16.5px)",
+  lineHeight: "clamp(20px, 3vw, 30px)",
+  display: "inline", // Ensure links stay inline
 };
 
 const iconStyle = {
   color: "#505F79",
-  fontSize: "clamp(16px, 3vw, 24px)", // Responsive icon size
+  fontSize: "clamp(16px, 3vw, 24px)",
   cursor: "pointer",
 };
 
-export default Footer;  
+export default Footer;

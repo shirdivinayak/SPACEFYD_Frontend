@@ -1,9 +1,18 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./ContentSection.css"; // Import the CSS file
 import banner from "../../../Assets/Home/contentbanner.png";
 import theatre from "../../../Assets/Home/contentimage.png";
+import { useNavigate } from "react-router-dom";
 
 const ContentSection = () => {
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate("/contactus");
+    window.scrollTo(0, 0);
+  };
+
   return (
     <div
       className="container-fluid p-0"
@@ -33,7 +42,6 @@ const ContentSection = () => {
             textAlign: "left",
           }}
         >
-          {/* Small Heading */}
           <h6
             className="mb-0"
             style={{
@@ -49,8 +57,6 @@ const ContentSection = () => {
           >
             Spacifyd.
           </h6>
-
-          {/* Main Heading */}
           <h1
             className="mb-0"
             style={{
@@ -66,8 +72,6 @@ const ContentSection = () => {
           >
             Let's Bring Your Vision to Life
           </h1>
-
-          {/* Paragraph */}
           <p
             className="mb-0"
             style={{
@@ -85,28 +89,7 @@ const ContentSection = () => {
             Whether it's a single-room makeover or a large-scale commercial
             project, we are here to turn your ideas into reality.
           </p>
-
-          {/* Button */}
-          <button
-            className="mt-2"
-            style={{
-              width: "170px",
-              height: "36px",
-              borderRadius: "4px",
-              border: "2px solid",
-              borderImageSource:
-                "linear-gradient(270deg, #4DA180 0%, #97935A 27.34%, #CE893E 100%)",
-              padding: "8px 16px",
-              backgroundColor: "#FCF9F5",
-              color: "#9A715B",
-              fontFamily: "DM Sans, sans-serif",
-              fontWeight: "400",
-              fontSize: "14px",
-              lineHeight: "20px",
-              cursor: "pointer",
-              alignSelf: "flex-start",
-            }}
-          >
+          <button className="content-btn mt-2" onClick={handleButtonClick}>
             Get started with us
           </button>
         </div>
@@ -143,7 +126,7 @@ const ContentSection = () => {
         </div>
       </div>
 
-      {/* Inline Responsive Styles */}
+      {/* Inline Responsive Styles (without button styles) */}
       <style jsx>{`
         @media (max-width: 991px) {
           .row {

@@ -1,3 +1,4 @@
+/* CarouselComponent.css */
 /* Base Styles */
 .carousel-home-container {
   margin: 100px auto;
@@ -42,13 +43,13 @@
   font-size: 16px;
   font-weight: 500;
   padding: 12px 24px;
-  color: white;
-  background: #4C6559;
+  color: white !important;
+  background: #4C6559 !important;
   white-space: nowrap;
   min-width: 100px;
-  border: none;
-  border-radius: 4px;
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: none !important;
+  border-radius: 4px !important;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
   position: relative;
   overflow: hidden;
   z-index: 1;
@@ -68,9 +69,9 @@
 }
 
 .carousel-home-know-more-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(76, 101, 89, 0.3);
-  background: #3a5045;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 16px rgba(76, 101, 89, 0.3) !important;
+  background: #3a5045 !important;
 }
 
 .carousel-home-know-more-btn:hover::before {
@@ -78,8 +79,8 @@
 }
 
 .carousel-home-know-more-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(76, 101, 89, 0.3);
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 8px rgba(76, 101, 89, 0.3) !important;
 }
 
 /* Custom Carousel Implementation */
@@ -129,15 +130,6 @@
   letter-spacing: -2.35px;
   color: #FFFFFF;
   margin-bottom: 20px;
-}
-
-.carousel-content-inner p {
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 20px;
-  color: #FCF9F5;
-  margin-bottom: 30px;
 }
 
 .carousel-content-inner hr {
@@ -270,11 +262,6 @@
   .carousel-content-inner h3 {
     font-size: 28px;
     line-height: 34px;
-  }
-
-  .carousel-content-inner p {
-    font-size: 14px;
-    line-height: 22px;
   }
 
   .carousel-navigation {

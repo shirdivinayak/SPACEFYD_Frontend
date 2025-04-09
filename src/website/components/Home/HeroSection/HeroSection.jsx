@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 import banner from "../../../Assets/Home/homebanner.png";
 import lamp from "../../../Assets/Home/lamp.png";
 import "./HeroSection.css";
@@ -31,11 +33,8 @@ const rightButtons = [
   { icon: icon7, text: "Hospitality" },
 ];
 
-// Combined buttons for small screens (5 buttons for 2x2x1 layout)
-const allHeroButtons = [...topButtons, ...leftButtons, ...rightButtons].slice(
-  0,
-  7
-);
+// Combined buttons for small screens
+const allHeroButtons = [...topButtons, ...leftButtons, ...rightButtons].slice(0, 7);
 
 // Button data for the Lamp Section
 const lampButtons = [
@@ -63,6 +62,25 @@ const FloatingButton = ({ icon, text }) => (
 );
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+
+  // Scroll to top on initial render
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleContactClick = (e) => {
+    e.preventDefault();
+    navigate("/contactus");
+    window.scrollTo(0, 0);
+  };
+
+  const handleAboutUsClick = (e) => {
+    e.preventDefault();
+    navigate("/aboutus");
+    window.scrollTo(0, 0);
+  };
+
   return (
     <div style={{ backgroundColor: "#FCF9F5" }}>
       {/* Hero Section */}
@@ -120,6 +138,7 @@ const HeroSection = () => {
             width: "1086px",
             maxWidth: "100%",
             textAlign: "center",
+            zIndex: 2,
           }}
         >
           {/* Large Screen Layout */}
@@ -193,6 +212,7 @@ const HeroSection = () => {
                 </h2>
 
                 <div
+                  className="hero-card"
                   style={{
                     width: "729px",
                     maxWidth: "100%",
@@ -207,6 +227,8 @@ const HeroSection = () => {
                     justifyContent: "center",
                     padding: "20px",
                     boxSizing: "border-box",
+                    position: "relative",
+                    zIndex: 3,
                   }}
                 >
                   <p
@@ -227,9 +249,17 @@ const HeroSection = () => {
                     <br /> a seamless, stylish, and future-ready experience.
                   </p>
 
-                  <button className="proper-btn" style={{ marginTop: "30px" }}>
+                  <Button
+                    variant="light"
+                    className="proper-btn"
+                    onClick={handleContactClick}
+                    style={{
+                      position: "relative",
+                      zIndex: 1000,
+                    }}
+                  >
                     Get Started With Us
-                  </button>
+                  </Button>
                 </div>
               </div>
 
@@ -300,6 +330,7 @@ const HeroSection = () => {
               </h2>
 
               <div
+                className="hero-card"
                 style={{
                   width: "729px",
                   maxWidth: "100%",
@@ -314,6 +345,8 @@ const HeroSection = () => {
                   justifyContent: "center",
                   padding: "20px",
                   boxSizing: "border-box",
+                  position: "relative",
+                  zIndex: 3,
                 }}
               >
                 <p
@@ -332,9 +365,18 @@ const HeroSection = () => {
                   seamless, stylish, and future-ready experience.
                 </p>
 
-                <button className="proper-btn" style={{ marginTop: "30px" }}>
+                <Button
+                  variant="light"
+                  className="proper-btn"
+                  onClick={handleContactClick}
+                  style={{
+                    marginTop: "30px",
+                    position: "relative",
+                    zIndex: 1000,
+                  }}
+                >
                   Get Started With Us
-                </button>
+                </Button>
               </div>
             </div>
           </div>
@@ -412,7 +454,9 @@ const HeroSection = () => {
             by blending advanced technology with thoughtful, purpose-driven
             design.
           </p>
-          <button
+          <Button
+            variant="dark"
+            onClick={handleAboutUsClick}
             className="lamp-btn"
             style={{
               width: "132px",
@@ -432,7 +476,7 @@ const HeroSection = () => {
             }}
           >
             Know More
-          </button>
+          </Button>
         </div>
 
         {/* Lamp Buttons */}

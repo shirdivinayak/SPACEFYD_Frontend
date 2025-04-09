@@ -81,10 +81,20 @@
   color: #9A715B;
   text-decoration: none;
   transition: color 0.3s ease;
+  white-space: nowrap; /* Prevent text wrapping */
 }
 
 .section-link:hover {
   color: #7a5a48;
+}
+
+.section-link-container {
+  display: inline-block; /* Keep container tight around content */
+}
+
+.arrow {
+  display: inline-block; /* Ensure arrow stays on same line */
+  margin-left: 5px;
 }
 
 /* Responsive adjustments */
@@ -106,6 +116,11 @@
   .section-title {
     font-size: 28px;
     line-height: 36px;
+  }
+  
+  .section-link {
+    font-size: 16px;
+    white-space: normal; /* Allow wrapping only on smaller screens */
   }
 }
 
@@ -146,5 +161,9 @@
   .section-title {
     font-size: 22px;
     line-height: 28px;
+  }
+  
+  .section-link {
+    white-space: nowrap; /* Prevent arrow from breaking to new line */
   }
 }

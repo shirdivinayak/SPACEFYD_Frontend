@@ -13,7 +13,7 @@ import image5 from "../../Assets/Home/Section/pic5.png";
 import image6 from "../../Assets/Home/Section/pic6.png";
 import ContentSection from "../../components/Home/Content/ContentSection";
 import Products from "../../components/Home/Products/Products";
-import CardSection from "../../components/CardSection/CardSection";
+import CardSection from "../../components/Home/CardSection/CardSection";
 import Partnership from "../../components/Home/Partnership/Partnership";
 
 function App() {
