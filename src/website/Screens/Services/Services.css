@@ -231,11 +231,6 @@ p {
     order: 1; /* Ensure text appears first */
   }
 
-  .image-container-right img {
-    /* margin-right: 0px; */
-    margin: 0 auto;
-  }
-
   .image-container-right,
   .right-images,
   .image-container {

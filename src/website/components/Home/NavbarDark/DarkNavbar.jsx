@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import pic from "../../../Assets/Home/mainwhite.svg"; // Adjust the relative path as needed
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import "./DarkNavbar.css";
 // import { FaGlobe } from "react-icons/fa";
 import LanguageSelector from "../../LanguageSelector/LanguageSelector";
 

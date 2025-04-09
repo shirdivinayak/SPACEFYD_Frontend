@@ -14,7 +14,7 @@ body {
   background-size: cover;
   background-position: center;
   width: 100%;
-  max-width: 1555px;
+  /* max-width: 1555px; */
   height: 614px;
   position: relative;
   font-family: "DM Sans", sans-serif;
@@ -91,7 +91,7 @@ body {
 }
 
 /* .heading-part { */
-  /* margin-top: 10px; */
+/* margin-top: 10px; */
 /* } */
 
 @media (max-width: 767px) {

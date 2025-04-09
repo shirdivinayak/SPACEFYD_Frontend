@@ -3,12 +3,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Services.css"; // Import CSS file
 import HeroImage from "../../Assets/AboutUs/hero.svg";
 import BackgroundImage from "../../Assets/Services/backgroundimage.svg";
-import Image1 from "../../Assets/Services/Image1.svg";
-import Image2 from "../../Assets/Services/Image2.svg";
-import Image3 from "../../Assets/Services/Image3.svg";
-import Image4 from "../../Assets/Services/Image4.svg";
-import Image5 from "../../Assets/Services/Image5.svg";
-import Image6 from "../../Assets/Services/Image6.svg";
+import Image1 from "../../Assets/Services/Image1.png";
+import Image2 from "../../Assets/Services/Image2.png";
+import Image3 from "../../Assets/Services/Image3.png";
+import Image4 from "../../Assets/Services/Image4.png";
+import Image5 from "../../Assets/Services/Image5.png";
+import Image6 from "../../Assets/Services/Image6.png";
 import HomeNavbar from "../../components/Home/NavbarDark/DarkNavbar"; // Import Navbar
 import Footer from "../../components/Home/Footer/Footer"; // Import Footer
 

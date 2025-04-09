@@ -6,6 +6,8 @@ import CoverImage from "../../../Assets/Projetcs/cover.svg"; // Fallback cover i
 import Image1 from "../../../Assets/Projetcs/image1.svg";
 import Image2 from "../../../Assets/Projetcs/image2.svg";
 import Image5 from "../../../Assets/Projetcs/image5.svg";
+import { ReactComponent as Linebot } from "../../../Assets/Products/Line.svg";
+
 import "./Projetc-Detail.css"; // Import CSS file
 import HomeNavbar from "../../../components/Home/NavbarDark/DarkNavbar"; // Import Navbar
 import Footer from "../../../components/Home/Footer/Footer"; // Import Footer
@@ -73,27 +75,31 @@ const ProjectsDetail = () => {
 
         {/* Cover Image */}
         <div className="cover-image-container">
-          <img 
-            src={projectData.images[0]} 
-            alt="Cover" 
-            className="cover-image" 
+          <img
+            src={projectData.images[0]}
+            alt="Cover"
+            className="cover-image"
           />
         </div>
 
         {/* Description */}
         <div className="content-contatiner">
-          <p className="project-description">{projectData.projectDescription}</p>
+          <p className="project-description">
+            {projectData.projectDescription}
+          </p>
 
           {/* Images Grid - use project images if available, otherwise use fallback */}
           <div className="images-grid">
-          {(projectData.images || fallbackData.images).slice(1).map((img, index) => (
-  <img
-    key={index}
-    src={img}
-    alt={`Project ${index + 1}`}
-    className="grid-image"
-  />
-))}
+            {(projectData.images || fallbackData.images)
+              .slice(1)
+              .map((img, index) => (
+                <img
+                  key={index}
+                  src={img}
+                  alt={`Project ${index + 1}`}
+                  className="grid-image"
+                />
+              ))}
           </div>
         </div>
         <div>
@@ -113,7 +119,9 @@ const ProjectsDetail = () => {
                   className="more-project-image"
                 />
                 <h3 className="more-project-title">{project.projectName}</h3>
-                <p className="more-project-description">{project.projectDescription}</p>
+                <p className="more-project-description">
+                  {project.projectDescription}
+                </p>
               </div>
             ))}
           </div>
