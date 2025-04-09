@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import banner from "../../../Assets/Home/homebanner.png";
@@ -15,6 +15,7 @@ import lampicon1 from "../../../Assets/Home/icons/lamp/smart.png";
 import lampicon2 from "../../../Assets/Home/icons/lamp/tailored.png";
 import lampicon3 from "../../../Assets/Home/icons/lamp/innovative.png";
 import lampicon4 from "../../../Assets/Home/icons/lamp/future.png";
+import axiosInstance from "../../../../instance/axiosInstance";
 
 // Button data for the Hero Section
 const topButtons = [
@@ -63,6 +64,8 @@ const FloatingButton = ({ icon, text }) => (
 
 const HeroSection = () => {
   const navigate = useNavigate();
+  const [banners, setBanner] = useState([]);
+  const [loading, setLoading] = useState([]);
 
   // Scroll to top on initial render
   useEffect(() => {
@@ -80,6 +83,27 @@ const HeroSection = () => {
     navigate("/aboutus");
     window.scrollTo(0, 0);
   };
+  const fetchBanner = async () => {
+      setLoading(true);
+      try {
+        const response = await axiosInstance.post("/fetchBannerImage");
+        console.log(response.data.data[0].defaultImage,"=====bannerimage")
+          if (response.data.data[0].defaultImage > 0) {
+            setBanner(response.data.data[0].defaultImage);
+          }else{
+
+            setBanner(banner)
+          }
+        } 
+      catch (error) {
+        console.error("Error fetching categories:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+useEffect(() => {
+  fetchBanner();
+  }, []);
 
   return (
     <div style={{ backgroundColor: "#FCF9F5" }}>
@@ -87,7 +111,7 @@ const HeroSection = () => {
       <section
         className="hero-section"
         style={{
-          backgroundImage: `url(${banner})`,
+          backgroundImage: `url(${banners})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           padding: "50px",
