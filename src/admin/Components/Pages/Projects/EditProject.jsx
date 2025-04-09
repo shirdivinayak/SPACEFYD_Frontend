@@ -16,7 +16,6 @@ const subCategories = {
 };
 const brands = ["Samsung", "Ikea", "Nike", "Lego"];
 
-
 const EditProjectScreen = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -45,21 +44,24 @@ const EditProjectScreen = () => {
       brand: item?.brand || "",
       projectCode: item?.ProjectCode || "",
       displayInHome: item?.isVisible || false,
-      images: item?.images || []
+      images: item?.images || [],
     };
   });
 
   // State for managing image display
   const [imageDisplay, setImageDisplay] = useState(() => {
     const imagesArray = item?.images || [];
-    const mainImage = imagesArray.length > 0 ? imagesArray[0] : placeholderImage;
+    const mainImage =
+      imagesArray.length > 0 ? imagesArray[0] : placeholderImage;
     const additionalImages = [...Array(8)].map((_, index) => {
-      return (index + 1) < imagesArray.length ? imagesArray[index + 1] : placeholderImage;
+      return index + 1 < imagesArray.length
+        ? imagesArray[index + 1]
+        : placeholderImage;
     });
 
     return {
       mainImage: mainImage,
-      additionalImages: additionalImages
+      additionalImages: additionalImages,
     };
   });
 
@@ -77,14 +79,18 @@ const EditProjectScreen = () => {
 
   const handleSave = async () => {
     setIsSubmitting(true);
-    
+
     try {
       // Combine the main image with additional images for saving
       const allImages = [
-        imageDisplay.mainImage !== placeholderImage ? imageDisplay.mainImage : null, 
-        ...imageDisplay.additionalImages.filter(img => img !== placeholderImage)
+        imageDisplay.mainImage !== placeholderImage
+          ? imageDisplay.mainImage
+          : null,
+        ...imageDisplay.additionalImages.filter(
+          (img) => img !== placeholderImage
+        ),
       ].filter(Boolean); // Remove null/undefined values
-      
+
       // Create the data object for the API
       const updatedProject = {
         id: projectDetails.id,
@@ -95,14 +101,14 @@ const EditProjectScreen = () => {
         ProjectCode: projectDetails.projectCode,
         isVisible: projectDetails.displayInHome,
         brand: projectDetails.brand,
-        images: allImages
+        images: allImages,
       };
       await editProject(updatedProject);
 
       // Call your update project API here (replace with your actual API call)
       // await updateProject(updatedProject);
       console.log("Project updated:", updatedProject);
-      
+
       setMessage("Project updated successfully.");
       setTimeout(() => {
         setMessage("");
@@ -119,10 +125,12 @@ const EditProjectScreen = () => {
   };
 
   const handleCategoryChange = (e) => {
-    const selectedCategory = e.target.value;
+    const selectedCategoryId = e.target.value;
+    const selectedCategory = categories.find(cat => cat._id === selectedCategoryId);
     setProjectDetails((prev) => ({
       ...prev,
-      category: selectedCategory,
+      categoryId: selectedCategoryId,
+      category: selectedCategory ? selectedCategory.name : "",
     }));
   };
 
@@ -140,11 +148,11 @@ const EditProjectScreen = () => {
       const reader = new FileReader();
       reader.onload = (e) => {
         const imageUrl = e.target.result;
-        
+
         // Update the main image in the display state
-        setImageDisplay(prev => ({
+        setImageDisplay((prev) => ({
           ...prev,
-          mainImage: imageUrl
+          mainImage: imageUrl,
         }));
       };
       reader.readAsDataURL(file);
@@ -160,14 +168,14 @@ const EditProjectScreen = () => {
       const reader = new FileReader();
       reader.onload = (e) => {
         const imageUrl = e.target.result;
-        
+
         // Update the additional image in the display state
-        setImageDisplay(prev => {
+        setImageDisplay((prev) => {
           const updatedAdditionalImages = [...prev.additionalImages];
           updatedAdditionalImages[index] = imageUrl;
           return {
             ...prev,
-            additionalImages: updatedAdditionalImages
+            additionalImages: updatedAdditionalImages,
           };
         });
       };
@@ -180,20 +188,20 @@ const EditProjectScreen = () => {
 
   const handleDeleteMain = () => {
     // Reset main image to placeholder
-    setImageDisplay(prev => ({
+    setImageDisplay((prev) => ({
       ...prev,
-      mainImage: placeholderImage
+      mainImage: placeholderImage,
     }));
   };
-  
+
   const handleDeleteOtherImage = (index) => {
     // Reset additional image to placeholder
-    setImageDisplay(prev => {
+    setImageDisplay((prev) => {
       const updatedAdditionalImages = [...prev.additionalImages];
       updatedAdditionalImages[index] = placeholderImage;
       return {
         ...prev,
-        additionalImages: updatedAdditionalImages
+        additionalImages: updatedAdditionalImages,
       };
     });
   };
@@ -320,57 +328,34 @@ const EditProjectScreen = () => {
                 }}
               >
                 Category:
-                <Dropdown>
-                  <Dropdown.Toggle
-                    id="dropdown"
-                    style={{
-                      width: "100%",
-                      fontSize: "14px",
-                      fontWeight: "400",
-                      color: "#757575",
-                      backgroundColor: "white",
-                      border: "1px solid #ccc",
-                      borderRadius: "4px",
-                      padding: "8px",
-                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                    disabled={!isEditing}
-                  >
-                    <span
-                      style={{
-                        fontSize: "14px",
-                        fontWeight: "400",
-                        color: "#757575",
-                      }}
-                    >
-                      {projectDetails.category || "Select"}
-                    </span>
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu style={{ width: "100%" }}>
-                    {categories.map((category, index) => (
-                      <Dropdown.Item
-                        key={index}
-                        onClick={() =>
-                          handleCategoryChange({ target: { value: category } })
-                        }
-                        style={{
-                          fontSize: "14px",
-                          fontWeight: "400",
-                          color: "#757575",
-                          padding: "8px",
-                          cursor: "pointer",
-                        }}
-                      >
+                <select
+                  value={projectDetails.categoryId || ""}
+                  onChange={handleCategoryChange}
+                  disabled={!isEditing}
+                  style={{
+                    width: "100%",
+                    fontSize: "14px",
+                    fontWeight: "400",
+                    color: "#757575",
+                    backgroundColor: "white",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    padding: "8px",
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                    marginTop: "4px",
+                  }}
+                >
+                  <option value="" disabled>
+                    Select
+                  </option>
+                  <option value="">Select Category</option>
+                    {categories && categories.map((category) => (
+                      <option key={category._id} value={category._id}> 
                         {category.name}
-                      </Dropdown.Item>
+                      </option>
                     ))}
-                  </Dropdown.Menu>
-                </Dropdown>
-              </label>      
+                </select>
+              </label>
             </div>
 
             <div
@@ -535,7 +520,9 @@ const EditProjectScreen = () => {
                   padding: "5px",
                   cursor: isEditing ? "pointer" : "default",
                 }}
-                onClick={() => isEditing && document.getElementById("mainImageInput").click()}
+                onClick={() =>
+                  isEditing && document.getElementById("mainImageInput").click()
+                }
               />
               {isEditing && (
                 <button
@@ -629,76 +616,87 @@ const EditProjectScreen = () => {
               ))}
             </div> */}
 
-
-<div style={{ marginTop: "20px", paddingLeft: "50px" }}>
-  {/* Display images in rows of 3 */}
-  {Array.from({ length: Math.ceil(imageDisplay.additionalImages.length / 3) }).map((_, rowIndex) => (
-    <div 
-      key={`row-${rowIndex}`} 
-      className="d-flex" 
-      style={{ gap: "15px", marginBottom: "15px" }}
-    >
-      {imageDisplay.additionalImages.slice(rowIndex * 3, (rowIndex + 1) * 3).map((img, colIndex) => {
-        const index = rowIndex * 3 + colIndex;
-        return (
-          <div
-            key={index}
-            style={{ 
-              position: "relative", 
-              display: "inline-block",
-              width: "120px",
-              height: "120px"
-            }}
-          >
-            <img
-              src={img}
-              alt={`Image-${index + 1}`}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                border: "1px solid #ddd",
-                padding: "5px",
-                cursor: isEditing ? "pointer" : "default",
-                borderRadius: "4px"
-              }}
-              onClick={() => isEditing && document.getElementById(`otherImageInput-${index}`).click()}
-            />
-            {isEditing && (
-              <button
-                onClick={() => handleDeleteOtherImage(index)}
-                style={{
-                  position: "absolute",
-                  top: "5px",
-                  right: "5px",
-                  backgroundColor: "rgba(255, 255, 255, 0.7)",
-                  border: "none",
-                  borderRadius: "50%",
-                  width: "24px",
-                  height: "24px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                }}
-              >
-                <i className="bi bi-trash" style={{ color: "red", fontSize: "14px" }}></i>
-              </button>
-            )}
-            <input
-              type="file"
-              disabled={!isEditing}
-              id={`otherImageInput-${index}`}
-              accept="image/*"
-              style={{ display: "none" }}
-              onChange={(e) => handleOtherImageUpload(e, index)}
-            />
-          </div>
-        );
-      })}
-    </div>
-  ))}
-</div>
+            <div style={{ marginTop: "20px", paddingLeft: "50px" }}>
+              {/* Display images in rows of 3 */}
+              {Array.from({
+                length: Math.ceil(imageDisplay.additionalImages.length / 3),
+              }).map((_, rowIndex) => (
+                <div
+                  key={`row-${rowIndex}`}
+                  className="d-flex"
+                  style={{ gap: "15px", marginBottom: "15px" }}
+                >
+                  {imageDisplay.additionalImages
+                    .slice(rowIndex * 3, (rowIndex + 1) * 3)
+                    .map((img, colIndex) => {
+                      const index = rowIndex * 3 + colIndex;
+                      return (
+                        <div
+                          key={index}
+                          style={{
+                            position: "relative",
+                            display: "inline-block",
+                            width: "120px",
+                            height: "120px",
+                          }}
+                        >
+                          <img
+                            src={img}
+                            alt={`Image-${index + 1}`}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                              border: "1px solid #ddd",
+                              padding: "5px",
+                              cursor: isEditing ? "pointer" : "default",
+                              borderRadius: "4px",
+                            }}
+                            onClick={() =>
+                              isEditing &&
+                              document
+                                .getElementById(`otherImageInput-${index}`)
+                                .click()
+                            }
+                          />
+                          {isEditing && (
+                            <button
+                              onClick={() => handleDeleteOtherImage(index)}
+                              style={{
+                                position: "absolute",
+                                top: "5px",
+                                right: "5px",
+                                backgroundColor: "rgba(255, 255, 255, 0.7)",
+                                border: "none",
+                                borderRadius: "50%",
+                                width: "24px",
+                                height: "24px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                cursor: "pointer",
+                              }}
+                            >
+                              <i
+                                className="bi bi-trash"
+                                style={{ color: "red", fontSize: "14px" }}
+                              ></i>
+                            </button>
+                          )}
+                          <input
+                            type="file"
+                            disabled={!isEditing}
+                            id={`otherImageInput-${index}`}
+                            accept="image/*"
+                            style={{ display: "none" }}
+                            onChange={(e) => handleOtherImageUpload(e, index)}
+                          />
+                        </div>
+                      );
+                    })}
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="mt-4 d-flex justify-content-end">

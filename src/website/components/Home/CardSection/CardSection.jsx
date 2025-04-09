@@ -1,12 +1,15 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import card1 from "../../../Assets/Home/cards/card1.png";
+import card1 from "../../../Assets/Home/cards/card1.png"; // fallback image
 import "./CardSection.css";
 import { Button } from "react-bootstrap";
+import axiosInstance from "../../../../instance/axiosInstance";
 
 const CardSection = () => {
   const navigate = useNavigate();
   const cardsContainerRef = useRef(null);
+  const [carouselData, setCarouselData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleKnowMoreClick = () => {
     navigate("/products");
@@ -17,7 +20,7 @@ const CardSection = () => {
     if (cardsContainerRef.current) {
       cardsContainerRef.current.scrollBy({
         left: -300,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }
   };
@@ -26,26 +29,45 @@ const CardSection = () => {
     if (cardsContainerRef.current) {
       cardsContainerRef.current.scrollBy({
         left: 300,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }
   };
+
+  const fetchTrending = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.post("/fetchTrendingImage", {
+        type: "product",
+      });
+      console.log(response.data.data, "=====dtrednindata");
+      if (response.data.data && response.data.data.length > 0) {
+        setCarouselData(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching trending products:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTrending();
+  }, []);
 
   return (
     <section className="card-section">
       <div className="content-wrapper">
         {/* Top Section: Heading and Button */}
         <div className="top-section">
-          {/* Left Side: Heading and Subheading */}
           <div className="heading-section">
             <h2>Our Products</h2>
             <h1>Explore Our Range of Premium Interior Products</h1>
           </div>
 
-          {/* Right Side: Button (Large Screens) and Navigation (Small Screens) */}
           <div className="button-navigation">
-            <Link 
-              to="/Products" 
+            <Link
+              to="/Products"
               className="view-more-btn large-screen-btn"
               onClick={() => window.scrollTo(0, 0)}
             >
@@ -65,17 +87,24 @@ const CardSection = () => {
         {/* Cards Section */}
         <div className="cards-section">
           <div className="cards-container" ref={cardsContainerRef}>
-            {[1, 2, 3, 4].map((card) => (
-              <div key={card} className="card">
-                <img src={card1} alt={`Card ${card}`} />
-                <p>Grifo</p>
-              </div>
-            ))}
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              carouselData.map((item, index) => (
+                <div key={index} className="card">
+                  <img
+                    src={item?.image[0] || card1}
+                    alt={item?.productName || "Product Image"}
+                  />
+                  <p>{item?.productName || "Unnamed Product"}</p>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
 
-      {/* Navigation Icons (Large Screens) and View More (Small Screens) */}
+      {/* Navigation and View More */}
       <div className="navigation-view-more">
         <div className="large-screen-navigation">
           <button onClick={scrollLeft}>
@@ -86,10 +115,7 @@ const CardSection = () => {
           </button>
         </div>
         <div className="small-screen-view-more">
-          <Button 
-            className="view-more-btn" 
-            onClick={handleKnowMoreClick}
-          >
+          <Button className="view-more-btn" onClick={handleKnowMoreClick}>
             View More
           </Button>
         </div>
