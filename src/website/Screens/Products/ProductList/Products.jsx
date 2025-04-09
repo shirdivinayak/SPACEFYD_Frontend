@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HeroImage from "../../../Assets/AboutUs/hero.svg";
 import HomeNavbar from "../../../components/Home/NavbarDark/DarkNavbar";
+import ContentSection from "../../../components/Home/Content/ContentSection";
+
 import Footer from "../../../components/Home/Footer/Footer";
 import "./Products.css";
 import { useNavigate } from "react-router-dom";
@@ -304,6 +306,7 @@ const Products = () => {
           </div>
         ))}
       </div>
+      <ContentSection />
       <Footer />
     </div>
   );

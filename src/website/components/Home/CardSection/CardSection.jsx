@@ -4,8 +4,10 @@ import card1 from "../../../Assets/Home/cards/card1.png"; // fallback image
 import "./CardSection.css";
 import { Button } from "react-bootstrap";
 import axiosInstance from "../../../../instance/axiosInstance";
+import { useTranslation } from "react-i18next";
 
 const CardSection = () => {
+  const { t } = useTranslation("card");
   const navigate = useNavigate();
   const cardsContainerRef = useRef(null);
   const [carouselData, setCarouselData] = useState([]);
@@ -61,7 +63,7 @@ const CardSection = () => {
         {/* Top Section: Heading and Button */}
         <div className="top-section">
           <div className="heading-section">
-            <h2>Our Products</h2>
+            <h2>{t("main-head")}</h2>
             <h1>Explore Our Range of Premium Interior Products</h1>
           </div>
 

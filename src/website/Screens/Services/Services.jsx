@@ -10,6 +10,8 @@ import Image4 from "../../Assets/Services/Image4.png";
 import Image5 from "../../Assets/Services/Image5.png";
 import Image6 from "../../Assets/Services/Image6.png";
 import HomeNavbar from "../../components/Home/NavbarDark/DarkNavbar"; // Import Navbar
+import ContentSection from "../../components/Home/Content/ContentSection";
+
 import Footer from "../../components/Home/Footer/Footer"; // Import Footer
 
 const Services = () => {
@@ -297,6 +299,7 @@ const Services = () => {
             </div>
           </div>
         </div>
+        <ContentSection />
         <Footer /> {/* Footer at the bottom */}
       </div>
     </>

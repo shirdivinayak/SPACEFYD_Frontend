@@ -19,9 +19,9 @@ import { JustifyLeft } from "react-bootstrap-icons";
 import { useTranslation } from "react-i18next";
 
 const AboutUs = () => {
-  const { t, i18n } = useTranslation("about");
+  const { t } = useTranslation("about");
 
-  console.log("Rendering AboutUs - Current i18n language:", i18n.language);
+  // console.log("Rendering AboutUs - Current i18n language:", i18n.language);
 
   // const LanguageSwitcher = () => {
   //   const { i18n } = useTranslation();
