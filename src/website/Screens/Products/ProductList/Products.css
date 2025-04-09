@@ -86,6 +86,12 @@
   /* text-overflow: ellipsis; Adds "..." if text is too long */
   max-width: 100%; /* Ensures text does not affect card width */
 }
+.product-title-class,
+.product-title,
+.product-card,
+.products-menu {
+  background-color: transparent !important;
+}
 
 .first-line {
   overflow: hidden;
@@ -318,7 +324,7 @@
   }
 }
 
-@media (max-width: 365px) {
+@media (max-width: 320px) {
   .card {
     width: calc(50% - 10px) !important; /* 2 cards per row */
   }

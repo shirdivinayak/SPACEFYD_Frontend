@@ -4,8 +4,8 @@ import "./AboutUs.css";
 
 import HeroImage from "../../Assets/AboutUs/hero.svg";
 import HeroImage2 from "../../Assets/AboutUs/heromob.svg";
-import MainImage from "../../Assets/AboutUs/image219.svg";
-import Image3 from "../../Assets/AboutUs/view3.svg";
+import MainImage from "../../Assets/AboutUs/image219.jpg";
+import Image3 from "../../Assets/AboutUs/view3.png";
 import circlegrad from "../../Assets/AboutUs/circlegrad.svg";
 import Gradient from "../../Assets/AboutUs/Gradient.svg";
 import circles from "../../Assets/AboutUs/circles.svg";

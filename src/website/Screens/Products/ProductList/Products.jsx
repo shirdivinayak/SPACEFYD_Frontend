@@ -296,7 +296,7 @@ const Products = () => {
         ))}
       </div> */}
 
-      <div className="cards-section container">
+      <div className="cards-section ">
         {[1, 2, 3, 4, 5, 6, 7, 8].map((card) => (
           <div key={card} className="card">
             <img src={Sample1} alt={`Card ${card}`} />
