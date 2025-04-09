@@ -1,31 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import "./CarouselComponent.css";
-import image1 from "../../../Assets/Home/image1.png";
+import image1 from "../../../Assets/Home/image1.png"; // fallback image
+import axiosInstance from "../../../../instance/axiosInstance";
 
 const CarouselComponent = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [carouselData, setCarouselData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const carouselData = [
-    {
-      image: image1,
-      heading: "Al Khaleej Serenity Villa Renovation",
-    },
-    {
-      image: image1,
-      heading: "Elegant Kitchen Design",
-    },
-    {
-      image: image1,
-      heading: "Cozy Bedroom Design",
-    },
-    {
-      image: image1,
-      heading: "Minimalist Office Design",
-    },
-  ];
+  const fetchTrending = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.post("/fetchTrendingImage", {
+        type: "project",
+      });
+
+      const data = response?.data?.data;
+      if (Array.isArray(data) && data.length > 0) {
+        setCarouselData(data);
+      }
+    } catch (error) {
+      console.error("Error fetching project data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTrending();
+  }, []);
 
   const goToPrev = () => {
     setCurrentIndex((prevIndex) =>
@@ -78,14 +84,18 @@ const CarouselComponent = () => {
         </Button>
       </div>
 
-      {/* Custom Carousel Implementation */}
+      {/* Custom Carousel */}
       <div className="custom-carousel-wrapper">
         <div className="custom-carousel">
           {/* Left Image Section */}
           <div
             className="carousel-image-section"
             style={{
-              backgroundImage: `url(${carouselData[currentIndex].image})`,
+              backgroundImage: `url(${
+                carouselData[currentIndex]?.images?.[0] || image1
+              })`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
           />
 
@@ -95,12 +105,14 @@ const CarouselComponent = () => {
             style={{ backgroundColor: "#9A715B" }}
           >
             <div className="carousel-content-inner">
-              <h3>{carouselData[currentIndex].heading}</h3>
+              <h3>
+                {carouselData[currentIndex]?.projectName || "Unnamed Project"}
+              </h3>
               <hr />
             </div>
 
             <div className="carousel-navigation">
-              <p>{`${currentIndex + 1}/${carouselData.length}`}</p>
+              <p>{`${currentIndex + 1}/${carouselData?.length}`}</p>
               <div className="carousel-navigation-buttons">
                 <button onClick={goToPrev}>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
