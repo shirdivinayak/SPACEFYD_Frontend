@@ -99,15 +99,28 @@
   list-style: none;
 }
 
-/* Navbar Toggler Animation */
+/* Toggle Button Fix */
 .navbar-toggler {
+  border: none !important;
+  padding: 0.25rem 0.5rem !important;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none !important;
+}
+
+.navbar-toggler-icon {
+  width: 1.75em !important;
+  height: 1.75em !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(76, 101, 89, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
   transition: transform 0.3s ease;
 }
 
-.navbar-toggler.collapsed {
-  transform: rotate(0deg);
+/* Fix for toggle icon rotation */
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+  transform: rotate(90deg);
 }
 
-.navbar-toggler:not(.collapsed) {
-  transform: rotate(90deg);
+.navbar-toggler[aria-expanded="false"] .navbar-toggler-icon {
+  transform: rotate(0deg);
 }

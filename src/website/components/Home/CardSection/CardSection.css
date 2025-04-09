@@ -1,7 +1,7 @@
 .card-section {
   width: 100%;
   padding: 90px 100px;
-  background-image: url("../../../website/Assets/Home/productsbanner.png");
+  background-image: url("../../../Assets/Home/productsbanner.png");
   background-size: cover;
   background-position: center;
   background-color: #1e1e1e;
@@ -9,27 +9,26 @@
   box-sizing: border-box;
 }
 
-/* Content Wrapper to Define the Content Area */
 .content-wrapper {
-  width: 100%; /* Ensure it takes the full width of the padded area */
-  margin: 0; /* Remove any auto margins that might interfere */
+  width: 100%;
+  margin: 0;
 }
 
-/* Top Section: Heading and Button */
 .top-section {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end; /* Align button with the end of the heading */
-  margin-bottom: 40px; /* Space between heading and cards */
-  width: 100%; /* Ensure it takes the full width of the content-wrapper */
+  align-items: flex-end;
+  margin-bottom: 40px;
+  width: 100%;
 }
 
 .heading-section {
   max-width: 608px;
+  text-align: left; /* Changed to left-align */
 }
 
 .heading-section h2 {
-  font-family: "DM Sans", sans-serif; /* Changed to DM Sans */
+  font-family: "DM Sans", sans-serif;
   font-weight: 400;
   font-size: 24px;
   line-height: 31px;
@@ -39,18 +38,18 @@
 }
 
 .heading-section h1 {
-  font-family: "DM Sans", sans-serif; /* Changed to DM Sans */
+  font-family: "DM Sans", sans-serif;
   font-weight: 400;
   font-size: 48px;
   line-height: 55px;
   letter-spacing: -0.9px;
   color: #ffffff;
-  margin-bottom: 0; /* Remove margin to align with button */
+  margin-bottom: 0;
 }
 
 .button-navigation {
   display: flex;
-  align-items: flex-end; /* Align button with the end of the heading */
+  align-items: flex-end;
 }
 
 .view-more-btn {
@@ -62,13 +61,17 @@
   color: #ffffff;
   border: none;
   cursor: pointer;
-  font-family: "DM Sans", sans-serif; /* Changed to DM Sans */
+  font-family: "DM Sans", sans-serif;
   font-size: 16px;
-  transition: background-color 0.3s ease; /* Smooth transition for hover */
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .view-more-btn:hover {
-  background-color: #5a7a6a; /* Lighter shade for hover effect */
+  background-color: #5a7a6a;
 }
 
 .small-screen-navigation {
@@ -89,11 +92,40 @@
 
 /* Cards Section */
 .cards-section {
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.cards-container {
   display: flex;
   flex-wrap: nowrap;
   gap: 30px;
-  justify-content: space-between; /* Distribute cards evenly */
-  width: 100%; /* Match the content-wrapper */
+  width: max-content;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  padding-bottom: 15px;
+  scrollbar-width: thin;
+  scrollbar-color: #ce893e #4c6559;
+}
+
+.cards-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.cards-container::-webkit-scrollbar-track {
+  background: #4c6559;
+  border-radius: 4px;
+}
+
+.cards-container::-webkit-scrollbar-thumb {
+  background: #ce893e;
+  border-radius: 4px;
+}
+
+.cards-container::-webkit-scrollbar-thumb:hover {
+  background: #e09d54;
 }
 
 .card {
@@ -103,11 +135,19 @@
   border-radius: 8px;
   overflow: hidden;
   flex-shrink: 0;
-  transition: transform 0.3s ease; /* Smooth transition for hover scaling */
+  transition: transform 0.3s ease;
+  position: relative;
+  margin-right: 10px;
 }
 
 .card:hover {
-  transform: scale(1.05); /* Enlarge the card by 5% on hover */
+  transform: scale(1.05);
+  z-index: 10;
+}
+
+.card:not(:hover) {
+  z-index: 0;
+  transform: scale(1);
 }
 
 .card img {
@@ -117,18 +157,18 @@
 }
 
 .card p {
-  font-family: "DM Sans", sans-serif; /* Changed to DM Sans */
-  font-weight: 700; /* Increased font weight for emphasis */
+  font-family: "DM Sans", sans-serif;
+  font-weight: 700;
   font-size: 24px;
   line-height: 120%;
   letter-spacing: 0%;
   color: black;
-  text-align: right; /* Changed from left to right */
+  text-align: left; /* Changed to left-align */
   margin-top: 20px;
-  padding-right: 20px; /* Changed from padding-left to padding-right for right alignment */
+  padding-left: 20px; /* Changed to left padding */
+  padding-right: 20px;
 }
 
-/* Navigation Icons (Large Screens) and View More (Small Screens) */
 .navigation-view-more {
   text-align: center;
   margin-top: 40px;
@@ -160,13 +200,14 @@
     max-width: 500px;
   }
 
-  .cards-section {
+  .cards-container {
     gap: 20px;
   }
 
   .card {
     width: 240px;
     height: 280px;
+    margin-right: 8px;
   }
 
   .card img {
@@ -202,13 +243,14 @@
     font-size: 20px;
   }
 
-  .cards-section {
+  .cards-container {
     gap: 15px;
   }
 
   .card {
     width: 190px;
     height: 230px;
+    margin-right: 6px;
   }
 
   .card img {
@@ -216,8 +258,9 @@
   }
 
   .card p {
-    font-size: 20px; /* Adjusted for smaller screens */
-    padding-right: 15px; /* Changed from padding-left to padding-right */
+    font-size: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
   .large-screen-navigation {
@@ -251,13 +294,14 @@
     line-height: 34px;
   }
 
-  .cards-section {
+  .cards-container {
     gap: 10px;
   }
 
   .card {
     width: 150px;
     height: 190px;
+    margin-right: 5px;
   }
 
   .card img {
@@ -265,8 +309,9 @@
   }
 
   .card p {
-    font-size: 18px; /* Adjusted for smaller screens */
-    padding-right: 10px; /* Changed from padding-left to padding-right */
+    font-size: 18px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   .small-screen-navigation button span {
@@ -296,15 +341,14 @@
     line-height: 30px;
   }
 
-  .cards-section {
-    flex-wrap: wrap;
+  .cards-container {
     gap: 10px;
-    justify-content: space-between;
   }
 
   .card {
-    width: calc(50% - 5px);
+    width: 150px;
     height: 180px;
+    margin-right: 5px;
   }
 
   .card img {
@@ -312,8 +356,9 @@
   }
 
   .card p {
-    font-size: 16px; /* Adjusted for smaller screens */
-    padding-right: 10px; /* Changed from padding-left to padding-right */
+    font-size: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   .small-screen-navigation button span {
@@ -326,4 +371,9 @@
     padding: 6px 8px;
     font-size: 11px;
   }
+}
+
+/* Smooth scroll to top */
+html {
+  scroll-behavior: smooth;
 }

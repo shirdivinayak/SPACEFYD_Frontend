@@ -1,5 +1,5 @@
 import React from "react";
-import "./Sections.css"; // Importing CSS file
+import "./Sections.css";
 import sectionbackground from "../../../Assets/Home/Sections/servicebackground.png";
 
 const Sections = ({ backgroundImage, sections }) => {
@@ -39,11 +39,11 @@ const Sections = ({ backgroundImage, sections }) => {
                     />
                     <div className="image-overlay">
                       <p className="image-text">{section.col8.row1.text}</p>
-                      <button className="image-button">
+                      <button className="arrow-button">
                         <svg
-                          className="button-icon"
-                          width="19.038166046142578"
-                          height="19.038166046142578"
+                          className="arrow-icon"
+                          width="24"
+                          height="24"
                           viewBox="0 0 24 24"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
@@ -70,11 +70,11 @@ const Sections = ({ backgroundImage, sections }) => {
                     />
                     <div className="image-overlay">
                       <p className="image-text">{section.col8.row2.text}</p>
-                      <button className="image-button">
+                      <button className="arrow-button">
                         <svg
-                          className="button-icon"
-                          width="19.038166046142578"
-                          height="19.038166046142578"
+                          className="arrow-icon"
+                          width="24"
+                          height="24"
                           viewBox="0 0 24 24"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
@@ -103,11 +103,11 @@ const Sections = ({ backgroundImage, sections }) => {
                   />
                   <div className="image-overlay">
                     <p className="image-text">{section.col4.text}</p>
-                    <button className="image-button">
+                    <button className="arrow-button">
                       <svg
-                        className="button-icon"
-                        width="19.038166046142578"
-                        height="19.038166046142578"
+                        className="arrow-icon"
+                        width="24"
+                        height="24"
                         viewBox="0 0 24 24"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
