@@ -273,10 +273,10 @@ const Products = () => {
       </div>
 
       <div className=" container similar-products  ">
-        <h2>Similar Products</h2>
+        <h2>{t("similar-products")}</h2>
         <div>
           {" "}
-          <button className="view-more-button">View More</button>
+          <button className="view-more-button">{t("view-more-btn")}</button>
         </div>
       </div>
 

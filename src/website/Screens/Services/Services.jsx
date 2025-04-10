@@ -11,10 +11,12 @@ import Image5 from "../../Assets/Services/Image5.png";
 import Image6 from "../../Assets/Services/Image6.png";
 import HomeNavbar from "../../components/Home/NavbarDark/DarkNavbar"; // Import Navbar
 import ContentSection from "../../components/Home/Content/ContentSection";
+import { useTranslation } from "react-i18next";
 
 import Footer from "../../components/Home/Footer/Footer"; // Import Footer
 
 const Services = () => {
+  const { t } = useTranslation("services");
   return (
     <>
       <HomeNavbar /> {/* Navbar at the top */}
@@ -25,12 +27,11 @@ const Services = () => {
           style={{ backgroundImage: `url(${HeroImage})` }}
         >
           <div className="container px-4">
-            <h1 className="service-title">Services</h1>
-            <p className="service-description">
-              Seamlessly blending technology, functionality, and design to
-              create intelligent, <br /> future-ready spaces tailored to your
-              needs.
-            </p>
+            <h1 className="service-title">{t("main-head")}</h1>
+            <p
+              className="service-description"
+              dangerouslySetInnerHTML={{ __html: t("sub-head") }}
+            ></p>
           </div>
         </div>
         {/* Main Content Section */}
@@ -38,40 +39,36 @@ const Services = () => {
           className="main-container"
           style={{ backgroundImage: `url(${BackgroundImage})` }}
         >
-          <h1 className="service-head">Smart Home Integration</h1>
+          <h1 className="service-head">{t("s1-main-head")}</h1>
 
           {/* Left and Right Content Sections */}
           <div className="content-wrapper">
             {/* Left Content */}
             <div className="section-container text-section-left ">
               <div className="content-container">
-                <h2>Automated lighting and climate control</h2>
-                <p>
-                  Smart systems optimize lighting and temperature, enhancing
-                  comfort, energy efficiency, and ambiance with seamless
-                  automation and control.
-                </p>
+                <h2>{t("left1-main-head")}</h2>
+                <p>{t("l1-p")}</p>
 
                 {/* List Items */}
                 <div className="sub-content">
                   <i className="bi bi-arrow-right icon"></i>
-                  <p>Smart LED lighting with customizable presets</p>
+                  <p>{t("l1-list1")}</p>
                 </div>
                 <div className="sub-content">
                   <i className="bi bi-arrow-right icon"></i>
-                  <p>Motion sensor-based lighting systems</p>
+                  <p>{t("l1-list2")}</p>
                 </div>
                 <div className="sub-content">
                   <i className="bi bi-arrow-right icon"></i>
-                  <p>Centralized climate control via smart thermostats</p>
+                  <p>{t("l1-list3")}</p>
                 </div>
                 <div className="sub-content">
                   <i className="bi bi-arrow-right icon"></i>
-                  <p>Zonal temperature control systems</p>
+                  <p>{t("l1-list4")}</p>
                 </div>
                 <div className="sub-content-no">
                   <i className="bi bi-arrow-right icon"></i>
-                  <p>Daylight integration and adaptive dimming</p>
+                  <p>{t("l1-list5")}</p>
                 </div>
               </div>
               <div className="image-container-right">
@@ -97,68 +94,57 @@ const Services = () => {
                 />
               </div>
               <div className="content-container-right">
-                <h2>Home Theaters and VR Gaming Setups</h2>
-                <p>
-                  Immersive entertainment with high-quality visuals, surround
-                  sound, and smart automation for a cinematic and interactive
-                  gaming experience.
-                </p>
+                <h2>{t("right2-main-head")}</h2>
+                <p>{t("r2-p")}</p>
 
                 {/* List Items */}
                 <div className="sub-content">
-                  <p>4K/8K projectors and large-format displayss</p>
+                  <p>{t("r2-list1")}</p>
                   <i className="bi bi-arrow-left icon"></i>
                 </div>
                 <div className="sub-content">
-                  <p>Surround sound systems with acoustic paneling</p>
+                  <p>{t("r2-list2")}</p>
                   <i className="bi bi-arrow-left icon"></i>
                 </div>
                 <div className="sub-content">
-                  <p>Ambient lighting for immersive experiences</p>
+                  <p>{t("r2-list3")}</p>
                   <i className="bi bi-arrow-left icon"></i>
                 </div>
                 <div className="sub-content">
-                  <p>VR-ready gaming consoles and seating arrangements</p>
+                  <p>{t("r2-list4")}</p>
                   <i className="bi bi-arrow-left icon"></i>
                 </div>
                 <div className="sub-content">
-                  <p>Streaming device integration and automation</p>
+                  <p>{t("r2-list5")}</p>
                   <i className="bi bi-arrow-left icon"></i>
                 </div>
               </div>
             </div>
             <div className="section-container text-section-left">
               <div className="content-container">
-                <h2>Voice-Activated Curtains and Wardrobes</h2>
-                <p>
-                  Hands-free convenience with automated curtains and wardrobes,
-                  integrating voice commands for effortless control and enhanced
-                  functionality.
-                </p>
+                <h2>{t("left3-main-head")}</h2>
+                <p>{t("left3-p")}</p>
 
                 {/* List Items */}
                 <div className="sub-content">
                   <i className="bi bi-arrow-right icon"></i>
-                  <p>Motorized curtain rails with voice integration</p>
+                  <p>{t("l3-list1")}</p>
                 </div>
                 <div className="sub-content">
                   <i className="bi bi-arrow-right icon"></i>
-                  <p>Smart wardrobe lighting with voice control</p>
+                  <p>{t("l3-list2")}</p>
                 </div>
                 <div className="sub-content">
                   <i className="bi bi-arrow-right icon"></i>
-                  <p>Automated clothing retrieval systems</p>
+                  <p>{t("l3-list3")}</p>
                 </div>
                 <div className="sub-content">
                   <i className="bi bi-arrow-right icon"></i>
-                  <p>
-                    Integration with Alexa, Google Assistant, and other
-                    platforms
-                  </p>
+                  <p>{t("l3-list4")}</p>
                 </div>
                 <div className="sub-content-no">
                   <i className="bi bi-arrow-right icon"></i>
-                  <p>Customized scheduling for curtain operation</p>
+                  <p>{t("l3-list5")}</p>
                 </div>
               </div>
               <div className="image-container-right">
@@ -173,37 +159,33 @@ const Services = () => {
             </div>
           </div>
           <div className="border"></div>
-          <h1 className="service-head">Interior Fit-Out & Design</h1>
+          <h1 className="service-head">{t("section2-main-head")}</h1>
 
           {/* Left and Right Content Sections */}
           <div className="content-wrapper">
             {/* Left Content */}
             <div className="section-container text-section-left">
               <div className="content-container">
-                <h2>Climate-Adaptive HVAC Systems</h2>
-                <p>
-                  Smart HVAC adapts to environmental conditions, ensuring
-                  optimal temperature, air quality, and energy efficiency for
-                  ultimate comfort.
-                </p>
+                <h2>{t("left4-main-head")}</h2>
+                <p>{t("left4-p")}</p>
 
                 {/* List Items */}
 
                 <div className="sub-content">
                   <i className="bi bi-arrow-right icon"></i>
-                  <p>Smart air conditioning with weather-based adjustments</p>
+                  <p>{t("l4-list1")}</p>
                 </div>
                 <div className="sub-content">
                   <i className="bi bi-arrow-right icon"></i>
-                  <p>Humidity control and air purification systems</p>
+                  <p>{t("l4-list2")}</p>
                 </div>
                 <div className="sub-content">
                   <i className="bi bi-arrow-right icon"></i>
-                  <p>Zone-based HVAC automation</p>
+                  <p>{t("l4-list3")}</p>
                 </div>
                 <div className="sub-content-no">
                   <i className="bi bi-arrow-right icon"></i>
-                  <p>Integration with home automation platforms</p>
+                  <p>{t("l4-list4")}</p>
                 </div>
               </div>
               <div className="image-container-right">
@@ -229,62 +211,54 @@ const Services = () => {
                 />
               </div>
               <div className="content-container-right">
-                <h2>Modular Kitchens and Custom Furniture</h2>
-                <p>
-                  Tailored kitchen and furniture solutions designed for style,
-                  functionality, and space efficiency with premium materials and
-                  smart integration.
-                </p>
+                <h2>{t("right5-main-head")}</h2>
+                <p>{t("right5-p")}</p>
 
                 {/* List Items */}
 
                 <div className="sub-content">
-                  <p>Space-saving pull-out cabinets and hidden compartments</p>
+                  <p>{t("r5-list1")}</p>
                   <i className="bi bi-arrow-left icon"></i>
                 </div>
                 <div className="sub-content">
-                  <p>Custom dining and countertop solutions</p>
+                  <p>{t("r5-list2")}</p>
                   <i className="bi bi-arrow-left icon"></i>
                 </div>
                 <div className="sub-content">
-                  <p>Ergonomic furniture with adjustable features</p>
+                  <p>{t("r5-list4")}</p>
                   <i className="bi bi-arrow-left icon"></i>
                 </div>
                 <div className="sub-content">
-                  <p>Sustainable materials and finishes</p>
+                  <p>{t("r5-list3")}</p>
                   <i className="bi bi-arrow-left icon"></i>
                 </div>
               </div>
             </div>
             <div className="section-container text-section-left">
               <div className="content-container">
-                <h2>Turnkey Interior Solutions</h2>
-                <p>
-                  End-to-end design, execution, and automation services,
-                  creating functional, stylish, and technology-integrated spaces
-                  effortlessly.
-                </p>
+                <h2>{t("left6-main-head")}</h2>
+                <p>{t("left6-p")}</p>
 
                 {/* List Items */}
                 <div className="sub-content">
                   <i className="bi bi-arrow-right icon"></i>
-                  <p>End-to-end design and execution services</p>
+                  <p>{t("l6-list1")}</p>
                 </div>
                 <div className="sub-content">
                   <i className="bi bi-arrow-right icon"></i>
-                  <p>Space planning and 3D visualizations</p>
+                  <p>{t("l6-list2")}</p>
                 </div>
                 <div className="sub-content">
                   <i className="bi bi-arrow-right icon"></i>
-                  <p>Flooring, wall finishes, and false ceilings</p>
+                  <p>{t("l6-list3")}</p>
                 </div>
                 <div className="sub-content">
                   <i className="bi bi-arrow-right icon"></i>
-                  <p>Lighting, furniture, and decor sourcing</p>
+                  <p>{t("l6-list4")}</p>
                 </div>
                 <div className="sub-content-no">
                   <i className="bi bi-arrow-right icon"></i>
-                  <p>Custom storage solutions for every room</p>
+                  <p>{t("l6-list5")}</p>
                 </div>
               </div>
               <div className="image-container-right">

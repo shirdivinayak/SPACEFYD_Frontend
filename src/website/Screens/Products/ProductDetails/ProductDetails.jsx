@@ -16,8 +16,11 @@ import ProductImage4 from "../../../Assets/Products/ProductImage4.svg";
 import ProductImage5 from "../../../Assets/Products/ProductImage5.png";
 import { ReactComponent as Linetop } from "../../../Assets/Products/Line.svg";
 import { Line } from "react-bootstrap-icons";
+import { useTranslation } from "react-i18next";
 
 const ProductDetails = () => {
+  const { t } = useTranslation("productdetails");
+
   const navigate = useNavigate();
 
   const ProductImages = {
@@ -106,10 +109,10 @@ const ProductDetails = () => {
       </div>
 
       <div className=" container similar-products ">
-        <h2>Similar Products</h2>
+        <h2>{t("similar-products")}</h2>
         <div>
           {" "}
-          <button className="view-more-button">View More</button>
+          <button className="view-more-button">{t("view-more")}</button>
         </div>
       </div>
       {/* <div className="similar-product-list">
