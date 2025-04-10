@@ -7,60 +7,41 @@ import ContactUsEn from "../website/Screens/ContactUs/translation.en.json";
 import ProductDetailsEn from "../website/Screens/Products/ProductDetails/translation.en.json";
 import ProductsEn from "../website/Screens/Products/ProductList/translation.en.json";
 import ProjectsDetailsEn from "../website/Screens/Projects/ProjectsDetail/translation.en.json";
-import ProjectsListEn from "../website/Screens/Projects/ProjectsList/translation.en.json";
+// import ProjectsListEn from "../website/Screens/Projects/ProjectsList/translation.en.json";
 import ServicesEn from "../website/Screens/Services/translation.en.json";
 import HomeCardSectionEn from "../website/components/Home/CardSection/translation.en.json";
-import HomeCarousalEn from "../website/components/Home/Carousel/translation.en.json";
-import HomeContentEn from "../website/components/Home/Content/translation.en.json";
-import HomeHeroSectionEn from "../website/components/Home/HeroSection/translation.en.json";
 
 import AboutUSDe from "../website/Screens/AboutUs/translation.de.json";
 import ContactUsDe from "../website/Screens/ContactUs/translation.de.json";
 import ProductDetailsDe from "../website/Screens/Products/ProductDetails/translation.de.json";
 import ProductsDe from "../website/Screens/Products/ProductList/translation.de.json";
 import ProjectsDetailsDe from "../website/Screens/Projects/ProjectsDetail/translation.de.json";
-import ProjectsListDe from "../website/Screens/Projects/ProjectsList/translation.de.json";
 import ServicesDe from "../website/Screens/Services/translation.de.json";
 import HomeCardSectionDe from "../website/components/Home/CardSection/translation.de.json";
-import HomeCarousalDe from "../website/components/Home/Carousel/translation.de.json";
-import HomeContentDe from "../website/components/Home/Content/translation.de.json";
-import HomeHeroSectionDe from "../website/components/Home/HeroSection/translation.de.json";
 
 import AboutUSIt from "../website/Screens/AboutUs/translation.it.json";
 import ContactUsIt from "../website/Screens/ContactUs/translation.it.json";
 import ProductDetailsIt from "../website/Screens/Products/ProductDetails/translation.it.json";
 import ProductsIt from "../website/Screens/Products/ProductList/translation.en.json";
 import ProjectsDetailsIt from "../website/Screens/Projects/ProjectsDetail/translation.it.json";
-import ProjectsListIt from "../website/Screens/Projects/ProjectsList/translation.it.json";
 import ServicesIt from "../website/Screens/Services/translation.it.json";
 import HomeCardSectionIt from "../website/components/Home/CardSection/translation.it.json";
-import HomeCarousalIt from "../website/components/Home/Carousel/translation.it.json";
-import HomeContentIt from "../website/components/Home/Content/translation.it.json";
-import HomeHeroSectionIt from "../website/components/Home/HeroSection/translation.it.json";
 
 import AboutUSEs from "../website/Screens/AboutUs/translation.es.json";
 import ContactUsEs from "../website/Screens/ContactUs/translation.es.json";
 import ProductDetailsEs from "../website/Screens/Products/ProductDetails/translation.es.json";
 import ProductsEs from "../website/Screens/Products/ProductList/translation.en.json";
 import ProjectsDetailsEs from "../website/Screens/Projects/ProjectsDetail/translation.es.json";
-import ProjectsListEs from "../website/Screens/Projects/ProjectsList/translation.es.json";
 import ServicesEs from "../website/Screens/Services/translation.es.json";
 import HomeCardSectionEs from "../website/components/Home/CardSection/translation.es.json";
-import HomeCarousalEs from "../website/components/Home/Carousel/translation.es.json";
-import HomeContentEs from "../website/components/Home/Content/translation.es.json";
-import HomeHeroSectionEs from "../website/components/Home/HeroSection/translation.es.json";
 
 import AboutUSFr from "../website/Screens/AboutUs/translation.fr.json";
 import ContactUsFr from "../website/Screens/ContactUs/translation.fr.json";
 import ProductDetailsFr from "../website/Screens/Products/ProductDetails/translation.fr.json";
 import ProductsFr from "../website/Screens/Products/ProductList/translation.en.json";
 import ProjectsDetailsFr from "../website/Screens/Projects/ProjectsDetail/translation.fr.json";
-import ProjectsListFr from "../website/Screens/Projects/ProjectsList/translation.fr.json";
 import ServicesFr from "../website/Screens/Services/translation.fr.json";
 import HomeCardSectionFr from "../website/components/Home/CardSection/translation.fr.json";
-import HomeCarousalFr from "../website/components/Home/Carousel/translation.fr.json";
-import HomeContentFr from "../website/components/Home/Content/translation.fr.json";
-import HomeHeroSectionFr from "../website/components/Home/HeroSection/translation.fr.json";
 
 const savedLanguage = localStorage.getItem("selected_language") || "en";
 
@@ -72,12 +53,9 @@ i18n.use(initReactI18next).init({
       productdetails: ProductDetailsEn,
       products: ProductsEn,
       projectDetails: ProjectsDetailsEn,
-      projectslist: ProjectsListEn,
+      // projectsList: ProjectsListEn,
       services: ServicesEn,
       card: HomeCardSectionEn,
-      carousel: HomeCarousalEn,
-      content: HomeContentEn,
-      hero: HomeHeroSectionEn,
     },
 
     de: {
@@ -86,12 +64,9 @@ i18n.use(initReactI18next).init({
       productdetails: ProductDetailsDe,
       products: ProductsDe,
       projectDetails: ProjectsDetailsDe,
-      projectslist: ProjectsListDe,
       services: ServicesDe,
+
       card: HomeCardSectionDe,
-      carousel: HomeCarousalDe,
-      content: HomeContentDe,
-      hero: HomeHeroSectionDe,
     },
 
     it: {
@@ -100,12 +75,10 @@ i18n.use(initReactI18next).init({
       productdetails: ProductDetailsIt,
       products: ProductsIt,
       projectDetails: ProjectsDetailsIt,
-      projectslist: ProjectsListIt,
       services: ServicesIt,
-      card: HomeCardSectionIt,
-      carousel: HomeCarousalIt,
-      content: HomeContentIt,
-      hero: HomeHeroSectionIt,
+      // card: HomeCardSectionIt,
+
+      // projectsList: ProjectsListEn,
     },
 
     es: {
@@ -114,26 +87,22 @@ i18n.use(initReactI18next).init({
       productdetails: ProductDetailsEs,
       products: ProductsEs,
       projectDetails: ProjectsDetailsEs,
-      projectslist: ProjectsListEs,
       services: ServicesEs,
-      card: HomeCardSectionEs,
-      carousel: HomeCarousalEs,
-      content: HomeContentEs,
-      hero: HomeHeroSectionEs,
+
+      card: HomeCardSectionEn,
+      // projectsList: ProjectsListEn,
     },
 
     fr: {
       about: AboutUSFr,
       contact: ContactUsFr,
+      card: HomeCardSectionEn,
       productdetails: ProductDetailsFr,
       products: ProductsFr,
       projectDetails: ProjectsDetailsFr,
-      projectslist: ProjectsListFr,
       services: ServicesFr,
-      card: HomeCardSectionFr,
-      carousel: HomeCarousalFr,
-      content: HomeContentFr,
-      hero: HomeHeroSectionFr,
+
+      // projectsList: ProjectsListEn,
     },
   },
   lng: savedLanguage,

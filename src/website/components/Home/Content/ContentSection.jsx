@@ -4,8 +4,10 @@ import "./ContentSection.css"; // Import the CSS file
 import banner from "../../../Assets/Home/contentbanner.png";
 import theatre from "../../../Assets/Home/contentimage.png";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const ContentSection = () => {
+  const { t } = useTranslation("content");
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
@@ -70,7 +72,7 @@ const ContentSection = () => {
               color: "#FFFFFF",
             }}
           >
-            Let's Bring Your Vision to Life
+            {t("h1")}
           </h1>
           <p
             className="mb-0"
@@ -85,12 +87,10 @@ const ContentSection = () => {
               color: "#FFFFFF",
             }}
           >
-            Partner with Spacifyd to create interiors that inspire and impress.
-            Whether it's a single-room makeover or a large-scale commercial
-            project, we are here to turn your ideas into reality.
+            {t("p1")}
           </p>
           <button className="content-btn mt-2" onClick={handleButtonClick}>
-            Get started with us
+            {t("get")}
           </button>
         </div>
 

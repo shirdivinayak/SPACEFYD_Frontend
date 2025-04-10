@@ -4,8 +4,10 @@ import { Button } from "react-bootstrap";
 import "./CarouselComponent.css";
 import image1 from "../../../Assets/Home/image1.png"; // fallback image
 import axiosInstance from "../../../../instance/axiosInstance";
+import { useTranslation } from "react-i18next";
 
 const CarouselComponent = () => {
+  const { t } = useTranslation("carousel");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [carouselData, setCarouselData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -55,10 +57,8 @@ const CarouselComponent = () => {
       {/* Heading Section */}
       <div className="carousel-home-heading-section">
         <div>
-          <h2 className="carousel-sub-heading">Our Trending Projects</h2>
-          <h1 className="carousel-main-heading">
-            Transforming Spaces with Seamless Interior Solutions
-          </h1>
+          <h2 className="carousel-sub-heading">{t("h2")}</h2>
+          <h1 className="carousel-main-heading">{t("h1")}</h1>
         </div>
         <Button
           variant="dark"
@@ -80,7 +80,7 @@ const CarouselComponent = () => {
             cursor: "pointer",
           }}
         >
-          Know More
+          {t("know")}
         </Button>
       </div>
 
@@ -161,7 +161,7 @@ const CarouselComponent = () => {
             margin: "20px auto 0",
           }}
         >
-          Know More
+          {t("know")}
         </Button>
       </div>
     </div>

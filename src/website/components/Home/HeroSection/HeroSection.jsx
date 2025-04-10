@@ -16,6 +16,7 @@ import lampicon2 from "../../../Assets/Home/icons/lamp/tailored.png";
 import lampicon3 from "../../../Assets/Home/icons/lamp/innovative.png";
 import lampicon4 from "../../../Assets/Home/icons/lamp/future.png";
 import axiosInstance from "../../../../instance/axiosInstance";
+import { useTranslation } from "react-i18next";
 
 // Button data for the Hero Section
 const topButtons = [
@@ -35,7 +36,10 @@ const rightButtons = [
 ];
 
 // Combined buttons for small screens
-const allHeroButtons = [...topButtons, ...leftButtons, ...rightButtons].slice(0, 7);
+const allHeroButtons = [...topButtons, ...leftButtons, ...rightButtons].slice(
+  0,
+  7
+);
 
 // Button data for the Lamp Section
 const lampButtons = [
@@ -63,6 +67,7 @@ const FloatingButton = ({ icon, text }) => (
 );
 
 const HeroSection = () => {
+  const { t } = useTranslation("hero");
   const navigate = useNavigate();
   const [banners, setBanner] = useState([]);
   const [loading, setLoading] = useState([]);
@@ -84,25 +89,23 @@ const HeroSection = () => {
     window.scrollTo(0, 0);
   };
   const fetchBanner = async () => {
-      setLoading(true);
-      try {
-        const response = await axiosInstance.post("/fetchBannerImage");
-        console.log(response.data.data[0].defaultImage,"=====bannerimage")
-          if (response.data.data[0].defaultImage > 0) {
-            setBanner(response.data.data[0].defaultImage);
-          }else{
-
-            setBanner(banner)
-          }
-        } 
-      catch (error) {
-        console.error("Error fetching categories:", error);
-      } finally {
-        setLoading(false);
+    setLoading(true);
+    try {
+      const response = await axiosInstance.post("/fetchBannerImage");
+      console.log(response.data.data[0].defaultImage, "=====bannerimage");
+      if (response.data.data[0].defaultImage > 0) {
+        setBanner(response.data.data[0].defaultImage);
+      } else {
+        setBanner(banner);
       }
-    };
-useEffect(() => {
-  fetchBanner();
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchBanner();
   }, []);
 
   return (
@@ -147,7 +150,7 @@ useEffect(() => {
               color: "#FCF9F5",
             }}
           >
-            Transforming Spaces with Custom Interiors
+            {t("h1")}
           </h1>
         </div>
 
@@ -232,7 +235,7 @@ useEffect(() => {
                     margin: "0",
                   }}
                 >
-                  Smart Tech Interior Solutions
+                  {t("h2")}
                 </h2>
 
                 <div
@@ -268,10 +271,8 @@ useEffect(() => {
                       paddingRight: "20px",
                       paddingLeft: "20px",
                     }}
-                  >
-                    Transform your space with smart design and technology for{" "}
-                    <br /> a seamless, stylish, and future-ready experience.
-                  </p>
+                    dangerouslySetInnerHTML={{ __html: t("p") }}
+                  ></p>
 
                   <Button
                     variant="light"
@@ -282,7 +283,7 @@ useEffect(() => {
                       zIndex: 1000,
                     }}
                   >
-                    Get Started With Us
+                    {t("get")}
                   </Button>
                 </div>
               </div>
@@ -350,7 +351,7 @@ useEffect(() => {
                   margin: "0",
                 }}
               >
-                Smart Tech Interior Solutions
+                {t("smart")}
               </h2>
 
               <div
@@ -385,8 +386,7 @@ useEffect(() => {
                     margin: "0 0 24px 0",
                   }}
                 >
-                  Transform your space with smart design and technology for a
-                  seamless, stylish, and future-ready experience.
+                  {t("transform")}
                 </p>
 
                 <Button
@@ -399,7 +399,7 @@ useEffect(() => {
                     zIndex: 1000,
                   }}
                 >
-                  Get Started With Us
+                  {t("get")}
                 </Button>
               </div>
             </div>
@@ -448,7 +448,7 @@ useEffect(() => {
               marginBottom: "20px",
             }}
           >
-            About Us
+            {t("about")}
           </h2>
           <h1
             style={{
@@ -460,9 +460,8 @@ useEffect(() => {
               color: "#4C6559",
               marginBottom: "20px",
             }}
-          >
-            Revolutionizing Spaces with <br /> Design and Technology
-          </h1>
+            dangerouslySetInnerHTML={{ __html: t("revol") }}
+          ></h1>
           <p
             style={{
               fontFamily: "Poppins, sans-serif",
@@ -473,11 +472,8 @@ useEffect(() => {
               color: "#646464",
               marginBottom: "30px",
             }}
-          >
-            Spacifyd creates innovative, functional, and beautiful spaces <br />
-            by blending advanced technology with thoughtful, purpose-driven
-            design.
-          </p>
+            dangerouslySetInnerHTML={{ __html: t("spacifyd") }}
+          ></p>
           <Button
             variant="dark"
             onClick={handleAboutUsClick}
@@ -499,7 +495,7 @@ useEffect(() => {
               marginBottom: "84px",
             }}
           >
-            Know More
+            {t("know")}
           </Button>
         </div>
 
