@@ -1,3 +1,30 @@
+/* Fix for Navbar Positioning */
+.navbar-collapse {
+  position: relative;
+  background-color: transparent;
+  transition: all 0.3s ease-out;
+  overflow: visible !important; /* Changed from hidden to visible */
+  max-height: 0;
+}
+
+.navbar-collapse.show {
+  max-height: 100vh;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.9);
+  overflow: visible !important; /* Ensure overflow is visible */
+}
+
+/* Language Selector Specific Fixes */
+.language-dropdown,
+.language-dropdown-mobile {
+  position: relative;
+  z-index: 2000; /* Ensure high z-index */
+}
+
+/* Language Selector Dropdown Fixes */
 .language-selector {
   position: relative;
   display: inline-block;
@@ -12,35 +39,64 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+  color: white;
 }
 
-.dropdown {
+.language-selector .dropdown {
   position: absolute;
-  list-style: none;
-  background: white;
-  border: 1px solid #ccc;
-  padding: 5px 0;
-  margin: 0;
-  display: none;
+  top: 100%;
+  left: 0;
   width: 150px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 9999; /* Very high z-index */
+  margin-top: 5px;
+  padding: 5px 0;
 }
 
-.language-selector:hover .dropdown {
-  display: block;
+.language-selector.mobile .dropdown {
+  position: absolute;
+  width: 150px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.dropdown li {
-  padding: 8px;
+/* Fix for dropdown items */
+.language-selector .dropdown div {
+  padding: 8px 12px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
-.dropdown li:hover {
-  background: #f0f0f0;
+.language-selector .dropdown div:hover {
+  background-color: #f0f0f0;
 }
 
-.flag-icon {
-  width: 20px;
-  height: auto;
-  margin-right: 8px;
-  vertical-align: middle;
+/* Clear any overflow restrictions */
+.navbar, 
+.navbar-collapse,
+.container-fluid {
+  overflow: visible !important;
+}
+
+/* Specific mobile fix */
+@media (max-width: 991px) {
+  .mobile-menu {
+    overflow: visible !important;
+  }
+  
+  .language-dropdown-mobile {
+    position: static;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .language-selector.mobile {
+    position: relative;
+    display: inline-block;
+  }
 }
