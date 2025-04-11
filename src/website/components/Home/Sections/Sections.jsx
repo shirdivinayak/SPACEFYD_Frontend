@@ -1,8 +1,10 @@
 import React from "react";
 import "./Sections.css";
 import sectionbackground from "../../../Assets/Home/Sections/servicebackground.png";
+import { useTranslation } from "react-i18next";
 
 const Sections = ({ backgroundImage, sections }) => {
+  const { t } = useTranslation("sections");
   return (
     <div
       className="background-section"
@@ -12,10 +14,11 @@ const Sections = ({ backgroundImage, sections }) => {
     >
       {/* Top Headings */}
       <div className="text-center mb-5">
-        <h6 className="section-subtitle">Our Services</h6>
-        <h1 className="section-title">
-          Tailored Solutions <br/> for Every Interior Need.
-        </h1>
+        <h6 className="section-subtitle">{t("our")}</h6>
+        <h1
+          className="section-title"
+          dangerouslySetInnerHTML={{ __html: t("tailor") }}
+        ></h1>
       </div>
 
       {/* Sections Wrapper */}
