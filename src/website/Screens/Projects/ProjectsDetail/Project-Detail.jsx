@@ -11,6 +11,7 @@ import { ReactComponent as Linebot } from "../../../Assets/Products/Line.svg";
 import "./Projetc-Detail.css"; // Import CSS file
 import HomeNavbar from "../../../components/Home/NavbarDark/DarkNavbar"; // Import Navbar
 import Footer from "../../../components/Home/Footer/Footer"; // Import Footer
+import { useTranslation } from "react-i18next";
 
 // Fallback data in case nothing is passed
 const fallbackData = {
@@ -37,6 +38,8 @@ const similarProjects = [
 ];
 
 const ProjectsDetail = () => {
+  const { t } = useTranslation("projectDetails");
+
   // Get project data from navigation state
   const location = useLocation();
   // const params = useParams();
@@ -105,8 +108,8 @@ const ProjectsDetail = () => {
         <div>
           {/* Heading and Button */}
           <div className="more-projects-container">
-            <h2 className="more-projects-heading">Similar Projects</h2>
-            <button className="view-more-button">View More</button>
+            <h2 className="more-projects-heading">{t("similar-products")}</h2>
+            <button className="view-more-button">{t("view-more-btn")}</button>
           </div>
 
           {/* Projects Grid */}

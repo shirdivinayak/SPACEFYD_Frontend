@@ -19,9 +19,9 @@ import { JustifyLeft } from "react-bootstrap-icons";
 import { useTranslation } from "react-i18next";
 
 const AboutUs = () => {
-  const { t, i18n } = useTranslation("about");
+  const { t } = useTranslation("about");
 
-  console.log("Rendering AboutUs - Current i18n language:", i18n.language);
+  // console.log("Rendering AboutUs - Current i18n language:", i18n.language);
 
   // const LanguageSwitcher = () => {
   //   const { i18n } = useTranslation();
@@ -37,13 +37,14 @@ const AboutUs = () => {
       {/* Hero Section with Background */}
 
       <div
-        className="hero-section "
+        className="hero-section-about "
         style={{
+          marginLeft: "0",
           backgroundImage: `url(${HeroImage})`,
         }}
       >
         {" "}
-        <div className="container">
+        <div className="">
           <h1>{t("title")}</h1>
 
           <p dangerouslySetInnerHTML={{ __html: t("title-sub") }}></p>

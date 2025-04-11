@@ -4,8 +4,10 @@ import card1 from "../../../Assets/Home/cards/card1.png"; // fallback image
 import "./CardSection.css";
 import { Button } from "react-bootstrap";
 import axiosInstance from "../../../../instance/axiosInstance";
+import { useTranslation } from "react-i18next";
 
 const CardSection = () => {
+  const { t } = useTranslation("card");
   const navigate = useNavigate();
   const cardsContainerRef = useRef(null);
   const [carouselData, setCarouselData] = useState([]);
@@ -61,8 +63,8 @@ const CardSection = () => {
         {/* Top Section: Heading and Button */}
         <div className="top-section">
           <div className="heading-section">
-            <h2>Our Products</h2>
-            <h1>Explore Our Range of Premium Interior Products</h1>
+            <h2>{t("main-head")}</h2>
+            <h1>{t("main-sub-head")}</h1>
           </div>
 
           <div className="button-navigation">
@@ -71,7 +73,7 @@ const CardSection = () => {
               className="view-more-btn large-screen-btn"
               onClick={() => window.scrollTo(0, 0)}
             >
-              View More
+              {t("view-more-btn")}
             </Link>
             <div className="small-screen-navigation">
               <button onClick={scrollLeft}>
@@ -88,7 +90,7 @@ const CardSection = () => {
         <div className="cards-section">
           <div className="cards-container" ref={cardsContainerRef}>
             {loading ? (
-              <p>Loading...</p>
+              <p>{t("loading")}</p>
             ) : (
               carouselData.map((item, index) => (
                 <div key={index} className="card">
@@ -116,7 +118,7 @@ const CardSection = () => {
         </div>
         <div className="small-screen-view-more">
           <Button className="view-more-btn" onClick={handleKnowMoreClick}>
-            View More
+            {t("view-more-btn")}
           </Button>
         </div>
       </div>

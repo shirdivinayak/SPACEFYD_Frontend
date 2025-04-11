@@ -6,8 +6,10 @@ import "./ProjectList.css";
 import HomeNavbar from "../../../components/Home/NavbarDark/DarkNavbar";
 import Footer from "../../../components/Home/Footer/Footer";
 import axiosInstance from "../../../../instance/axiosInstance";
+import { useTranslation } from "react-i18next";
 
 const ProjectList = () => {
+  const { t } = useTranslation("projectlist");
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [loadingCategories, setLoadingCategories] = useState(true);
@@ -37,10 +39,14 @@ const ProjectList = () => {
     setLoadingCategories(true);
     try {
       const response = await axiosInstance.post("/displayCategory", {
-        type: "project"
+        type: "project",
       });
-      
-      if (response.data && response.data.data && Array.isArray(response.data.data)) {
+
+      if (
+        response.data &&
+        response.data.data &&
+        Array.isArray(response.data.data)
+      ) {
         setCategories(response.data.data);
         if (response.data.data.length > 0) {
           setSelectedCategory(response.data.data[0]._id);
@@ -58,29 +64,29 @@ const ProjectList = () => {
   };
 
   const fetchProjects = async (categoryId, lastId) => {
-    console.log("====api called")
+    console.log("====api called");
     const isInitialFetch = lastId === null;
-    
+
     if (isInitialFetch) {
       setLoadingProjects(true);
     } else {
       setLoadingMoreProjects(true);
     }
-    
+
     try {
-      const response = await axiosInstance.post('/displayProjectByID', { 
+      const response = await axiosInstance.post("/displayProjectByID", {
         categoryId: categoryId,
-        lastId: lastId 
+        lastId: lastId,
       });
-      console.log(response.data.lastFetchedId,"---lSTFETCH")
+      console.log(response.data.lastFetchedId, "---lSTFETCH");
 
       if (response.data && response.data.data) {
         if (isInitialFetch) {
           setProjects(response.data.data);
         } else {
-          setProjects(prev => [...prev, ...response.data.data]);
+          setProjects((prev) => [...prev, ...response.data.data]);
         }
-        
+
         if (response.data.lastFetchedId) {
           setLastFetchedId(response.data.lastFetchedId);
           setHasMore(response.data.data.length > 0);
@@ -113,18 +119,27 @@ const ProjectList = () => {
   };
 
   // Set up intersection observer for infinite scrolling
-  const lastProjectElementRef = useCallback(node => {
-    if (loadingProjects || loadingMoreProjects) return;
-    if (observer.current) observer.current.disconnect();
-    
-    observer.current = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && hasMore) {
-        fetchProjects(selectedCategory, lastFetchedId);
-      }
-    });
-    
-    if (node) observer.current.observe(node);
-  }, [loadingProjects, loadingMoreProjects, hasMore, selectedCategory, lastFetchedId]);
+  const lastProjectElementRef = useCallback(
+    (node) => {
+      if (loadingProjects || loadingMoreProjects) return;
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          fetchProjects(selectedCategory, lastFetchedId);
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [
+      loadingProjects,
+      loadingMoreProjects,
+      hasMore,
+      selectedCategory,
+      lastFetchedId,
+    ]
+  );
 
   // Placeholder loader for categories
   const CategoryPlaceholders = () => {
@@ -166,7 +181,10 @@ const ProjectList = () => {
     return (
       <div className="more-projects-grid">
         {[1, 2].map((item) => (
-          <div key={`load-more-${item}`} className="more-project-item placeholder-project">
+          <div
+            key={`load-more-${item}`}
+            className="more-project-item placeholder-project"
+          >
             <div className="placeholder-glow project-image-placeholder">
               <span className="placeholder col-12 h-100"></span>
             </div>
@@ -193,15 +211,14 @@ const ProjectList = () => {
           style={{ backgroundImage: `url(${HeroImage})` }}
         >
           <div className="container px-4">
-            <h1 className="service-title">Our Projects</h1>
-            <p className="service-description">
-              Discover our diverse portfolio showcasing transformative
-              designs and <br /> exceptional craftsmanship 
-              across every project
-            </p>
+            <h1 className="service-title">{t("our-projects")}</h1>
+            <p
+              className="service-description"
+              dangerouslySetInnerHTML={{ __html: t("discover") }}
+            ></p>
           </div>
         </div>
-        
+
         {/* Category List */}
         <div className="category-containers">
           {loadingCategories ? (
@@ -229,50 +246,68 @@ const ProjectList = () => {
             {projects.map((project, index) => {
               if (index === projects.length - 1) {
                 return (
-                  <div 
+                  <div
                     ref={lastProjectElementRef}
-                    key={`${project._id}-${index}`} 
+                    key={`${project._id}-${index}`}
                     className="more-project-item"
                   >
                     <img
-                      onClick={() => 
-                        navigate(`/ProjectsDetail/${encodeURIComponent(project.projectName)}`, { state: { project } })
+                      onClick={() =>
+                        navigate(
+                          `/ProjectsDetail/${encodeURIComponent(
+                            project.projectName
+                          )}`,
+                          { state: { project } }
+                        )
                       }
                       src={project.images[0] || project.img}
                       alt={project.projectName}
                       className="more-project-image"
                     />
-                    <h3 className="more-project-title">{project.projectName}</h3>
-                    <p className="more-project-description">{project.projectDescription}</p>
+                    <h3 className="more-project-title">
+                      {project.projectName}
+                    </h3>
+                    <p className="more-project-description">
+                      {project.projectDescription}
+                    </p>
                   </div>
                 );
               } else {
                 return (
-                  <div 
-                    key={`${project._id}-${index}`} 
+                  <div
+                    key={`${project._id}-${index}`}
                     className="more-project-item"
                   >
                     <img
-                      onClick={() => 
-                        navigate(`/ProjectsDetail/${encodeURIComponent(project.projectName)}`, { state: { project } })
+                      onClick={() =>
+                        navigate(
+                          `/ProjectsDetail/${encodeURIComponent(
+                            project.projectName
+                          )}`,
+                          { state: { project } }
+                        )
                       }
                       src={project.images[0] || project.img}
                       alt={project.projectName}
                       className="more-project-image"
                     />
-                    <h3 className="more-project-title">{project.projectName}</h3>
-                    <p className="more-project-description">{project.projectDescription}</p>
+                    <h3 className="more-project-title">
+                      {project.projectName}
+                    </h3>
+                    <p className="more-project-description">
+                      {project.projectDescription}
+                    </p>
                   </div>
                 );
               }
             })}
-            
+
             {/* Loader for additional projects */}
             {loadingMoreProjects && <LoadMorePlaceholder />}
           </div>
         ) : (
           <div className="no-projects-container">
-            <p className="no-projects-message">No projects found for this category</p>
+            <p className="no-projects-message">{t("no-project")}</p>
           </div>
         )}
       </div>
