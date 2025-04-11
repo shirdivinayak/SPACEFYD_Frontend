@@ -5,7 +5,9 @@ body {
   color: #4c6559;
 }
 
-.hero-section {
+.hero-section-about {
+  margin: 0 !important;
+  padding: 0 !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,7 +16,6 @@ body {
   background-size: cover;
   background-position: center;
   width: 100%;
-  /* max-width: 1555px; */
   height: 614px;
   position: relative;
   font-family: "DM Sans", sans-serif;
@@ -26,11 +27,11 @@ body {
   padding-top: clamp(3.75rem, 8vw, 6.25rem);
 }
 
-.navbar-collapse.show + .hero-section {
+.navbar-collapse.show + .hero-section-about {
   margin-top: 200px;
 }
 
-.hero-section::before {
+.hero-section-about::before {
   content: "";
   position: absolute;
   top: 0;
@@ -41,18 +42,18 @@ body {
   z-index: 1;
 }
 
-.hero-section .container {
+.hero-section-about .container {
   position: relative;
   z-index: 2;
 }
 
-.hero-section h1 {
+.hero-section-about h1 {
   font-size: 3rem;
   font-weight: bold;
   margin-bottom: 15px;
 }
 
-.hero-section p {
+.hero-section-about p {
   font-size: 1.25rem;
   font-weight: 400;
 }
@@ -115,38 +116,39 @@ body {
     line-height: 100%;
     letter-spacing: 0%;
   }
-  /* .hero-section {
-    padding: 20px !important;
-    height: 440px !important; 
-    max-height: 440px !important;
-    overflow: hidden !important; 
-    display: flex;
-    align-items: center; 
-    justify-content: center; 
-    text-align: center;
-  } */
 
-  .hero-section .container {
+  .hero-section-about .container {
     padding: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
     margin: 0 auto !important;
   }
 
-  .hero-section h1 {
+  .hero-section-about h1 {
     font-size: 2rem;
     margin-bottom: 10px;
   }
 
-  .hero-section p {
+  .hero-section-about p {
     font-size: 1rem;
     margin: 0 10px;
   }
 }
 
 @media (max-width: 600px) {
-  .hero-section {
+  .hero-section-about {
+    width: 100vw;
+    padding: 0 !important;
     max-height: 440px !important;
     background-size: cover !important;
     background-position: center !important;
     overflow: hidden !important;
+  }
+}
+@media (max-width: 991px) {
+  .hero-section-about {
+    margin: 0 !important;
+    width: 100% !important;
+    padding: 0 !important; /* Optional, if you want to remove internal spacing too */
   }
 }

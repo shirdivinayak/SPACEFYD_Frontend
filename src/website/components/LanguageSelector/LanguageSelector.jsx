@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 import i18n from "../../../i18n/i18n";
 import "./LanguageSelector.css";
 import { FaAngleDown } from "react-icons/fa";
@@ -19,7 +19,7 @@ const languages = [
 ];
 
 const LanguageSelector = ({ mobile }) => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const [selectedLang, setSelectedLang] = useState(
     localStorage.getItem("selected_language") || "en"
   );
@@ -35,7 +35,7 @@ const LanguageSelector = ({ mobile }) => {
     setSelectedLang(langCode); // Update state
     setIsOpen(false); // Close dropdown after selection
   };
-  
+
   // Toggle dropdown
   const toggleDropdown = (e) => {
     e.preventDefault();
@@ -43,7 +43,7 @@ const LanguageSelector = ({ mobile }) => {
     setIsOpen(!isOpen);
     console.log("Dropdown toggled:", !isOpen); // Debug log
   };
-  
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -51,7 +51,7 @@ const LanguageSelector = ({ mobile }) => {
         setIsOpen(false);
       }
     };
-    
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -59,36 +59,32 @@ const LanguageSelector = ({ mobile }) => {
   }, []);
 
   return (
-    <div 
-      className={`language-selector ${mobile ? 'mobile' : ''}`} 
+    <div
+      className={`language-selector ${mobile ? "mobile" : ""}`}
       ref={dropdownRef}
       style={{ position: "relative" }}
     >
-      <button 
-        className="selected-lang" 
-        onClick={toggleDropdown}
-        type="button"
-      >
+      <button className="selected-lang" onClick={toggleDropdown} type="button">
         <img
           src={selectedLanguage?.flag}
           alt={selectedLanguage?.name}
           className="flag-icon"
         />
-        <FaAngleDown 
-          size={20} 
-          color="white" 
-          style={{ 
-            transform: isOpen ? 'rotate(180deg)' : 'rotate(0)', 
-            transition: 'transform 0.3s ease'
-          }} 
+        <FaAngleDown
+          size={20}
+          color="white"
+          style={{
+            transform: isOpen ? "rotate(180deg)" : "rotate(0)",
+            transition: "transform 0.3s ease",
+          }}
         />
       </button>
-      
+
       {/* Force display the dropdown for debugging */}
-      <div 
-        className="dropdown" 
+      <div
+        className="dropdown"
         style={{
-          display: isOpen ? 'block' : 'none',
+          display: isOpen ? "block" : "none",
           position: "absolute",
           top: "100%",
           left: 0,
@@ -98,27 +94,27 @@ const LanguageSelector = ({ mobile }) => {
           width: "150px",
           zIndex: 9999,
           boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-          padding: "5px 0"
+          padding: "5px 0",
         }}
       >
         {languages.map((lang) => (
-          <div 
-            key={lang.code} 
+          <div
+            key={lang.code}
             onClick={() => changeLanguage(lang.code)}
             style={{
               padding: "8px 12px",
               cursor: "pointer",
               display: "flex",
-              alignItems: "center"
+              alignItems: "center",
             }}
           >
-            <img 
-              src={lang.flag} 
-              alt={lang.name} 
+            <img
+              src={lang.flag}
+              alt={lang.name}
               style={{
                 width: "20px",
-                marginRight: "8px"
-              }} 
+                marginRight: "8px",
+              }}
             />
             <span>{lang.name}</span>
           </div>

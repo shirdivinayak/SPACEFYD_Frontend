@@ -37,13 +37,14 @@ const AboutUs = () => {
       {/* Hero Section with Background */}
 
       <div
-        className="hero-section "
+        className="hero-section-about "
         style={{
+          marginLeft: "0",
           backgroundImage: `url(${HeroImage})`,
         }}
       >
         {" "}
-        <div className="container">
+        <div className="">
           <h1>{t("title")}</h1>
 
           <p dangerouslySetInnerHTML={{ __html: t("title-sub") }}></p>
