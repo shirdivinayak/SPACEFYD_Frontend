@@ -3,157 +3,168 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import HeroImage from "../../../Assets/AboutUs/hero.svg";
 import HomeNavbar from "../../../components/Home/NavbarDark/DarkNavbar";
 import ContentSection from "../../../components/Home/Content/ContentSection";
-
 import Footer from "../../../components/Home/Footer/Footer";
 import "./Products.css";
 import { useNavigate } from "react-router-dom";
-import ImgFurniture from "../../../Assets/Products/Furniture.svg";
-import ImgDecor from "../../../Assets/Products/Decor.svg";
-import ImgPlant from "../../../Assets/Products/Plants.svg";
-import ImgBath from "../../../Assets/Products/Bathroom.svg";
-import ImgWall from "../../../Assets/Products/Wall.svg";
-import ImgSmart from "../../../Assets/Products/SmartHome.svg";
 import { ReactComponent as Linetop } from "../../../Assets/Products/Line.svg";
 import { ReactComponent as Linebot } from "../../../Assets/Products/Line.svg";
-import Sample1 from "../../../Assets/Products/SampleImage1.svg";
-import Sample2 from "../../../Assets/Products/SampleImage2.svg";
-import Sample3 from "../../../Assets/Products/SampleImage3.svg";
-import Sample4 from "../../../Assets/Products/SampleImage4.svg";
-
 import { useTranslation } from "react-i18next";
+import axiosInstance from "../../../../instance/axiosInstance";
 
 const Products = () => {
-  const [selectedCategory, setSelectedCategory] = useState("Furnitures");
-  const [selectedTypes, setSelectedTypes] = useState("Modular Furniture");
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [subcategories, setSubcategories] = useState([]);
+  const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+  const [allProductsInCategory, setAllProductsInCategory] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [similarProducts, setSimilarProducts] = useState([]);
+  const [loading, setLoading] = useState({
+    categories: true,
+    subcategories: false,
+    products: false
+  });
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation("products");
 
-  const ProductList = [
-    {
-      title: "Grifo",
-      description: "Night lamp",
-      image: Sample1,
-    },
-    {
-      title: "Muggo",
-      description: "Small mug",
-      image: Sample2,
-    },
-    {
-      title: "Pingky",
-      description: "Cute bed set",
-      image: Sample3,
-    },
-    {
-      title: "Potty",
-      description: "Minimalist flower pot",
-      image: Sample4,
-    },
-  ];
+  // Fetch categories on component mount
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
-  const ProductCategory = {
-    Furnitures: [
-      {
-        img: ImgWall,
-        title: "Furniture",
-        types: {
-          type1: "Modular Furniture",
-          type2: "Premium",
-          type3: "Ergonomic Office",
-          type4: "Tech-integrated",
-          type5: "Outdoor",
-          type6: "Storage",
-        },
-      },
-    ],
-    Decor: [
-      {
-        img: ImgWall,
-        title: "Decor",
-        types: {
-          type1: "Wall Art",
-          type2: "Sculptures",
-          type3: "Candles",
-          type4: "Vases",
-          type5: "Mirrors",
-          type6: "Rugs",
-        },
-      },
-    ],
-    Plants: [
-      {
-        img: ImgWall,
-        title: "Plants",
-        types: {
-          type1: "Indoor",
-          type2: "Outdoor",
-          type3: "Succulents",
-          type4: "Planters",
-          type5: "Artificial",
-          type6: "Hanging",
-        },
-      },
-    ],
-    Bathroom: [
-      {
-        img: ImgBath,
-        title: "Bathroom & Wellness",
-        types: {
-          type1: "Towels",
-          type2: "Bath Mats",
-          type3: "Shower Accessories",
-          type4: "Storage",
-          type5: "Wellness Products",
-          type6: "Spa Essentials",
-        },
-      },
-    ],
-    Walls: [
-      {
-        img: ImgWall,
-        title: "Wall & Flooring",
-        types: {
-          type1: "Wallpaper",
-          type2: "Tiles",
-          type3: "Wooden Panels",
-          type4: "Vinyl Flooring",
-          type5: "Paints",
-          type6: "Wall Stickers",
-        },
-      },
-    ],
-    Smart: [
-      {
-        img: ImgSmart,
-        title: "Smart Home",
-        types: {
-          type1: "Lighting",
-          type2: "Security Systems",
-          type3: "Voice Assistants",
-          type4: "Smart Appliances",
-          type5: "Home Automation",
-          type6: "Sensors",
-        },
-      },
-    ],
+  // Fetch subcategories and products whenever selected category changes
+  useEffect(() => {
+    if (selectedCategory) {
+      console.log(selectedCategory, "======selected category");
+      fetchSubcategories(selectedCategory);
+      fetchProducts(selectedCategory);
+    }
+  }, [selectedCategory]);
+
+  // Filter products whenever selected subcategory or all products change
+  useEffect(() => {
+    if (selectedSubcategory && allProductsInCategory.length > 0) {
+      filterProductsBySubcategory();
+    }
+  }, [selectedSubcategory, allProductsInCategory]);
+
+  const fetchCategories = async () => {
+    setLoading(prev => ({ ...prev, categories: true }));
+    try {
+      const response = await axiosInstance.post("/displayCategory", {
+        type: "product",
+      });
+      setCategories(response.data.data);
+      
+      if (response.data.data.length > 0) {
+        // Select the first category by default
+        setSelectedCategory(response.data.data[0]._id);
+        console.log(response.data.data[0]._id, "=====first category id");
+      }
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    } finally {
+      setLoading(prev => ({ ...prev, categories: false }));
+    }
   };
 
-  const categories = Object.keys(ProductCategory);
+  const fetchSubcategories = async (categoryId) => {
+    setLoading(prev => ({ ...prev, subcategories: true }));
+    console.log(categoryId, "====selected category id");
+    try {
+      const response = await axiosInstance.post("/displaySubCategoryById", {
+        type: "product",
+        id: categoryId
+      });
+      setSubcategories(response.data.data);
+      
+      if (response.data.data.length > 0) {
+        // Select the first subcategory by default
+        setSelectedSubcategory(response.data.data[0]._id);
+        console.log(response.data.data[0]._id, "=====first subcategory id");
+      } else {
+        setSelectedSubcategory(null);
+        setFilteredProducts([]);
+      }
+    } catch (error) {
+      console.error("Error fetching subcategories:", error);
+      setSubcategories([]);
+      setSelectedSubcategory(null);
+    } finally {
+      setLoading(prev => ({ ...prev, subcategories: false }));
+    }
+  };
+
+  const fetchProducts = async (categoryId) => {
+    setLoading(prev => ({ ...prev, products: true }));
+    try {
+      const response = await axiosInstance.post("/displayProductByID", {
+        lastId: null,
+        categoryId: categoryId
+      });
+      
+      // Store all products for the category
+      setAllProductsInCategory(response.data.data || []);
+      
+      // Initial filtered products will be set in the useEffect when selectedSubcategory changes
+      
+      // Set similar products (you might want to adjust this logic)
+      const similarProductsData = response.data.data ? response.data.data.slice(0, 8) : [];
+      setSimilarProducts(similarProductsData);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      setAllProductsInCategory([]);
+      setFilteredProducts([]);
+      setSimilarProducts([]);
+    } finally {
+      setLoading(prev => ({ ...prev, products: false }));
+    }
+  };
+
+  // Filter products based on selected subcategory
+  const filterProductsBySubcategory = () => {
+    console.log("Filtering products for subcategory:", selectedSubcategory);
+    console.log("Total products before filtering:", allProductsInCategory.length);
+    
+    // Check if products have subcategory information
+    if (allProductsInCategory.some(product => product.subCategoryId)) {
+      // If products have subcategory ID, filter by it
+      const filtered = allProductsInCategory.filter(
+        product => product.subCategoryId === selectedSubcategory
+      );
+      setFilteredProducts(filtered);
+      console.log("Filtered products by subCategoryId:", filtered.length);
+    } else {
+      const selectedSubcategoryObj = subcategories.find(
+        subcat => subcat._id === selectedSubcategory
+      );
+      
+      if (selectedSubcategoryObj) {
+        const subcategoryName = selectedSubcategoryObj.name;
+        // Filter products by subcategory name if available
+        const filtered = allProductsInCategory.filter(
+          product => product.subcategoryName === subcategoryName
+        );
+        setFilteredProducts(filtered);
+        console.log("Filtered products by subcategoryName:", filtered.length);
+      } else {
+        setFilteredProducts(allProductsInCategory);
+        console.log("Showing all products as fallback");
+      }
+    }
+  };
 
   const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-    setSelectedTypes(ProductCategory[category][0].types.type1); // Default to the first type of the selected category
+    setSelectedCategory(category._id);
   };
 
-  const handleTypeClick = (type) => {
-    setSelectedTypes(type);
+  const handleSubcategoryClick = (subcategory) => {
+    setSelectedSubcategory(subcategory._id);
   };
 
-  const handleCardClick = () => {
-    navigate(`/ProductDetails`);
+  const handleCardClick = (product) => {
+    navigate(`/ProductDetails`, { state: { product } });
   };
-
-  const { t, i18n } = useTranslation("products");
-  console.log("Rendering Products - Current i18n language:", i18n.language);
 
   useEffect(() => {
     const updateLanguage = () => {
@@ -165,6 +176,51 @@ const Products = () => {
     return () => window.removeEventListener("languageChanged", updateLanguage);
   }, [i18n]);
 
+  // Category placeholder while loading
+  const CategoryPlaceholder = () => (
+    <div className="product-card">
+      <div className="product-image-class p-4">
+        <div className="placeholder-glow">
+          <div className="placeholder" style={{ width: "100%", height: "80px" }}></div>
+        </div>
+      </div>
+      <div className="product-title-class">
+        <div className="placeholder-glow">
+          <span className="placeholder col-12"></span>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Subcategory placeholder while loading
+  const SubcategoryPlaceholder = () => (
+    <span className="type-item placeholder-glow">
+      <span className="placeholder col-4"></span>
+    </span>
+  );
+
+  // Product card placeholder while loading
+  const ProductPlaceholder = () => (
+    <div className="card">
+      <div className="placeholder-glow">
+        <div className="placeholder" style={{ width: "100%", height: "200px" }}></div>
+      </div>
+      <div className="placeholder-glow">
+        <span className="placeholder col-8"></span>
+      </div>
+    </div>
+  );
+
+  // Get the active category for UI highlighting
+  const getActiveCategory = (categoryId) => {
+    return selectedCategory === categoryId;
+  };
+
+  // Get the active subcategory for UI highlighting
+  const getActiveSubcategory = (subcategoryId) => {
+    return selectedSubcategory === subcategoryId;
+  };
+
   return (
     <div className="main">
       <HomeNavbar />
@@ -174,7 +230,6 @@ const Products = () => {
         className="services-container"
         style={{
           backgroundImage: `url(${HeroImage})`,
-
           color: "white",
         }}
       >
@@ -188,36 +243,37 @@ const Products = () => {
       </div>
 
       {/* Horizontal Menu for Categories */}
-      <div className="products-menu ">
-        {categories.map((category) => (
-          <div
-            key={category}
-            className={`product-card ${
-              selectedCategory === category ? "active" : ""
-            }`}
-            onClick={() => handleCategoryClick(category)}
-          >
-            <div className="product-image-class p-4">
-              <img
-                src={ProductCategory[category][0].img}
-                alt={ProductCategory[category][0].title}
-                className="product-image"
-              />
+      <div className="products-menu">
+        {loading.categories 
+          ? Array(6).fill().map((_, index) => <CategoryPlaceholder key={index} />)
+          : categories.map((category) => (
+            <div
+              key={category._id}
+              className={`product-card ${getActiveCategory(category._id) ? "active" : ""}`}
+              onClick={() => handleCategoryClick(category)}
+            >
+              <div className="product-image-class p-4">
+                <img
+                  src={category.image}
+                  alt={category.name}
+                  className="product-image"
+                />
+              </div>
+              <div className="product-title-class">
+                <p
+                  className="container product-title"
+                  style={{
+                    fontSize: "14px",
+                  }}
+                >
+                  {category.name}
+                </p>
+              </div>
             </div>
-            <div className="product-title-class">
-              <p
-                className=" container product-title"
-                style={{
-                  fontSize: "14px",
-                }}
-              >
-                {ProductCategory[category][0].title}
-              </p>
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
-      <div className=" first-line container justify-content-center">
+
+      <div className="first-line container justify-content-center">
         <Linetop
           style={{
             marginTop: 50,
@@ -225,87 +281,77 @@ const Products = () => {
           }}
         />
       </div>
-      {/* Horizontal Menu for Types */}
+
+      {/* Horizontal Menu for Subcategories */}
       <div className="types-menu">
-        {Object.values(ProductCategory[selectedCategory][0].types).map(
-          (type, index) => (
+        {loading.subcategories 
+          ? Array(6).fill().map((_, index) => <SubcategoryPlaceholder key={index} />)
+          : subcategories.map((subcategory) => (
             <span
-              key={index}
-              className={`type-item ${selectedTypes === type ? "active" : ""}`}
-              onClick={() => handleTypeClick(type)}
+              key={subcategory._id}
+              className={`type-item ${getActiveSubcategory(subcategory._id) ? "active" : ""}`}
+              onClick={() => handleSubcategoryClick(subcategory)}
             >
-              {type}
+              {subcategory.name}
             </span>
-          )
-        )}
+          ))}
       </div>
 
-      {/* <div className="similar-product-list">
-        {ProductList.map((product, index) => (
-          <div
-            className="similar-product-card"
-            key={index}
-            onClick={() => handleCardClick(product)}
-          >
-            <img
-              src={product.image}
-              alt={product.title}
-              className="similar-product-image"
-            />
-            <h3 className="similar-product-title">{product.title}</h3>
-            <p className="similar-product-description">{product.description}</p>
-          </div>
-        ))}
+      {/* Products Grid */}
+      <div className="cards-section container">
+        {loading.products 
+          ? Array(12).fill().map((_, index) => <ProductPlaceholder key={index} />)
+          : filteredProducts.length > 0 
+            ? filteredProducts.map((product) => (
+              <div 
+                key={product._id} 
+                className="card" 
+                onClick={() => handleCardClick(product)}
+              >
+                <img 
+                  src={product.image && product.image.length > 0 ? product.image[0] : ''} 
+                  alt={product.productName} 
+                />
+                <p>{product.productName}</p>
+              </div>
+            ))
+            : (
+              <div className="no-products-message">
+                <p>No products found for this subcategory.</p>
+              </div>
+            )}
+      </div>
+
+      {/* <div className="first-line container justify-content-center">
+        <Linebot />
       </div> */}
 
-      <div className="cards-section container">
-        {[...ProductList, ...ProductList, ...ProductList].map((card, index) => (
-          <div key={index} className="card">
-            <img src={card.image} alt={`Card ${card.title}`} />
-            <p>{card.title}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className=" first-line container justify-content-center">
-        {" "}
-        <Linebot />
-      </div>
-
-      <div className=" container similar-products  ">
+      {/* <div className="container similar-products">
         <h2>{t("similar-products")}</h2>
         <div>
-          {" "}
           <button className="view-more-button">{t("view-more-btn")}</button>
         </div>
-      </div>
-
-      {/* <div className="similar-product-list">
-        {ProductList.map((product, index) => (
-          <div
-            className="similar-product-card"
-            key={index}
-            onClick={() => handleCardClick(product)}
-          >
-            <img
-              src={product.image}
-              alt={product.title}
-              className="similar-product-image"
-            />
-            <h3 className="similar-product-title">{product.title}</h3>
-            <p className="similar-product-description">{product.description}</p>
-          </div>
-        ))}
       </div> */}
 
-      <div className="cards-section ">
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((card) => (
-          <div key={card} className="card">
-            <img src={Sample1} alt={`Card ${card}`} />
-            <p>Grifo</p>
-          </div>
-        ))}
-      </div>
+      {/* Similar Products Grid */}
+      {/* <div className="cards-section">
+        {loading.products 
+          ? Array(8).fill().map((_, index) => <ProductPlaceholder key={index} />)
+          : similarProducts.map((product, index) => (
+            <div 
+              key={`similar-${product._id || index}`} 
+              className="card"
+              onClick={() => handleCardClick(product)}
+            >
+              <img 
+                src={product.image && product.image.length > 0 ? product.image[0] : ''} 
+                alt={product.productName} 
+              />
+              <p>{product.productName}</p>
+            </div>
+          ))}
+      </div> */}
+      
       <ContentSection />
       <Footer />
     </div>

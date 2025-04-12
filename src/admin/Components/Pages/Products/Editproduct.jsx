@@ -112,7 +112,7 @@ useEffect(() => {
         categoryId: productDetails.categoryId,
         categoryName: productDetails.category,
         subcategoryId: productDetails.subcategoryId,
-        subCategoryName: productDetails.subCategory,
+        subcategoryName: productDetails.subCategory,
         productCode: productDetails.productCode,
         isVisible: productDetails.displayInHome,
         brand: productDetails.brand,
