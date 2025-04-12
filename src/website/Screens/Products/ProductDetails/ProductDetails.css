@@ -33,6 +33,7 @@
   background-color: #fcf9f5;
 }
 .main-image img {
+  max-height: 500px;
   max-width: 500px;
   width: 100%;
   height: auto;

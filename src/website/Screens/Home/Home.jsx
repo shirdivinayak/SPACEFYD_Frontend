@@ -20,26 +20,26 @@ import { useTranslation } from "react-i18next";
 function App() {
   const backgroundImage = "https://via.placeholder.com/1920x1080"; // Replace with your background image URL
 
-  const { t } = useTranslation("");
+  const { t } = useTranslation("home");
   const sections = [
     {
-      heading: "Smart Home Integration",
+      heading: t("head"),
       col8: {
         row1: {
           image: image1, // Directly use the imported image
-          alt: "Automated lighting and climate control",
-          text: "Automated lighting and climate control",
+          alt: t("automate"),
+          text: t("automate"),
         },
         row2: {
           image: image2, // Directly use the imported image
-          alt: "Home theaters and VR gaming setups",
-          text: "Home theaters and VR gaming setups",
+          alt: t("home"),
+          text: t("home"),
         },
       },
       col4: {
         image: image3, // Directly use the imported image
-        alt: "Voice-activated curtains and wardrobes",
-        text: "Voice-activated curtains and wardrobes",
+        alt: t("voice"),
+        text: t("voice"),
       },
     },
     {
@@ -47,19 +47,19 @@ function App() {
       col8: {
         row1: {
           image: image4, // Directly use the imported image
-          alt: "Climate-adaptive HVAC systems",
-          text: "Climate-adaptive HVAC systems",
+          alt: t("climate"),
+          text: t("climate"),
         },
         row2: {
           image: image5, // Directly use the imported image
-          alt: "Bespoke modular kitchens and custom furniture",
-          text: "Bespoke modular kitchens and custom furniture",
+          alt: t("bespoke"),
+          text: t("bespoke"),
         },
       },
       col4: {
         image: image6, // Directly use the imported image
-        alt: "Turkey interior soultions",
-        text: "Turkey interior soultions",
+        alt: t("turkey"),
+        text: t("turkey"),
       },
     },
   ];
