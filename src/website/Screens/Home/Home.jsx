@@ -15,10 +15,12 @@ import ContentSection from "../../components/Home/Content/ContentSection";
 import Products from "../../components/Home/Products/Products";
 import CardSection from "../../components/Home/CardSection/CardSection";
 import Partnership from "../../components/Home/Partnership/Partnership";
+import { useTranslation } from "react-i18next";
 
 function App() {
   const backgroundImage = "https://via.placeholder.com/1920x1080"; // Replace with your background image URL
 
+  const { t } = useTranslation("");
   const sections = [
     {
       heading: "Smart Home Integration",
