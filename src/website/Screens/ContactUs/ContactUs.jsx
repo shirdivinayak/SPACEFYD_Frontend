@@ -8,6 +8,8 @@ import "./ContactUs.css";
 import HomeNavbar from "../../components/Home/NavbarDark/DarkNavbar"; // Import Navbar
 import Footer from "../../components/Home/Footer/Footer"; // Import Footer
 import { useTranslation } from "react-i18next";
+import emailjs from "emailjs-com";
+
 
 const ContactUs = () => {
   const { t } = useTranslation("contact");
@@ -39,10 +41,28 @@ const ContactUs = () => {
   };
 
   const handleSubmit = (e) => {
+    
     e.preventDefault();
+    const now = new Date().toLocaleString();
+    const fullData = { ...formData, time: now };
     if (validateForm()) {
-      alert("Form submitted successfully!");
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      
+      emailjs.send(
+        "service_sxvzn4k",
+        "template_mbqt1ni",
+        fullData,
+        "ch-chHYzlLc1w9lT5"
+      )
+        .then(
+          (result) => {
+            alert("Message sent successfully!");
+            setFormData({ name: "", email: "", subject: "", message: "" });
+          },
+          (error) => {
+            alert("Failed to send message, please try again.");
+            console.error(error.text);
+          }
+        );
     }
   };
 
