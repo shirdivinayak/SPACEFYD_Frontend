@@ -16,6 +16,7 @@ import HomeHeroSectionEn from "../website/components/Home/HeroSection/translatio
 import HomePartnershipEn from "../website/components/Home/Partnership/translation.en.json";
 import HomeProductsEn from "../website/components/Home/Products/translation.en.json";
 import HomeSectionsEn from "../website/components/Home/Sections/translation.en.json";
+import HomeEn from "../website/Screens/Home/translation.en.json";
 
 import AboutUSDe from "../website/Screens/AboutUs/translation.de.json";
 import ContactUsDe from "../website/Screens/ContactUs/translation.de.json";
@@ -31,6 +32,7 @@ import HomeHeroSectionDe from "../website/components/Home/HeroSection/translatio
 import HomePartnershipDe from "../website/components/Home/Partnership/translation.de.json";
 import HomeProductsDe from "../website/components/Home/Products/translation.de.json";
 import HomeSectionsDe from "../website/components/Home/Sections/translation.de.json";
+import HomeDe from "../website/Screens/Home/translation.de.json";
 
 import AboutUSIt from "../website/Screens/AboutUs/translation.it.json";
 import ContactUsIt from "../website/Screens/ContactUs/translation.it.json";
@@ -46,6 +48,7 @@ import HomeHeroSectionIt from "../website/components/Home/HeroSection/translatio
 import HomePartnershipIt from "../website/components/Home/Partnership/translation.it.json";
 import HomeProductsIt from "../website/components/Home/Products/translation.it.json";
 import HomeSectionsIt from "../website/components/Home/Sections/translation.it.json";
+import HomeIt from "../website/Screens/Home/translation.it.json";
 
 import AboutUSEs from "../website/Screens/AboutUs/translation.es.json";
 import ContactUsEs from "../website/Screens/ContactUs/translation.es.json";
@@ -61,6 +64,7 @@ import HomeHeroSectionEs from "../website/components/Home/HeroSection/translatio
 import HomePartnershipEs from "../website/components/Home/Partnership/translation.es.json";
 import HomeProductsEs from "../website/components/Home/Products/translation.es.json";
 import HomeSectionsEs from "../website/components/Home/Sections/translation.es.json";
+import HomeEs from "../website/Screens/Home/translation.es.json";
 
 import AboutUSFr from "../website/Screens/AboutUs/translation.fr.json";
 import ContactUsFr from "../website/Screens/ContactUs/translation.fr.json";
@@ -76,6 +80,7 @@ import HomeHeroSectionFr from "../website/components/Home/HeroSection/translatio
 import HomePartnershipFr from "../website/components/Home/Partnership/translation.fr.json";
 import HomeProductsFr from "../website/components/Home/Products/translation.fr.json";
 import HomeSectionsFr from "../website/components/Home/Sections/translation.fr.json";
+import HomeFr from "../website/Screens/Home/translation.fr.json";
 
 const savedLanguage = localStorage.getItem("selected_language") || "en";
 
@@ -96,6 +101,7 @@ i18n.use(initReactI18next).init({
       partnership: HomePartnershipEn,
       producthome: HomeProductsEn,
       sections: HomeSectionsEn,
+      home: HomeEn,
     },
 
     de: {
@@ -113,6 +119,7 @@ i18n.use(initReactI18next).init({
       partnership: HomePartnershipDe,
       producthome: HomeProductsDe,
       sections: HomeSectionsDe,
+      home: HomeDe,
     },
 
     it: {
@@ -130,6 +137,7 @@ i18n.use(initReactI18next).init({
       partnership: HomePartnershipIt,
       producthome: HomeProductsIt,
       sections: HomeSectionsIt,
+      home: HomeIt,
     },
 
     es: {
@@ -147,6 +155,7 @@ i18n.use(initReactI18next).init({
       partnership: HomePartnershipEs,
       producthome: HomeProductsEs,
       sections: HomeSectionsEs,
+      home: HomeEs,
     },
 
     fr: {
@@ -164,6 +173,7 @@ i18n.use(initReactI18next).init({
       partnership: HomePartnershipFr,
       producthome: HomeProductsFr,
       sections: HomeSectionsFr,
+      home: HomeFr,
     },
   },
   lng: savedLanguage,

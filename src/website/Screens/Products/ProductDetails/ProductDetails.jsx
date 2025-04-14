@@ -70,6 +70,7 @@ const ProductDetails = () => {
             {ProductImages.subImages.map((image, index) => (
               <img
                 key={index}
+                className="thumbnail-img"
                 src={image}
                 alt={`${ProductImages.title} view ${index + 1}`}
                 style={{ cursor: "pointer" }}

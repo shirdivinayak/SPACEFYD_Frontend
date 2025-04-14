@@ -9,7 +9,8 @@ import axiosInstance from "../../../../instance/axiosInstance";
 import { useTranslation } from "react-i18next";
 
 const ProjectList = () => {
-  const { t } = useTranslation("projectlist");
+  const { t } = useTranslation("projectslist");
+
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [loadingCategories, setLoadingCategories] = useState(true);
