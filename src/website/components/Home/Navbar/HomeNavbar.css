@@ -1,9 +1,9 @@
-/* Mobile Menu Styles */
+/* Navbar Collapse */
 .navbar-collapse {
   position: relative;
   background-color: transparent;
   transition: all 0.3s ease-out;
-  overflow: hidden;
+  overflow: visible !important;
   max-height: 0;
 }
 
@@ -13,6 +13,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.9);
+  overflow: visible !important;
 }
 
 /* Large Screen Styles */
@@ -27,6 +29,7 @@
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
+    background-color: transparent !important;
   }
 }
 
@@ -62,6 +65,11 @@
     bottom: 0;
     z-index: 1040;
     padding: 20px;
+  }
+  
+  /* Adjust the position of the language selector next to toggle */
+  .language-dropdown-mobile {
+    margin-right: 10px;
   }
 }
 
@@ -99,6 +107,35 @@
   list-style: none;
 }
 
+/* Language Selector Styles for Light Theme */
+.home-navbar .language-dropdown .selected-lang,
+.home-navbar .language-dropdown-mobile .selected-lang {
+  border: 2px solid #4C6559 !important;
+  border-radius: 8px !important;
+  background-color: rgba(255, 255, 255, 0.11) !important;
+}
+
+.home-navbar .language-dropdown .selected-lang svg path,
+.home-navbar .language-dropdown-mobile .selected-lang svg path {
+  stroke: #4C6559 !important;
+  fill: #4C6559 !important;
+  color: #4C6559 !important;
+}
+
+/* Dark theme support */
+.dark-navbar .language-dropdown .selected-lang,
+.dark-navbar .language-dropdown-mobile .selected-lang {
+  border: 2px solid white !important;
+  border-radius: 8px !important;
+}
+
+.dark-navbar .language-dropdown .selected-lang svg path,
+.dark-navbar .language-dropdown-mobile .selected-lang svg path {
+  stroke: white !important;
+  fill: white !important;
+  color: white !important;
+}
+
 /* Toggle Button Fix */
 .navbar-toggler {
   border: none !important;
@@ -112,7 +149,6 @@
 .navbar-toggler-icon {
   width: 1.75em !important;
   height: 1.75em !important;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(76, 101, 89, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
   transition: transform 0.3s ease;
 }
 
@@ -123,4 +159,22 @@
 
 .navbar-toggler[aria-expanded="false"] .navbar-toggler-icon {
   transform: rotate(0deg);
+}
+
+/* Mobile header adjustments */
+@media (max-width: 991px) {
+  .navbar > .container-fluid {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .language-dropdown-mobile {
+    order: 2;
+  }
+  
+  .navbar-toggler {
+    order: 3;
+  }
 }
