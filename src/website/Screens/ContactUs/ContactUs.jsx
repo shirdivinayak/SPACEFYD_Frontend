@@ -123,8 +123,18 @@ const ContactUs = () => {
                 />
                 <div className="contact-text">
                   <h1>{t("phone")}</h1>
-                  <p>Mobile: +(84) 546-678990</p>
-                  <p>Hotline: +(84) 456-6789</p>
+                  <p>
+                  Mobile:{" "}
+                  <a
+                    href="https://wa.me/84546678990"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    +(84) 546-678990
+                  </a>
+                </p>                 
+                <p>Hotline: +(84) 456-6789</p>
                 </div>
               </div>
 
