@@ -16,14 +16,14 @@ import Footer from "../../components/Home/Footer/Footer";
 
 const Services = () => {
   const { t } = useTranslation("services");
-  
+
   React.useEffect(() => {
     const hash = window.location.hash.substring(1);
     if (hash) {
       const element = document.getElementById(hash);
       if (element) {
         setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth' });
+          element.scrollIntoView({ behavior: "smooth" });
         }, 100);
       }
     }
@@ -34,7 +34,10 @@ const Services = () => {
       <HomeNavbar />
       <div className="services-page">
         {/* Hero Section */}
-        <div className="services-hero" style={{ backgroundImage: `url(${HeroImage})` }}>
+        <div
+          className="services-hero"
+          style={{ backgroundImage: `url(${HeroImage})` }}
+        >
           <div className="container px-4">
             <h1 className="services-hero-title">{t("main-head")}</h1>
             <p
@@ -43,102 +46,123 @@ const Services = () => {
             ></p>
           </div>
         </div>
-        
+
         {/* Main Content Sections */}
-        <div className="services-main-container" style={{ backgroundImage: `url(${BackgroundImage})` }}>
+        <div
+          className="services-main-container"
+          style={{ backgroundImage: `url(${BackgroundImage})` }}
+        >
           <h1 className="services-main-heading">{t("s1-main-head")}</h1>
 
           <div className="services-content-wrapper">
             {/* Automated Lighting Section */}
-            <div id="automated-lighting" className="services-section services-text-left">
+            <div
+              id="automated-lighting"
+              className="services-section services-text-left"
+            >
               <div className="services-content">
-                <h2>Automated Lighting & Climate</h2>
+                <h2>{t("left1-main-head")}</h2>
                 <p>{t("l1-p")}</p>
                 <div className="services-sub-content">
                   <i className="bi bi-arrow-right services-icon"></i>
-                  <p>Smart lighting control systems</p>
+                  <p>{t("l1-list1")}</p>
                 </div>
                 <div className="services-sub-content">
                   <i className="bi bi-arrow-right services-icon"></i>
-                  <p>Automated climate regulation</p>
+                  <p>{t("l1-list2")}</p>
                 </div>
                 <div className="services-sub-content">
                   <i className="bi bi-arrow-right services-icon"></i>
-                  <p>Energy efficient solutions</p>
+                  <p>{t("l1-list3")}</p>
                 </div>
               </div>
               <div className="services-image-right">
-                <img src={Image1} alt="Automated lighting and climate control" />
+                <img
+                  src={Image1}
+                  alt="Automated lighting and climate control"
+                />
               </div>
             </div>
 
             {/* Home Theaters Section */}
-            <div id="home-theaters" className="services-section services-text-right">
+            <div
+              id="home-theaters"
+              className="services-section services-text-right"
+            >
               <div className="services-image-left">
                 <img src={Image2} alt="Home theaters and VR gaming setups" />
               </div>
               <div className="services-content-right">
-                <h2>Home Theaters & VR</h2>
-                <p>Immersive entertainment solutions</p>
+                <h2>{t("right2-main-head")}</h2>
+                <p>{t("r2-p")}</p>
                 <div className="services-sub-content-right">
-                  <p>4K/8K home theater systems</p>
+                  <p>{t("r2-list1")}</p>
                   <i className="bi bi-arrow-left services-icon"></i>
                 </div>
                 <div className="services-sub-content-right">
-                  <p>Virtual reality gaming setups</p>
+                  <p>{t("r2-list2")}</p>
                   <i className="bi bi-arrow-left services-icon"></i>
                 </div>
                 <div className="services-sub-content-right">
-                  <p>Acoustic optimization</p>
+                  <p>{t("r2-list3")}</p>
                   <i className="bi bi-arrow-left services-icon"></i>
                 </div>
               </div>
             </div>
 
             {/* Voice Activated Section */}
-            <div id="voice-activated" className="services-section services-text-left">
+            <div
+              id="voice-activated"
+              className="services-section services-text-left"
+            >
               <div className="services-content">
-                <h2>Voice-Activated Solutions</h2>
-                <p>Smart home voice integration</p>
+                <h2>{t("left3-main-head")}</h2>
+                <p>{t("left3-p")}</p>
                 <div className="services-sub-content">
                   <i className="bi bi-arrow-right services-icon"></i>
-                  <p>Window treatment automation</p>
+                  <p>{t("l3-list1")}</p>
                 </div>
                 <div className="services-sub-content">
                   <i className="bi bi-arrow-right services-icon"></i>
-                  <p>Smart wardrobe systems</p>
+                  <p>{t("l3-list2")}</p>
                 </div>
                 <div className="services-sub-content">
                   <i className="bi bi-arrow-right services-icon"></i>
-                  <p>Multi-platform compatibility</p>
+                  <p>{t("l3-list3")}</p>
                 </div>
               </div>
               <div className="services-image-right">
-                <img src={Image3} alt="Voice-activated curtains and wardrobes" />
+                <img
+                  src={Image3}
+                  alt="Voice-activated curtains and wardrobes"
+                />
               </div>
             </div>
           </div>
 
           <div className="services-divider"></div>
-          <h1 className="services-main-heading">Interior Fit-Out Solutions</h1>
+          <h1 className="services-main-heading">{t("section2-main-head")}</h1>
 
           <div className="services-content-wrapper">
             {/* Climate Adaptive Section */}
-            <div id="climate-adaptive" className="services-section services-text-left">
+            <div
+              id="climate-adaptive"
+              className="services-section services-text-left"
+            >
               <div className="services-content">
-                <h2>Climate-Adaptive Systems</h2>
-                <p>Smart HVAC solutions</p>
+                <h2>{t("left4-main-head")}</h2>
+                <p>{t("left4-p")}</p>
                 <div className="services-sub-content">
                   <i className="bi bi-arrow-right services-icon"></i>
-                  <p>Zone-based climate control</p>
+                  <p>{t("l4-list1")}</p>
                 </div>
                 <div className="services-sub-content">
                   <i className="bi bi-arrow-right services-icon"></i>
-                  <p>Energy efficient designs</p>
+                  <p>{t("l4-list2")}</p>
                 </div>
                 <div className="services-sub-content">
                   <i className="bi bi-arrow-right services-icon"></i>
-                  <p>Automated temperature regulation</p>
+                  <p>{t("l4-list3")}</p>
                 </div>
               </div>
               <div className="services-image-right">
@@ -147,44 +171,53 @@ const Services = () => {
             </div>
 
             {/* Bespoke Kitchens Section */}
-            <div id="bespoke-kitchens" className="services-section services-text-right">
+            <div
+              id="bespoke-kitchens"
+              className="services-section services-text-right"
+            >
               <div className="services-image-left">
-                <img src={Image5} alt="Bespoke modular kitchens and custom furniture" />
+                <img
+                  src={Image5}
+                  alt="Bespoke modular kitchens and custom furniture"
+                />
               </div>
               <div className="services-content-right">
-                <h2>Bespoke Kitchens & Furniture</h2>
-                <p>Custom interior solutions</p>
+                <h2>{t("right5-main-head")}</h2>
+                <p>{t("right5-p")}</p>
                 <div className="services-sub-content-right">
-                  <p>Modular kitchen designs</p>
+                  <p>{t("r5-list1")}</p>
                   <i className="bi bi-arrow-left services-icon"></i>
                 </div>
                 <div className="services-sub-content-right">
-                  <p>Custom cabinetry</p>
+                  <p>{t("r5-list2")}</p>
                   <i className="bi bi-arrow-left services-icon"></i>
                 </div>
                 <div className="services-sub-content-right">
-                  <p>Premium materials</p>
+                  <p>{t("r5-list4")}</p>
                   <i className="bi bi-arrow-left services-icon"></i>
                 </div>
               </div>
             </div>
 
             {/* Turkey Interior Section */}
-            <div id="turkey-interior" className="services-section services-text-left">
+            <div
+              id="turkey-interior"
+              className="services-section services-text-left"
+            >
               <div className="services-content">
-                <h2>Turkey Interior Solutions</h2>
-                <p>Local design expertise</p>
+                <h2>{t("left6-main-head")}</h2>
+                <p>{t("left6-p")}</p>
                 <div className="services-sub-content">
                   <i className="bi bi-arrow-right services-icon"></i>
-                  <p>Regional material sourcing</p>
+                  <p>{t("l6-list1")}</p>
                 </div>
                 <div className="services-sub-content">
                   <i className="bi bi-arrow-right services-icon"></i>
-                  <p>Cultural design elements</p>
+                  <p>{t("l6-list2")}</p>
                 </div>
                 <div className="services-sub-content">
                   <i className="bi bi-arrow-right services-icon"></i>
-                  <p>Local craftsmanship</p>
+                  <p>{t("l6-list3")}</p>
                 </div>
               </div>
               <div className="services-image-right">
