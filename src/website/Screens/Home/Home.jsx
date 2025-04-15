@@ -20,46 +20,51 @@ import { useTranslation } from "react-i18next";
 function App() {
   const backgroundImage = "https://via.placeholder.com/1920x1080"; // Replace with your background image URL
 
-  const { t } = useTranslation("home");
-  const sections = [
+  const sectionsData = [
     {
-      heading: t("head"),
+      heading: "Smart Home Integration",
       col8: {
         row1: {
-          image: image1, // Directly use the imported image
-          alt: t("automate"),
-          text: t("automate"),
+          image: image1,
+          alt: "Automated lighting and climate control",
+          text: "Automated lighting and climate control",
+          targetId: "automated-lighting",
         },
         row2: {
-          image: image2, // Directly use the imported image
-          alt: t("home"),
-          text: t("home"),
+          image: image2,
+          alt: "Home theaters and VR gaming setups",
+          text: "Home theaters and VR gaming setups",
+          targetId: "home-theaters",
         },
       },
       col4: {
-        image: image3, // Directly use the imported image
-        alt: t("voice"),
-        text: t("voice"),
+        image: image3,
+        alt: "Voice-activated curtains and wardrobes",
+        text: "Voice-activated curtains and wardrobes",
+        targetId: "voice-activated",
       },
     },
     {
       heading: "Interior Fit-Out & Design",
       col8: {
         row1: {
-          image: image4, // Directly use the imported image
-          alt: t("climate"),
-          text: t("climate"),
+          image: image4,
+          alt: "Climate-adaptive HVAC systems",
+          text: "Climate-adaptive HVAC systems",
+          targetId: "climate-adaptive",
         },
         row2: {
-          image: image5, // Directly use the imported image
-          alt: t("bespoke"),
-          text: t("bespoke"),
+          image: image5,
+          alt: "Bespoke modular kitchens and custom furniture",
+          text: "Bespoke modular kitchens and custom furniture",
+          targetId: "bespoke-kitchens",
         },
       },
       col4: {
-        image: image6, // Directly use the imported image
-        alt: t("turkey"),
-        text: t("turkey"),
+        image: image6,
+        alt: "Turkey interior solutions",
+        text: "Turkey interior solutions",
+        targetId: "turkey-interior",
       },
     },
   ];
@@ -72,7 +77,10 @@ function App() {
       <Partnership />
       <Products />
       <CardSection />
-      <Sections backgroundImage={backgroundImage} sections={sections} />
+      <Sections
+        backgroundImage={backgroundImage}
+        sections={sectionsData}
+      />{" "}
       <ContentSection />
       <Footer />
     </>

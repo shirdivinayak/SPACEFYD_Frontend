@@ -13,7 +13,7 @@ const CardSection = () => {
   const [carouselData, setCarouselData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const handleKnowMoreClick = () => {
+  const handleCardClick = () => {
     navigate("/products");
     window.scrollTo(0, 0);
   };
@@ -42,7 +42,6 @@ const CardSection = () => {
       const response = await axiosInstance.post("/fetchTrendingImage", {
         type: "product",
       });
-      console.log(response.data.data, "=====dtrednindata");
       if (response.data.data && response.data.data.length > 0) {
         setCarouselData(response.data.data);
       }
@@ -93,7 +92,12 @@ const CardSection = () => {
               <p>{t("loading")}</p>
             ) : (
               carouselData.map((item, index) => (
-                <div key={index} className="card">
+                <div
+                  key={index}
+                  className="card"
+                  onClick={handleCardClick}
+                  style={{ cursor: "pointer" }}
+                >
                   <img
                     src={item?.image[0] || card1}
                     alt={item?.productName || "Product Image"}
@@ -117,7 +121,7 @@ const CardSection = () => {
           </button>
         </div>
         <div className="small-screen-view-more">
-          <Button className="view-more-btn" onClick={handleKnowMoreClick}>
+          <Button className="view-more-btn" onClick={handleCardClick}>
             {t("view-more-btn")}
           </Button>
         </div>

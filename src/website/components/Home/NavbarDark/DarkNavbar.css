@@ -1,133 +1,21 @@
-/* Navbar Collapse */
-.navbar-collapse {
-    position: relative;
-    background-color: transparent;
-    transition: all 0.3s ease-out;
-    overflow: hidden;
-    max-height: 0;
-  }
-  
-  .navbar-collapse.show {
-    max-height: 100vh;
-    display: flex !important;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    background-color: rgba(0, 0, 0, 0.9);
-  }
-  
-  /* Large Screen Styles */
-  @media (min-width: 992px) {
-    .navbar-nav {
-      justify-content: center !important;
-      flex-grow: 1;
-    }
-  
-    .navbar-collapse {
-      max-height: none !important;
-      display: flex !important;
-      justify-content: space-between !important;
-      align-items: center !important;
-      background-color: transparent !important;
-    }
-  }
-  
-  /* Mobile Menu */
-  .mobile-menu {
-    display: none;
-    width: 100%;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.9);
-    z-index: 1050;
-    padding: 20px;
-    box-sizing: border-box;
-    transition: all 0.3s ease;
-  }
-  
-  /* Show mobile menu when navbar is collapsed on small screens */
-  @media (max-width: 991px) {
-    .navbar-collapse.show .mobile-menu {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-  
-    .navbar-collapse.show {
-      background-color: rgba(0, 0, 0, 0.9);
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 1040;
-      padding: 20px;
-    }
-  }
-  
-  /* Mobile Menu Header */
-  .mobile-menu-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    transition: all 0.3s ease;
-  }
-  
-  .mobile-menu-close {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    transition: transform 0.3s ease;
-  }
-  
-  .mobile-menu-close:hover {
-    transform: rotate(90deg);
-  }
-  
-  /* Mobile Menu Items */
-  .mobile-menu-items {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 30px !important;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-  
-  /* Language Dropdown Mobile */
-  .language-dropdown-mobile {
-    margin-top: 20px;
-  }
-  
-  /* Toggle Button Fix */
-  .navbar-toggler {
-    border: none !important;
-    padding: 0.25rem 0.5rem !important;
-  }
-  
-  .navbar-toggler:focus {
-    box-shadow: none !important;
-  }
-  
-  .navbar-toggler-icon {
-    width: 1.75em !important;
-    height: 1.75em !important;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
-    transition: transform 0.3s ease;
-  }
-  
-  /* Fix for toggle icon rotation */
-  .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
-    transform: rotate(90deg);
-  }
-  
-  .navbar-toggler[aria-expanded="false"] .navbar-toggler-icon {
-    transform: rotate(0deg);
-  }
+/* Light theme (already works with your light navbar) */
+.language-dropdown .language-selector-header,
+.language-dropdown-mobile .language-selector-header {
+  border: 1px solid #4C6559 !important;
+}
+
+.language-dropdown .language-selector-header svg path,
+.language-dropdown-mobile .language-selector-header svg path {
+  stroke: #4C6559 !important;
+}
+
+/* Dark theme support */
+.dark-navbar .language-dropdown .language-selector-header,
+.dark-navbar .language-dropdown-mobile .language-selector-header {
+  border: 1px solid white !important;
+}
+
+.dark-navbar .language-dropdown .language-selector-header svg path,
+.dark-navbar .language-dropdown-mobile .language-selector-header svg path {
+  stroke: white !important;
+}

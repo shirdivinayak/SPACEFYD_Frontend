@@ -1,19 +1,17 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import pic from "../../../Assets/Home/companylogo.png";
+import pic from "../../../Assets/Home/logo.png";
 import "./HomeNavbar.css";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "../../LanguageSelector/LanguageSelector";
 
 const HomeNavbar = () => {
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const { i18n } = useTranslation();
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
-    localStorage.removeItem("selected_lanuage");
     localStorage.setItem("selected_language", lng);
-    setShowDropdown(false);
   };
 
   const navItems = [
@@ -27,7 +25,7 @@ const HomeNavbar = () => {
 
   return (
     <nav
-      className="navbar navbar-expand-lg"
+      className="navbar navbar-expand-lg home-navbar"
       style={{
         padding: "clamp(20px, 3vw, 36px) clamp(10px, 5vw, 100px)",
         backgroundColor: "#FCF9F5",
@@ -38,45 +36,53 @@ const HomeNavbar = () => {
           <img
             src={pic}
             alt="Logo"
-            width={clamp(150, 250)} // Increased width range
-            height="auto"
+            width="191"
+            height="48"
             className="d-inline-block me-2"
             style={{ maxWidth: "100%", height: "auto" }}
           />
         </Link>
 
-        <button
-          className="navbar-toggler d-lg-none"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-          style={{
-            border: "none",
-            padding: "clamp(0px, 1vw, 4px)",
-            marginLeft: "auto",
-          }}
-        >
-          <span
-            className="navbar-toggler-icon"
+        {/* Mobile language selector and toggle button */}
+        <div className="d-flex align-items-center">
+          <div className="language-dropdown-mobile me-3 d-lg-none">
+            <LanguageSelector mobile={true} />
+          </div>
+          
+          <button
+            className="navbar-toggler d-lg-none"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
             style={{
-              display: "inline-block",
-              width: "1.5em",
-              height: "1.5em",
-              verticalAlign: "middle",
-              backgroundImage: "var(--bs-navbar-toggler-icon-bg)",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center",
-              backgroundSize: "100%",
-              transition: "transform 0.3s ease",
+              border: "none",
+              padding: "clamp(0px, 1vw, 4px)",
             }}
-          />
-        </button>
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            <span
+              className="navbar-toggler-icon"
+              style={{
+                display: "inline-block",
+                width: "1.5em",
+                height: "1.5em",
+                verticalAlign: "middle",
+                backgroundImage:
+                  "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(76, 101, 89, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e\")",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                backgroundSize: "100%",
+                transition: "transform 0.3s ease",
+              }}
+            />
+          </button>
+        </div>
 
         <div
-          className="collapse navbar-collapse justify-content-center"
+          className={`collapse navbar-collapse ${isExpanded ? "show" : ""}`}
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav d-flex align-items-center gap-4">
@@ -114,8 +120,8 @@ const HomeNavbar = () => {
                 <img
                   src={pic}
                   alt="Logo"
-                  width={clamp(150, 250)}
-                  height="auto"
+                  width="191"
+                  height="48"
                   className="d-inline-block me-2"
                   style={{ maxWidth: "100%", height: "auto" }}
                 />
@@ -128,6 +134,7 @@ const HomeNavbar = () => {
                 aria-controls="navbarSupportedContent"
                 aria-expanded="false"
                 aria-label="Close navigation"
+                onClick={() => setIsExpanded(false)}
               >
                 <svg
                   width="24"
@@ -169,16 +176,7 @@ const HomeNavbar = () => {
                       textDecoration: "none",
                       transition: "transform 0.3s ease",
                     }}
-                    onClick={() => {
-                      const navbarToggler =
-                        document.querySelector(".navbar-toggler");
-                      const navbarCollapse = document.querySelector(
-                        "#navbarSupportedContent"
-                      );
-                      if (navbarCollapse.classList.contains("show")) {
-                        navbarToggler.click();
-                      }
-                    }}
+                    onClick={() => setIsExpanded(false)}
                     onMouseEnter={(e) =>
                       (e.currentTarget.style.transform = "scale(1.1)")
                     }
@@ -207,25 +205,27 @@ const HomeNavbar = () => {
                     textDecoration: "none",
                     display: "inline-block",
                     textAlign: "center",
+                    transition: "background-color 0.3s ease, color 0.3s ease",
                   }}
-                  onClick={() => {
-                    const navbarToggler =
-                      document.querySelector(".navbar-toggler");
-                    const navbarCollapse = document.querySelector(
-                      "#navbarSupportedContent"
-                    );
-                    if (navbarCollapse.classList.contains("show")) {
-                      navbarToggler.click();
-                    }
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = "white";
+                    e.currentTarget.style.color = "#4C6559";
+                    e.currentTarget.style.border = "1px solid #4C6559";
                   }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = "#4C6559";
+                    e.currentTarget.style.color = "white";
+                    e.currentTarget.style.border = "1px solid #4C6559";
+                  }}
+                  onClick={() => setIsExpanded(false)}
                 >
                   Contact us
                 </Link>
               </li>
+              {/* Removed the language selector from mobile menu */}
             </ul>
           </div>
 
-          {/* Language Switcher - Now hidden on mobile screens */}
           <div className="language-dropdown position-relative mx-3 d-none d-lg-block">
             <LanguageSelector />
           </div>
@@ -244,6 +244,17 @@ const HomeNavbar = () => {
               minWidth: "100px",
               border: "1px solid #4C6559",
               textDecoration: "none",
+              transition: "background-color 0.3s ease, color 0.3s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = "white";
+              e.currentTarget.style.color = "#4C6559";
+              e.currentTarget.style.border = "1px solid #4C6559";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = "#4C6559";
+              e.currentTarget.style.color = "white";
+              e.currentTarget.style.border = "1px solid #4C6559";
             }}
           >
             Contact us
@@ -252,10 +263,6 @@ const HomeNavbar = () => {
       </div>
     </nav>
   );
-};
-
-const clamp = (min, max) => {
-  return Math.min(Math.max(min, window.innerWidth * 0.1), max);
 };
 
 export default HomeNavbar;
