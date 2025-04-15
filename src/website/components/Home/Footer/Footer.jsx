@@ -180,18 +180,21 @@ const Footer = () => {
           height: "auto",
         }}
       >
-        <Link to="/privacy" style={linkStyle} onClick={handleNavigate}>
+        {/* <Link to="/privacy" style={linkStyle} onClick={handleNavigate}>
           Privacy Policy
         </Link>{" "}
-        |{" "}
-        <Link to="/terms" style={linkStyle} onClick={handleNavigate}>
+        |{" "} */}
+        {/* <Link to="/terms" style={linkStyle} onClick={handleNavigate}>
           Terms & Conditions
         </Link>{" "}
-        |{" "}
-        <Link to="/cookies" style={linkStyle} onClick={handleNavigate}>
+        |{" "} */}
+        {/* <Link to="/cookies" style={linkStyle} onClick={handleNavigate}>
           Cookies Policy
+        </Link> */}
+        <Link to="/" style={linkStyle}>
+        © Copyright {new Date().getFullYear()} - spacifyd        
         </Link>
-      </div>
+    </div>
     </footer>
   );
 };
