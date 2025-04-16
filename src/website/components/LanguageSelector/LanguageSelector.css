@@ -1,30 +1,4 @@
-/* Fix for Navbar Positioning */
-.navbar-collapse {
-  position: relative;
-  background-color: transparent;
-  transition: all 0.3s ease-out;
-  overflow: visible !important; /* Changed from hidden to visible */
-  max-height: 0;
-}
-
-.navbar-collapse.show {
-  max-height: 100vh;
-  display: flex !important;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.9);
-  overflow: visible !important; /* Ensure overflow is visible */
-}
-
-/* Language Selector Specific Fixes */
-.language-dropdown,
-.language-dropdown-mobile {
-  position: relative;
-  z-index: 2000; /* Ensure high z-index */
-}
-
-/* Language Selector Dropdown Fixes */
+/* LanguageSelector.css */
 .language-selector {
   position: relative;
   display: inline-block;
@@ -40,63 +14,36 @@
   display: flex;
   align-items: center;
   color: white;
+  gap: 8px;
 }
 
-.language-selector .dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 150px;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  z-index: 9999; /* Very high z-index */
-  margin-top: 5px;
-  padding: 5px 0;
+.flag-icon {
+  width: 20px;
+  height: auto;
 }
 
-.language-selector.mobile .dropdown {
-  position: absolute;
-  width: 150px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* Fix for dropdown items */
-.language-selector .dropdown div {
-  padding: 8px 12px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-.language-selector .dropdown div:hover {
-  background-color: #f0f0f0;
-}
-
-/* Clear any overflow restrictions */
-.navbar, 
-.navbar-collapse,
-.container-fluid {
-  overflow: visible !important;
-}
-
-/* Specific mobile fix */
+/* Mobile-specific styles */
 @media (max-width: 991px) {
-  .mobile-menu {
-    overflow: visible !important;
-  }
-  
-  .language-dropdown-mobile {
+  .language-selector.mobile {
     position: static;
-    width: 100%;
     display: flex;
     justify-content: center;
+    width: 100%;
   }
-  
-  .language-selector.mobile {
-    position: relative;
-    display: inline-block;
+
+  .language-selector.mobile .dropdown {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
   }
+}
+
+/* Dark theme support */
+.dark-navbar .selected-lang {
+  border: 2px solid white !important;
+}
+
+.dark-navbar .selected-lang svg path {
+  stroke: white !important;
+  fill: white !important;
+  color: white !important;
 }

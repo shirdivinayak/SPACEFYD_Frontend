@@ -1,5 +1,5 @@
+// LanguageSelector.js
 import React, { useState, useRef, useEffect } from "react";
-// import { useTranslation } from "react-i18next";
 import i18n from "../../../i18n/i18n";
 import "./LanguageSelector.css";
 import { FaAngleDown } from "react-icons/fa";
@@ -9,7 +9,6 @@ import Italy from "../../Assets/Flags/Italy.png";
 import Spain from "../../Assets/Flags/Spain.png";
 import France from "../../Assets/Flags/France.png";
 
-// Language options with flags
 const languages = [
   { code: "en", name: "English", flag: English },
   { code: "de", name: "Deutsch", flag: Germany },
@@ -19,32 +18,27 @@ const languages = [
 ];
 
 const LanguageSelector = ({ mobile }) => {
-  // const { t } = useTranslation();
   const [selectedLang, setSelectedLang] = useState(
     localStorage.getItem("selected_language") || "en"
   );
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Find the selected language object
   const selectedLanguage = languages.find((lang) => lang.code === selectedLang);
 
   const changeLanguage = (langCode) => {
-    i18n.changeLanguage(langCode); // Change i18n language
-    localStorage.setItem("selected_language", langCode); // Save selection
-    setSelectedLang(langCode); // Update state
-    setIsOpen(false); // Close dropdown after selection
+    i18n.changeLanguage(langCode);
+    localStorage.setItem("selected_language", langCode);
+    setSelectedLang(langCode);
+    setIsOpen(false);
   };
 
-  // Toggle dropdown
   const toggleDropdown = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setIsOpen(!isOpen);
-    console.log("Dropdown toggled:", !isOpen); // Debug log
   };
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -62,7 +56,6 @@ const LanguageSelector = ({ mobile }) => {
     <div
       className={`language-selector ${mobile ? "mobile" : ""}`}
       ref={dropdownRef}
-      style={{ position: "relative" }}
     >
       <button className="selected-lang" onClick={toggleDropdown} type="button">
         <img
@@ -80,14 +73,14 @@ const LanguageSelector = ({ mobile }) => {
         />
       </button>
 
-      {/* Force display the dropdown for debugging */}
       <div
-        className="dropdown"
+        className={`dropdown ${isOpen ? "show" : ""}`}
         style={{
           display: isOpen ? "block" : "none",
           position: "absolute",
           top: "100%",
-          left: 0,
+          left: mobile ? "50%" : "0",
+          transform: mobile ? "translateX(-50%)" : "none",
           background: "white",
           border: "1px solid #ccc",
           borderRadius: "8px",

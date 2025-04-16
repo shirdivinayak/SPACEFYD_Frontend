@@ -67,9 +67,49 @@
     padding: 20px;
   }
   
-  /* Adjust the position of the language selector next to toggle */
-  .language-dropdown-mobile {
-    margin-right: 10px;
+  /* Center align language selector container */
+  .mobile-language-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+  }
+  
+  /* Enhanced dropdown centering */
+  .mobile-language-wrapper .dropdown-menu {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    position: absolute !important;
+    float: none !important;
+    text-align: center !important;
+    width: auto !important;
+    min-width: 160px !important;
+  }
+  
+  /* FIXED: Make sure dropdown menus are visible when shown */
+  .mobile-language-wrapper .dropdown-menu.show {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    max-height: none !important;
+    z-index: 1060 !important;
+    top: 100% !important;
+    margin-top: 5px !important;
+  }
+  
+  /* Direct targeting for Bootstrap dropdowns */
+  .mobile-language-wrapper .dropdown .dropdown-menu,
+  .mobile-language-wrapper div[class*="dropdown"] .dropdown-menu,
+  .mobile-language-wrapper div[class*="dropdown"] div[class*="menu"],
+  .mobile-language-wrapper div[class*="language"] .dropdown-menu,
+  .mobile-language-wrapper div[class*="language"] div[class*="menu"] {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    position: absolute !important;
+    float: none !important;
+    text-align: center !important;
   }
 }
 
@@ -107,16 +147,16 @@
   list-style: none;
 }
 
-/* Language Selector Styles for Light Theme */
+/* Language Selector Styles - Make sure to use these specific colors for mobile too */
 .home-navbar .language-dropdown .selected-lang,
-.home-navbar .language-dropdown-mobile .selected-lang {
+.home-navbar .mobile-language-wrapper .selected-lang {
   border: 2px solid #4C6559 !important;
   border-radius: 8px !important;
   background-color: rgba(255, 255, 255, 0.11) !important;
 }
 
 .home-navbar .language-dropdown .selected-lang svg path,
-.home-navbar .language-dropdown-mobile .selected-lang svg path {
+.home-navbar .mobile-language-wrapper .selected-lang svg path {
   stroke: #4C6559 !important;
   fill: #4C6559 !important;
   color: #4C6559 !important;
@@ -124,13 +164,13 @@
 
 /* Dark theme support */
 .dark-navbar .language-dropdown .selected-lang,
-.dark-navbar .language-dropdown-mobile .selected-lang {
+.dark-navbar .mobile-language-wrapper .selected-lang {
   border: 2px solid white !important;
   border-radius: 8px !important;
 }
 
 .dark-navbar .language-dropdown .selected-lang svg path,
-.dark-navbar .language-dropdown-mobile .selected-lang svg path {
+.dark-navbar .mobile-language-wrapper .selected-lang svg path {
   stroke: white !important;
   fill: white !important;
   color: white !important;
@@ -170,11 +210,44 @@
     justify-content: space-between;
   }
   
-  .language-dropdown-mobile {
+  .navbar-toggler {
     order: 2;
   }
-  
-  .navbar-toggler {
-    order: 3;
-  }
+}
+
+/* Override Bootstrap's dropdown positioning */
+.dropdown-menu {
+  margin: 0;
+  padding: 0;
+}
+
+/* Force center alignment for language dropdown specifically */
+.mobile-language-wrapper {
+  position: static !important;
+}
+
+.mobile-language-wrapper > div {
+  position: relative !important; /* FIXED: Changed from static to relative */
+}
+
+/* FIXED: Additional style to ensure dropdown toggle works properly */
+.mobile-language-wrapper .dropdown-toggle::after {
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0;
+  border-left: 0.3em solid transparent;
+}
+
+/* FIXED: Make sure dropdown toggles are clickable */
+.dropdown-toggle {
+  cursor: pointer;
+}
+
+/* FIXED: Ensure dropdowns have sufficient z-index */
+.dropdown-menu {
+  z-index: 1060 !important;
 }
