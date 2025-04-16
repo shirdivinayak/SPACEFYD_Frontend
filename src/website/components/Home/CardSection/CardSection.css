@@ -24,7 +24,7 @@
 
 .heading-section {
   max-width: 608px;
-  text-align: left; /* Changed to left-align */
+  text-align: left;
 }
 
 .heading-section h2 {
@@ -105,7 +105,8 @@
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
-  padding-bottom: 15px;
+  padding: 20px 40px;
+  margin: 0 -40px;
   scrollbar-width: thin;
   scrollbar-color: #ce893e #4c6559;
 }
@@ -135,25 +136,27 @@
   border-radius: 8px;
   overflow: hidden;
   flex-shrink: 0;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
   position: relative;
-  margin-right: 10px;
+  margin: 0 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .card:hover {
   transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
   z-index: 10;
-}
-
-.card:not(:hover) {
-  z-index: 0;
-  transform: scale(1);
 }
 
 .card img {
   width: 100%;
   height: 190px;
   object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card:hover img {
+  transform: scale(1.02);
 }
 
 .card p {
@@ -163,9 +166,9 @@
   line-height: 120%;
   letter-spacing: 0%;
   color: black;
-  text-align: left; /* Changed to left-align */
+  text-align: left;
   margin-top: 20px;
-  padding-left: 20px; /* Changed to left padding */
+  padding-left: 20px;
   padding-right: 20px;
 }
 
@@ -202,12 +205,16 @@
 
   .cards-container {
     gap: 20px;
+    padding: 15px 30px;
+    margin: 0 -30px;
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
   }
 
   .card {
     width: 240px;
     height: 280px;
-    margin-right: 8px;
+    margin: 0 8px;
   }
 
   .card img {
@@ -245,12 +252,14 @@
 
   .cards-container {
     gap: 15px;
+    padding: 15px 20px;
+    margin: 0 -20px;
   }
 
   .card {
     width: 190px;
     height: 230px;
-    margin-right: 6px;
+    margin: 0 6px;
   }
 
   .card img {
@@ -296,12 +305,14 @@
 
   .cards-container {
     gap: 10px;
+    padding: 10px 15px;
+    margin: 0 -15px;
   }
 
   .card {
     width: 150px;
     height: 190px;
-    margin-right: 5px;
+    margin: 0 5px;
   }
 
   .card img {
@@ -342,23 +353,25 @@
   }
 
   .cards-container {
-    gap: 10px;
+    gap: 8px;
+    padding: 10px 10px;
+    margin: 0 -10px;
   }
 
   .card {
-    width: 150px;
+    width: 140px;
     height: 180px;
-    margin-right: 5px;
+    margin: 0 4px;
   }
 
   .card img {
-    height: 110px;
+    height: 100px;
   }
 
   .card p {
     font-size: 16px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 8px;
+    padding-right: 8px;
   }
 
   .small-screen-navigation button span {

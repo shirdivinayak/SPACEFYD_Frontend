@@ -1,4 +1,4 @@
-
+/* Project-Detail.css */
 .services-container {
     width: 100%;
     height: 614px;
@@ -10,65 +10,9 @@
     text-align: center;
     color: white;
     position: relative;
-    z-index: 1; /* Bring it in front */
-}
-
-.cover-image-container {
-    position: absolute; /* Position it above */
-    top: 100%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 1200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10; /* Ensure it stays in front */
-    overflow: hidden;
-}
-
-.cover-image {
-    width: 100%;
-    border-radius: 12px;
-    display: block;
-}
-.content-contatiner {
-    margin-top: 35%;
-    padding-left: 3%;
-    padding-right: 2%;
-}
-  
-.main{
-    background-color: #FCF9F5;
-
-  }
-  /* Description Styling */
-  .project-description {
-    font-family: "DM Sans", sans-serif;
-    font-weight: 300;
-    font-size: 45.56px;
-    line-height: 53.41px;
-    text-align: center;
-    color: #9a715b;
-    margin: 100px auto;
-    max-width: 70%;
-    margin-top: 40%;
+    z-index: 1;
   }
   
-  /* Images Grid */
-  .images-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Default: 2 images per row */
-    gap: 20px;
-    justify-content: center;
-    padding: 5%;
-  }
-  
-  .grid-image {
-    width: 608px;
-     height: 455px;
-    border-radius: 12px;
-  }
   .service-title {
     font-family: "DM Sans", sans-serif;
     font-weight: 400;
@@ -76,199 +20,285 @@
     line-height: 68px;
     letter-spacing: 0%;
     text-align: center;
-}
-
-.more-projects-container {
+    margin-bottom: 80px;
+  }
+  
+  .cover-image-container {
+    width: 100%;
+    max-width: 1240px;
+    height: 543px;
+    margin: -100px auto 0;
+    padding: 0 20px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 10;
+  }
+  
+  .cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 21.88px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .main {
+    background-color: #FCF9F5;
+    position: relative;
+  }
+  
+  .content-container {
+    padding: 100px 8% 0;
+    margin-top: 50px;
+  }
+  
+  .project-description {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 300;
+    font-size: 45.56px;
+    line-height: 53.41px;
+    text-align: center;
+    color: #9a715b;
+    margin: 0 auto 100px;
+    max-width: 80%;
+  }
+  
+  .images-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin: 0 auto;
+    max-width: 1240px;
+  }
+  
+  .grid-image {
+    width: 100%;
+    height: 455px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  
+  .more-projects-container {
     display: flex;
-    justify-content: space-between; /* Heading on left, button on right */
-    align-items: left;
-    margin-bottom: 20px;
-    padding-left: 8%;
-    padding-right: 8%;
-}
-
-.more-projects-heading {
+    justify-content: space-between;
+    align-items: center;
+    margin: 100px 8% 40px;
+  }
+  
+  .more-projects-heading {
     font-family: "Kollektif", sans-serif;
     font-weight: 400;
     font-size: 48px;
     line-height: 59px;
     letter-spacing: -0.9px;
     color: #4C6559;
-    align-items:start;
-}
-
-.view-more-button {
+  }
+  
+  .view-more-button {
     font-family: "DM Sans", sans-serif;
     font-weight: 500;
     font-size: 16px;
-    padding: 5px 10px;
+    padding: 12px 24px;
     background-color: #4C6559;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 5px;
-}
-
-.more-projects-grid {
+    transition: background-color 0.3s ease;
+  }
+  
+  .view-more-button:hover {
+    background-color: #3a5045;
+  }
+  
+  .more-projects-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Default: 2 images per row */
-    gap: 20px;
-    justify-content: center;
-    padding: 5%;
-}
-
-/* Individual Project Item */
-.more-project-item {
-    text-align: left;
-    max-width: 1200px;
-    padding-left: 3%;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    margin: 0 8% 80px;
+  }
+  
+  .more-project-item {
     background-color: white;
-}
-
-.more-project-image {
-    width: 608px;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .more-project-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .more-project-image {
+    width: 100%;
     height: 455px;
-    margin-bottom: 5%;
-    border-radius: 12px; /* Ensure consistent styling */
-}
-
-
-.more-project-title {
+    object-fit: cover;
+  }
+  
+  .more-project-title {
     font-family: "Kollektif", sans-serif;
     font-weight: 400;
     font-size: 29.41px;
     line-height: 35.29px;
-    letter-spacing: 0%;
     color: #4C6559;
-    margin-top: 10px;
-    padding-left: 30px;
-    padding-right: 10px;
-}
-
-.more-project-description {
+    margin: 20px 30px 10px;
+  }
+  
+  .more-project-description {
     font-family: "DM Sans", sans-serif;
     font-weight: 300;
     font-size: 14px;
     line-height: 18.23px;
-    letter-spacing: 0%;
     color: #3F3F3F;
-    margin-top: 5px;
-    padding-left: 30px;
-    padding-right: 10px;
-}
-
+    margin: 0 30px 30px;
+  }
   
-
-  
-  /* Responsive: Mobile View (1 image per row) */
-  @media (max-width: 768px) {
-    .images-grid {
-      grid-template-columns: repeat(1, 1fr); /* 1 image per row */
-    }
-    .content-contatiner {
-        margin-top: 70%;
-    }
-    .service-title {
-        font-weight: 500;
-        font-size: 36px;
-        line-height: 46.87px;
-        letter-spacing: 1%;
-    }
+  /* Responsive Styles */
+  @media (max-width: 1200px) {
     .cover-image-container {
-        position: absolute; /* Position it above */
-        top: 92%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 90%; /* Crop width to 70% */
-        height: 100%;
-        max-width: 800px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden; /* Hide overflow content */
-        z-index: 10; /* Ensure it stays in front */
+      height: 450px;
+      margin-top: -80px;
     }
+    
     .project-description {
-        font-family: "DM Sans", sans-serif;
-        font-weight: 300;
-        font-size: 20px;
-        line-height: 26.04px;
-        text-align: center;
-        color: #9a715b;
-        text-transform: capitalize;
-        max-width: 90%;
-      }    
+      font-size: 36px;
+      line-height: 42px;
+    }
     
-    .cover-image {
-        width: 100%; /* Ensure the image stretches */
-        height: 40%; /* Maintain full height */
-        object-fit: cover; /* Crop instead of squeezing */
-    }    
+    .grid-image,
+    .more-project-image {
+      height: 380px;
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .service-title {
+      font-size: 48px;
+      line-height: 56px;
+      margin-bottom: 60px;
+    }
+    
+    .cover-image-container {
+      height: 380px;
+    }
+    
+    .project-description {
+      font-size: 32px;
+      line-height: 38px;
+      max-width: 90%;
+    }
+    
+    .images-grid {
+      gap: 20px;
+    }
+    
+    .grid-image,
+    .more-project-image {
+      height: 320px;
+    }
+    
+    .more-projects-heading {
+      font-size: 36px;
+      line-height: 44px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .services-container {
+      height: 500px;
+    }
+    
+    .service-title {
+      font-size: 36px;
+      line-height: 42px;
+      margin-bottom: 40px;
+    }
+    
+    .cover-image-container {
+      height: 300px;
+      margin-top: -60px;
+      padding: 0 15px;
+    }
+    
+    .content-container {
+      padding: 60px 5% 0;
+      margin-top: 30px;
+    }
+    
+    .project-description {
+      font-size: 24px;
+      line-height: 30px;
+      margin-bottom: 60px;
+    }
+    
+    .images-grid {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+    
+    .grid-image,
+    .more-project-image {
+      height: 280px;
+    }
+    
+    .more-projects-container {
+      margin: 60px 5% 30px;
+    }
+    
+    .more-projects-heading {
+      font-size: 28px;
+      line-height: 34px;
+    }
+    
     .more-projects-grid {
-        grid-template-columns: repeat(1, 1fr);
-    }
-    .grid-image{
-        width: 100%;
-        height: 248px;
-        object-fit: contain;
-        border-radius: 12px;
-    }
-    .more-project-image{
-        width: 100%;
-        height: 248px;
-        object-fit: contain;
-        border-radius: 12px;
-    
+      grid-template-columns: 1fr;
+      gap: 30px;
+      margin: 0 5% 60px;
     }
     
-
     .more-project-title {
-        font-family: "Kollektif", sans-serif;
-        font-weight: 400;
-        font-size: 25px;
-        line-height: 25.29px;
-        letter-spacing: 0%;
-        color: #4C6559;
-        margin-top: 10px;
-        padding-left: 5%;
+      font-size: 24px;
+      line-height: 28px;
+      margin: 15px 20px 8px;
     }
     
     .more-project-description {
-        font-family: "DM Sans", sans-serif;
-        font-weight: 300;
-        font-size: 14px;
-        line-height: 18.23px;
-        letter-spacing: 0%;
-        color: #3F3F3F;
-        margin-top: 5px;
-        padding-left: 5%;
-
+      margin: 0 20px 20px;
     }
-    
-.more-projects-heading {
-    font-family: "Kollektif", sans-serif;
-    font-weight: 400;
-    font-size: 28px;
-    /* line-height: 59px; */
-    /* letter-spacing: -0.9px; */
-    color: #4C6559;
-    align-items:start;
-}
-
-
-.view-more-button {
-    font-family: "DM Sans", sans-serif;
-    font-weight: 500;
-    font-size: 12px; /* Reduce font size */
-    padding-top: 2px;  /* Reduce top padding */
-    padding-bottom: 2px; /* Reduce bottom padding */
-    padding-left: 10px; /* Keep left padding */
-    padding-right: 10px; /* Keep right padding */
-    background-color: #4C6559;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-}
   }
   
+  @media (max-width: 576px) {
+    .services-container {
+      height: 400px;
+    }
+    
+    .service-title {
+      font-size: 28px;
+      line-height: 34px;
+      margin-bottom: 30px;
+    }
+    
+    .cover-image-container {
+      height: 220px;
+      margin-top: -40px;
+      padding: 0 10px;
+    }
+    
+    .project-description {
+      font-size: 20px;
+      line-height: 26px;
+      margin-bottom: 40px;
+    }
+    
+    .grid-image,
+    .more-project-image {
+      height: 200px;
+    }
+    
+    .view-more-button {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+  }

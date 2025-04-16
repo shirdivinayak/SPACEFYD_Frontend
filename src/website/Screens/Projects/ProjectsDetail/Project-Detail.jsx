@@ -58,7 +58,6 @@ const ProjectsDetail = () => {
 
   // Get project data from navigation state
   const location = useLocation();
-  // const params = useParams();
   const [projectData, setProjectData] = useState(null);
   const [similar, setSimilar] = useState([]);
   const [loading, setLoading] = useState({ project: true, categories: true });
@@ -150,7 +149,7 @@ const ProjectsDetail = () => {
         </div>
 
         {/* Description */}
-        <div className="content-contatiner">
+        <div className="content-container">
           <p className="project-description">
             {projectData.projectDescription}
           </p>

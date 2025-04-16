@@ -32,7 +32,7 @@ const Partnership = () => {
             <p className="section-text">{t("elevate")}</p>
             <div className="section-link-container">
               <a href="#" className="section-link">
-                {t("discover")} <span className="arrow">→</span>
+                {t("discover")} <span className="arrow"></span>
               </a>
             </div>
           </Col>

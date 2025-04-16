@@ -1,21 +1,22 @@
-/* Light theme (already works with your light navbar) */
-.language-dropdown .language-selector-header,
-.language-dropdown-mobile .language-selector-header {
-  border: 1px solid #4C6559 !important;
-}
-
-.language-dropdown .language-selector-header svg path,
-.language-dropdown-mobile .language-selector-header svg path {
-  stroke: #4C6559 !important;
-}
-
-/* Dark theme support */
-.dark-navbar .language-dropdown .language-selector-header,
-.dark-navbar .language-dropdown-mobile .language-selector-header {
-  border: 1px solid white !important;
-}
-
-.dark-navbar .language-dropdown .language-selector-header svg path,
-.dark-navbar .language-dropdown-mobile .language-selector-header svg path {
-  stroke: white !important;
+/* Mobile language selector centering */
+@media (max-width: 991px) {
+  .mobile-language-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+  }
+  
+  .mobile-language-wrapper .dropdown {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+  
+  .dark-navbar .mobile-language-wrapper .selected-lang {
+    border: 2px solid white !important;
+  }
+  
+  .dark-navbar .mobile-language-wrapper .selected-lang svg path {
+    stroke: white !important;
+  }
 }
