@@ -77,7 +77,7 @@ body {
   color: white;
   /* background-size: cover;   */
   border-radius: 12px;
-  max-height: 641px;
+  /* max-height: 641px; */
   max-width: 1240px;
 }
 
@@ -139,10 +139,10 @@ body {
   .hero-section-about {
     width: 100vw;
     padding: 0 !important;
-    max-height: 440px !important;
+    /* max-height: 440px !important; */
     background-size: cover !important;
     background-position: center !important;
-    overflow: hidden !important;
+    /* overflow: hidden; */
   }
 }
 @media (max-width: 991px) {
