@@ -49,7 +49,7 @@ const [isModalOpen, setModalOpen] = useState(false);
     console.log("Product Details:", product);
   }, [product]);
 
-  const [mainImage, setMainImage] = useState(product.image?.[0] || "");
+  const [mainImage, setMainImage] = useState(product?.image?.[0] || "");
 
   const handleImageClick = (image) => {
     setMainImage(image);
