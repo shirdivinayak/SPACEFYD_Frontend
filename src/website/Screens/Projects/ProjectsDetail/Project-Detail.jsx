@@ -20,6 +20,11 @@ import { useTranslation } from "react-i18next";
 import axiosInstance from "../../../../instance/axiosInstance";
 import ImageModal from "../../../components/ImageViewer/ImageViewer"; // Adjust path accordingly
 
+
+
+import { PhotoProvider, PhotoView } from 'react-photo-view';
+import 'react-photo-view/dist/react-photo-view.css';
+
 // Fallback data in case nothing is passed
 const fallbackData = {
   title: "Gulf Logistics & Warehouse Facility",
@@ -63,14 +68,28 @@ const ProjectsDetail = () => {
   const [similar, setSimilar] = useState([]);
   const [loading, setLoading] = useState({ project: true, categories: true });
 
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [modalImage, setModalImage] = useState(null);
+// const [isModalOpen, setModalOpen] = useState(false);
+const [currentIndex, setCurrentIndex] = useState(null);
+const images = projectData?.images || fallbackData?.images || [];
 
 
-   const openModal = (src) => {
-    setModalImage(src);
-    setModalOpen(true);
-  };
+
+
+
+// const openModal = (index) => {
+//   setCurrentIndex(index);
+//   setModalOpen(true);
+// };
+
+// const goToPrevious = () => {
+//   setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev));
+// };
+
+// const goToNext = () => {
+//   setCurrentIndex((prev) => (prev < images.length - 1 ? prev + 1 : prev));
+// };
+
+
 
   useEffect(() => {
     // If project data was passed via navigation state
@@ -150,14 +169,20 @@ const ProjectsDetail = () => {
         </div>
 
         {/* Cover Image */}
+
         <div className="cover-image-container">
-          <img
-            src={projectData.images[0]}
-            alt="Cover"
-            className="cover-image"
-            style={{ cursor: "pointer" }}
-            onClick={() => openModal(projectData.images[0])}
-          />
+{/* Cover Image with PhotoView */}
+<PhotoProvider>
+  <PhotoView src={images[0]}>
+    <img
+      src={images[0]}
+      alt="Cover"
+      className="cover-image"
+      style={{ cursor: "pointer" }}
+    />
+  </PhotoView>
+</PhotoProvider>
+
         </div>
 
         {/* Description */}
@@ -167,20 +192,21 @@ const ProjectsDetail = () => {
           </p>
 
           {/* Images Grid - use project images if available, otherwise use fallback */}
-          <div className="images-grid">
-            {(projectData.images || fallbackData.images)
-              .slice(1)
-              .map((img, index) => (
-                <img
-                  key={index}
-                  src={img}
-                  alt={`Project ${index + 1}`}
-                  className="grid-image"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => openModal(img)}
-                />
-              ))}
-          </div>
+
+<div className="images-grid">
+<PhotoProvider>
+  {images.map((img, i) => (
+    <PhotoView key={i} src={img}>
+      <img src={img} alt="" className="grid-image" />
+    </PhotoView>
+  ))}
+</PhotoProvider>
+</div>
+
+
+
+
+
         </div>
 
         <div>
@@ -229,12 +255,17 @@ const ProjectsDetail = () => {
           )}
         </div>
       </div>
-      <ImageModal
-        src={modalImage}
-        alt="Enlarged view"
+
+      {/* <ImageModal
+        src={images[currentIndex]}
+        alt={`Project ${currentIndex + 1}`}
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
-      />
+        onNext={goToNext}
+        onPrev={goToPrevious}
+        hasNext={currentIndex < images.length - 1}
+        hasPrev={currentIndex > 0}
+      /> */}
 
       <Footer />
     </>
