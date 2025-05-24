@@ -9,6 +9,7 @@ import { ReactComponent as Linetop } from "../../../Assets/Products/Line.svg";
 import { useTranslation } from "react-i18next";
 import axiosInstance from "../../../../instance/axiosInstance";
 import Placeholder from "react-bootstrap/Placeholder";
+import ImageModal from "../../../components/ImageViewer/ImageViewer"
 
 const ProductDetails = () => {
   const { t } = useTranslation("productdetails");
@@ -18,7 +19,13 @@ const ProductDetails = () => {
 
   const [similar, setSimilar] = useState([]);
   const [loading, setLoading] = useState({ categories: false });
+const [isModalOpen, setModalOpen] = useState(false);
+  const [modalImage, setModalImage] = useState(null);
 
+   const openModal = (src) => {
+    setModalImage(src);
+    setModalOpen(true);
+  };
   const fetchSimillarProducts = async () => {
     setLoading((prev) => ({ ...prev, categories: true }));
     try {
@@ -79,7 +86,9 @@ const ProductDetails = () => {
             ))}
           </div>
           <div className="main-image">
-            <img src={mainImage} alt={ProductImages.title} />
+            <img src={mainImage} alt={ProductImages.title}         style={{ cursor: "pointer" }}
+
+                        onClick={() => openModal(mainImage)}/>
           </div>
         </div>
 
@@ -148,6 +157,13 @@ const ProductDetails = () => {
       </div>
 
       <ContentSection />
+      <ImageModal
+        src={modalImage}
+        alt="Enlarged view"
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+      />
+
       <Footer />
     </div>
   );

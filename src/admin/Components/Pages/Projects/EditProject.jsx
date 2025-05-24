@@ -102,6 +102,7 @@ const EditProjectScreen = () => {
         isVisible: projectDetails.displayInHome,
         brand: projectDetails.brand,
         images: allImages,
+        date: new Date().toISOString(),
       };
       await editProject(updatedProject);
 

@@ -18,6 +18,7 @@ import HomeNavbar from "../../../components/Home/NavbarDark/DarkNavbar"; // Impo
 import Footer from "../../../components/Home/Footer/Footer"; // Import Footer
 import { useTranslation } from "react-i18next";
 import axiosInstance from "../../../../instance/axiosInstance";
+import ImageModal from "../../../components/ImageViewer/ImageViewer"; // Adjust path accordingly
 
 // Fallback data in case nothing is passed
 const fallbackData = {
@@ -61,6 +62,14 @@ const ProjectsDetail = () => {
   const [projectData, setProjectData] = useState(null);
   const [similar, setSimilar] = useState([]);
   const [loading, setLoading] = useState({ project: true, categories: true });
+const [isModalOpen, setModalOpen] = useState(false);
+  const [modalImage, setModalImage] = useState(null);
+
+
+   const openModal = (src) => {
+    setModalImage(src);
+    setModalOpen(true);
+  };
 
   useEffect(() => {
     // If project data was passed via navigation state
@@ -145,6 +154,8 @@ const ProjectsDetail = () => {
             src={projectData.images[0]}
             alt="Cover"
             className="cover-image"
+            style={{ cursor: "pointer" }}
+            onClick={() => openModal(projectData.images[0])}
           />
         </div>
 
@@ -164,6 +175,8 @@ const ProjectsDetail = () => {
                   src={img}
                   alt={`Project ${index + 1}`}
                   className="grid-image"
+                    style={{ cursor: "pointer" }}
+        onClick={() => openModal(img)}
                 />
               ))}
           </div>
@@ -215,6 +228,13 @@ const ProjectsDetail = () => {
           )}
         </div>
       </div>
+      <ImageModal
+        src={modalImage}
+        alt="Enlarged view"
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+      />
+
       <Footer />
     </>
   );

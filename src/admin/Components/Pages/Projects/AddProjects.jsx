@@ -27,7 +27,8 @@ const AddProject = () => {
     ProjectCode: "",
     isVisible: false,
     brand: "",
-    images: []
+    images: [],
+    date: new Date().toISOString(),
   });
 
   // Separate state for UI rendering of images
@@ -56,30 +57,36 @@ const AddProject = () => {
   const [isSubmitting, setIsSubmitting] = useState(false); // Track submission state
 
   const handleSave = async () => {
-    setIsSubmitting(true); // Show loader on submission
-    // Combine the main image with additional images for saving
-    const allImages = [
-      imageDisplay.mainImage, 
-      ...imageDisplay.additionalImages.filter(img => img !== placeholderImage)
-    ];
-    
-    // Update product details with all images before saving
-    const updatedProductDetails = {
-      ...productDetails,
-      images: allImages
-    };
-    
-    try {
-      await addProject(updatedProductDetails);
-      // Only navigate back if the save was successful
-      navigate(-1);
-    } catch (error) {
-      console.error("Error saving project:", error);
-      // Handle error case if needed
-    }finally{
-      setIsSubmitting(false); // Hide loader after process completes
-    }
+  setIsSubmitting(true); // Show loader on submission
+
+  const allImages = [
+    imageDisplay.mainImage,
+    ...imageDisplay.additionalImages.filter(img => img !== placeholderImage),
+  ];
+
+  // Convert images to desired format: { img: base64String, index: number }
+  const formattedImages = allImages
+    .filter(Boolean) // skip null/undefined
+    .map((img, index) => ({
+      img,
+      index,
+    }));
+
+  const updatedProductDetails = {
+    ...productDetails,
+    images: formattedImages,
+    date: new Date().toISOString(), // refresh timestamp if needed
   };
+
+  try {
+    await addProject(updatedProductDetails);
+    navigate(-1); // Navigate back on success
+  } catch (error) {
+    console.error("Error saving project:", error);
+  } finally {
+    setIsSubmitting(false); // Hide loader after process completes
+  }
+};
 
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
