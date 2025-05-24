@@ -51,6 +51,14 @@
     padding: 13px 0px 4% 0;
     margin-top: 50px;
   }
+
+  .cnt-fixing-paragaraph {
+    width: 70%;
+  }
+
+  .cnt-fixing-paragaraph p{
+    text-align: center;
+  }
   
   .project-description {
     font-family: "DM Sans", sans-serif;

@@ -171,17 +171,17 @@ const images = projectData?.images || fallbackData?.images || [];
         {/* Cover Image */}
 
         <div className="cover-image-container">
-{/* Cover Image with PhotoView */}
-<PhotoProvider>
-  <PhotoView src={images[0]}>
-    <img
-      src={images[0]}
-      alt="Cover"
-      className="cover-image"
-      style={{ cursor: "pointer" }}
-    />
-  </PhotoView>
-</PhotoProvider>
+
+          <PhotoProvider>
+            <PhotoView src={images[0]}>
+              <img
+                src={images[0]}
+                alt="Cover"
+                className="cover-image"
+                style={{ cursor: "pointer" }}
+              />
+            </PhotoView>
+          </PhotoProvider>
 
         </div>
 

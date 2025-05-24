@@ -44,7 +44,7 @@ const AboutUs = () => {
         }}
       >
         {" "}
-        <div className="">
+        <div className="cnt-fixing-paragaraph container px-4">
           <h1>{t("title")}</h1>
 
           <p dangerouslySetInnerHTML={{ __html: t("title-sub") }}></p>
