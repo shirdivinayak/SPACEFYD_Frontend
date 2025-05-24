@@ -63,10 +63,22 @@
 
 .more-projects-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Default: 2 images per row */
+    grid-template-columns: repeat(2, 1fr); 
     gap: 20px;
     justify-content: center;
-    /* padding: 5%; */
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+@media (min-width: 1024px){
+  .more-projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
 }
 
 /* Individual Project Item */

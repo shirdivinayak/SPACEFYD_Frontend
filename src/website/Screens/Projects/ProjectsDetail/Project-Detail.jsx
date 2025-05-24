@@ -62,7 +62,8 @@ const ProjectsDetail = () => {
   const [projectData, setProjectData] = useState(null);
   const [similar, setSimilar] = useState([]);
   const [loading, setLoading] = useState({ project: true, categories: true });
-const [isModalOpen, setModalOpen] = useState(false);
+
+  const [isModalOpen, setModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState(null);
 
 
@@ -176,7 +177,7 @@ const [isModalOpen, setModalOpen] = useState(false);
                   alt={`Project ${index + 1}`}
                   className="grid-image"
                     style={{ cursor: "pointer" }}
-        onClick={() => openModal(img)}
+                    onClick={() => openModal(img)}
                 />
               ))}
           </div>
