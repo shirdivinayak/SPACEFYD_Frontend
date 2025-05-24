@@ -39,6 +39,7 @@ const AddProduct = () => {
     productCode: "",
     isVisible: false,
     brand: "",
+    date: new Date().toISOString(),
     image: []
   });
 
@@ -175,36 +176,46 @@ const AddProduct = () => {
 
   // Save Product handler
   const handleSave = async () => {
-    // Validation
-    if (!productDetails.productName || !productDetails.categoryId) {
-      setMessage("Please fill in required fields.");
-      setTimeout(() => setMessage(""), 3000);
-      return;
-    }
+  // Validation
+  if (!productDetails.productName || !productDetails.categoryId) {
+    setMessage("Please fill in required fields.");
+    setTimeout(() => setMessage(""), 3000);
+    return;
+  }
 
-    setIsSubmitting(true);
-    
-    const allImages = [
-      imageDisplay.mainImage, 
-      ...imageDisplay.additionalImages.filter(img => img !== placeholderImage)
-    ];
-    
-    const updatedProductDetails = {
-      ...productDetails,
-      image: allImages
-    };
-    
-    try {
-      await addProduct(updatedProductDetails);
-      navigate(-1);
-    } catch (error) {
-      console.error("Error saving Product:", error);
-      setMessage("Failed to save Product. Please try again.");
-      setTimeout(() => setMessage(""), 3000);
-    } finally {
-      setIsSubmitting(false);
-    }
+  setIsSubmitting(true);
+
+  // Gather all images
+  const allImages = [
+    imageDisplay.mainImage,
+    ...imageDisplay.additionalImages.filter(img => img !== placeholderImage)
+  ];
+
+  // Format images as { img: base64, index: number }
+  const formattedImages = allImages
+    .filter(Boolean) // Remove empty/null
+    .map((img, index) => ({
+      img,
+      index
+    }));
+
+  const updatedProductDetails = {
+    ...productDetails,
+    image: formattedImages,
+    date: new Date().toISOString(), // ensure fresh timestamp
   };
+
+  try {
+    await addProduct(updatedProductDetails);
+    navigate(-1);
+  } catch (error) {
+    console.error("Error saving product:", error);
+    setMessage("Failed to save product. Please try again.");
+    setTimeout(() => setMessage(""), 3000);
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   // Image deletion methods (similar to previous implementation)
   const handleDeleteMain = () => {

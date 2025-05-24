@@ -21,18 +21,18 @@ import { useTranslation } from "react-i18next";
 // Button data for the Hero Section
 const topButtons = [
   { icon: icon1, text: "Industrial Spaces" },
-  { icon: icon2, text: "Residential" },
+  { icon: icon2, text: "Residential Spaces" },
   { icon: icon3, text: "Entertainment and Leisure" },
 ];
 
 const leftButtons = [
-  { icon: icon4, text: "Retail" },
-  { icon: icon5, text: "Education" },
+  { icon: icon4, text: "Retail Environments" },
+  { icon: icon5, text: "Educational Facilities" },
 ];
 
 const rightButtons = [
-  { icon: icon6, text: "Commercial" },
-  { icon: icon7, text: "Hospitality" },
+  { icon: icon6, text: "Commercial Workspaces" },
+  { icon: icon7, text: "Hospitality Venues" },
 ];
 
 // Combined buttons for small screens
@@ -43,10 +43,10 @@ const allHeroButtons = [...topButtons, ...leftButtons, ...rightButtons].slice(
 
 // Button data for the Lamp Section
 const lampButtons = [
-  { icon: lampicon1, text: "Smart Space Solutions" },
-  { icon: lampicon2, text: "Tailored Design Excellence" },
-  { icon: lampicon3, text: "Innovative Technology Integration" },
-  { icon: lampicon4, text: "Future-Ready Designs" },
+  { icon: lampicon1, text: "AI-Driven Interiors" },
+  { icon: lampicon2, text: "Bespoke Design Precision" },
+  { icon: lampicon3, text: "Seamless Tech Integration" },
+  { icon: lampicon4, text: "Future-Defined Spaces" },
 ];
 
 // Reusable Button Component
@@ -479,7 +479,7 @@ const HeroSection = () => {
             onClick={handleAboutUsClick}
             className="lamp-btn"
             style={{
-              width: "132px",
+              width: "172px",
               height: "44px",
               borderRadius: "4px",
               padding: "12px 16px",

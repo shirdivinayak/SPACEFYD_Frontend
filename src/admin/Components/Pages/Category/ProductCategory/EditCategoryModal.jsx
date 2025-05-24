@@ -20,14 +20,20 @@ const EditCategoryModal = ({ show, handleClose, categoryData, onSave }) => {
   }, [categoryData]);
 
   const handleSave = () => {
-    onSave({
-      ...categoryData,
-      category: categoryName,
-      subCategory: subCategoryName,
-      image: image,
-    });
-    handleClose();
-  };
+  const formattedImage = image
+    ? [{ img: image, index: 0 }]
+    : [];
+
+  onSave({
+    ...categoryData,
+    category: categoryName,
+    subCategory: subCategoryName,
+    image: formattedImage, // <-- updated format
+  });
+
+  handleClose();
+};
+
 
   const handleRemoveWord = async (wordToRemove) => {
     // Find the subcategory object that matches the name being removed

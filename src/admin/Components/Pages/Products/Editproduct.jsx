@@ -116,7 +116,8 @@ useEffect(() => {
         productCode: productDetails.productCode,
         isVisible: productDetails.displayInHome,
         brand: productDetails.brand,
-        image: allImages
+        image: allImages,
+        date: new Date().toISOString(),
       };
 
       await editProduct(updatedProduct);
