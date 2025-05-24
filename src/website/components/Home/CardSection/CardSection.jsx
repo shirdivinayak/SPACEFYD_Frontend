@@ -95,11 +95,14 @@ const CardSection = () => {
                 <div
                   key={index}
                   className="card"
-                  onClick={handleCardClick}
+                  onClick={() => {
+                    navigate("/ProductDetails", { state: { product: item } });
+                    window.scrollTo(0, 0);
+                  }}
                   style={{ cursor: "pointer" }}
                 >
                   <img
-                    src={item?.image[0] || card1}
+                    src={item?.image?.[0] || card1}
                     alt={item?.productName || "Product Image"}
                   />
                   <p>{item?.productName || "Unnamed Product"}</p>

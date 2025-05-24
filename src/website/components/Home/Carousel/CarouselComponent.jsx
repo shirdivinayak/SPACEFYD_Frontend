@@ -91,11 +91,19 @@ const CarouselComponent = () => {
           <div
             className="carousel-image-section"
             style={{
-              backgroundImage: `url(${
-                carouselData[currentIndex]?.images?.[0] || image1
-              })`,
+              backgroundImage: `url(${carouselData[currentIndex]?.images?.[0] || image1})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
+              cursor: "pointer", // Optional for better UX
+            }}
+            onClick={() => {
+              navigate(
+                `/ProjectsDetail/${encodeURIComponent(
+                  carouselData[currentIndex]?.projectName || "unknown"
+                )}`,
+                { state: { project: carouselData[currentIndex] } }
+              )
+                window.scrollTo(0, 0);
             }}
           />
 
