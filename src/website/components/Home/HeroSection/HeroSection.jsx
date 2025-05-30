@@ -162,7 +162,6 @@ const HeroSection = () => {
             top: "300px",
             left: "50%",
             transform: "translateX(-50%)",
-            width: "1086px",
             maxWidth: "100%",
             textAlign: "center",
             zIndex: 2,
