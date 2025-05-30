@@ -6,6 +6,7 @@ import BackgroundImage from "../../Assets/Services/backgroundimage.svg";
 import Image1 from "../../Assets/Services/Image1.png";
 import Image2 from "../../Assets/Services/Image2.png";
 import Image3 from "../../Assets/Services/Image3.png";
+import Image9 from "../../Assets/Services/image9.png";
 import Image4 from "../../Assets/Services/Image4.png";
 import Image5 from "../../Assets/Services/Image5.png";
 import Image6 from "../../Assets/Services/Image6.png";
@@ -136,6 +137,35 @@ const Services = () => {
                   src={Image3}
                   alt="Voice-activated curtains and wardrobes"
                 />
+              </div>
+            </div>
+
+             <div
+              id="home-theaters"
+              className="services-section services-text-right"
+            >
+              <div className="services-image-left">
+                <img src={Image9} alt="Home theaters and VR gaming setups" />
+              </div>
+              <div className="services-content-right">
+                <h2>AR/VR Gaming & Entertainment Rooms</h2>
+                <p>Interactive, tech-rich spaces for immersive play and social experience.</p>
+                <div className="services-sub-content-right">
+                  <p>Dedicated virtual and augmented reality zones</p>
+                  <i className="bi bi-arrow-left services-icon"></i>
+                </div>
+                <div className="services-sub-content-right">
+                  <p>Multi-use setups for gaming, streaming, and social hosting</p>
+                  <i className="bi bi-arrow-left services-icon"></i>
+                </div>
+                <div className="services-sub-content-right">
+                  <p>Spatial calibration and lighting effects</p>
+                  <i className="bi bi-arrow-left services-icon"></i>
+                </div>
+                <div className="services-sub-content-right">
+                  <p>Integrated control systems for all media devices</p>
+                  <i className="bi bi-arrow-left services-icon"></i>
+                </div>
               </div>
             </div>
           </div>
