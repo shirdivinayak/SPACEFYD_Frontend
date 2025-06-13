@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HeroImage from "../../../Assets/AboutUs/hero.svg";
+import allProject from "../../../Assets/Products/allProject.png";
 import HomeNavbar from "../../../components/Home/NavbarDark/DarkNavbar";
 import ContentSection from "../../../components/Home/Content/ContentSection";
 import Footer from "../../../components/Home/Footer/Footer";
@@ -45,8 +46,11 @@ const Products = () => {
   useEffect(() => {
     if (selectedSubcategory && allProductsInCategory.length > 0) {
       filterProductsBySubcategory();
+    } else if (selectedCategory === "All Products") {
+      // If "All Products" is selected, no filtering by subcategory
+      setFilteredProducts(allProductsInCategory);
     }
-  }, [selectedSubcategory, allProductsInCategory]);
+  }, [selectedSubcategory, allProductsInCategory, selectedCategory]);
 
   const fetchCategories = async () => {
     setLoading(prev => ({ ...prev, categories: true }));
@@ -55,11 +59,17 @@ const Products = () => {
         type: "product",
       });
       setCategories(response.data.data);
-      
+
+      // Add "All Products" as the first category
+      const allProductsCategory = {
+        _id: "All Products", // Unique identifier for "All Products"
+        name: t("All Products"), // Translate to "All Products"
+        image: allProject,
+      };
+      setCategories([allProductsCategory, ...response.data.data]);
+
       if (response.data.data.length > 0) {
-        // Select the first category by default
-        setSelectedCategory(response.data.data[0]._id);
-        console.log(response.data.data[0]._id, "=====first category id");
+        setSelectedCategory("All Products"); // Select "All Products" by default
       }
     } catch (error) {
       console.error("Error fetching categories:", error);
@@ -70,18 +80,14 @@ const Products = () => {
 
   const fetchSubcategories = async (categoryId) => {
     setLoading(prev => ({ ...prev, subcategories: true }));
-    console.log(categoryId, "====selected category id");
     try {
       const response = await axiosInstance.post("/displaySubCategoryById", {
         type: "product",
         id: categoryId
       });
       setSubcategories(response.data.data);
-      
       if (response.data.data.length > 0) {
-        // Select the first subcategory by default
         setSelectedSubcategory(response.data.data[0]._id);
-        console.log(response.data.data[0]._id, "=====first subcategory id");
       } else {
         setSelectedSubcategory(null);
         setFilteredProducts([]);
@@ -98,19 +104,21 @@ const Products = () => {
   const fetchProducts = async (categoryId) => {
     setLoading(prev => ({ ...prev, products: true }));
     try {
-      const response = await axiosInstance.post("/displayProductByID", {
+      // If "All Products" is selected, call /displayProduct to fetch all products
+      const endpoint = categoryId === "All Products" ? "/displayProduct" : "/displayProductByID";
+      const response = await axiosInstance.post(endpoint, {
         lastId: null,
-        categoryId: categoryId
+        categoryId: categoryId !== "All Products" ? categoryId : undefined
       });
-      
-      // Store all products for the category
+
       setAllProductsInCategory(response.data.data || []);
-      
-      // Initial filtered products will be set in the useEffect when selectedSubcategory changes
-      
-      // Set similar products (you might want to adjust this logic)
       const similarProductsData = response.data.data ? response.data.data.slice(0, 8) : [];
       setSimilarProducts(similarProductsData);
+      
+      // If "All Products" is selected, set the filtered products directly to all products
+      if (categoryId === "All Products") {
+        setFilteredProducts(response.data.data || []);
+      }
     } catch (error) {
       console.error("Error fetching products:", error);
       setAllProductsInCategory([]);
@@ -121,35 +129,24 @@ const Products = () => {
     }
   };
 
-  // Filter products based on selected subcategory
   const filterProductsBySubcategory = () => {
-    console.log("Filtering products for subcategory:", selectedSubcategory);
-    console.log("Total products before filtering:", allProductsInCategory.length);
-    
-    // Check if products have subcategory information
     if (allProductsInCategory.some(product => product.subCategoryId)) {
-      // If products have subcategory ID, filter by it
       const filtered = allProductsInCategory.filter(
         product => product.subCategoryId === selectedSubcategory
       );
       setFilteredProducts(filtered);
-      console.log("Filtered products by subCategoryId:", filtered.length);
     } else {
       const selectedSubcategoryObj = subcategories.find(
         subcat => subcat._id === selectedSubcategory
       );
-      
       if (selectedSubcategoryObj) {
         const subcategoryName = selectedSubcategoryObj.name;
-        // Filter products by subcategory name if available
         const filtered = allProductsInCategory.filter(
           product => product.subcategoryName === subcategoryName
         );
         setFilteredProducts(filtered);
-        console.log("Filtered products by subcategoryName:", filtered.length);
       } else {
         setFilteredProducts(allProductsInCategory);
-        console.log("Showing all products as fallback");
       }
     }
   };
@@ -244,33 +241,33 @@ const Products = () => {
 
       {/* Horizontal Menu for Categories */}
       <div className="products-menu">
-        {loading.categories 
+        {loading.categories
           ? Array(6).fill().map((_, index) => <CategoryPlaceholder key={index} />)
           : categories.map((category) => (
-            <div
-              key={category._id}
-              className={`product-card ${getActiveCategory(category._id) ? "active" : ""}`}
-              onClick={() => handleCategoryClick(category)}
-            >
-              <div className="product-image-class p-4">
-                <img
-                  src={category.image}
-                  alt={category.name}
-                  className="product-image"
-                />
+              <div
+                key={category._id}
+                className={`product-card ${getActiveCategory(category._id) ? "active" : ""}`}
+                onClick={() => handleCategoryClick(category)}
+              >
+                <div className="product-image-class p-4">
+                  <img
+                    src={category.image}
+                    alt={category.name}
+                    className="product-image"
+                  />
+                </div>
+                <div className="product-title-class">
+                  <p
+                    className="container product-title"
+                    style={{
+                      fontSize: "14px",
+                    }}
+                  >
+                    {category.name}
+                  </p>
+                </div>
               </div>
-              <div className="product-title-class">
-                <p
-                  className="container product-title"
-                  style={{
-                    fontSize: "14px",
-                  }}
-                >
-                  {category.name}
-                </p>
-              </div>
-            </div>
-          ))}
+            ))}
       </div>
 
       <div className="first-line container justify-content-center">
@@ -282,76 +279,48 @@ const Products = () => {
         />
       </div>
 
-      {/* Horizontal Menu for Subcategories */}
-      <div className="types-menu">
-        {loading.subcategories 
-          ? Array(6).fill().map((_, index) => <SubcategoryPlaceholder key={index} />)
-          : subcategories.map((subcategory) => (
-            <span
-              key={subcategory._id}
-              className={`type-item ${getActiveSubcategory(subcategory._id) ? "active" : ""}`}
-              onClick={() => handleSubcategoryClick(subcategory)}
-            >
-              {subcategory.name}
-            </span>
-          ))}
-      </div>
+      {/* Horizontal Menu for Subcategories (only show if not "All Products") */}
+      {selectedCategory !== "All Products" && (
+        <div className="types-menu">
+          {loading.subcategories
+            ? Array(6).fill().map((_, index) => <SubcategoryPlaceholder key={index} />)
+            : subcategories.map((subcategory) => (
+                <span
+                  key={subcategory._id}
+                  className={`type-item ${getActiveSubcategory(subcategory._id) ? "active" : ""}`}
+                  onClick={() => handleSubcategoryClick(subcategory)}
+                >
+                  {subcategory.name}
+                </span>
+              ))}
+        </div>
+      )}
 
       {/* Products Grid */}
       <div className="cards-section container">
-        {loading.products 
+        {loading.products
           ? Array(12).fill().map((_, index) => <ProductPlaceholder key={index} />)
-          : filteredProducts.length > 0 
-            ? filteredProducts.map((product) => (
-              <div 
-                key={product._id} 
-                className="card" 
+          : filteredProducts.length > 0
+          ? filteredProducts.map((product) => (
+              <div
+                key={product._id}
+                className="card"
                 onClick={() => handleCardClick(product)}
               >
-                <img 
-                  src={product.image && product.image.length > 0 ? product.image[0] : ''} 
-                  alt={product.productName} 
+                <img
+                  src={product.image && product.image.length > 0 ? product.image[0] : ""}
+                  alt={product.productName}
                 />
                 <p>{product.productName}</p>
               </div>
             ))
-            : (
+          : (
               <div className="no-products-message">
-                <p>No products found for this subcategory.</p>
+                <p>No products found.</p>
               </div>
             )}
       </div>
 
-      {/* <div className="first-line container justify-content-center">
-        <Linebot />
-      </div> */}
-
-      {/* <div className="container similar-products">
-        <h2>{t("similar-products")}</h2>
-        <div>
-          <button className="view-more-button">{t("view-more-btn")}</button>
-        </div>
-      </div> */}
-
-      {/* Similar Products Grid */}
-      {/* <div className="cards-section">
-        {loading.products 
-          ? Array(8).fill().map((_, index) => <ProductPlaceholder key={index} />)
-          : similarProducts.map((product, index) => (
-            <div 
-              key={`similar-${product._id || index}`} 
-              className="card"
-              onClick={() => handleCardClick(product)}
-            >
-              <img 
-                src={product.image && product.image.length > 0 ? product.image[0] : ''} 
-                alt={product.productName} 
-              />
-              <p>{product.productName}</p>
-            </div>
-          ))}
-      </div> */}
-      
       <ContentSection />
       <Footer />
     </div>

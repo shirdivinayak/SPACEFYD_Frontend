@@ -48,10 +48,14 @@ const ProjectList = () => {
         response.data.data &&
         Array.isArray(response.data.data)
       ) {
-        setCategories(response.data.data);
-        if (response.data.data.length > 0) {
-          setSelectedCategory(response.data.data[0]._id);
-        }
+        const allProjectsCategory = {
+          _id: "All Projects", // Unique identifier for the "All Projects" category
+          name: t("All Projects"), // Translate this to show 'All Projects'
+        };
+        const allCategories = [allProjectsCategory, ...response.data.data];
+        setCategories(allCategories);
+        // Set the selected category to "All Projects" by default
+        setSelectedCategory(allProjectsCategory._id);
       } else {
         console.error("Invalid category data format:", response.data);
         setCategories([]);
@@ -75,22 +79,34 @@ const ProjectList = () => {
     }
 
     try {
-      const response = await axiosInstance.post("/displayProjectByID", {
-        categoryId: categoryId,
+      const endpoint =
+        categoryId === "All Projects" ? "/displayProject" : "/displayProjectByID";
+      const response = await axiosInstance.post(endpoint, {
+        categoryId: categoryId !== "All Projects" ? categoryId : undefined,
         lastId: lastId,
       });
       console.log(response.data.lastFetchedId, "---lSTFETCH");
 
       if (response.data && response.data.data) {
+        const newProjects = response.data.data;
+        const newLastFetchedId = response.data.lastFetchedId;
+
         if (isInitialFetch) {
-          setProjects(response.data.data);
+          setProjects(newProjects);
         } else {
-          setProjects((prev) => [...prev, ...response.data.data]);
+          // Prevent duplicates: filter out any projects that already exist in the current list
+          const updatedProjects = [
+            ...projects,
+            ...newProjects.filter(
+              (newProject) => !projects.some((project) => project._id === newProject._id)
+            ),
+          ];
+          setProjects(updatedProjects);
         }
 
-        if (response.data.lastFetchedId) {
-          setLastFetchedId(response.data.lastFetchedId);
-          setHasMore(response.data.data.length > 0);
+        if (newLastFetchedId) {
+          setLastFetchedId(newLastFetchedId);
+          setHasMore(newProjects.length > 0);
         } else {
           setHasMore(false);
         }
