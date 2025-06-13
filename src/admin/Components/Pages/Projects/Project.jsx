@@ -11,7 +11,7 @@ import Spinner from "react-bootstrap/Spinner";
 const ProductTable = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("All Projects");
-  
+
   const {
     projects,
     loading: projectsLoading,
@@ -19,7 +19,8 @@ const ProductTable = () => {
     refetch,
     fetchMoreProjects,
     hasMore,
-  } =useFetchProjects(
+    lastFetchedId,  // Track lastFetchedId for pagination
+  } = useFetchProjects(
     selectedCategory === "All Projects" ? null : selectedCategory
   );
   const {
@@ -45,13 +46,14 @@ const ProductTable = () => {
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
           setLoadingMore(true);
-          fetchMoreProjects().finally(() => setLoadingMore(false));
+          fetchMoreProjects(lastFetchedId) // Pass lastFetchedId for pagination
+            .finally(() => setLoadingMore(false));
         }
       });
 
       if (node) observer.current.observe(node);
     },
-    [projectsLoading, loadingMore, hasMore, fetchMoreProjects]
+    [projectsLoading, loadingMore, hasMore, fetchMoreProjects, lastFetchedId]
   );
 
   useEffect(() => {
@@ -74,7 +76,7 @@ const ProductTable = () => {
 
   useEffect(() => {
     if (projects) {
-      const formattedprojects = projects.map((item) => ({
+      const formattedProjects = projects.map((item) => ({
         id: item._id,
         projectName: item.projectName || "Unnamed",
         projectDescription: item.projectDescription || "",
@@ -86,7 +88,18 @@ const ProductTable = () => {
         isVisible: item.isVisible || false, // Use isVisible property for filtering
         originalItem: item,
       }));
-      setItems(formattedprojects);
+
+      // Remove duplicates based on `_id` and append new projects to the existing list
+      setItems((prevItems) => {
+        const newItems = [...prevItems, ...formattedProjects];
+        
+        // Use Set to remove duplicates based on project `id`
+        const uniqueItems = [
+          ...new Map(newItems.map(item => [item.id, item])).values()
+        ];
+
+        return uniqueItems;
+      });
     }
   }, [projects]);
 
@@ -146,7 +159,7 @@ const ProductTable = () => {
   };
 
   const handleCategorySelect = (categoryId) => {
-    setItems([]);
+    setItems([]); // Clear items when changing category
 
     // If "All Projects" is explicitly selected or the same category is clicked again, reset to "All Projects"
     setSelectedCategory(
@@ -223,7 +236,6 @@ const ProductTable = () => {
               className="d-flex overflow-hidden"
               ref={tabsRef}
               style={{
-                // paddingRight: "90px",
                 maxWidth: "950px",
                 overflowX: "auto",
                 whiteSpace: "nowrap",
@@ -231,9 +243,7 @@ const ProductTable = () => {
               }}
             >
               <Button
-                variant={
-                  selectedCategory === "All Projects" ? "primary" : "btn-light"
-                }
+                variant={selectedCategory === "All Projects" ? "primary" : "btn-light"}
                 className="mx-1"
                 onClick={() => handleCategorySelect("All Projects")}
                 style={{
@@ -251,9 +261,7 @@ const ProductTable = () => {
               {filteredAndSortedCategories.map((category) => (
                 <Button
                   key={category._id}
-                  variant={
-                    selectedCategory === category._id ? "primary" : "btn-light"
-                  }
+                  variant={selectedCategory === category._id ? "primary" : "btn-light"}
                   className="mx-1"
                   onClick={() => handleCategorySelect(category._id)}
                   style={{
@@ -312,11 +320,8 @@ const ProductTable = () => {
       </div>
 
       {/* Project Table */}
-      <div
-        className="mx-4 px-12"
-        // style={{ backgroundColor: "white" }}
-      >
-        {projectsLoading  ? (
+      <div className="mx-4 px-12">
+        {projectsLoading ? (
           <div
             style={{
               display: "flex",
@@ -400,22 +405,8 @@ const ProductTable = () => {
                 >
                   Category
                 </th>
-                {/* <th
-                  style={{
-                    height: "60px",
-                    padding: "20px 10px",
-                    borderBottom: true,
-                    fontWeight: 500,
-                    fontSize: 14,
-                    color: "#474747",
-                  }}
-                >
-                  Brand
-                </th> */}
 
-                <th
-                  style={{ border: "none", width: "140px", borderBottom: true }}
-                >
+                <th style={{ border: "none", width: "140px", borderBottom: true }}>
                   <div
                     className="d-flex align-items-center"
                     style={{
@@ -454,11 +445,8 @@ const ProductTable = () => {
                 </th>
               </tr>
             </thead>
-            {/* <div style={{ position: "relative", minHeight: "300px" }}> */}
-            {/* </div> */}
             <tbody>
               {filteredItems.map((item, index) => {
-                // Determine if this is the last item for the ref
                 const isLastItem = index === filteredItems.length - 1;
 
                 return (
@@ -488,7 +476,6 @@ const ProductTable = () => {
                       />
                     </td>
                     <td style={{ borderBottom: true }}>{item.category}</td>
-                    {/* <td style={{ borderBottom: true }}>{item.brand}</td> */}
                     <td style={{ borderBottom: true }}>
                       <Button
                         size="sm"
@@ -504,7 +491,6 @@ const ProductTable = () => {
                           style={{ color: "9A715B", fontSize: "20px" }}
                         ></i>{" "}
                         <span style={{ fontWeight: 500, fontSize: "16px" }}>
-                          {" "}
                           Edit
                         </span>
                       </Button>
@@ -527,10 +513,7 @@ const ProductTable = () => {
           </div>
         )}
       </div>
-      {/*message section*/}
       <AlertMessage message={message} />
-
-      {/* Footer section */}
       {selectedItems.length > 0 && (
         <div
           style={{

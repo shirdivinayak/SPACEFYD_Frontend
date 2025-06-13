@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HeroImage from "../../../Assets/AboutUs/hero.svg";
+import allProject from "../../../Assets/Products/allProject.png";
 import HomeNavbar from "../../../components/Home/NavbarDark/DarkNavbar";
 import ContentSection from "../../../components/Home/Content/ContentSection";
 import Footer from "../../../components/Home/Footer/Footer";
@@ -45,7 +46,7 @@ const Products = () => {
   useEffect(() => {
     if (selectedSubcategory && allProductsInCategory.length > 0) {
       filterProductsBySubcategory();
-    } else if (selectedCategory === "all-products") {
+    } else if (selectedCategory === "All Products") {
       // If "All Products" is selected, no filtering by subcategory
       setFilteredProducts(allProductsInCategory);
     }
@@ -61,13 +62,14 @@ const Products = () => {
 
       // Add "All Products" as the first category
       const allProductsCategory = {
-        _id: "all-products", // Unique identifier for "All Products"
-        name: t("all-products"), // Translate to "All Products"
+        _id: "All Products", // Unique identifier for "All Products"
+        name: t("All Products"), // Translate to "All Products"
+        image: allProject,
       };
       setCategories([allProductsCategory, ...response.data.data]);
 
       if (response.data.data.length > 0) {
-        setSelectedCategory("all-products"); // Select "All Products" by default
+        setSelectedCategory("All Products"); // Select "All Products" by default
       }
     } catch (error) {
       console.error("Error fetching categories:", error);
@@ -103,10 +105,10 @@ const Products = () => {
     setLoading(prev => ({ ...prev, products: true }));
     try {
       // If "All Products" is selected, call /displayProduct to fetch all products
-      const endpoint = categoryId === "all-products" ? "/displayProduct" : "/displayProductByID";
+      const endpoint = categoryId === "All Products" ? "/displayProduct" : "/displayProductByID";
       const response = await axiosInstance.post(endpoint, {
         lastId: null,
-        categoryId: categoryId !== "all-products" ? categoryId : undefined
+        categoryId: categoryId !== "All Products" ? categoryId : undefined
       });
 
       setAllProductsInCategory(response.data.data || []);
@@ -114,7 +116,7 @@ const Products = () => {
       setSimilarProducts(similarProductsData);
       
       // If "All Products" is selected, set the filtered products directly to all products
-      if (categoryId === "all-products") {
+      if (categoryId === "All Products") {
         setFilteredProducts(response.data.data || []);
       }
     } catch (error) {
@@ -278,7 +280,7 @@ const Products = () => {
       </div>
 
       {/* Horizontal Menu for Subcategories (only show if not "All Products") */}
-      {selectedCategory !== "all-products" && (
+      {selectedCategory !== "All Products" && (
         <div className="types-menu">
           {loading.subcategories
             ? Array(6).fill().map((_, index) => <SubcategoryPlaceholder key={index} />)
