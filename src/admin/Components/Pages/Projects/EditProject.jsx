@@ -6,7 +6,8 @@ import AlertSuccesMessage from "../../common/MessageSuccesAlert";
 import useAddProjectApi from "../../../hooks/useAddProjectApi.js";
 import useFetchCategories from "../../../hooks/useAllProjectApi.js";
 import Placeholder from "../../../Assets/Images/PlaceholderInput.svg";
-
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { reorder } from "../../../utils/reorder";
 // const categories = ["Electronics", "Furniture", "Clothing", "Toys"];
 const subCategories = {
   Electronics: ["Phones", "Laptops", "Cameras"],
@@ -76,6 +77,19 @@ const EditProjectScreen = () => {
       [name]: type === "checkbox" ? checked : value,
     }));
   };
+
+    const handleDragEnd = (result) => {
+    if (!result.destination) return;
+  
+    setImageDisplay((prev) => ({
+      ...prev,
+      additionalImages: reorder(
+        prev.additionalImages,
+        result.source.index,
+        result.destination.index
+      ),
+      }));
+    };
 
   const handleSave = async () => {
     setIsSubmitting(true);
@@ -617,87 +631,105 @@ const EditProjectScreen = () => {
               ))}
             </div> */}
 
-            <div style={{ marginTop: "20px", paddingLeft: "50px" }}>
-              {/* Display images in rows of 3 */}
-              {Array.from({
-                length: Math.ceil(imageDisplay.additionalImages.length / 3),
-              }).map((_, rowIndex) => (
-                <div
-                  key={`row-${rowIndex}`}
-                  className="d-flex"
-                  style={{ gap: "15px", marginBottom: "15px" }}
-                >
-                  {imageDisplay.additionalImages
-                    .slice(rowIndex * 3, (rowIndex + 1) * 3)
-                    .map((img, colIndex) => {
-                      const index = rowIndex * 3 + colIndex;
-                      return (
-                        <div
-                          key={index}
-                          style={{
-                            position: "relative",
-                            display: "inline-block",
-                            width: "120px",
-                            height: "120px",
-                          }}
-                        >
-                          <img
-                            src={img}
-                            alt={`Image-${index + 1}`}
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "cover",
-                              border: "1px solid #ddd",
-                              padding: "5px",
-                              cursor: isEditing ? "pointer" : "default",
-                              borderRadius: "4px",
-                            }}
-                            onClick={() =>
-                              isEditing &&
-                              document
-                                .getElementById(`otherImageInput-${index}`)
-                                .click()
-                            }
-                          />
-                          {isEditing && (
-                            <button
-                              onClick={() => handleDeleteOtherImage(index)}
-                              style={{
-                                position: "absolute",
-                                top: "5px",
-                                right: "5px",
-                                backgroundColor: "rgba(255, 255, 255, 0.7)",
-                                border: "none",
-                                borderRadius: "50%",
-                                width: "24px",
-                                height: "24px",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                cursor: "pointer",
-                              }}
-                            >
-                              <i
-                                className="bi bi-trash"
-                                style={{ color: "red", fontSize: "14px" }}
-                              ></i>
-                            </button>
-                          )}
-                          <input
-                            type="file"
-                            disabled={!isEditing}
-                            id={`otherImageInput-${index}`}
-                            accept="image/*"
-                            style={{ display: "none" }}
-                            onChange={(e) => handleOtherImageUpload(e, index)}
-                          />
-                        </div>
-                      );
-                    })}
-                </div>
-              ))}
-            </div>
+             
+<DragDropContext onDragEnd={handleDragEnd}>
+  <Droppable droppableId="thumbGrid" direction="horizontal">
+    {(provided) => (
+      <div
+        ref={provided.innerRef}
+        {...provided.droppableProps}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "auto auto auto",
+          gap: "15px",
+          paddingLeft: "50px"
+        }}
+        className="pt-3"
+      >
+        {imageDisplay.additionalImages.map((img, index) => (
+          <Draggable
+            key={index}
+            draggableId={`thumb-${index}`}
+            index={index}
+            isDragDisabled={!isEditing} // only draggable when editing
+          >
+            {(dragProvided, snapshot) => (
+              <div
+                className="image-orediring-container"
+                ref={dragProvided.innerRef}
+                {...dragProvided.draggableProps}
+                {...dragProvided.dragHandleProps}
+                style={{
+                  width: "120px",
+                  height: "120px",
+                  position: "relative",
+                  borderRadius: "4px",
+                  transition: "transform .2s ease",
+                  boxShadow: snapshot.isDragging
+                    ? "0 0 8px rgba(0,0,0,.25)"
+                    : "none",
+                  ...dragProvided.draggableProps.style,
+                }}
+              >
+                <img
+                  src={img}
+                  alt={`Image-${index + 1}`}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    border: "1px solid #ddd",
+                    padding: "5px",
+                    cursor: isEditing ? "grab" : "default",
+                    opacity: snapshot.isDragging ? 0.8 : 1,
+                  }}
+                  onClick={() =>
+                    isEditing &&
+                    document.getElementById(`otherImageInput-${index}`).click()
+                  }
+                />
+
+                {/* 🗑 Delete Button */}
+                {isEditing && (
+                  <button
+                    onClick={() => handleDeleteOtherImage(index)}
+                    style={{
+                      position: "absolute",
+                      top: "5px",
+                      right: "5px",
+                      backgroundColor: "rgba(255,255,255,0.7)",
+                      border: "none",
+                      borderRadius: "50%",
+                      width: "24px",
+                      height: "24px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <i className="bi bi-trash" style={{ color: "red" }} />
+                  </button>
+                )}
+
+                {/* Hidden file input */}
+                <input
+                  type="file"
+                  disabled={!isEditing}
+                  id={`otherImageInput-${index}`}
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={(e) => handleOtherImageUpload(e, false, index)}
+                />
+              </div>
+            )}
+          </Draggable>
+        ))}
+        {provided.placeholder}
+      </div>
+    )}
+  </Droppable>
+</DragDropContext>
           </div>
 
           <div className="mt-4 d-flex justify-content-end">
