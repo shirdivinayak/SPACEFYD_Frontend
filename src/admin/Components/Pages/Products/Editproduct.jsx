@@ -646,7 +646,12 @@ useEffect(() => {
       <div
         ref={provided.innerRef}
         {...provided.droppableProps}
-        style={{ display: "flex", flexWrap: "wrap", gap: "15px", paddingLeft: "50px" }}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "auto auto auto",
+          gap: "15px",
+          paddingLeft: "50px"
+        }}
         className="pt-3"
       >
         {imageDisplay.additionalImages.map((img, index) => (
