@@ -49,7 +49,8 @@ const Sections = ({ backgroundImage, sections }) => {
                 {/* Left Column - two stacked images */}
                 <div className="left-images">
                   <div className="image-item">
-                    <img src={section.col8.row1.image} alt={section.col8.row1.alt} />
+                    <img src={section.col8.row1.image} alt={section.col8.row1.alt} 
+                     onClick={() => handleServiceNavigation(section.col8.row1.targetId)}/>
                     <div className="image-overlay">
                       <p>{section.col8.row1.text}</p>
                       <button 
@@ -68,12 +69,14 @@ const Sections = ({ backgroundImage, sections }) => {
                     </div>
                   </div>
                   <div className="image-item">
-                    <img src={section.col8.row2.image} alt={section.col8.row2.alt} />
+                    <img src={section.col8.row2.image} alt={section.col8.row2.alt} 
+                      onClick={() => handleServiceNavigation(section.col8.row2.targetId)}
+                    />
                     <div className="image-overlay">
                       <p>{section.col8.row2.text}</p>
                       <button 
+                      onClick={() => handleServiceNavigation(section.col8.row2.targetId)}
                         className="arrow-button"
-                        onClick={() => handleServiceNavigation(section.col8.row2.targetId)}
                         aria-label={`Navigate to ${section.col8.row2.text}`}
                       >
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -91,7 +94,8 @@ const Sections = ({ backgroundImage, sections }) => {
                 {/* Right Column - single image */}
                 <div className="right-image">
                   <div className="image-item">
-                    <img src={section.col4.image} alt={section.col4.alt} />
+                    <img src={section.col4.image} alt={section.col4.alt} 
+                    onClick={() => handleServiceNavigation(section.col4.targetId)}/>
                     <div className="image-overlay">
                       <p>{section.col4.text}</p>
                       <button 

@@ -105,15 +105,15 @@ const ContactUs = () => {
                 <div className="contact-text">
                   <h1>{t("address")}</h1>
                   <p>
-                    236 5th SE Avenue, New
+                    SPACIFYD, Al Maya Building, 5th Floor, Office 503,
                     <br />
-                    York NY10000, United
-                    <br /> States
+                    Al Maha Street, Al Khuawir,
+                    <br />  Sultanate of Oman
                   </p>
                 </div>
               </div>
 
-              <div className="contact-item">
+              {/* <div className="contact-item">
                 <img
                   src={Phone}
                   alt="Phone"
@@ -136,7 +136,7 @@ const ContactUs = () => {
                 </p>                 
                 <p>Hotline: +(84) 456-6789</p>
                 </div>
-              </div>
+              </div> */}
 
               <div className="contact-item">
                 <img
@@ -148,7 +148,7 @@ const ContactUs = () => {
                 />
                 <div className="contact-text">
                   <h1>{t("email")}</h1>
-                  <p>hasghgds@gmail.com</p>
+                  <p>connect.spacifyd@gmail.com</p>
                 </div>
               </div>
             </div>

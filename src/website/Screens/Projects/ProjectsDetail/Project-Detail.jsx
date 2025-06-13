@@ -194,13 +194,13 @@ const images = projectData?.images || fallbackData?.images || [];
           {/* Images Grid - use project images if available, otherwise use fallback */}
 
 <div className="images-grid">
-<PhotoProvider>
-  {images.map((img, i) => (
-    <PhotoView key={i} src={img}>
-      <img src={img} alt="" className="grid-image" />
-    </PhotoView>
-  ))}
-</PhotoProvider>
+  <PhotoProvider>
+    {images.slice(1).map((img, i) => (
+      <PhotoView key={i} src={img}>
+        <img src={img} alt="" className="grid-image" />
+      </PhotoView>
+    ))}
+  </PhotoProvider>
 </div>
 
 
