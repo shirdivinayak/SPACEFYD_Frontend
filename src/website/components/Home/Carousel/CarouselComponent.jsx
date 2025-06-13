@@ -117,6 +117,11 @@ const CarouselComponent = () => {
                 {carouselData[currentIndex]?.projectName || "Unnamed Project"}
               </h3>
               <hr />
+              <p>
+              {carouselData[currentIndex]?.projectDescription?.length > 550
+                ? carouselData[currentIndex]?.projectDescription.slice(0, 550) + "..."
+                : carouselData[currentIndex]?.projectDescription || ""}
+            </p>
             </div>
 
             <div className="carousel-navigation">
