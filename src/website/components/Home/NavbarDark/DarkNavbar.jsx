@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import pic from "../../../Assets/Home/mainwhite.svg";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -6,6 +6,7 @@ import LanguageSelector from "../../LanguageSelector/LanguageSelector";
 
 const DarkNavbar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);  // Track scroll state
   const { i18n } = useTranslation();
 
   const navItems = [
@@ -17,17 +18,35 @@ const DarkNavbar = () => {
 
   const contactPath = "/ContactUs";
 
+  // Scroll event listener to update navbar style
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);  // If scrolled down, apply styles
+      } else {
+        setIsScrolled(false);  // If at top, reset styles
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup the event listener
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <nav
-      className="navbar navbar-expand-lg dark-navbar"
+      className={`navbar navbar-expand-lg dark-navbar fixed-top ${isScrolled ? "scrolled" : ""}`}
       style={{
         padding: "clamp(20px, 3vw, 36px) clamp(10px, 5vw, 100px)",
-        background: "transparent",
-        position: "absolute",
+        background: isScrolled ? "rgba(255, 255, 255, 0.1)" : "transparent", // Transparent at top, with a slight color on scroll
+        position: "fixed",
         width: "100%",
         top: 0,
         left: 0,
         zIndex: 1000,
+        backdropFilter: isScrolled ? "blur(10px)" : "none",  // Apply blur only after scroll
+        transition: "background 0.3s ease, backdrop-filter 0.3s ease",  // Smooth transition for background and blur
       }}
     >
       <div className="container-fluid">
@@ -77,7 +96,7 @@ const DarkNavbar = () => {
           className={`collapse navbar-collapse ${isExpanded ? "show" : ""}`}
           id="navbarSupportedContent"
         >
-          {/* Mobile Menu - Background color restored to original */}
+          {/* Mobile Menu */}
           <div className="mobile-menu d-lg-none" style={{ backgroundColor: "#4C6559" }}>
             <div className="mobile-menu-header">
               <Link className="navbar-brand d-flex align-items-center" to="/">
