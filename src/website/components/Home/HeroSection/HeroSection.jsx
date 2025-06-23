@@ -124,6 +124,7 @@ const HeroSection = () => {
           position: "relative",
           margin: "auto",
           maxWidth: "100%",
+          marginTop: "8.5%"
         }}
       >
         {/* Heading */}
