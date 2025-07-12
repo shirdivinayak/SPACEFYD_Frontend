@@ -22,17 +22,17 @@ import { useTranslation } from "react-i18next";
 const topButtons = [
   { icon: icon1, text: "Industrial Spaces" },
   { icon: icon2, text: "Residential Spaces" },
-  { icon: icon3, text: "Entertainment and Leisure" },
+  { icon: icon3, text: "Entertainment Spaces" },
 ];
 
 const leftButtons = [
-  { icon: icon4, text: "Retail Environments" },
-  { icon: icon5, text: "Educational Facilities" },
+  { icon: icon4, text: "Commercial" },
+  { icon: icon5, text: "Hospitality" },
 ];
 
 const rightButtons = [
-  { icon: icon6, text: "Commercial Workspaces" },
-  { icon: icon7, text: "Hospitality Venues" },
+  { icon: icon6, text: "Retail Environments" },
+  { icon: icon7, text: "Education" },
 ];
 
 // Combined buttons for small screens
@@ -43,8 +43,8 @@ const allHeroButtons = [...topButtons, ...leftButtons, ...rightButtons].slice(
 
 // Button data for the Lamp Section
 const lampButtons = [
-  { icon: lampicon1, text: "AI-Driven Interiors" },
-  { icon: lampicon2, text: "Bespoke Design Precision" },
+  { icon: lampicon1, text: "Intelligent Interior Planning" },
+  { icon: lampicon2, text: "Bespoke Design" },
   { icon: lampicon3, text: "Seamless Tech Integration" },
   { icon: lampicon4, text: "Future-Defined Spaces" },
 ];
@@ -223,7 +223,7 @@ const HeroSection = () => {
                   gap: "20px",
                 }}
               >
-                <h2
+                {/* <h2
                   style={{
                     fontFamily: "Poppins, sans-serif",
                     fontWeight: 500,
@@ -236,7 +236,7 @@ const HeroSection = () => {
                   }}
                 >
                   {t("h2")}
-                </h2>
+                </h2> */}
 
                 <div
                   className="hero-card"

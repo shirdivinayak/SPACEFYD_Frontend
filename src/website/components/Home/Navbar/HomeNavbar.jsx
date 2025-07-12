@@ -27,7 +27,7 @@ const HomeNavbar = () => {
     <nav
       className="navbar navbar-expand-lg home-navbar fixed-top"
       style={{
-        padding: "clamp(20px, 3vw, 36px) clamp(10px, 5vw, 100px)",
+        padding: "clamp(20px, 3vw, 16px) clamp(10px, 5vw, 100px)",
         backgroundColor: "#FCF9F5",
       }}
     >
