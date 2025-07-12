@@ -36,19 +36,19 @@ const DarkNavbar = () => {
 
   return (
     <nav
-      className={`navbar navbar-expand-lg dark-navbar fixed-top ${isScrolled ? "scrolled" : ""}`}
-      style={{
-        padding: "clamp(20px, 3vw, 36px) clamp(10px, 5vw, 100px)",
-        background: isScrolled ? "rgba(255, 255, 255, 0.1)" : "transparent", // Transparent at top, with a slight color on scroll
-        position: "fixed",
-        width: "100%",
-        top: 0,
-        left: 0,
-        zIndex: 1000,
-        backdropFilter: isScrolled ? "blur(10px)" : "none",  // Apply blur only after scroll
-        transition: "background 0.3s ease, backdrop-filter 0.3s ease",  // Smooth transition for background and blur
-      }}
-    >
+  className={`navbar navbar-expand-lg dark-navbar fixed-top ${isScrolled ? "scrolled" : ""}`}
+  style={{
+    padding: "clamp(20px, 3vw, 16px) clamp(10px, 5vw, 100px)",
+    background: isScrolled ? "rgb(76, 101, 89)" : "transparent", // Dark green background on scroll
+    position: "fixed",
+    width: "100%",
+    top: 0,
+    left: 0,
+    zIndex: 1000,
+    backdropFilter: isScrolled ? "blur(6px)" : "none",  // Adjusted blur on scroll
+    transition: "background 0.3s ease, backdrop-filter 0.3s ease",
+  }}
+>
       <div className="container-fluid">
         <Link className="navbar-brand d-flex align-items-center" to="/">
           <img

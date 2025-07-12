@@ -32,8 +32,8 @@ function App() {
         },
         row2: {
           image: image2,
-          alt: "Home theaters and immersive media rooms",
-          text: "Home theaters and immersive media rooms",
+          alt: "Home theaters and VR gaming setups",
+          text: "Home theaters and VR gaming setups",
           targetId: "home-theaters",
         },
       },
