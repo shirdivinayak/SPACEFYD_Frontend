@@ -91,7 +91,9 @@ const CarouselComponent = () => {
           <div
             className="carousel-image-section"
             style={{
-              backgroundImage: `url(${carouselData[currentIndex]?.images?.[0] || image1})`,
+              backgroundImage: `url(${
+                carouselData[currentIndex]?.images?.[0] || image1
+              })`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               cursor: "pointer", // Optional for better UX
@@ -102,8 +104,8 @@ const CarouselComponent = () => {
                   carouselData[currentIndex]?.projectName || "unknown"
                 )}`,
                 { state: { project: carouselData[currentIndex] } }
-              )
-                window.scrollTo(0, 0);
+              );
+              window.scrollTo(0, 0);
             }}
           />
 
@@ -118,10 +120,15 @@ const CarouselComponent = () => {
               </h3>
               <hr />
               <p>
-              {carouselData[currentIndex]?.projectDescription?.length > 550
-                ? carouselData[currentIndex]?.projectDescription.slice(0, 550) + "..."
-                : carouselData[currentIndex]?.projectDescription || ""}
-            </p>
+                {(() => {
+                  const desc =
+                    carouselData[currentIndex]?.projectDescription || "";
+                  const maxLength = window.innerWidth <= 768 ? 150 : 300;
+                  return desc.length > maxLength
+                    ? desc.slice(0, maxLength) + "..."
+                    : desc;
+                })()}
+              </p>
             </div>
 
             <div className="carousel-navigation">
@@ -158,7 +165,7 @@ const CarouselComponent = () => {
           className="carousel-home-know-more-btn small-screen-btn"
           onClick={handleKnowMoreClick}
           style={{
-            width: "132px",
+            width: "182px",
             height: "44px",
             borderRadius: "4px",
             padding: "12px 16px",

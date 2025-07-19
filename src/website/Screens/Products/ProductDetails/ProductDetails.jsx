@@ -9,7 +9,7 @@ import { ReactComponent as Linetop } from "../../../Assets/Products/Line.svg";
 import { useTranslation } from "react-i18next";
 import axiosInstance from "../../../../instance/axiosInstance";
 import Placeholder from "react-bootstrap/Placeholder";
-import ImageModal from "../../../components/ImageViewer/ImageViewer"
+import ImageModal from "../../../components/ImageViewer/ImageViewer";
 
 const ProductDetails = () => {
   const { t } = useTranslation("productdetails");
@@ -19,13 +19,15 @@ const ProductDetails = () => {
 
   const [similar, setSimilar] = useState([]);
   const [loading, setLoading] = useState({ categories: false });
-const [isModalOpen, setModalOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState(null);
+  const [mainImage, setMainImage] = useState(product?.image?.[0] || "");
 
-   const openModal = (src) => {
+  const openModal = (src) => {
     setModalImage(src);
     setModalOpen(true);
   };
+
   const fetchSimillarProducts = async () => {
     setLoading((prev) => ({ ...prev, categories: true }));
     try {
@@ -35,7 +37,6 @@ const [isModalOpen, setModalOpen] = useState(false);
       });
       if (response.data.data.length > 0) {
         setSimilar(response.data.data);
-        console.log(response.data.data, "===== fetched similar products");
       }
     } catch (error) {
       console.error("Error fetching similar products:", error);
@@ -46,10 +47,7 @@ const [isModalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     fetchSimillarProducts();
-    console.log("Product Details:", product);
   }, [product]);
-
-  const [mainImage, setMainImage] = useState(product?.image?.[0] || "");
 
   const handleImageClick = (image) => {
     setMainImage(image);
@@ -80,15 +78,17 @@ const [isModalOpen, setModalOpen] = useState(false);
                 className="thumbnail-img"
                 src={image}
                 alt={`${ProductImages.title} view ${index + 1}`}
-                style={{ cursor: "pointer" }}
                 onClick={() => handleImageClick(image)}
               />
             ))}
           </div>
           <div className="main-image">
-            <img src={mainImage} alt={ProductImages.title}         style={{ cursor: "pointer" }}
-
-                        onClick={() => openModal(mainImage)}/>
+            <img
+              src={mainImage}
+              alt={ProductImages.title}
+              onClick={() => openModal(mainImage)}
+              style={{ cursor: "pointer" }}
+            />
           </div>
         </div>
 
@@ -103,7 +103,8 @@ const [isModalOpen, setModalOpen] = useState(false);
       <div className="first-line container justify-content-center">
         <Linetop style={{ marginTop: 50, marginBottom: 25 }} />
       </div>
-      {similar.length > 1 ? (
+
+      {similar.length > 1 && (
         <div className="container similar-products">
           <h2>{t("similar-products")}</h2>
           <div>
@@ -115,7 +116,7 @@ const [isModalOpen, setModalOpen] = useState(false);
             </button>
           </div>
         </div>
-      ) : null}
+      )}
 
       <div className="cards-section container row">
         {loading.categories
@@ -135,7 +136,7 @@ const [isModalOpen, setModalOpen] = useState(false);
                 </div>
               </div>
             ))
-          : similar?.map((item, index) => (
+          : similar.map((item, index) => (
               <div className="col-md-3 mb-4" key={item._id || index}>
                 <div
                   className="card h-100"
@@ -163,7 +164,6 @@ const [isModalOpen, setModalOpen] = useState(false);
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
       />
-
       <Footer />
     </div>
   );
