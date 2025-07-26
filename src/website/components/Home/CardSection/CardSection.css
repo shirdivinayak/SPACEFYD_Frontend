@@ -376,11 +376,10 @@
 
   .small-screen-navigation button span {
     font-size: 16px;
-    display: none;
   }
 
   .small-screen-view-more .view-more-btn {
-    width: 150px;
+    width: 80px;
     height: 28px;
     padding: 6px 8px;
     font-size: 11px;

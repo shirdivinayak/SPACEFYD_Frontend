@@ -10,8 +10,6 @@
 }
 .service-title{
   margin-bottom: 15px;
-      margin-top: 120px;
-
 }
 .products-menu {
   display: flex;
@@ -299,12 +297,6 @@
 }
 
 @media (max-width: 768px) {
-  .card {
-  width: calc(25% - 15px); /* 4 cards per row */
-  max-width: 150px; /* Prevents oversized cards */
-  max-height: 328px;
-  border-radius: 12px !important;
-}
   .products-menu {
     /* display: flex; */
     justify-content: flex-start;
