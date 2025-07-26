@@ -82,13 +82,13 @@ const AboutUs = () => {
       >
         {/* Left Section (Text) */}
         <div
-  className="d-flex flex-column col-12 col-md-8 text-left text-md-left"
-  style={{
-    textAlign: "left",
-    paddingLeft: "16px",
-  }}
->
-
+          className="d-flex flex-column col-lg-6 col-md-6 text-left text-md-left"
+          style={{
+            width: "50%", // Keeps content in the left half
+            textAlign: "left",
+            paddingLeft: "16px", // Ensures text is justified to the left
+          }}
+        >
           <div
             style={{
               paddingLeft: "22px",
@@ -107,19 +107,19 @@ const AboutUs = () => {
           <div className="left-column d-flex flex-column flex-sm-row mt-4 px-4">
             {/* Left Column */}
             <div className="d-flex flex-column me-sm-4">
-              <h4>{t("left-column-top-head")}</h4>
+              <h5>{t("left-column-top-head")}</h5>
               <p>{t("left-column-top-content")}</p>
 
-              <h4>{t("left-column-bottom-head")}</h4>
+              <h5>{t("left-column-bottom-head")}</h5>
               <p>{t("left-column-bottom-content")}</p>
             </div>
 
             {/* Right Column */}
             <div className="right-column d-flex flex-column">
-              <h4>{t("right-column-top-head")}</h4>
+              <h5>{t("right-column-top-head")}</h5>
               <p>{t("right-column-top-content")}</p>
 
-              <h4>{t("right-column-bottom-head")}</h4>
+              <h5>{t("right-column-bottom-head")}</h5>
               <p>{t("right-column-bottom-content")}</p>
             </div>
           </div>
