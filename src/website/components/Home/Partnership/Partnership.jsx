@@ -30,7 +30,7 @@ const Partnership = () => {
             <h2 className="section-title">{t("innovat")}</h2>
             <p className="section-text">{t("elevate")}</p>
             <div className="section-link-container">
-              <a href="#" className="section-link">
+            <a href="https://www.qbikdesigns.com" className="section-link" target="_blank" rel="noopener noreferrer">
                 {t("discover")}
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <path

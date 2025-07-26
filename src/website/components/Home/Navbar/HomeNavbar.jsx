@@ -56,7 +56,9 @@ const HomeNavbar = () => {
             border: "none",
             padding: "clamp(0px, 1vw, 4px)",
           }}
-          onClick={() => setIsExpanded(!isExpanded)}
+          onClick={() => {
+             window.scrollTo(0, 0);
+            setIsExpanded(!isExpanded)}}
         >
           <span
             className="navbar-toggler-icon"
@@ -128,7 +130,9 @@ const HomeNavbar = () => {
                 aria-controls="navbarSupportedContent"
                 aria-expanded="false"
                 aria-label="Close navigation"
-                onClick={() => setIsExpanded(false)}
+                onClick={() => {
+                   window.scrollTo(0, 0);
+                  setIsExpanded(false)}}
               >
                 <svg
                   width="24"
@@ -170,7 +174,9 @@ const HomeNavbar = () => {
                       textDecoration: "none",
                       transition: "transform 0.3s ease",
                     }}
-                    onClick={() => setIsExpanded(false)}
+                    onClick={() => {
+                       window.scrollTo(0, 0);
+                      setIsExpanded(false)}}
                     onMouseEnter={(e) =>
                       (e.currentTarget.style.transform = "scale(1.1)")
                     }
@@ -211,7 +217,9 @@ const HomeNavbar = () => {
                     e.currentTarget.style.color = "white";
                     e.currentTarget.style.border = "1px solid #4C6559";
                   }}
-                  onClick={() => setIsExpanded(false)}
+                  onClick={() => {
+                     window.scrollTo(0, 0);
+                     setIsExpanded(false)}}
                 >
                   Contact us
                 </Link>
