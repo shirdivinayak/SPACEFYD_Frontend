@@ -158,7 +158,7 @@ const CarouselComponent = () => {
           className="carousel-home-know-more-btn small-screen-btn"
           onClick={handleKnowMoreClick}
           style={{
-            width: "132px",
+            width: "162px",
             height: "44px",
             borderRadius: "4px",
             padding: "12px 16px",

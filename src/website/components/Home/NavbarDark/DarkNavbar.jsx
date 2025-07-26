@@ -17,7 +17,9 @@ const DarkNavbar = () => {
   ];
 
   const contactPath = "/ContactUs";
-
+  const handleNavigate = () => {
+    window.scrollTo(0, 0);
+  };
   // Scroll event listener to update navbar style
   useEffect(() => {
     const handleScroll = () => {
@@ -73,7 +75,9 @@ const DarkNavbar = () => {
             border: "none",
             padding: "clamp(0px, 1vw, 4px)",
           }}
-          onClick={() => setIsExpanded(!isExpanded)}
+          onClick={() => {
+             window.scrollTo(0, 0);
+             setIsExpanded(!isExpanded)}}
         >
           <span
             className="navbar-toggler-icon"
@@ -117,7 +121,9 @@ const DarkNavbar = () => {
                 aria-controls="navbarSupportedContent"
                 aria-expanded="false"
                 aria-label="Close navigation"
-                onClick={() => setIsExpanded(false)}
+                onClick={() => {
+                   window.scrollTo(0, 0);
+                   setIsExpanded(false)}}
               >
                 <svg
                   width="24"
@@ -159,7 +165,9 @@ const DarkNavbar = () => {
                       textDecoration: "none",
                       transition: "transform 0.3s ease",
                     }}
-                    onClick={() => setIsExpanded(false)}
+                    onClick={() => {
+                       window.scrollTo(0, 0);
+                       setIsExpanded(false)}}
                     onMouseEnter={(e) =>
                       (e.currentTarget.style.transform = "scale(1.1)")
                     }
@@ -198,7 +206,9 @@ const DarkNavbar = () => {
                     e.currentTarget.style.backgroundColor = "white";
                     e.currentTarget.style.color = "#4C6559";
                   }}
-                  onClick={() => setIsExpanded(false)}
+                  onClick={() => {
+                     window.scrollTo(0, 0);
+                     setIsExpanded(false)}}
                 >
                   Contact us
                 </Link>
@@ -235,6 +245,7 @@ const DarkNavbar = () => {
                   onMouseLeave={(e) =>
                     (e.currentTarget.style.transform = "scale(1)")
                   }
+                  onClick={handleNavigate}
                 >
                   {item.name}
                 </Link>
@@ -271,6 +282,7 @@ const DarkNavbar = () => {
                 e.currentTarget.style.backgroundColor = "white";
                 e.currentTarget.style.color = "#4C6559";
               }}
+              onClick={handleNavigate}
             >
               Contact us
             </Link>

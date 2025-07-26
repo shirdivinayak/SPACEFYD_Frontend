@@ -296,14 +296,14 @@ const ProjectList = () => {
                     className="more-project-item"
                   >
                     <img
-                      onClick={() =>
+                      onClick={() => {
                         navigate(
-                          `/ProjectsDetail/${encodeURIComponent(
-                            project.projectName
-                          )}`,
+                          `/ProjectsDetail/${encodeURIComponent(project.projectName)}`,
                           { state: { project } }
-                        )
-                      }
+                        );
+                        window.scrollTo(0, 0);
+                      }}
+
                       src={project.images[0] || project.img}
                       alt={project.projectName}
                       className="more-project-image"
@@ -320,7 +320,7 @@ const ProjectList = () => {
             })}
 
             {/* Loader for additional projects */}
-            {loadingMoreProjects && <LoadMorePlaceholder />}
+            {/* {loadingMoreProjects && <LoadMorePlaceholder />} */}
           </div>
         ) : (
           <div className="no-projects-container">

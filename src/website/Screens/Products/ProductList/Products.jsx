@@ -161,6 +161,7 @@ const Products = () => {
 
   const handleCardClick = (product) => {
     navigate(`/ProductDetails`, { state: { product } });
+        window.scrollTo(0, 0);
   };
 
   useEffect(() => {
