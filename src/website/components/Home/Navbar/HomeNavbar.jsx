@@ -97,6 +97,7 @@ const HomeNavbar = () => {
                     textDecoration: "none",
                     transition: "transform 0.3s ease",
                   }}
+                  onClick={() => window.scrollTo(0, 0)} 
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.transform = "scale(1.1)")
                   }
@@ -264,6 +265,7 @@ const HomeNavbar = () => {
                 e.currentTarget.style.color = "white";
                 e.currentTarget.style.border = "1px solid #4C6559";
               }}
+              onClick={() => window.scrollTo(0, 0)} 
             >
               Contact us
             </Link>
