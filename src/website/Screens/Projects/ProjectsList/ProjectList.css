@@ -125,8 +125,8 @@
     padding: 10px 0;
     padding-left: 20%;
     margin-top: 3%;
-    /* scrollbar-width: thin; /* For Firefox */
-    /* scrollbar-color: #fff; For Firefox */ 
+    scrollbar-width: thin; /* For Firefox */
+    /* scrollbar-color: #fff; For Firefox 
   }
   .main{
     background-color: #FCF9F5;
