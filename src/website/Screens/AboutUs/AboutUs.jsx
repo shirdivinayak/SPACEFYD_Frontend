@@ -137,7 +137,7 @@ const AboutUs = () => {
           backgroundColor: "#4C6559",
           color: "#ffffff",
           width: "90%",
-          maxWidth: "1200px",
+          maxWidth: "1290px",
           overflow: "hidden",
           marginTop: "50px",
           minHeight: "456px",

@@ -135,7 +135,7 @@ const HeroSection = () => {
             maxWidth: "100%",
             height: "180px",
             position: "absolute",
-            top: "62px",
+            top: "122px",
             left: "50%",
             transform: "translateX(-50%)",
             textAlign: "center",
@@ -143,7 +143,7 @@ const HeroSection = () => {
         >
           <h1
             style={{
-              fontFamily: "Kollektif, sans-serif",
+              fontFamily: "DM Sans",
               fontWeight: 400,
               fontSize: "88px",
               lineHeight: "89.69px",
@@ -452,7 +452,7 @@ const HeroSection = () => {
           </h2>
           <h1
             style={{
-              fontFamily: "Kollektif, sans-serif",
+              fontFamily: "DM Sans",
               fontWeight: 400,
               fontSize: "48px",
               lineHeight: "57px",
