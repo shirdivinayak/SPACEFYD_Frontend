@@ -105,15 +105,15 @@ const ContactUs = () => {
                 <div className="contact-text">
                   <h1>{t("address")}</h1>
                   <p>
-                    SPACIFYD, Al Maya Building, 5th Floor, Office 503,
-                    <br />
-                    Al Maha Street, Al Khuawir,
-                    <br />  Sultanate of Oman
+                    SPACIFYD,
+                     <br />
+                     Merbat Tower, AI Gubra, P.O Box 2398, <br /> PC 112, Muscat,  <br />Sultanate of Oman
+                   
                   </p>
                 </div>
               </div>
 
-              {/* <div className="contact-item">
+              <div className="contact-item">
                 <img
                   src={Phone}
                   alt="Phone"
@@ -126,17 +126,19 @@ const ContactUs = () => {
                   <p>
                   Mobile:{" "}
                   <a
-                    href="https://wa.me/84546678990"
+                    href="https://wa.me/96897080423"
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{ textDecoration: "none", color: "inherit" }}
                   >
-                    +(84) 546-678990
+                    +968 9708 0423
                   </a>
                 </p>                 
-                <p>Hotline: +(84) 456-6789</p>
+                <p>
+                  {/* Hotline: +(84) 456-6789 */}
+                  </p>
                 </div>
-              </div> */}
+              </div>
 
               <div className="contact-item">
                 <img
@@ -148,7 +150,7 @@ const ContactUs = () => {
                 />
                 <div className="contact-text">
                   <h1>{t("email")}</h1>
-                  <p>connect.spacifyd@gmail.com</p>
+                  <p>info@spacifyd.com</p>
                 </div>
               </div>
             </div>
