@@ -9,6 +9,7 @@ const Sections = ({ backgroundImage, sections }) => {
 
   const handleServiceNavigation = (sectionId) => {
     navigate(`/services#${sectionId}`);
+    // window.scroll(0,0)
     // Smooth scroll after navigation
     setTimeout(() => {
       const element = document.getElementById(sectionId);
@@ -52,7 +53,8 @@ const Sections = ({ backgroundImage, sections }) => {
                     <img src={section.col8.row1.image} alt={section.col8.row1.alt} 
                      onClick={() => handleServiceNavigation(section.col8.row1.targetId)}/>
                     <div className="image-overlay">
-                      <p>{section.col8.row1.text}</p>
+                      <p 
+                       onClick={() => handleServiceNavigation(section.col8.row1.targetId)}>{section.col8.row1.text}</p>
                       <button 
                         className="arrow-button"
                         onClick={() => handleServiceNavigation(section.col8.row1.targetId)}
@@ -73,7 +75,8 @@ const Sections = ({ backgroundImage, sections }) => {
                       onClick={() => handleServiceNavigation(section.col8.row2.targetId)}
                     />
                     <div className="image-overlay">
-                      <p>{section.col8.row2.text}</p>
+                      <p
+                      onClick={() => handleServiceNavigation(section.col8.row2.targetId)}>{section.col8.row2.text}</p>
                       <button 
                       onClick={() => handleServiceNavigation(section.col8.row2.targetId)}
                         className="arrow-button"
@@ -97,7 +100,9 @@ const Sections = ({ backgroundImage, sections }) => {
                     <img src={section.col4.image} alt={section.col4.alt} 
                     onClick={() => handleServiceNavigation(section.col4.targetId)}/>
                     <div className="image-overlay">
-                      <p>{section.col4.text}</p>
+                      <p
+                        onClick={() => handleServiceNavigation(section.col4.targetId)}
+                      >{section.col4.text}</p>
                       <button 
                         className="arrow-button"
                         onClick={() => handleServiceNavigation(section.col4.targetId)}

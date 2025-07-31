@@ -169,11 +169,11 @@
 
 /* Divider */
 .services-divider {
-  margin-top: 10%;
+  /* margin-top: 5%; */
   width: 100%;
   height: 1px;
   background: linear-gradient(270deg, #4DA180 0%, #97935A 27.34%, #CE893E 100%);
-  margin-bottom: 10%;
+  margin-bottom: 5%;
 }
 
 /* Responsive Styles */
