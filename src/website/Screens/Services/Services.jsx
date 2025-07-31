@@ -20,7 +20,6 @@ const Services = () => {
 
   React.useEffect(() => {
     const hash = window.location.hash.substring(1);
-    console.log(hash,"===hash")
     if (hash) {
       const element = document.getElementById(hash);
       if (element) {
@@ -54,14 +53,12 @@ const Services = () => {
           className="services-main-container"
           style={{ backgroundImage: `url(${BackgroundImage})` }}
         >
-          <h1 
-            id="automated-lighting"
-          className="services-main-heading">{t("s1-main-head")}</h1>
+          <h1 className="services-main-heading">{t("s1-main-head")}</h1>
 
           <div className="services-content-wrapper">
             {/* Automated Lighting Section */}
             <div
-            
+              id="automated-lighting"
               className="services-section services-text-left"
             >
               <div className="services-content">
@@ -80,8 +77,7 @@ const Services = () => {
                   <p>{t("l1-list3")}</p>
                 </div>
               </div>
-              <div className="services-image-right"
-                            id="home-theaters">
+              <div className="services-image-right">
                 <img
                   src={Image1}
                   alt="Automated lighting and climate control"
@@ -91,6 +87,7 @@ const Services = () => {
 
             {/* Home Theaters Section */}
             <div
+              id="home-theaters"
               className="services-section services-text-right"
             >
               <div className="services-image-left">
@@ -107,9 +104,7 @@ const Services = () => {
                   <p>{t("r2-list2")}</p>
                   <i className="bi bi-arrow-left services-icon"></i>
                 </div>
-                <div 
-                id="voice-activated"
-                className="services-sub-content-right">
+                <div className="services-sub-content-right">
                   <p>{t("r2-list3")}</p>
                   <i className="bi bi-arrow-left services-icon"></i>
                 </div>
@@ -118,6 +113,7 @@ const Services = () => {
 
             {/* Voice Activated Section */}
             <div
+              id="voice-activated"
               className="services-section services-text-left"
             >
               <div className="services-content">
@@ -175,13 +171,12 @@ const Services = () => {
           </div>
 
           <div className="services-divider"></div>
-          <h1 className="services-main-heading"
-          id="climate-adaptive"
-          >{t("section2-main-head")}</h1>
+          <h1 className="services-main-heading">{t("section2-main-head")}</h1>
 
           <div className="services-content-wrapper">
             {/* Climate Adaptive Section */}
             <div
+              id="climate-adaptive"
               className="services-section services-text-left"
             >
               <div className="services-content">
@@ -200,16 +195,14 @@ const Services = () => {
                   <p>{t("l4-list3")}</p>
                 </div>
               </div>
-              <div
-               id="bespoke-kitchens"
-              className="services-image-right">
+              <div className="services-image-right">
                 <img src={Image4} alt="Climate-adaptive HVAC systems" />
               </div>
             </div>
 
             {/* Bespoke Kitchens Section */}
             <div
-             
+              id="bespoke-kitchens"
               className="services-section services-text-right"
             >
               <div className="services-image-left">
@@ -229,9 +222,7 @@ const Services = () => {
                   <p>{t("r5-list2")}</p>
                   <i className="bi bi-arrow-left services-icon"></i>
                 </div>
-                <div 
-                id="turkey-interior"
-                className="services-sub-content-right">
+                <div className="services-sub-content-right">
                   <p>{t("r5-list4")}</p>
                   <i className="bi bi-arrow-left services-icon"></i>
                 </div>
@@ -240,6 +231,7 @@ const Services = () => {
 
             {/* Turkey Interior Section */}
             <div
+              id="turkey-interior"
               className="services-section services-text-left"
             >
               <div className="services-content">
