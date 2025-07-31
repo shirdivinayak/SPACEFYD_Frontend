@@ -26,21 +26,21 @@ function App() {
       col8: {
         row1: {
           image: image1,
-          alt: "Automated Lighting & Climate",
-          text: "Automated Lighting & Climate",
+          alt: "Automated lighting and climate control",
+          text: "Automated lighting and climate control",
           targetId: "automated-lighting",
         },
         row2: {
           image: image2,
           alt: "Home theaters and VR gaming setups",
-          text: "Home Theaters & VR",
+          text: "Home theaters and VR gaming setups",
           targetId: "home-theaters",
         },
       },
       col4: {
         image: image3,
         alt: "Voice-activated curtains and wardrobes",
-        text: "Voice-Activated Solutions",
+        text: "Voice-activated curtains and wardrobes",
         targetId: "voice-activated",
       },
     },
@@ -50,13 +50,13 @@ function App() {
         row1: {
           image: image4,
           alt: "Climate-adaptive HVAC systems",
-          text: "Climate-Adaptive Systems",
+          text: "Climate-adaptive HVAC systems",
           targetId: "climate-adaptive",
         },
         row2: {
           image: image5,
           alt: "Bespoke modular kitchens and custom furniture",
-          text: "Bespoke Kitchens & Furniture",
+          text: "Bespoke modular kitchens and custom furniture",
           targetId: "bespoke-kitchens",
         },
       },

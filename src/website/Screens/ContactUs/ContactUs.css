@@ -66,7 +66,7 @@
 .contact-item .contact-icon-phone {
   font-size: 1.5rem;
   color: #4C6559;
-  margin-top:-5%; /* Ensures no extra margin */
+  margin-top:-14%; /* Ensures no extra margin */
   display: flex;
   align-items: center;
 }

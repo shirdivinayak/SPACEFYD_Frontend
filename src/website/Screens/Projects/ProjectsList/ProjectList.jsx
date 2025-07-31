@@ -269,26 +269,24 @@ const ProjectList = () => {
                     className="more-project-item"
                   >
                     <img
-                      onClick={() => {
+                      onClick={() =>
                         navigate(
-                          `/ProjectsDetail/${encodeURIComponent(project.projectName)}`,
+                          `/ProjectsDetail/${encodeURIComponent(
+                            project.projectName
+                          )}`,
                           { state: { project } }
-                        );
-                        window.scrollTo(0, 0);
-                      }}
+                        )
+                      }
                       src={project.images[0] || project.img}
                       alt={project.projectName}
                       className="more-project-image"
                     />
-
                     <h3 className="more-project-title">
                       {project.projectName}
                     </h3>
-                  <p className="more-project-description">
-                  {project.projectDescription.length > 200 
-                    ? project.projectDescription.substring(0, 200) + "..." 
-                    : project.projectDescription}
-                  </p>
+                    <p className="more-project-description">
+                      {project.projectDescription}
+                    </p>
                   </div>
                 );
               } else {
@@ -313,11 +311,9 @@ const ProjectList = () => {
                     <h3 className="more-project-title">
                       {project.projectName}
                     </h3>
-                                      <p className="more-project-description">
-                  {project.projectDescription.length > 200 
-                    ? project.projectDescription.substring(0, 200) + "..." 
-                    : project.projectDescription}
-                  </p>
+                    <p className="more-project-description">
+                      {project.projectDescription}
+                    </p>
                   </div>
                 );
               }
